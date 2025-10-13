@@ -2,7 +2,7 @@ import Heading from "./ui/Heading/Heading";
 
 export default function LandingPage() {
   return (
-    <Heading as="h1" size="72">
+    <Heading as="h1" size="96">
       Life RPG
     </Heading>
   );
