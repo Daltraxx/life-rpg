@@ -21,9 +21,12 @@ export default function Heading({
   return (
     <Comp
       className={clsx(
+        'font-main',
+        size === "16" && "text-base",
         size === "36" && "text-4xl",
         size === "48" && "text-5xl",
-        size === "72" && "text-7xl"
+        size === "72" && "text-7xl",
+        className
       )}
       {...restProps}
     >
