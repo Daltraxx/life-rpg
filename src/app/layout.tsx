@@ -19,8 +19,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={clsx(jersey.variable, "antialiased")}>
+    <html lang="en" className={clsx(jersey.variable, "antialiased")}>
+      <body>
         <main>{children}</main>
       </body>
     </html>
