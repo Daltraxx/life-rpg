@@ -1,4 +1,4 @@
-import Heading from "./ui/Heading/Heading";
+import Heading from "./Heading";
 
 export default function LandingPage() {
   return (
