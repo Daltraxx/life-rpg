@@ -13,7 +13,7 @@ export default function LandingPageIntro() {
         Grind your daily tasks, habits, and goals like one would their most
         addictive RPG. Gain experience, level up, and get that dopamine via
         on-screen progress that will be reflected in your real life mind,
-        discipline, and capabilities. Its a feedback loop that can be
+        discipline, and capabilities. It's a feedback loop that can be
         mesmerizing in a video game. Now it can propel you to becoming
         overpowered in your own dreams, in your own life.
       </Text>
