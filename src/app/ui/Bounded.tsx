@@ -6,6 +6,13 @@ type BoundedProps = {
   children: React.ReactNode;
 };
 
+/**
+ * Bounded container component that centers content with max-width constraint.
+ *
+ * @param as - The element type to render (default: "section")
+ * @param className - Additional CSS classes to apply to the outer element
+ * @param children - Content to render inside the bounded container
+ */
 export default function Bounded({
   as: Comp = "section",
   className,
