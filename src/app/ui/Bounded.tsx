@@ -2,7 +2,8 @@ import clsx from "clsx";
 
 type BoundedProps = {
   as?: React.ElementType;
-  className?: string;
+  outerClassName?: string;
+  innerClassName?: string;
   children: React.ReactNode;
 };
 
@@ -15,12 +16,13 @@ type BoundedProps = {
  */
 export default function Bounded({
   as: Comp = "section",
-  className,
+  outerClassName,
+  innerClassName,
   children,
 }: BoundedProps) {
   return (
-    <Comp className={clsx("px-4 py-8", className)}>
-      <div className="mx-auto w-full max-w-7xl">{children}</div>
+    <Comp className={clsx("px-4 py-8", outerClassName)}>
+      <div className={clsx("mx-auto w-full max-w-7xl", innerClassName)}>{children}</div>
     </Comp>
   );
 }
