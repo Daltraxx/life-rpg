@@ -3,7 +3,7 @@ import Heading from "../../Heading";
 import Text from "../../Text";
 import styles from "./styles.module.css";
 
-export default function LandingPageIntro() { 
+export default function Intro() { 
   return (
     <Bounded>
       <Heading as="h1" size="96" className={styles.mainHeading}>
