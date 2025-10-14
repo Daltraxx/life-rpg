@@ -3,7 +3,7 @@ import clsx from "clsx";
 import fontSizeToTWMap from "./utils/fontSizeToTWMap";
 
 type TextType = "p" | "span";
-type FontSize = "16" | "20" | "manual";
+type FontSize = "16" | "20" | "24" | "manual";
 
 export interface TextProps extends ComponentPropsWithoutRef<"p"> {
   as?: TextType;
