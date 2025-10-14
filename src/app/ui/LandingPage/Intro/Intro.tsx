@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 
 export default function Intro() { 
   return (
-    <Bounded>
+    <Bounded innerClassName={styles.introContainer}>
       <Heading as="h1" size="96" className={styles.mainHeading}>
         Life RPG
       </Heading>
