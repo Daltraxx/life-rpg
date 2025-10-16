@@ -20,4 +20,4 @@ const fontSizeToTWMap = {
   "96": "text-8xl",
 } as const;
 
-export default fontSizeToTWMap;
+export { fontSizeToTWMap };
