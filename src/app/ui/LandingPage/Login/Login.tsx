@@ -1,9 +1,9 @@
 import Link from "next/link";
-import styles from ',./styles.module.css';
+import styles from './styles.module.css';
 
 export default function Login() {
   return (
-    <form action="">
+    <form className={styles.loginForm} action="">
       <label htmlFor="email-field">Email:</label>
       <input type="email" id="email-field" name="email" required />
       <label htmlFor="password-field">Password:</label>
