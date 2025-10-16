@@ -1,3 +1,15 @@
+/**
+ * Maps font sizes (in pixels) to corresponding Tailwind CSS utility classes.
+ *
+ * The string keys represent font sizes in pixels (e.g., "16" = 16px).
+ * This object is readonly and provides a consistent mapping between
+ * numeric font sizes and Tailwind's text size utilities.
+ *
+ * @example
+ * ```typescript
+ * const className = fontSizeToTWMap["24"]; // Returns "text-2xl"
+ * ```
+ */
 const fontSizeToTWMap = {
   "16": "text-base",
   "20": "text-xl",
