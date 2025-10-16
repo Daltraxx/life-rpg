@@ -16,3 +16,27 @@ export default function Login() {
     </Bounded>
   );
 }
+
+// Consider adding loading state to submit button.
+
+// The submit button lacks a loading/disabled state during form submission, which can lead to:
+
+// Multiple submission attempts
+// Poor user feedback during authentication
+// Add loading state handling:
+
+// const [isLoading, setIsLoading] = useState(false);
+
+// // In handleSubmit:
+// setIsLoading(true);
+// try {
+//   // authentication logic
+// } finally {
+//   setIsLoading(false);
+// }
+// Then update the button:
+
+// -<button type="submit">Login</button>
+// +<button type="submit" disabled={isLoading}>
+// +  {isLoading ? 'Logging in...' : 'Login'}
+// +</button>
