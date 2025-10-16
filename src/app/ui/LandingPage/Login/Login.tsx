@@ -13,6 +13,7 @@ export default function Login() {
         <button type="submit">Login</button>
         <Link href="/forgot-password">Forgot Password?</Link>
       </form>
+      <div className={styles.divider}></div>
     </Bounded>
   );
 }
