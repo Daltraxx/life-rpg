@@ -33,6 +33,6 @@
 
 .divider {
   height: 1px;
-  background-color: var(--brown-600, gray);
+  background-color: var(--brown-600, #362009);
   margin: 2rem 0;
 }
