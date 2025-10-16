@@ -1,7 +1,10 @@
 .loginForm {
-  color: var(--white);
   display: flex;
   flex-direction: column;
+  color: var(--brown-600, #362009);
+  background-color: var(--white, #ffffff);
+  border: 5px solid var(--brown-600, #362009);
+  padding: 1rem;
 }
 
 .loginForm label {
