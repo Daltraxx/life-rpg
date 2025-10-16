@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from './styles.module.css';
+import styles from "./styles.module.css";
 import Bounded from "../../Bounded";
 
 export default function Login() {
@@ -7,9 +7,15 @@ export default function Login() {
     <Bounded innerClassName={styles.loginContainer}>
       <form className={styles.loginForm} action="">
         <label htmlFor="email-field">Email:</label>
-        <input type="email" id="email-field" name="email" required />
+        <input type="email" id="email-field" name="email" required autoComplete="email" />
         <label htmlFor="password-field">Password:</label>
-        <input type="password" id="password-field" name="password" required />
+        <input
+          type="password"
+          id="password-field"
+          name="password"
+          required
+          autoComplete="current-password"
+        />{" "}
         <button type="submit">Login</button>
         <Link href="/forgot-password">Forgot Password?</Link>
       </form>
