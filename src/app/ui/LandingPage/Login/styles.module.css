@@ -1,0 +1,30 @@
+.loginForm {
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.loginForm label {
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.loginForm input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.loginForm button {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background-color: #0070f3;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.loginForm button:hover {
+  background-color: #005bb5;
+}
