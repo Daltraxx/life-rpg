@@ -17,6 +17,8 @@ export default function Login() {
   );
 }
 
+// Instead of below, use formAction and isPending for changes in submit button
+
 // Consider adding loading state to submit button.
 
 // The submit button lacks a loading/disabled state during form submission, which can lead to:
