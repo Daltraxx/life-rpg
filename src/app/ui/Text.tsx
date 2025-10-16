@@ -2,14 +2,16 @@ import { ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
 import fontSizeToTWMap from "./utils/fontSizeToTWMap";
 
-type TextType = "p" | "span";
 type FontSize = "16" | "20" | "24" | "manual";
 
-export interface TextProps extends ComponentPropsWithoutRef<"p"> {
-  as?: TextType;
+type BaseTextProps = {
   size?: FontSize;
   children: ReactNode;
-}
+};
+
+export type TextProps =
+  | (ComponentPropsWithoutRef<"p"> & BaseTextProps & { as?: "p" })
+  | (ComponentPropsWithoutRef<"span"> & BaseTextProps & { as: "span" });
 
 export default function Text({
   as: Comp = "p",
