@@ -4,9 +4,9 @@ import Login from "./ui/LandingPage/Login/Login";
 
 export default function LandingPage() {
   return (
-    <div className={styles.landingPageContainer}>
+    <main className={styles.landingPageContainer}>
       <Intro />
       <Login />
-    </div>
+    </main>
   );
 }
