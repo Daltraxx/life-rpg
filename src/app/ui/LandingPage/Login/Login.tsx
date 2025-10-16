@@ -14,6 +14,7 @@ export default function Login() {
         <Link href="/forgot-password">Forgot Password?</Link>
       </form>
       <div className={styles.divider}></div>
+      <Link href="/register">Create an account</Link>
     </Bounded>
   );
 }
