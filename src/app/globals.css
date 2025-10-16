@@ -14,6 +14,7 @@
 
   --blue-600: hsl(211, 71%, 12%); /* #091f36 */
   --orange-300: hsl(31, 61%, 70%); /* #E1B382 */
+  --white: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -11,5 +11,5 @@
 }
 
 .introParagraph {
-  color: #fff;
+  color: var(--white);
 }
