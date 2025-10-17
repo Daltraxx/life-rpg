@@ -1,6 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 import type { LinkProps } from "next/link";
 import Link from "next/link";
+import clsx from "clsx";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -13,7 +14,7 @@ interface LinkWrapperProps extends LinkProps {
 
 export function Button({ children, className, ...restProps }: ButtonProps) {
   return (
-    <button className={className} {...restProps}>
+    <button className={clsx(className)} {...restProps}>
       {children}
     </button>
   );
