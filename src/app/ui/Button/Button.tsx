@@ -1,9 +1,17 @@
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+import type { LinkProps } from "next/link";
+import Link from "next/link";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   className?: string;
 };
+
+interface LinkWrapperProps extends LinkProps {
+  children: ReactNode;
+  className?: string;
+};
+
 
 export function Button({
   children,
@@ -14,6 +22,18 @@ export function Button({
     <button className={className} {...restProps}>
       {children}
     </button>
+  );
+}
+
+export function LinkWrapper({
+  children,
+  className,
+  ...restProps
+}: LinkWrapperProps) {
+  return (
+    <Link className={className} {...restProps}>
+      {children}
+    </Link>
   );
 }
 
