@@ -4,20 +4,14 @@ import Link from "next/link";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
-  className?: string;
-};
+}
 
 interface LinkWrapperProps extends LinkProps {
   children: ReactNode;
   className?: string;
-};
+}
 
-
-export function Button({
-  children,
-  className,
-    ...restProps
-}: ButtonProps) {
+export function Button({ children, className, ...restProps }: ButtonProps) {
   return (
     <button className={className} {...restProps}>
       {children}
@@ -36,4 +30,3 @@ export function LinkWrapper({
     </Link>
   );
 }
-
