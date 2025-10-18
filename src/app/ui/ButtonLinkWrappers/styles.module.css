@@ -8,26 +8,26 @@
   transition: background-color 0.2s ease;
 }
 
-.brown600 {
+.buttonBrown600 {
   background-color: var(--brown-600, #362009);
 }
 
-.brown600:hover {
+.buttonBrown600:hover {
   background-color: hsl(31 71% 20%);
 }
 
-.brown600:active {
+.buttonBrown600:active {
   background-color: var(--brown-600, #362009);
 }
 
-.blue600 {
+.buttonBlue600 {
   background-color: var(--blue-600, #091f36);
 }
 
-.blue600:hover {
+.buttonBlue600:hover {
   background-color: hsl(211 71% 20%);
 }
 
-.blue600:active {
+.buttonBlue600:active {
   background-color: var(--blue-600, #091f36);
 }

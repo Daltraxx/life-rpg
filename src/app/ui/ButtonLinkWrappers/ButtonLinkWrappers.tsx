@@ -17,9 +17,9 @@ interface LinkWrapperProps extends LinkProps {
   className?: string;
 }
 
-const colorMap = {
-  "brown-600": styles.brown600,
-  "blue-600": styles.blue600,
+const buttonColorMap = {
+  "brown-600": styles.buttonBrown600,
+  "blue-600": styles.buttonBlue600,
 } satisfies Record<Color, string>;
 
 const DEFAULT_COLOR: Color = "brown-600";
@@ -31,7 +31,10 @@ export function ButtonWrapper({
   ...restProps
 }: ButtonProps) {
   return (
-    <button className={clsx(className, styles.button, colorMap[color])} {...restProps}>
+    <button
+      className={clsx(className, styles.button, buttonColorMap[color])}
+      {...restProps}
+    >
       {children}
     </button>
   );
@@ -44,7 +47,23 @@ export function LinkWrapper({
   ...restProps
 }: LinkWrapperProps) {
   return (
-    <Link className={clsx(className, styles.button, colorMap[color])} {...restProps}>
+    <Link
+      className={clsx(className, styles.button, buttonColorMap[color])}
+      {...restProps}
+    >
+      {children}
+    </Link>
+  );
+}
+
+export function LinkNoStyleWrapper({
+  color = DEFAULT_COLOR,
+  children,
+  className,
+  ...restProps
+}: LinkWrapperProps) {
+  return (
+    <Link className={clsx(className)} {...restProps}>
       {children}
     </Link>
   );
