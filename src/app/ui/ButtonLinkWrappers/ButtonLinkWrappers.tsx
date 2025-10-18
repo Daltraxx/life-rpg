@@ -56,6 +56,11 @@ export function LinkWrapper({
   );
 }
 
+const linkColorMap = {
+  "brown-600": styles.linkBrown600,
+  "blue-600": styles.linkBlue600,
+} satisfies Record<Color, string>;
+
 export function LinkNoStyleWrapper({
   color = DEFAULT_COLOR,
   children,
@@ -63,7 +68,7 @@ export function LinkNoStyleWrapper({
   ...restProps
 }: LinkWrapperProps) {
   return (
-    <Link className={clsx(className)} {...restProps}>
+    <Link className={clsx(className, linkColorMap[color])} {...restProps}>
       {children}
     </Link>
   );
