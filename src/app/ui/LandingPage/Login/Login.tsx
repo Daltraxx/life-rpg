@@ -1,7 +1,7 @@
 import Link from "next/link";
 import styles from "./styles.module.css";
 import Bounded from "../../Bounded";
-import { Button, LinkWrapper } from "../../Button/Button";
+import { ButtonWrapper, LinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 
 export default function Login() {
   return (
@@ -16,8 +16,8 @@ export default function Login() {
           name="password"
           required
           autoComplete="current-password"
-        />{" "}
-        <Button type="submit" className={styles.loginButton}>Login</Button>
+        />
+        <ButtonWrapper type="submit" className={styles.loginButton}>Login</ButtonWrapper>
         <Link href="/forgot-password">Forgot Password?</Link>
       </form>
       <div className={styles.divider}></div>

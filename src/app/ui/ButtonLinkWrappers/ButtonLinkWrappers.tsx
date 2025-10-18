@@ -24,7 +24,7 @@ const colorMap = {
 
 const DEFAULT_COLOR: Color = "brown-600";
 
-export function Button({
+export function ButtonWrapper({
   color = DEFAULT_COLOR,
   children,
   className,
