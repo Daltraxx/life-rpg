@@ -1,6 +1,7 @@
 import Link from "next/link";
 import styles from "./styles.module.css";
 import Bounded from "../../Bounded";
+import { Button, LinkWrapper } from "../../Button/Button";
 
 export default function Login() {
   return (
