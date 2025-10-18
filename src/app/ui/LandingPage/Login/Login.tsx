@@ -21,7 +21,7 @@ export default function Login() {
         <Link href="/forgot-password">Forgot Password?</Link>
       </form>
       <div className={styles.divider}></div>
-      <LinkWrapper href="/register" color="blue-600">Create an account</LinkWrapper>
+      <LinkWrapper href="/register">Create an account</LinkWrapper>
     </Bounded>
   );
 }
