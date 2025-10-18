@@ -26,10 +26,6 @@
   margin-top: 1rem;
 }
 
-.loginForm button:hover {
-  background-color: #005bb5;
-}
-
 .divider {
   height: 1px;
   background-color: var(--brown-600, #362009);
