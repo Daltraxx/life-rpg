@@ -22,8 +22,10 @@ const colorMap = {
   "blue-600": styles.blue600,
 } satisfies Record<Color, string>;
 
+const DEFAULT_COLOR: Color = "brown-600";
+
 export function Button({
-  color = "brown-600",
+  color = DEFAULT_COLOR,
   children,
   className,
   ...restProps
@@ -36,7 +38,7 @@ export function Button({
 }
 
 export function LinkWrapper({
-  color = "brown-600",
+  color = DEFAULT_COLOR,
   children,
   className,
   ...restProps
