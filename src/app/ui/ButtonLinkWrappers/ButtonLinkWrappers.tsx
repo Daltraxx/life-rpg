@@ -61,7 +61,7 @@ const linkColorMap = {
   "blue-600": styles.linkBlue600,
 } satisfies Record<Color, string>;
 
-export function LinkNoStyleWrapper({
+export function RegularLinkWrapper({
   color = DEFAULT_COLOR,
   children,
   className,
