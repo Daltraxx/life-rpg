@@ -17,11 +17,11 @@ export default function Login() {
           required
           autoComplete="current-password"
         />{" "}
-        <button type="submit">Login</button>
-        <Link href="/forgot-password">Forgot Password?</Link>
+        <Button type="submit" className={styles.loginButton}>Login</Button>
+        <Link href="/forgot-password">Forgot Password?</Link>Button
       </form>
       <div className={styles.divider}></div>
-      <Link href="/register">Create an account</Link>
+      <LinkWrapper href="/register">Create an account</LinkWrapper>
     </Bounded>
   );
 }
