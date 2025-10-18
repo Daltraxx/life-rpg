@@ -17,10 +17,10 @@ interface LinkWrapperProps extends LinkProps {
   className?: string;
 }
 
-const colorMap = new Map<string, string>([
-  ["brown-600", styles.brown600],
-  ["blue-600", styles.blue600],
-]);
+const colorMap = {
+  "brown-600": styles.brown600,
+  "blue-600": styles.blue600,
+} satisfies Record<Color, string>;
 
 export function Button({
   color = "brown-600",
@@ -29,7 +29,7 @@ export function Button({
   ...restProps
 }: ButtonProps) {
   return (
-    <button className={clsx(className, styles.button, colorMap.get(color))} {...restProps}>
+    <button className={clsx(className, styles.button, colorMap[color])} {...restProps}>
       {children}
     </button>
   );
@@ -42,7 +42,7 @@ export function LinkWrapper({
   ...restProps
 }: LinkWrapperProps) {
   return (
-    <Link className={clsx(className, styles.button, colorMap.get(color))} {...restProps}>
+    <Link className={clsx(className, styles.button, colorMap[color])} {...restProps}>
       {children}
     </Link>
   );
