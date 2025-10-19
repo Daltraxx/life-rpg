@@ -1,9 +1,8 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
-import { fontSizeToTWMap } from "./utils/fontSizeToTWMap";
+import { fontSizeToTWMap, FontSize } from "./utils/fontSizeToTWMap";
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-type FontSize = "16" | "36" | "48" | "72" | "96" | "manual";
 
 export interface HeadingProps extends ComponentPropsWithoutRef<"h1"> {
   as?: HeadingLevel;
