@@ -21,7 +21,7 @@ export default function Heading({
     <Comp
       className={clsx(
         "font-main",
-        size !== "manual" && fontSizeToTWMap[size],
+        fontSizeToTWMap[size],
         className
       )}
       {...restProps}

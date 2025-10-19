@@ -22,7 +22,7 @@ export default function Text({
     <Comp
       className={clsx(
         "font-main",
-        size !== "manual" && fontSizeToTWMap[size],
+        fontSizeToTWMap[size],
         className
       )}
       {...restProps}
