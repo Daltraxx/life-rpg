@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { jersey } from "./ui/fonts";
 import "./globals.css";
 import clsx from "clsx";
+import Footer from "./ui/LandingPage/Footer/Footer";
+import styles from "./styles.module.css";
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +22,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={clsx(jersey.variable, "antialiased")}>
-      <body>{children}</body>
+      <body className={styles.landingPageContainer}>
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
