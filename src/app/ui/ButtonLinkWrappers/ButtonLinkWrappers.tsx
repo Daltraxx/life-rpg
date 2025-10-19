@@ -24,6 +24,7 @@ interface LinkWrapperProps extends LinkProps {
 const buttonColorMap = {
   "brown-600": styles.buttonBrown600,
   "blue-600": styles.buttonBlue600,
+  "orange-300": styles.buttonOrange300,
 } satisfies Record<Color, string>;
 
 const DEFAULT_COLOR: Color = "brown-600";
@@ -65,6 +66,7 @@ export function LinkWrapper({
 const linkColorMap = {
   "brown-600": styles.linkBrown600,
   "blue-600": styles.linkBlue600,
+  "orange-300": styles.linkOrange300,
 } satisfies Record<Color, string>;
 
 export function RegularLinkWrapper({
