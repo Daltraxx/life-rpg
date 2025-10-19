@@ -20,7 +20,7 @@ export default function Login() {
         <RegularLinkWrapper href="/forgot-password">Forgot Password?</RegularLinkWrapper>
       </form>
       <div className={styles.divider}></div>
-      <LinkWrapper href="/register">Create an account</LinkWrapper>
+      <LinkWrapper href="/register" className={styles.createAccountLink}>Create an account</LinkWrapper>
     </Bounded>
   );
 }
