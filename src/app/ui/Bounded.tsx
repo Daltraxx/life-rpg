@@ -4,6 +4,7 @@ type BoundedProps = {
   as?: React.ElementType;
   outerClassName?: string;
   innerClassName?: string;
+  verticalPadding?: boolean;
   children: React.ReactNode;
 };
 
@@ -18,11 +19,14 @@ export default function Bounded({
   as: Comp = "section",
   outerClassName,
   innerClassName,
+  verticalPadding = true,
   children,
 }: BoundedProps) {
   return (
-    <Comp className={clsx("px-4 py-8", outerClassName)}>
-      <div className={clsx("mx-auto w-full max-w-7xl", innerClassName)}>{children}</div>
+    <Comp className={clsx("px-4", verticalPadding && "py-8", outerClassName)}>
+      <div className={clsx("mx-auto w-full max-w-7xl", innerClassName)}>
+        {children}
+      </div>
     </Comp>
   );
 }
