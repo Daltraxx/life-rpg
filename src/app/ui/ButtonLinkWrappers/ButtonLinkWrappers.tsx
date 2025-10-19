@@ -18,6 +18,7 @@ interface LinkWrapperProps extends LinkProps {
   color?: Color;
   children: ReactNode;
   className?: string;
+  target?: string;
 }
 
 const buttonColorMap = {
