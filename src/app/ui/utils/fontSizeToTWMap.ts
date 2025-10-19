@@ -12,17 +12,6 @@
  * ```
  */
 
-export type FontSize =
-  | "16"
-  | "20"
-  | "24"
-  | "30"
-  | "36"
-  | "48"
-  | "72"
-  | "96"
-  | "manual";
-
 const fontSizeToTWMap = {
   "manual": "",
   "16": "text-base",
@@ -34,5 +23,7 @@ const fontSizeToTWMap = {
   "72": "text-7xl",
   "96": "text-8xl",
 } as const;
+
+export type FontSize = keyof typeof fontSizeToTWMap;
 
 export { fontSizeToTWMap };
