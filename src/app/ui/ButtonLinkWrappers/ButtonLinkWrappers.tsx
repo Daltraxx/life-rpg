@@ -64,9 +64,9 @@ export function LinkWrapper({
 }
 
 const linkColorMap = {
-  "brown-600": styles.linkBrown600,
-  "blue-600": styles.linkBlue600,
-  "orange-300": styles.linkOrange300,
+  "brown-600": styles.regularLinkBrown600,
+  "blue-600": styles.regularLinkBlue600,
+  "orange-300": styles.regularLinkOrange300,
 } satisfies Record<Color, string>;
 
 export function RegularLinkWrapper({

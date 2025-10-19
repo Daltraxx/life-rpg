@@ -40,22 +40,22 @@
   text-decoration: underline;
 }
 
-.linkBrown600 {
+.regularLinkBrown600 {
   color: var(--brown-600, #362009);
 }
-.linkBrown600:hover {
+.regularLinkBrown600:hover {
   color: hsl(31, 71%, 20%);
 }
-.linkBrown600:active {
+.regularLinkBrown600:active {
   color: var(--brown-600, #362009);
 }
 
-.linkBlue600 {
+.regularLinkBlue600 {
   color: var(--blue-600, #091f36);
 }
-.linkBlue600:hover {
+.regularLinkBlue600:hover {
   color: hsl(211, 71%, 20%);
 }
-.linkBlue600:active {
+.regularLinkBlue600:active {
   color: var(--blue-600, #091f36);
 }
