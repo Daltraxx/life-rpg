@@ -29,6 +29,16 @@
   background-color: var(--blue-600, #091f36);
 }
 
+.buttonOrange300 {
+  background-color: var(--orange-300, #E1B382);
+}
+.buttonOrange300:hover {
+  background-color: var(--orange-200, #e8c6a1);
+}
+.buttonOrange300:active {
+  background-color: var(--orange-300, #E1B382);
+}
+
 /* LINK STYLES */
 .regularLink {
   text-decoration: none;
@@ -59,3 +69,13 @@
 .regularLinkBlue600:active {
   color: var(--blue-600, #091f36);
 }
+
+.regularLinkOrange300 {
+  color: var(--orange-300, #E1B382);
+}
+.regularLinkOrange300:hover {
+  color: var(--orange-200, #e8c6a1);
+}
+.regularLinkOrange300:active {
+  color: var(--orange-300, #E1B382);
+} 
