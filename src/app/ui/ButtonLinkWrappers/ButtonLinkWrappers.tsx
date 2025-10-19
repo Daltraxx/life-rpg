@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
-type Color = "brown-600" | "blue-600";
+type Color = "brown-600" | "blue-600" | "orange-300";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fontSize?: FontSize;
