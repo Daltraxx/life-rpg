@@ -1,8 +1,6 @@
 import { ComponentPropsWithoutRef, ReactNode } from "react";
 import clsx from "clsx";
-import { fontSizeToTWMap } from "./utils/fontSizeToTWMap";
-
-type FontSize = "16" | "20" | "24" | "30" | "manual";
+import { fontSizeToTWMap, FontSize } from "./utils/fontSizeToTWMap";
 
 type BaseTextProps = {
   size?: FontSize;

@@ -10,6 +10,18 @@
  * const className = fontSizeToTWMap["24"]; // Returns "text-2xl"
  * ```
  */
+
+export type FontSize =
+  | "16"
+  | "20"
+  | "24"
+  | "30"
+  | "36"
+  | "48"
+  | "72"
+  | "96"
+  | "manual";
+
 const fontSizeToTWMap = {
   "16": "text-base",
   "20": "text-xl",
