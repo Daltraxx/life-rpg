@@ -4,7 +4,7 @@ import { ButtonWrapper, LinkWrapper, RegularLinkWrapper } from "../../ButtonLink
 
 export default function Login() {
   return (
-    <Bounded innerClassName={styles.loginContainer}>
+    <Bounded innerClassName={styles.loginContainer} verticalPadding={false}>
       <form className={styles.loginForm} action="">
         <label htmlFor="email-field">Email:</label>
         <input type="email" id="email-field" name="email" required autoComplete="email" />
