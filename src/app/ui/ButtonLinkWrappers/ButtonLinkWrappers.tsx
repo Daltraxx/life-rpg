@@ -32,7 +32,7 @@ export function ButtonWrapper({
 }: ButtonProps) {
   return (
     <button
-      className={clsx(className, styles.button, buttonColorMap[color])}
+      className={clsx(styles.button, buttonColorMap[color], className)}
       {...restProps}
     >
       {children}
@@ -48,7 +48,7 @@ export function LinkWrapper({
 }: LinkWrapperProps) {
   return (
     <Link
-      className={clsx(className, styles.button, buttonColorMap[color])}
+      className={clsx(styles.button, buttonColorMap[color], className)}
       {...restProps}
     >
       {children}
@@ -68,7 +68,7 @@ export function RegularLinkWrapper({
   ...restProps
 }: LinkWrapperProps) {
   return (
-    <Link className={clsx(className, styles.regularLink, linkColorMap[color])} {...restProps}>
+    <Link className={clsx(styles.regularLink, linkColorMap[color], className)} {...restProps}>
       {children}
     </Link>
   );
