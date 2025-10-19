@@ -37,16 +37,19 @@
 .regularLink {
   text-decoration: none;
   padding: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.regularLink:hover {
+  text-decoration: underline;
 }
 
 .linkBrown600 {
   color: var(--brown-600, #362009);
-  transition: color 0.2s ease;
 }
 
 .linkBrown600:hover {
-  text-decoration: underline;
-  color: hsl(31 71% 20%);
+  color: hsl(31, 71%, 20%);
 }
 
 .linkBrown600:active {
@@ -58,8 +61,7 @@
 }
 
 .linkBlue600:hover {
-  text-decoration: underline;
-  color: hsl(211 71% 20%);
+  color: hsl(211, 71%, 20%);
 }
 
 .linkBlue600:active {
