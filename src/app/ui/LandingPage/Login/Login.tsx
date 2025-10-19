@@ -17,7 +17,7 @@ export default function Login() {
           autoComplete="current-password"
         />
         <ButtonWrapper type="submit" className={styles.loginButton}>Login</ButtonWrapper>
-        <RegularLinkWrapper href="/forgot-password">Forgot Password?</RegularLinkWrapper>
+        <RegularLinkWrapper href="/forgot-password" className={styles.forgotPasswordLink}>Forgot Password?</RegularLinkWrapper>
       </form>
       <div className={styles.divider}></div>
       <LinkWrapper href="/register" className={styles.createAccountLink}>Create an account</LinkWrapper>

@@ -26,10 +26,16 @@
   margin-top: 1rem;
 }
 
+.forgotPasswordLink {
+  text-align: center;
+  max-width: fit-content;
+  align-self: center;
+}
+
 .divider {
   height: 1px;
   background-color: var(--brown-600, #362009);
-  margin: 2rem 0;
+  margin: 0.5rem 0;
 }
 
 .createAccountLink {
