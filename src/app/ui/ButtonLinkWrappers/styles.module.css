@@ -54,7 +54,7 @@
   color: var(--brown-600, #362009);
 }
 .regularLinkBrown600:hover {
-  color: hsl(31, 71%, 20%);
+  color: var(--brown-400, #57340f);
 }
 .regularLinkBrown600:active {
   color: var(--brown-600, #362009);
@@ -64,7 +64,7 @@
   color: var(--blue-600, #091f36);
 }
 .regularLinkBlue600:hover {
-  color: hsl(211, 71%, 20%);
+  color: var(--blue-400, #0f3257);
 }
 .regularLinkBlue600:active {
   color: var(--blue-600, #091f36);
