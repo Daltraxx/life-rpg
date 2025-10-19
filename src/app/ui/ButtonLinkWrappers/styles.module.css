@@ -12,11 +12,9 @@
 .buttonBrown600 {
   background-color: var(--brown-600, #362009);
 }
-
 .buttonBrown600:hover {
   background-color: var(--brown-400, #57340f);
 }
-
 .buttonBrown600:active {
   background-color: var(--brown-600, #362009);
 }
@@ -24,11 +22,9 @@
 .buttonBlue600 {
   background-color: var(--blue-600, #091f36);
 }
-
 .buttonBlue600:hover {
   background-color: var(--blue-400, #0f3257);
 }
-
 .buttonBlue600:active {
   background-color: var(--blue-600, #091f36);
 }
@@ -47,11 +43,9 @@
 .linkBrown600 {
   color: var(--brown-600, #362009);
 }
-
 .linkBrown600:hover {
   color: hsl(31, 71%, 20%);
 }
-
 .linkBrown600:active {
   color: var(--brown-600, #362009);
 }
@@ -59,11 +53,9 @@
 .linkBlue600 {
   color: var(--blue-600, #091f36);
 }
-
 .linkBlue600:hover {
   color: hsl(211, 71%, 20%);
 }
-
 .linkBlue600:active {
   color: var(--blue-600, #091f36);
 }
