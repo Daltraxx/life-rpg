@@ -3,15 +3,18 @@ import type { LinkProps } from "next/link";
 import Link from "next/link";
 import styles from "./styles.module.css";
 import clsx from "clsx";
+import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
 type Color = "brown-600" | "blue-600";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  fontSize?: FontSize;
   color?: Color;
   children: ReactNode;
 }
 
 interface LinkWrapperProps extends LinkProps {
+  fontSize?: FontSize;
   color?: Color;
   children: ReactNode;
   className?: string;
@@ -26,13 +29,14 @@ const DEFAULT_COLOR: Color = "brown-600";
 
 export function ButtonWrapper({
   color = DEFAULT_COLOR,
+  fontSize = "20",
   children,
   className,
   ...restProps
 }: ButtonProps) {
   return (
     <button
-      className={clsx(styles.button, buttonColorMap[color], className)}
+      className={clsx(styles.button, buttonColorMap[color], fontSizeToTWMap[fontSize], className)}
       {...restProps}
     >
       {children}
@@ -42,13 +46,14 @@ export function ButtonWrapper({
 
 export function LinkWrapper({
   color = DEFAULT_COLOR,
+  fontSize = "20",
   children,
   className,
   ...restProps
 }: LinkWrapperProps) {
   return (
     <Link
-      className={clsx(styles.button, buttonColorMap[color], className)}
+      className={clsx(styles.button, buttonColorMap[color], fontSizeToTWMap[fontSize], className)}
       {...restProps}
     >
       {children}
@@ -63,12 +68,13 @@ const linkColorMap = {
 
 export function RegularLinkWrapper({
   color = DEFAULT_COLOR,
+  fontSize = "16",
   children,
   className,
   ...restProps
 }: LinkWrapperProps) {
   return (
-    <Link className={clsx(styles.regularLink, linkColorMap[color], className)} {...restProps}>
+    <Link className={clsx(styles.regularLink, linkColorMap[color], fontSizeToTWMap[fontSize], className)} {...restProps}>
       {children}
     </Link>
   );
