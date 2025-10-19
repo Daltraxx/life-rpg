@@ -1,10 +1,12 @@
-import Text from "@/app/ui/Text";
+import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Bounded from "../../Bounded";
 
 export default function Footer() {
   return (
     <Bounded as="footer">
-      <Text size="30">by daltraxx INC.</Text>
+      <RegularLinkWrapper href="https://www.daltonpettus.com/" target="_blank" fontSize="36" >
+        by daltraxx INC.
+      </RegularLinkWrapper>
     </Bounded>
   );
 }
