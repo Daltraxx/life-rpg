@@ -14,7 +14,7 @@
 }
 
 .buttonBrown600:hover {
-  background-color: hsl(31 71% 20%);
+  background-color: var(--brown-400, #57340f);
 }
 
 .buttonBrown600:active {
@@ -26,7 +26,7 @@
 }
 
 .buttonBlue600:hover {
-  background-color: hsl(211 71% 20%);
+  background-color: var(--blue-400, #0f3257);
 }
 
 .buttonBlue600:active {
