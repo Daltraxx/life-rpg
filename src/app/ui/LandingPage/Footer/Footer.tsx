@@ -4,7 +4,7 @@ import Bounded from "../../Bounded";
 export default function Footer() {
   return (
     <Bounded as="footer">
-      <Text>by daltraxx INC.</Text>
+      <Text size="30">by daltraxx INC.</Text>
     </Bounded>
   );
 }
