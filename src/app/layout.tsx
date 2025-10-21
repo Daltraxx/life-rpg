@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { jersey } from "./ui/fonts";
 import "./globals.css";
 import clsx from "clsx";
-import Footer from "./ui/LandingPage/Footer/Footer";
 import styles from "./styles.module.css";
 
 export const metadata: Metadata = {
