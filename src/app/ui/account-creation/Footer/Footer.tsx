@@ -27,7 +27,7 @@ export default function Footer() {
         target="_blank"
         rel="noopener noreferrer"
         fontSize="30"
-        color="manual"
+        color="custom"
         className={styles.daltraxxLink}
       >
         by Daltraxx INC.
