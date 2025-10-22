@@ -1,0 +1,18 @@
+.boundedContainer {
+  background-color: var(--blue-600);
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.branding {
+  color: var(--orange-300)
+}
+
+@media only screen and (min-width: 768px) {
+  .headerContainer {
+    justify-content: start;
+  }
+}
