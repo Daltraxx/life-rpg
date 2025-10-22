@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={clsx(jersey.variable, "antialiased")}>
-      <body className={styles.landingPageContainer}>
+      <body>
         {children}
       </body>
     </html>
