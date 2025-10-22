@@ -2,7 +2,7 @@
   background-color: var(--blue-600);
 }
 
-.headerContainer {
+.contentContainer {
   display: flex;
   justify-content: center;
 }
@@ -12,7 +12,7 @@
 }
 
 @media only screen and (min-width: 768px) {
-  .headerContainer {
+  .contentContainer {
     justify-content: start;
   }
 }
