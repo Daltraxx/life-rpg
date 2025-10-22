@@ -1,4 +1,4 @@
-
+import Header from "@/app/ui/account-creation/Header/Header";
 export default function Layout({
   children,
 }: {
@@ -6,7 +6,7 @@ export default function Layout({
 }) {
   return (
     <div>
-      <h1>Create Account</h1>
+      <Header />
       {children}
     </div>
   );
