@@ -15,3 +15,7 @@
 .copyright {
   margin-top: -0.75rem;
 }
+
+.daltraxxLink {
+  color: var(--white, #fff);
+}
