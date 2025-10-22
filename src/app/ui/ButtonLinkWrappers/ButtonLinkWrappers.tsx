@@ -5,6 +5,10 @@ import styles from "./styles.module.css";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
+/**
+ * Color variants for buttons and links.
+ * Use "custom" with className prop to provide your own color styling.
+ */
 type Color = "brown-600" | "blue-600" | "orange-300" | "custom";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
