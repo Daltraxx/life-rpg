@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { jersey } from "./ui/fonts";
 import "./globals.css";
 import clsx from "clsx";
-import styles from "./styles.module.css";
 
 export const metadata: Metadata = {
   title: {
