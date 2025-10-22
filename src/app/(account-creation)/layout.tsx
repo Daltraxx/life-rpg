@@ -1,15 +1,11 @@
 import Header from "@/app/ui/account-creation/Header/Header";
 import Footer from "@/app/ui/account-creation/Footer/Footer";
 
-export default function Layout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Header />
-      {children}
+      <main>{children}</main>
       <Footer />
     </div>
   );
