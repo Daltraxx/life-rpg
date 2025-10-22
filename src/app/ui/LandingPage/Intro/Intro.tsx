@@ -7,7 +7,7 @@ export default function Intro() {
   return (
     <Bounded innerClassName={styles.introContainer}>
       <Heading as="h1" size="96" className={styles.mainHeading}>
-        Life RPG
+        LifeRPG
       </Heading>
       <Text size="24" className={styles.introParagraph}>
         Grind your daily tasks, habits, and goals like one would their most
