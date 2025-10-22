@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
-type Color = "brown-600" | "blue-600" | "orange-300";
+type Color = "brown-600" | "blue-600" | "orange-300" | "manual";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fontSize?: FontSize;
@@ -26,6 +26,7 @@ const buttonColorMap = {
   "brown-600": styles.buttonBrown600,
   "blue-600": styles.buttonBlue600,
   "orange-300": styles.buttonOrange300,
+  "manual": "",
 } satisfies Record<Color, string>;
 
 const DEFAULT_COLOR: Color = "brown-600";
@@ -69,6 +70,7 @@ const linkColorMap = {
   "brown-600": styles.regularLinkBrown600,
   "blue-600": styles.regularLinkBlue600,
   "orange-300": styles.regularLinkOrange300,
+  "manual": "",
 } satisfies Record<Color, string>;
 
 export function RegularLinkWrapper({
