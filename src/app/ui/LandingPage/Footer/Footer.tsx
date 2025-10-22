@@ -12,7 +12,7 @@ export default function Footer() {
         fontSize="36"
         color="orange-300"
       >
-        by daltraxx INC.
+        © {new Date().getFullYear()} daltraxx INC.
       </RegularLinkWrapper>
     </Bounded>
   );
