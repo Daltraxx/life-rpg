@@ -39,6 +39,7 @@ export function ButtonWrapper({
 }: ButtonProps) {
   return (
     <button
+      type="button"
       className={clsx(styles.button, buttonColorMap[color], fontSizeToTWMap[fontSize], className)}
       {...restProps}
     >
