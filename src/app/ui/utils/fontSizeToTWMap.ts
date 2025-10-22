@@ -2,7 +2,7 @@
  * Maps font sizes (in pixels) to corresponding Tailwind CSS utility classes.
  *
  * Most keys represent font sizes in pixels (e.g., "16" = 16px).
- * The special "manual" key maps to an empty string for custom font sizing.
+ * The special "custom" key maps to an empty string for custom font sizing.
  * This object is readonly and provides a consistent mapping between
  * numeric font sizes and Tailwind's text size utilities.
  *
