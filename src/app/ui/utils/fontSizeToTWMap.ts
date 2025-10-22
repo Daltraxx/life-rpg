@@ -13,7 +13,7 @@
  */
 
 const fontSizeToTWMap = {
-  "manual": "",
+  "custom": "",
   "16": "text-base",
   "20": "text-xl",
   "24": "text-2xl",
