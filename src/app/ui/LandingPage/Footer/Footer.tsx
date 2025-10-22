@@ -2,6 +2,8 @@ import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers"
 import Bounded from "../../Bounded";
 import styles from "./styles.module.css";
 
+const CURRENT_YEAR = new Date().getFullYear();
+
 export default function Footer() {
   return (
     <Bounded as="footer" innerClassName={styles.footer} verticalPadding={false}>
@@ -12,7 +14,7 @@ export default function Footer() {
         fontSize="36"
         color="orange-300"
       >
-        © {new Date().getFullYear()} daltraxx INC.
+        © {CURRENT_YEAR} daltraxx INC.
       </RegularLinkWrapper>
     </Bounded>
   );
