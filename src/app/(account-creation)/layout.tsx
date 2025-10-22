@@ -1,4 +1,6 @@
 import Header from "@/app/ui/account-creation/Header/Header";
+import Footer from "@/app/ui/account-creation/Footer/Footer";
+
 export default function Layout({
   children,
 }: {
@@ -8,6 +10,7 @@ export default function Layout({
     <div>
       <Header />
       {children}
+      <Footer />
     </div>
   );
 }
