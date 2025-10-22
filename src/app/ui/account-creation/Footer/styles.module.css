@@ -28,7 +28,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translateY(-50%) translateX(-50%) translateX(12.5rem);
+    transform: translateY(-50%) translateX(calc(-50% + 12.5rem));
     right: 0;
   }
 }
