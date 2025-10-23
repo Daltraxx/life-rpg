@@ -2,35 +2,47 @@ import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import Text from "../../Text";
+import styles from "./styles.module.css";
 
 export default function CreateAccountForm() {
   return (
-    <Bounded>
-      <div>
-        <Heading as="h1" size="48">
+    <Bounded innerClassName={styles.contentContainer}>
+      <div className={styles.headerContainer}>
+        <Heading as="h1" size="48-responsive">
           Welcome [new user]!
         </Heading>
-        <Text as="p" size="36">
+        <Text as="p" size="36-responsive" className={styles.subheading}>
           Please complete the following to set up your character profile...
         </Text>
       </div>
 
-      <form>
-        <label htmlFor="email">Email:</label>
-        <input id="email" type="email" name="email" required />
+      <form className={styles.formContainer} action="">
+        <div className={styles.inputContainer}>
+          <label htmlFor="email">Email:</label>
+          <input id="email" type="email" name="email" required />
+        </div>
 
-        <label htmlFor="password">Password:</label>
-        <input id="password" type="password" name="password" required />
+        <div className={styles.inputContainer}>
+          <label htmlFor="displayName">Display Name:</label>
+          <input id="displayName" type="text" name="displayName" required />
+        </div>
 
-        <label htmlFor="confirmPassword">Confirm Password:</label>
-        <input
-          id="confirmPassword"
-          type="password"
-          name="confirmPassword"
-          required
-        />
+        <div className={styles.inputContainer}>
+          <label htmlFor="password">Password:</label>
+          <input id="password" type="password" name="password" required />
+        </div>
 
-        <ButtonWrapper type="submit">Create Account</ButtonWrapper>
+        <div className={styles.inputContainer}>
+          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            name="confirmPassword"
+            required
+          />
+        </div>
+
+        <ButtonWrapper type="submit" color="blue-600">Create Account</ButtonWrapper>
       </form>
     </Bounded>
   );
