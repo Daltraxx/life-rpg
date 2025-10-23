@@ -42,7 +42,13 @@ export default function CreateAccountForm() {
           />
         </div>
 
-        <ButtonWrapper type="submit" color="blue-600">Create Account</ButtonWrapper>
+        <ButtonWrapper
+          type="submit"
+          color="blue-600"
+          className={styles.submitButton}
+        >
+          Create Account!
+        </ButtonWrapper>
       </form>
     </Bounded>
   );

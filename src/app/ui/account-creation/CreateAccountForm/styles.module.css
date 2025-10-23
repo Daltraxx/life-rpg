@@ -57,4 +57,9 @@
     text-align: right;
     left: -12.75rem;
   }
+
+  .submitButton {
+    align-self: center;
+    width: 12rem;
+  }
 }
