@@ -35,8 +35,15 @@
 
 .inputContainer input {
   font-size: 1rem;
+  background-color: var(--gray-200);
   border: 3px solid var(--brown-600);
   padding-left: 0.5rem;
+}
+
+.inputContainer input:focus {
+  outline: none;
+  border-color: var(--orange-300);
+  box-shadow: 0 0 0 3px var(--orange-200);
 }
 
 @media only screen and (min-width: 768px) {
