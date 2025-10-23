@@ -1,3 +1,4 @@
+import CreateAccountForm from "@/app/ui/account-creation/CreateAccountForm/CreateAccountForm";
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Create Account",
@@ -6,8 +7,7 @@ export const metadata: Metadata = {
 export default function CreateAccountPage() {
   return (
     <main>
-      <h1>Create Account</h1>
-      {/* Add your create account form or content here */}
+      <CreateAccountForm />
     </main>
   );
 }
