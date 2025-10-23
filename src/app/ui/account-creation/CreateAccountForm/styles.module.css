@@ -11,20 +11,18 @@
   flex-direction: column;
   gap: 0.5rem;
   text-align: center;
+  color: var(--blue-600);
 }
 
 .formContainer {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 80%;
+  max-width: 20rem;
 }
 
 /* Add fallback colors */
-.formContainer input {
-  font-size: 1rem;
-  border: 3px solid var(--brown-600);
-}
-
 .inputContainer {
   display: flex;
   flex-direction: column;
@@ -33,6 +31,12 @@
 .inputContainer label {
   font-size: 1.25rem;
   color: var(--brown-600);
+}
+
+.inputContainer input {
+  font-size: 1rem;
+  border: 3px solid var(--brown-600);
+  padding-left: 0.5rem;
 }
 
 @media only screen and (min-width: 768px) {
