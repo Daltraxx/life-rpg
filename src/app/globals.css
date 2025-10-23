@@ -21,6 +21,8 @@
   --orange-200: hsl(31, 61%, 77%); /* #e8c6a1 */
   --orange-300: hsl(31, 61%, 70%); /* #E1B382 */
 
+  --gray-200: #d9d9d9;
+
   --white: #ffffff;
 }
 
