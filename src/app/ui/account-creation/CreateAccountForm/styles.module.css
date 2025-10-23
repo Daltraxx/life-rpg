@@ -34,7 +34,7 @@
 }
 
 .inputContainer input {
-  font-size: 1rem;
+  font-size: 1.125rem;
   background-color: var(--gray-200);
   border: 3px solid var(--brown-600);
   padding-left: 0.5rem;
@@ -53,6 +53,8 @@
   .inputContainer label {
     font-size: 1.5rem;
     position: absolute;
-    left: 50%;
+    width: 10rem;
+    text-align: right;
+    left: -10.75rem;
   }
 }
