@@ -5,9 +5,9 @@ import Text from "../../Text";
 import clsx from "clsx";
 import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 
-const CURRENT_YEAR = new Date().getFullYear();
-
 export default function Footer() {
+  const CURRENT_YEAR = new Date().getFullYear();
+
   return (
     <Bounded
       as="footer"
