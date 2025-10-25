@@ -31,7 +31,7 @@ export default function CreateAccountForm() {
       <form className={styles.formContainer} action="">
         <div className={styles.inputContainer}>
           <label htmlFor="email">Email:</label>
-          <input id="email" type="email" name="email" required />
+          <input id="email" type="email" name="email" autoComplete="email" required />
         </div>
 
         <div className={styles.inputContainer}>
