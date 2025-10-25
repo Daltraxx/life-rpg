@@ -2,9 +2,9 @@ import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers"
 import Bounded from "../../Bounded";
 import styles from "./styles.module.css";
 
-const CURRENT_YEAR = new Date().getFullYear();
-
 export default function Footer() {
+  const CURRENT_YEAR = new Date().getFullYear();
+  
   return (
     <Bounded as="footer" innerClassName={styles.footer} verticalPadding={false}>
       <RegularLinkWrapper
