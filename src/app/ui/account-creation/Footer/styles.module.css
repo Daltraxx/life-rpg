@@ -16,6 +16,7 @@
   color: var(--orange-300);
 }
 
+/* Negative margin due to above element's line height */
 .copyright {
   margin-top: -0.75rem;
 }
