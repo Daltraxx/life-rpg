@@ -6,8 +6,6 @@ export const metadata: Metadata = {
 
 export default function CreateAccountPage() {
   return (
-    <>
       <CreateAccountForm />
-    </>
   );
 }
