@@ -1,3 +1,4 @@
+import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { jersey } from "./ui/fonts";
 import "./globals.css";
@@ -16,13 +17,11 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en" className={clsx(jersey.variable, "antialiased")}>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
