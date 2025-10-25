@@ -16,6 +16,10 @@
   --gray-200: #d9d9d9;
 
   --white: #ffffff;
+
+  /* For use in calculating viewport height in create-account page */
+  --create-account-header-height: 6.5rem;
+  --create-account-footer-height: 7.5rem;
 }
 
 @theme inline {
