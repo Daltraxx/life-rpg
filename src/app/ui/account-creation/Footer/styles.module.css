@@ -2,6 +2,7 @@
 .boundedContainer {
   background-color: var(--blue-600);
   height: var(--create-account-footer-height);
+  overflow: hidden;
 }
 
 .contentContainer {
