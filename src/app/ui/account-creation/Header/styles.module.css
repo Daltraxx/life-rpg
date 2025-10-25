@@ -1,5 +1,8 @@
+/* Adjust height for boundedContainer/Header in globals.css */
 .boundedContainer {
   background-color: var(--blue-600);
+  height: var(--create-account-header-height);
+  overflow: hidden;
 }
 
 .contentContainer {
