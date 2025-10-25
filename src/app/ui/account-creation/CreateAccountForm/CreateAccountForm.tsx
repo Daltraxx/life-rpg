@@ -5,6 +5,18 @@ import Text from "../../Text";
 import styles from "./styles.module.css";
 
 export default function CreateAccountForm() {
+  // TODO: Implement form state and validation
+  // const [formData, setFormData] = useState({
+  //   email: "",
+  //   displayName: "",
+  //   password: "",
+  //   confirmPassword: "",
+  // });
+  // const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  // };
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
