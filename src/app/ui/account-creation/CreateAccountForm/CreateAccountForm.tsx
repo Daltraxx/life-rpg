@@ -31,7 +31,13 @@ export default function CreateAccountForm() {
       <form className={styles.formContainer} action="">
         <div className={styles.inputContainer}>
           <label htmlFor="email">Email:</label>
-          <input id="email" type="email" name="email" autoComplete="email" required />
+          <input
+            id="email"
+            type="email"
+            name="email"
+            autoComplete="email"
+            required
+          />
         </div>
 
         <div className={styles.inputContainer}>
@@ -41,7 +47,13 @@ export default function CreateAccountForm() {
 
         <div className={styles.inputContainer}>
           <label htmlFor="password">Password:</label>
-          <input id="password" type="password" name="password" required />
+          <input
+            id="password"
+            type="password"
+            name="password"
+            autoComplete="new-password"
+            required
+          />
         </div>
 
         <div className={styles.inputContainer}>
@@ -50,6 +62,7 @@ export default function CreateAccountForm() {
             id="confirmPassword"
             type="password"
             name="confirmPassword"
+            autoComplete="new-password"
             required
           />
         </div>
