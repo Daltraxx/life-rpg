@@ -11,7 +11,7 @@
   flex-direction: column;
   gap: 0.5rem;
   text-align: center;
-  color: var(--blue-600);
+  color: var(--blue-600, #091f36);
 }
 
 .formContainer {
@@ -30,19 +30,19 @@
 
 .inputContainer label {
   font-size: 1.25rem;
-  color: var(--brown-600);
+  color: var(--brown-600, #362009);
 }
 
 .inputContainer input {
   font-size: 1.125rem;
-  background-color: var(--gray-200);
-  border: 3px solid var(--brown-600);
+  background-color: var(--gray-200, #d9d9d9);
+  border: 3px solid var(--brown-600, #362009);
   padding-left: 0.5rem;
 }
 
 .inputContainer input:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--orange-300);
+  box-shadow: 0 0 0 2px var(--orange-300, #e1b382);
 }
 
 @media only screen and (min-width: 768px) {
