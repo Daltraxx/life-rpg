@@ -42,7 +42,7 @@ export default function CreateAccountForm() {
 
         <div className={styles.inputContainer}>
           <label htmlFor="displayName">Display Name:</label>
-          <input id="displayName" type="text" name="displayName" autoComplete="username" required />
+          <input id="displayName" type="text" name="displayName" required />
         </div>
 
         <div className={styles.inputContainer}>
