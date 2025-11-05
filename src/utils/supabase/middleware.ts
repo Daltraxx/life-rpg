@@ -1,7 +1,9 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-export async function updateSession(request: NextRequest): Promise<NextResponse> {
+export async function updateSession(
+  request: NextRequest
+): Promise<NextResponse> {
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -37,7 +39,13 @@ export async function updateSession(request: NextRequest): Promise<NextResponse>
 
   const {
     data: { user },
+    error,
   } = await supabase.auth.getUser();
+
+  if (error) {
+    console.error("Auth errors in middleware", error);
+    // Treat auth errors as unauthenticated
+  }
 
   if (
     !user &&
