@@ -49,7 +49,7 @@ export async function updateSession(
 
   if (
     !user &&
-    !request.nextUrl.pathname.endsWith("/") &&
+    request.nextUrl.pathname !== "/" &&
     !request.nextUrl.pathname.startsWith("/create-account") &&
     !request.nextUrl.pathname.startsWith("/auth") &&
     !request.nextUrl.pathname.startsWith("/error")
