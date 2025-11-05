@@ -32,7 +32,7 @@ export async function login(prevState: LoginState, formData: FormData) {
 
   if (!validatedFields.success) {
     return {
-      errors: z.treeifyError(validatedFields.error), // test this
+      errors: z.flattenError(validatedFields.error), // test this
       message: "Fields not valid. Failed to log in.",
     } as LoginState;
   }
