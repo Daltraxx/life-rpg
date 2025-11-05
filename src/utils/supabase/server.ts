@@ -5,7 +5,7 @@ export async function createSupabaseServerClient() {
   const cookieStore = await cookies();
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!, // Consider switching to anon key if security is a concern
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
       cookies: {
         getAll() {
