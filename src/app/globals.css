@@ -19,7 +19,8 @@
 
   /* For use in calculating viewport height in create-account page */
   --create-account-header-height: 6.5rem;
-  --create-account-footer-height: 7.5rem;
+  --create-account-footer-height-mobile: 10.75rem;
+  --create-account-footer-height-large: 7.5rem;
 }
 
 @theme inline {
