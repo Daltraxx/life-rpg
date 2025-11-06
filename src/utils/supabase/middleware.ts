@@ -52,14 +52,15 @@ export async function updateSession(
     // Treat auth errors as unauthenticated
   }
 
-  if (
-    !user &&
-    request.nextUrl.pathname !== "/" &&
-    !request.nextUrl.pathname.startsWith("/create-account") &&
-    !request.nextUrl.pathname.startsWith("/auth") &&
-    !request.nextUrl.pathname.startsWith("/error")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  const publicPaths = ["/", "/create-account", "/auth", "/error"];
+  const isPublicPath = publicPaths.some(
+    (path) =>
+      request.nextUrl.pathname === path ||
+      request.nextUrl.pathname.startsWith(`${path}/`)
+  );
+
+  if (!user && !isPublicPath) {
+    // no user and is not public path, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);
