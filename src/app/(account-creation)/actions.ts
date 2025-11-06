@@ -53,7 +53,9 @@ export async function createAccount(prevState: SignupState, formData: FormData) 
       message: "Account creation failed. Please try again.",
     } as SignupState;
   }
-  
+
+  // Todo: if account creation succeeds, insert additional user data into the "users" table
+
   // Revalidate the path to update any server components depending on auth state
   // Consider more targeted path revalidation.
   // Revalidating the root path "/" may be broader than necessary.
