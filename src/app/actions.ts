@@ -46,6 +46,10 @@ export async function login(prevState: LoginState, formData: FormData) {
   }
 
   // Revalidate the path to update any server components depending on auth state
+  // Consider more targeted path revalidation.
+  // Revalidating the root path "/" may be broader than necessary. 
+  // If only specific pages depend on auth state,
+  // consider revalidating those paths specifically(e.g., "/profile", "/dashboard").
   revalidatePath("/");
   redirect("/profile"); // Redirect to profile or desired page after login (need to create page)
 }
