@@ -3,7 +3,7 @@ import Bounded from "../../Bounded";
 import styles from "./styles.module.css";
 
 export default function Footer() {
-  const CURRENT_YEAR = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
   
   return (
     <Bounded as="footer" innerClassName={styles.footer} verticalPadding={false}>
@@ -14,7 +14,7 @@ export default function Footer() {
         fontSize="36"
         color="orange-300"
       >
-        © {CURRENT_YEAR} daltraxx INC.
+        © {currentYear} daltraxx INC.
       </RegularLinkWrapper>
     </Bounded>
   );
