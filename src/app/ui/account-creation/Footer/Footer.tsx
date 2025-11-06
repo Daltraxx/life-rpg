@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 
 export default function Footer() {
-  const CURRENT_YEAR = new Date().getFullYear();
+  const currentYear = new Date().getFullYear();
 
   return (
     <Bounded
@@ -22,7 +22,7 @@ export default function Footer() {
         size="20"
         className={clsx(styles.branding, styles.copyright)}
       >
-        © {CURRENT_YEAR}
+        © {currentYear}
       </Text>
       <RegularLinkWrapper
         href="https://www.daltonpettus.com/"
