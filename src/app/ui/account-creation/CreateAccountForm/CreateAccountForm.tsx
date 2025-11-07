@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useState, useEffect, useActionState, JSX } from "react";
+import { useState, useEffect, useActionState, ReactNode } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 
@@ -27,7 +27,7 @@ type Field = keyof ValidationErrorMessages;
 
 /**
  * CreateAccountForm - A form component for creating new user accounts.
- * 
+ *
  * This component provides a multi-field registration form with real-time validation,
  * field-level error messaging, and server-side action handling. It includes:
  * - Email, username, password, and password confirmation fields
@@ -37,18 +37,18 @@ type Field = keyof ValidationErrorMessages;
  * - Accessible error messages with ARIA attributes
  * - Disabled submit state during pending operations
  * - Dynamic welcome message using entered username or placeholder
- * 
+ *
  * @component
- * @returns {JSX.Element} A bounded form container with input fields, validation errors,
+ * @returns {ReactNode} A bounded form container with input fields, validation errors,
  * and a submit button for account creation.
- * 
+ *
  * @example
  * ```tsx
  * <CreateAccountForm />
  * ```
  */
 
-export default function CreateAccountForm() {
+export default function CreateAccountForm(): ReactNode {
   const [formData, setFormData] = useState({
     email: "",
     username: "",
