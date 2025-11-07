@@ -208,7 +208,7 @@ export default function CreateAccountForm() {
             </div>
           )}
         </div>
-        {/* test below */}
+        {/* remember to test below error messaging*/}
         <div className={styles.serverErrorContainer} role="alert">
           {errorState.message && <p>{errorState.message}</p>}
         </div>
