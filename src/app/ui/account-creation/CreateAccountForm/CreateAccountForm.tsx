@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useActionState } from "react";
+import z from "zod";
+import { useState, useEffect, useActionState } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
-import { SignupState } from "@/utils/validations/signup";
+import { SignupSchema, SignupState } from "@/utils/validations/signup";
 
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
@@ -15,6 +16,13 @@ const INITIAL_SIGNUP_STATE: SignupState = {
   message: null,
 };
 
+type ValidationErrorMessages = {
+  email?: string[];
+  username?: string[];
+  password?: string[];
+  confirmPassword?: string[];
+};
+
 export default function CreateAccountForm() {
   const [formData, setFormData] = useState({
     email: "",
@@ -23,11 +31,20 @@ export default function CreateAccountForm() {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
+
+  useEffect(() => {
+    const validatedFields = SignupSchema.safeParse(formData);
+    if (!validatedFields.success) {
+      setErrors(z.flattenError(validatedFields.error).fieldErrors);
+    } else {
+      setErrors({});
+    }
+  }, [formData]);
 
   const [errorMessage, formAction, isPending] = useActionState(
     createAccount,
