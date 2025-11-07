@@ -1,8 +1,16 @@
+import { useActionState } from "react";
+import { createAccount, SignupState } from "@/app/(account-creation)/actions";
+
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import Text from "../../Text";
 import styles from "./styles.module.css";
+
+const INITIAL_SIGNUP_STATE : SignupState = {
+  errors: {},
+  message: null,
+};
 
 export default function CreateAccountForm() {
   // TODO: Implement form state and validation
@@ -17,6 +25,9 @@ export default function CreateAccountForm() {
   // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   //   setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   // };
+
+  const [errorMessage, formAction, isPending] = useActionState(createAccount, INITIAL_SIGNUP_STATE);
+
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
@@ -28,7 +39,7 @@ export default function CreateAccountForm() {
         </Text>
       </div>
 
-      <form className={styles.formContainer} action="">
+      <form className={styles.formContainer} action={formAction}>
         <div className={styles.inputContainer}>
           <label htmlFor="email">Email:</label>
           <input
