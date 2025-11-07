@@ -82,6 +82,7 @@ export default function CreateAccountForm() {
           type="submit"
           color="blue-600"
           className={styles.submitButton}
+          disabled={isPending}
         >
           Create Account!
         </ButtonWrapper>
