@@ -31,6 +31,7 @@ export async function createAccount(prevState: SignupState, formData: FormData) 
     password: validatedFields.data.password,
   });
 
+  // Add logic for specific error cases like existing email, weak password, etc.
   if (error) {
     return {
       message: "Account creation failed. Please try again.",
