@@ -74,9 +74,10 @@ export default function CreateAccountForm() {
   };
 
   /**
-   * A React effect that validates the form data whenever it changes.
-   * It uses the `SignupSchema` to perform validation and updates the `errors` state
-   * with any validation errors for fields that have been interacted with.
+   * A React effect that validates the form data with debouncing whenever it changes.
+   * It uses a 500ms debounce delay to prevent excessive validation calls during rapid typing.
+   * The effect validates using `SignupSchema` and updates the `errors` state with validation
+   * errors only for fields that have been interacted with.
    *
    * If the validation is successful, it clears the errors.
    *
@@ -84,21 +85,28 @@ export default function CreateAccountForm() {
    * - `formData`: The current state of the form data.
    *
    * Side Effects:
-   * - Updates the `errors` state based on the validation results.
+   * - Updates the `errors` state based on the validation results after the debounce delay.
+   * - Clears pending validation timeouts on cleanup to prevent memory leaks.
    */
   useEffect(() => {
-    const validatedFields = SignupSchema.safeParse(formData);
-    if (!validatedFields.success) {
-      const errors = z.flattenError(validatedFields.error).fieldErrors;
-      const filteredErrors: ValidationErrorMessages = {};
-      for (const field of fields) {
-        if (interactedFields[field] && errors[field as Field]?.length)
-          filteredErrors[field as Field] = errors[field as Field];
+    const validationHandler = setTimeout(() => {
+      const validatedFields = SignupSchema.safeParse(formData);
+      if (!validatedFields.success) {
+        const errors = z.flattenError(validatedFields.error).fieldErrors;
+        const filteredErrors: ValidationErrorMessages = {};
+        for (const field of fields) {
+          if (interactedFields[field] && errors[field as Field]?.length)
+            filteredErrors[field as Field] = errors[field as Field];
+        }
+        setErrors(filteredErrors);
+      } else {
+        setErrors({});
       }
-      setErrors(filteredErrors);
-    } else {
-      setErrors({});
-    }
+    }, 500); // Adjust the delay as needed (500ms in this example)
+
+    return () => {
+      clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
+    };
   }, [formData]);
 
   const [errorState, formAction, isPending] = useActionState(
