@@ -2,10 +2,19 @@ import { z } from "zod";
 
 // Further validation can be added here as needed
 export const SignupSchema = z.object({
-  email: z.email(),
-  username: z.string().min(3).max(30),
-  password: z.string().min(8).max(100),
-  confirmPassword: z.string().min(8).max(100),
+  email: z.email("Invalid email address"),
+  username: z
+    .string()
+    .min(3, "Username must be at least 3 characters long")
+    .max(30, "Username must be at most 30 characters long"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters long")
+    .max(100, "Password must be at most 100 characters long"),
+  confirmPassword: z
+    .string()
+    .min(8, "Confirm Password must be at least 8 characters long")
+    .max(100, "Confirm Password must be at most 100 characters long"),
 });
 
 export type SignupState = {
