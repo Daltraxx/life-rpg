@@ -25,6 +25,28 @@ type ValidationErrorMessages = {
 
 type Field = keyof ValidationErrorMessages;
 
+/**
+ * CreateAccountForm - A form component for creating new user accounts.
+ * 
+ * This component provides a multi-field registration form with real-time validation,
+ * field-level error messaging, and server-side action handling. It includes:
+ * - Email, username, password, and password confirmation fields
+ * - Client-side validation using Zod schema (SignupSchema)
+ * - Field interaction tracking to show errors only after user interaction
+ * - Server-side validation and error handling via useActionState
+ * - Accessible error messages with ARIA attributes
+ * - Disabled submit state during pending operations
+ * - Dynamic welcome message using entered username or placeholder
+ * 
+ * @component
+ * @returns {JSX.Element} A bounded form container with input fields, validation errors,
+ * and a submit button for account creation.
+ * 
+ * @example
+ * ```tsx
+ * <CreateAccountForm />
+ * ```
+ */
 export default function CreateAccountForm() {
   const [formData, setFormData] = useState({
     email: "",
