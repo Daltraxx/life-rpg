@@ -46,7 +46,7 @@ export default function CreateAccountForm() {
     }
   }, [formData]);
 
-  const [errorMessage, formAction, isPending] = useActionState(
+  const [errorState, formAction, isPending] = useActionState(
     createAccount,
     INITIAL_SIGNUP_STATE
   );
