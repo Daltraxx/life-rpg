@@ -56,9 +56,8 @@ export default function CreateAccountForm() {
       const errors = z.flattenError(validatedFields.error).fieldErrors;
       const filteredErrors: ValidationErrorMessages = {};
       for (const field of fields) {
-        if (interactedFields[field] && errors[field as Field]?.length) {
+        if (interactedFields[field] && errors[field as Field]?.length)
           filteredErrors[field as Field] = errors[field as Field];
-        }
       }
       setErrors(filteredErrors);
     } else {
