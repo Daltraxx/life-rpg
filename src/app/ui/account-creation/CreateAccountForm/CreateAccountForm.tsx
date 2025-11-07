@@ -23,6 +23,8 @@ type ValidationErrorMessages = {
   confirmPassword?: string[];
 };
 
+type Field = keyof ValidationErrorMessages;
+
 export default function CreateAccountForm() {
   const [formData, setFormData] = useState({
     email: "",
@@ -52,14 +54,12 @@ export default function CreateAccountForm() {
     const validatedFields = SignupSchema.safeParse(formData);
     if (!validatedFields.success) {
       const errors = z.flattenError(validatedFields.error).fieldErrors;
-      const filteredErrors: ValidationErrorMessages = Object.keys(
-        errors
-      ).reduce((obj, field) => {
-        if (interactedFields[field])
-          obj[field as keyof ValidationErrorMessages] =
-            errors[field as keyof ValidationErrorMessages];
-        return obj;
-      }, {} as ValidationErrorMessages);
+      const filteredErrors: ValidationErrorMessages = {};
+      for (const field of fields) {
+        if (interactedFields[field] && errors[field as Field]?.length) {
+          filteredErrors[field as Field] = errors[field as Field];
+        }
+      }
       setErrors(filteredErrors);
     } else {
       setErrors({});
