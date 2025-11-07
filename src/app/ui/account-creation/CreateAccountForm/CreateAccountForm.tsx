@@ -47,6 +47,7 @@ type Field = keyof ValidationErrorMessages;
  * <CreateAccountForm />
  * ```
  */
+
 export default function CreateAccountForm() {
   const [formData, setFormData] = useState({
     email: "",
@@ -72,6 +73,19 @@ export default function CreateAccountForm() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  /**
+   * A React effect that validates the form data whenever it changes.
+   * It uses the `SignupSchema` to perform validation and updates the `errors` state
+   * with any validation errors for fields that have been interacted with.
+   *
+   * If the validation is successful, it clears the errors.
+   *
+   * Dependencies:
+   * - `formData`: The current state of the form data.
+   *
+   * Side Effects:
+   * - Updates the `errors` state based on the validation results.
+   */
   useEffect(() => {
     const validatedFields = SignupSchema.safeParse(formData);
     if (!validatedFields.success) {
