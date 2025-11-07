@@ -15,19 +15,6 @@ const INITIAL_SIGNUP_STATE: SignupState = {
 };
 
 export default function CreateAccountForm() {
-  // TODO: Implement form state and validation
-  // const [formData, setFormData] = useState({
-  //   email: "",
-  //   displayName: "",
-  //   password: "",
-  //   confirmPassword: "",
-  // });
-  // const [errors, setErrors] = useState<Record<string, string>>({});
-
-  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  // };
-
   const [formData, setFormData] = useState({
     email: "",
     displayName: "",
