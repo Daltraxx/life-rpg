@@ -72,8 +72,16 @@ export default function CreateAccountForm() {
             autoComplete="email"
             value={formData.email}
             onChange={handleChange}
+            aria-describedby="email-error"
             required
           />
+          {errors.email && (
+            <div id="email-error" className={styles.errorMessage}>
+              {errors.email.map((error) => (
+                <p key={error}>{error}</p>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className={styles.inputContainer}>
@@ -84,8 +92,16 @@ export default function CreateAccountForm() {
             name="username"
             value={formData.username}
             onChange={handleChange}
+            aria-describedby="username-error"
             required
           />
+          {errors.username && (
+            <div id="username-error" className={styles.errorMessage}>
+              {errors.username.map((error) => (
+                <p key={error}>{error}</p>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className={styles.inputContainer}>
@@ -97,8 +113,16 @@ export default function CreateAccountForm() {
             autoComplete="new-password"
             value={formData.password}
             onChange={handleChange}
+            aria-describedby="password-error"
             required
           />
+          {errors.password && (
+            <div id="password-error" className={styles.errorMessage}>
+              {errors.password.map((error) => (
+                <p key={error}>{error}</p>
+              ))}
+            </div>
+          )}
         </div>
 
         <div className={styles.inputContainer}>
@@ -110,8 +134,16 @@ export default function CreateAccountForm() {
             autoComplete="new-password"
             value={formData.confirmPassword}
             onChange={handleChange}
+            aria-describedby="confirmPassword-error"
             required
           />
+          {errors.confirmPassword && (
+            <div id="confirmPassword-error" className={styles.errorMessage}>
+              {errors.confirmPassword.map((error) => (
+                <p key={error}>{error}</p>
+              ))}
+            </div>
+          )}
         </div>
 
         <ButtonWrapper
