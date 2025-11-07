@@ -4,21 +4,8 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
+import { LoginSchema, LoginState } from "@/utils/validations/login";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
-
-// Further validation can be added here as needed
-const LoginSchema = z.object({
-  email: z.email(),
-  password: z.string().min(8).max(100),
-});
-
-export type LoginState = {
-  errors?: {
-    email?: string[];
-    password?: string[];
-  };
-  message?: string | null;
-};
 
 export async function login(prevState: LoginState, formData: FormData) {
   const supabase = await createSupabaseServerClient();
