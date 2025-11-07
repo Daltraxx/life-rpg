@@ -145,6 +145,10 @@ export default function CreateAccountForm() {
             </div>
           )}
         </div>
+        {/* test below */}
+        <div className={styles.serverErrorContainer} role="alert">
+          {errorState.message && <p>{errorState.message}</p>}
+        </div>
 
         <ButtonWrapper
           type="submit"
