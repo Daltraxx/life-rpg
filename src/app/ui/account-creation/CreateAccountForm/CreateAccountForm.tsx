@@ -1,6 +1,6 @@
 "use client";
 
-import { z } from "zod";
+import { object, z } from "zod";
 import { useState, useEffect, useActionState } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
@@ -31,16 +31,36 @@ export default function CreateAccountForm() {
     confirmPassword: "",
   });
 
+  const fields: string[] = Object.keys(formData);
+  const initialInteractedFields = fields.reduce((obj, field) => {
+    obj[field] = false;
+    return obj;
+  }, {} as Record<string, boolean>);
+
+  const [interactedFields, setInteractedFields] = useState(
+    initialInteractedFields
+  );
+
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInteractedFields((prev) => ({ ...prev, [e.target.name]: true }));
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   useEffect(() => {
     const validatedFields = SignupSchema.safeParse(formData);
     if (!validatedFields.success) {
-      setErrors(z.flattenError(validatedFields.error).fieldErrors);
+      const errors = z.flattenError(validatedFields.error).fieldErrors;
+      const filteredErrors: ValidationErrorMessages = Object.keys(
+        errors
+      ).reduce((obj, field) => {
+        if (interactedFields[field])
+          obj[field as keyof ValidationErrorMessages] =
+            errors[field as keyof ValidationErrorMessages];
+        return obj;
+      }, {} as ValidationErrorMessages);
+      setErrors(filteredErrors);
     } else {
       setErrors({});
     }
