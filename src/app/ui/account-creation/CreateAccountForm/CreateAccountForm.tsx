@@ -18,7 +18,7 @@ const INITIAL_SIGNUP_STATE: SignupState = {
 export default function CreateAccountForm() {
   const [formData, setFormData] = useState({
     email: "",
-    displayName: "",
+    username: "",
     password: "",
     confirmPassword: "",
   });
@@ -60,12 +60,12 @@ export default function CreateAccountForm() {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="displayName">Display Name:</label>
+          <label htmlFor="username">Display Name:</label>
           <input
-            id="displayName"
+            id="username"
             type="text"
-            name="displayName"
-            value={formData.displayName}
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             required
           />
