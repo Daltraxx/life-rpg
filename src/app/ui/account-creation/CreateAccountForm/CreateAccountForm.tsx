@@ -55,7 +55,7 @@ export default function CreateAccountForm() {
     <Bounded innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
         <Heading as="h1" size="48-responsive">
-          Welcome [new user]!
+          Welcome {(formData.username && formData.username) || "[new user]"}!
         </Heading>
         <Text as="p" size="36-responsive" className={styles.subheading}>
           Please complete the following to set up your character profile...
