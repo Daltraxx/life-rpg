@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useActionState } from "react";
-import { createAccount, SignupState } from "@/app/(account-creation)/actions";
+import { createAccount } from "@/app/(account-creation)/actions";
+import { SignupState } from "@/utils/validations/signup";
 
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
