@@ -4,8 +4,6 @@ import { NextResponse, type NextRequest } from "next/server";
 export async function updateSession(
   request: NextRequest
 ): Promise<NextResponse> {
-  let supabaseResponse = NextResponse.next({ request });
-
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
@@ -14,6 +12,8 @@ export async function updateSession(
       "Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set."
     );
   }
+
+  let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(supabaseUrl, supabaseKey, {
     cookies: {
