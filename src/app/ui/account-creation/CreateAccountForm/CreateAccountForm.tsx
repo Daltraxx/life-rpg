@@ -8,7 +8,7 @@ import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
-import Text from "../../Text";
+import { Paragraph } from "../../Text";
 import styles from "./styles.module.css";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
 import useElementWidth from "@/utils/hooks/useElementWidth";
@@ -132,15 +132,17 @@ export default function CreateAccountForm(): ReactNode {
     }
   }, [formData.username, headingWidth, windowWidth]);
 
+  const testRef = useRef<HTMLParagraphElement>(null);
+
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
         <Heading as="h1" size="48-responsive" ref={headingElementRef} className={styles.heading}>
           Welcome {usernameForDisplay}!
         </Heading>
-        <Text as="p" size="36-responsive" className={styles.subheading}>
+        <Paragraph size="36-responsive" className={styles.subheading} ref={testRef}>
           Please complete the following to set up your character profile...
-        </Text>
+        </Paragraph>
       </div>
 
       <form
