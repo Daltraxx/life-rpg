@@ -10,7 +10,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export async function createAccount(
   prevState: SignupState,
   formData: FormData
-) {
+): Promise<SignupState | void> {
   const supabase = await createSupabaseServerClient();
 
   const rawFormData = Object.fromEntries(formData);
@@ -37,16 +37,16 @@ export async function createAccount(
       case "email_exists":
         return {
           message: "An account with this email already exists.",
-        } as SignupState;
+        };
       // research ways to make password validaation match supabase rules
       case "weak_password":
         return {
           message: "Password is too weak. Please choose a stronger password.",
-        } as SignupState;
+        };
       default:
         return {
           message: "Account creation failed. Please try again.",
-        } as SignupState;
+        };
     }
   }
 
