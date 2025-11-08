@@ -10,6 +10,7 @@ import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import Text from "../../Text";
 import styles from "./styles.module.css";
+import { error } from "console";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
@@ -125,7 +126,11 @@ export default function CreateAccountForm(): ReactNode {
         </Text>
       </div>
 
-      <form className={styles.formContainer} action={formAction}>
+      <form
+        className={styles.formContainer}
+        action={formAction}
+        aria-describedby={errorState.message ? "server-error" : undefined}
+      >
         <div className={styles.inputContainer}>
           <label htmlFor="email">Email:</label>
           <input
@@ -197,7 +202,9 @@ export default function CreateAccountForm(): ReactNode {
             autoComplete="new-password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            aria-describedby={errors.confirmPassword ? "confirmPassword-error" : undefined}
+            aria-describedby={
+              errors.confirmPassword ? "confirmPassword-error" : undefined
+            }
             required
           />
           {errors.confirmPassword && (
@@ -208,10 +215,17 @@ export default function CreateAccountForm(): ReactNode {
             </div>
           )}
         </div>
+
         {/* remember to test below error messaging*/}
-        <div className={styles.serverErrorContainer} role="alert">
-          {errorState.message && <p>{errorState.message}</p>}
-        </div>
+        {errorState.message && (
+          <div
+            id="server-error"
+            className={styles.serverErrorContainer}
+            role="alert"
+          >
+            <p>{errorState.message}</p>
+          </div>
+        )}
 
         <ButtonWrapper
           type="submit"
