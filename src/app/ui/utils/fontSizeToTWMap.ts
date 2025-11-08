@@ -3,6 +3,7 @@
  *
  * Most keys represent font sizes in pixels (e.g., "16" = 16px).
  * The special "custom" key maps to an empty string for custom font sizing.
+ * Keys with "-responsive" suffix provide mobile-first responsive scaling (e.g., "36-responsive" scales from 30px to 36px at md+ breakpoint).
  * This object is readonly and provides a consistent mapping between
  * numeric font sizes and Tailwind's text size utilities.
  *
