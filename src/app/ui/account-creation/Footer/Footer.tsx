@@ -1,7 +1,7 @@
 import Bounded from "../../Bounded";
 import Heading from "../../Heading";
 import styles from "./styles.module.css";
-import { Span } from "../../Text";
+import { Span } from "../../TextWrappers";
 import clsx from "clsx";
 import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 
@@ -17,10 +17,7 @@ export default function Footer() {
       <Heading as="h4" size="72" className={styles.branding}>
         LifeRPG
       </Heading>
-      <Span
-        size="20"
-        className={clsx(styles.branding, styles.copyright)}
-      >
+      <Span size="20" className={clsx(styles.branding, styles.copyright)}>
         © {currentYear}
       </Span>
       <RegularLinkWrapper

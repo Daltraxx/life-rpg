@@ -8,7 +8,7 @@ import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
-import { Paragraph } from "../../Text";
+import { Paragraph } from "../../TextWrappers";
 import styles from "./styles.module.css";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
 import useElementWidth from "@/utils/hooks/useElementWidth";
@@ -122,7 +122,9 @@ export default function CreateAccountForm(): ReactNode {
   const windowWidth = useWindowWidth();
   const headingElementRef = useRef<HTMLHeadingElement>(null);
   const headingWidth = useElementWidth(headingElementRef, formData.username);
-  const [usernameForDisplay, setUsernameForDisplay] = useState(formData.username || "[new user]");
+  const [usernameForDisplay, setUsernameForDisplay] = useState(
+    formData.username || "[new user]"
+  );
   useEffect(() => {
     // console.log("Heading width:", headingWidth, "Window width:", windowWidth);
     if (formData.username.length > 18 && headingWidth > windowWidth * 0.85) {
@@ -137,10 +139,19 @@ export default function CreateAccountForm(): ReactNode {
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
-        <Heading as="h1" size="48-responsive" ref={headingElementRef} className={styles.heading}>
+        <Heading
+          as="h1"
+          size="48-responsive"
+          ref={headingElementRef}
+          className={styles.heading}
+        >
           Welcome {usernameForDisplay}!
         </Heading>
-        <Paragraph size="36-responsive" className={styles.subheading} ref={testRef}>
+        <Paragraph
+          size="36-responsive"
+          className={styles.subheading}
+          ref={testRef}
+        >
           Please complete the following to set up your character profile...
         </Paragraph>
       </div>

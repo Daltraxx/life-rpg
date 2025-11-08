@@ -1,9 +1,9 @@
 import Bounded from "../../Bounded";
 import Heading from "../../Heading";
-import { Paragraph } from "../../Text";
+import { Paragraph } from "../../TextWrappers";
 import styles from "./styles.module.css";
 
-export default function Intro() { 
+export default function Intro() {
   return (
     <Bounded innerClassName={styles.introContainer}>
       <Heading as="h1" size="96" className={styles.mainHeading}>

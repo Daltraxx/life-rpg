@@ -1,7 +1,6 @@
 import { ComponentProps, ReactNode } from "react";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "./utils/fontSizeToTWMap";
-import { int } from "zod";
 
 interface PProps extends ComponentProps<"p"> {
   size?: FontSize;
