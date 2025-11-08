@@ -21,8 +21,13 @@ import { useState, useLayoutEffect } from "react";
  * const isNarrow = width < 768;
  */
 export default function useWindowWidth() {
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window === "undefined" ? 0 : window.innerWidth
+  );
+
   useLayoutEffect(() => {
+    if (typeof window === "undefined") return;
+
     setWindowWidth(window.innerWidth);
     let frame = 0;
     const handleResize = () => {
