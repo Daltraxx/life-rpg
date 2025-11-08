@@ -11,6 +11,7 @@ export async function createAccount(
   prevState: SignupState,
   formData: FormData
 ) {
+  //TODO: add rate limiting to prevent abuse
   const supabase = await createSupabaseServerClient();
 
   const rawFormData = Object.fromEntries(formData);
@@ -54,5 +55,5 @@ export async function createAccount(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   revalidatePath("/");
-  redirect("/profile"); // Redirect to profile or desired page after login (need to create page)
+  redirect("/profile"); // Redirect to profile or desired page after login (need to create page), take into account email confirmation step
 }
