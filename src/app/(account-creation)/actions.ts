@@ -10,12 +10,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export async function createAccount(prevState: SignupState, formData: FormData) {
   const supabase = await createSupabaseServerClient();
 
-  const rawFormData = {
-    email: formData.get("email"),
-    username: formData.get("username"),
-    password: formData.get("password"),
-    confirmPassword: formData.get("confirmPassword"),
-  };
+  const rawFormData = Object.fromEntries(formData);
 
   const validatedFields = SignupSchema.safeParse(rawFormData);
 
