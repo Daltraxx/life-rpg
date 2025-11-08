@@ -31,7 +31,7 @@ export async function login(prevState: LoginState, formData: FormData) {
     } as LoginState;
   }
 
-  // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root
+  // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
   revalidatePath("/");
   redirect("/profile"); // Redirect to profile or desired page after login (need to create page)
 }
