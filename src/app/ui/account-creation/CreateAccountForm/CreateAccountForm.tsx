@@ -121,7 +121,7 @@ export default function CreateAccountForm(): ReactNode {
   // Dynamic username display logic designed to prevent layout overflow
   const windowWidth = useWindowWidth();
   const headingElementRef = useRef<HTMLHeadingElement>(null);
-  const headingWidth = useElementWidth(headingElementRef, formData.username);
+  const headingWidth = useElementWidth(headingElementRef);
   const [usernameForDisplay, setUsernameForDisplay] = useState(
     formData.username || "[new user]"
   );
