@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useState, useEffect, useActionState, ReactNode, useRef, useLayoutEffect } from "react";
+import { useState, useEffect, useActionState, ReactNode, useRef } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 
