@@ -10,7 +10,11 @@ export default function Header() {
       outerClassName={styles.boundedContainer}
       innerClassName={styles.contentContainer}
     >
-      <Link href="/" className={styles.brandingLink}>
+      <Link
+        href="/"
+        className={styles.brandingLink}
+        aria-label="Go to homepage"
+      >
         <Heading as="h2" size="72" className={styles.branding}>
           LifeRPG
         </Heading>
