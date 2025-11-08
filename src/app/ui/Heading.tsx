@@ -7,6 +7,7 @@ type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 export interface HeadingProps extends ComponentPropsWithoutRef<"h1"> {
   as?: HeadingLevel;
   size?: FontSize;
+  ref?: React.Ref<HTMLHeadingElement>;
   children: ReactNode;
 }
 
