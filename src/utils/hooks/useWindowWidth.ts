@@ -25,6 +25,7 @@ export default function useWindowWidth() {
     typeof window === "undefined" ? 0 : window.innerWidth
   );
 
+  // Research: useLayoutEffect vs useEffect for reading layout properties in SSR Environments
   useLayoutEffect(() => {
     if (typeof window === "undefined") return;
 
