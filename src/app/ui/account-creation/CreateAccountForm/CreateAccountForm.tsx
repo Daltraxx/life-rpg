@@ -124,7 +124,7 @@ export default function CreateAccountForm(): ReactNode {
   const headingWidth = useElementWidth(headingElementRef, formData.username);
   const [usernameForDisplay, setUsernameForDisplay] = useState(formData.username || "[new user]");
   useEffect(() => {
-    console.log("Heading width:", headingWidth, "Window width:", windowWidth);
+    // console.log("Heading width:", headingWidth, "Window width:", windowWidth);
     if (formData.username.length > 18 && headingWidth > windowWidth * 0.85) {
       setUsernameForDisplay(formData.username.slice(0, 18) + "...");
     } else {
