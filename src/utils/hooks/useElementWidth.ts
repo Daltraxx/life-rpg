@@ -35,6 +35,8 @@ export default function useElementWidth(
     };
 
     updateWidth();
+    if (typeof window === "undefined") return;
+    
     window.addEventListener("resize", updateWidth);
     return () => {
       window.removeEventListener("resize", updateWidth);
