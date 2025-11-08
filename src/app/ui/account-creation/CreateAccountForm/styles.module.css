@@ -9,10 +9,14 @@
 .headerContainer {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.5rem;
   text-align: center;
   color: var(--blue-600, #091f36);
-  max-width: 100%;
+}
+
+.heading {
+  width: fit-content; /* Necessary for accurate tracking of dynamic text width */
 }
 
 .formContainer {
