@@ -25,7 +25,7 @@ export async function createAccount(
     } as SignupState;
   }
 
-  const { error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
     email: validatedFields.data.email,
     password: validatedFields.data.password,
   });
