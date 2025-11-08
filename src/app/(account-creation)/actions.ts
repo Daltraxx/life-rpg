@@ -52,11 +52,7 @@ export async function createAccount(
 
   // Todo: if account creation succeeds, insert additional user data into the "users" table
 
-  // Revalidate the path to update any server components depending on auth state
-  // Consider more targeted path revalidation.
-  // Revalidating the root path "/" may be broader than necessary.
-  // If only specific pages depend on auth state,
-  // consider revalidating those paths specifically(e.g., "/profile", "/dashboard").
+  // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   revalidatePath("/");
   redirect("/profile"); // Redirect to profile or desired page after login (need to create page)
 }
