@@ -1,33 +1,46 @@
-import { ComponentPropsWithoutRef, ReactNode } from "react";
+import { ComponentProps, ReactNode } from "react";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "./utils/fontSizeToTWMap";
+import { int } from "zod";
 
-type BaseTextProps = {
+interface PProps extends ComponentProps<"p"> {
   size?: FontSize;
   children: ReactNode;
-};
+}
 
-export type TextProps =
-  | (ComponentPropsWithoutRef<"p"> & BaseTextProps & { as?: "p" })
-  | (ComponentPropsWithoutRef<"span"> & BaseTextProps & { as: "span" });
-
-export default function Text({
-  as: Comp = "p",
+export function Paragraph({
   size = "20",
   children,
   className,
   ...restProps
-}: TextProps) {
+}: PProps) {
   return (
-    <Comp
-      className={clsx(
-        "font-main",
-        fontSizeToTWMap[size],
-        className
-      )}
+    <p
+      className={clsx("font-main", fontSizeToTWMap[size], className)}
       {...restProps}
     >
       {children}
-    </Comp>
+    </p>
+  );
+}
+
+interface SpanProps extends ComponentProps<"span"> {
+  size?: FontSize;
+  children: ReactNode;
+}
+
+export function Span({
+  size = "20",
+  children,
+  className,
+  ...restProps
+}: SpanProps) {
+  return (
+    <span
+      className={clsx("font-main", fontSizeToTWMap[size], className)}
+      {...restProps}
+    >
+      {children}
+    </span>
   );
 }
