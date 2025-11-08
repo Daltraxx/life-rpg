@@ -23,7 +23,7 @@ import { useLayoutEffect, useState } from "react";
  */
 export default function useElementWidth(
   ref: React.RefObject<HTMLElement | null>,
-  ...dependencies: any[]
+  ...dependencies: React.DependencyList
 ): number {
   const [elementWidth, setElementWidth] = useState(0);
 
