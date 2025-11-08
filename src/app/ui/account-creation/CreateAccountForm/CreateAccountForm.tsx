@@ -58,11 +58,13 @@ export default function CreateAccountForm(): ReactNode {
     confirmPassword: "",
   });
 
-  const fields: string[] = Object.keys(formData);
-  const initialInteractedFields = fields.reduce((obj, field) => {
-    obj[field] = false;
-    return obj;
-  }, {} as Record<string, boolean>);
+  const fields: Field[] = ["email", "username", "password", "confirmPassword"];
+  const initialInteractedFields: Record<Field, boolean> = {
+    email: false,
+    username: false,
+    password: false,
+    confirmPassword: false,
+  };
 
   const [interactedFields, setInteractedFields] = useState(
     initialInteractedFields
@@ -109,7 +111,7 @@ export default function CreateAccountForm(): ReactNode {
     return () => {
       clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
     };
-  }, [formData, interactedFields, fields]);
+  }, [formData, interactedFields]);
 
   const [errorState, formAction, isPending] = useActionState(
     createAccount,
