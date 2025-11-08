@@ -10,10 +10,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export async function login(prevState: LoginState, formData: FormData) {
   const supabase = await createSupabaseServerClient();
 
-  const rawFormData = {
-    email: formData.get("email"),
-    password: formData.get("password"),
-  };
+  const rawFormData = Object.fromEntries(formData);
 
   const validatedFields = LoginSchema.safeParse(rawFormData);
 
