@@ -10,7 +10,6 @@ import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import Text from "../../Text";
 import styles from "./styles.module.css";
-import { error } from "console";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
