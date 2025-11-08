@@ -1,6 +1,7 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { createBrowserClient } from "@supabase/ssr";
 
-export function createSupabaseBrowserClient() {
+export function createSupabaseBrowserClient(): SupabaseClient {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
