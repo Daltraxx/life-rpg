@@ -3,6 +3,12 @@ import { createBrowserClient } from "@supabase/ssr";
 
 let client: SupabaseClient | undefined;
 
+/**
+ * Creates or returns the cached Supabase browser client.
+ * The client is initialized once and reused for subsequent calls.
+ * @returns {SupabaseClient} The Supabase client instance
+ * @throws {Error} If required environment variables are not set
+ */
 export function createSupabaseBrowserClient(): SupabaseClient {
   if (client) return client;
 
