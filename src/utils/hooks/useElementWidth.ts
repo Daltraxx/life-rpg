@@ -1,7 +1,9 @@
 import { useLayoutEffect, useState } from "react";
 
-
-export default function useElementWidth(ref: React.RefObject<HTMLElement | null>): number {
+export default function useElementWidth(
+  ref: React.RefObject<HTMLElement | null>,
+  ...dependencies: any[]
+): number {
   const [elementWidth, setElementWidth] = useState(0);
 
   useLayoutEffect(() => {
@@ -16,7 +18,7 @@ export default function useElementWidth(ref: React.RefObject<HTMLElement | null>
     return () => {
       window.removeEventListener("resize", updateWidth);
     };
-  }, [ref]);
+  }, [ref, ...dependencies]); // include dependencies if provided
 
   return elementWidth;
 }
