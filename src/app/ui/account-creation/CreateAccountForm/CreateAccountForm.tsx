@@ -107,7 +107,7 @@ export default function CreateAccountForm(): ReactNode {
     return () => {
       clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
     };
-  }, [formData]);
+  }, [formData, interactedFields, fields]);
 
   const [errorState, formAction, isPending] = useActionState(
     createAccount,
