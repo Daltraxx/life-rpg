@@ -22,7 +22,6 @@
   max-width: 20rem;
 }
 
-/* Add fallback colors */
 .inputContainer {
   display: flex;
   flex-direction: column;
