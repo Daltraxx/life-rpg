@@ -7,7 +7,7 @@ export const SignupSchema = z
     username: z
       .string()
       .min(3, "Username must be at least 3 characters long")
-      .max(30, "Username must be at most 30 characters long"),
+      .max(22, "Username must be at most 22 characters long"),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters long")
