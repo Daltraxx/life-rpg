@@ -135,7 +135,7 @@ export default function CreateAccountForm(): ReactNode {
             autoComplete="email"
             value={formData.email}
             onChange={handleChange}
-            aria-describedby="email-error"
+            aria-describedby={errors.email ? "email-error" : undefined}
             required
           />
           {errors.email && (
@@ -155,7 +155,7 @@ export default function CreateAccountForm(): ReactNode {
             name="username"
             value={formData.username}
             onChange={handleChange}
-            aria-describedby="username-error"
+            aria-describedby={errors.username ? "username-error" : undefined}
             required
           />
           {errors.username && (
@@ -176,7 +176,7 @@ export default function CreateAccountForm(): ReactNode {
             autoComplete="new-password"
             value={formData.password}
             onChange={handleChange}
-            aria-describedby="password-error"
+            aria-describedby={errors.password ? "password-error" : undefined}
             required
           />
           {errors.password && (
@@ -197,7 +197,7 @@ export default function CreateAccountForm(): ReactNode {
             autoComplete="new-password"
             value={formData.confirmPassword}
             onChange={handleChange}
-            aria-describedby="confirmPassword-error"
+            aria-describedby={errors.confirmPassword ? "confirmPassword-error" : undefined}
             required
           />
           {errors.confirmPassword && (
