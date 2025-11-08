@@ -10,7 +10,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export async function createAccount(
   prevState: SignupState,
   formData: FormData
-): Promise<SignupState | void> {
+) {
   const supabase = await createSupabaseServerClient();
 
   const rawFormData = Object.fromEntries(formData);
