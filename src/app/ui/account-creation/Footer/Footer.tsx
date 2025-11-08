@@ -28,6 +28,7 @@ export default function Footer() {
         href="https://www.daltonpettus.com/"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="by Daltraxx INC. (opens in new tab)"
         fontSize="30"
         color="custom"
         className={styles.daltraxxLink}
