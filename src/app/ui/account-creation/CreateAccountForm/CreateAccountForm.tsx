@@ -1,7 +1,7 @@
 "use client";
 
 import { z } from "zod";
-import { useState, useEffect, useActionState, ReactNode } from "react";
+import { useState, useEffect, useActionState, ReactNode, useRef, useLayoutEffect } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 
@@ -10,6 +10,8 @@ import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import Text from "../../Text";
 import styles from "./styles.module.css";
+import useWindowWidth from "@/utils/hooks/useWindowWidth";
+import useElementWidth from "@/utils/hooks/useElementWidth";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
@@ -114,11 +116,25 @@ export default function CreateAccountForm(): ReactNode {
     INITIAL_SIGNUP_STATE
   );
 
+  // Dynamic username display logic designed to prevent layout overflow
+  const windowWidth = useWindowWidth();
+  const headingElementRef = useRef<HTMLHeadingElement>(null);
+  const headingWidth = useElementWidth(headingElementRef, formData.username);
+  const [usernameForDisplay, setUsernameForDisplay] = useState(formData.username || "[new user]");
+  useEffect(() => {
+    console.log("Heading width:", headingWidth, "Window width:", windowWidth);
+    if (formData.username.length > 18 && headingWidth > windowWidth * 0.85) {
+      setUsernameForDisplay(formData.username.slice(0, 18) + "...");
+    } else {
+      setUsernameForDisplay(formData.username || "[new user]");
+    }
+  }, [formData.username, headingWidth, windowWidth]);
+
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
-        <Heading as="h1" size="48-responsive">
-          Welcome {formData.username || "[new user]"}!
+        <Heading as="h1" size="48-responsive" ref={headingElementRef} className={styles.heading}>
+          Welcome {usernameForDisplay}!
         </Heading>
         <Text as="p" size="36-responsive" className={styles.subheading}>
           Please complete the following to set up your character profile...
