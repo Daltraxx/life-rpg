@@ -35,11 +35,14 @@ export default function useElementWidth(
     };
 
     updateWidth();
-    if (typeof window === "undefined") return;
+
+    if (!ref.current) return;
+
+    const resizeObserver = new ResizeObserver(updateWidth);
+    resizeObserver.observe(ref.current);
     
-    window.addEventListener("resize", updateWidth);
     return () => {
-      window.removeEventListener("resize", updateWidth);
+      resizeObserver.disconnect();
     };
   }, [ref, ...dependencies]); // include dependencies if provided
 
