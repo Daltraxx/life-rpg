@@ -29,9 +29,9 @@ export default function useWindowWidth() {
     if (typeof window === "undefined") return;
 
     setWindowWidth(window.innerWidth);
-    let frame = 0;
+    let frame: number | null = null;
     const handleResize = () => {
-      cancelAnimationFrame(frame);
+      if (frame) cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         setWindowWidth(window.innerWidth);
       });
@@ -39,7 +39,7 @@ export default function useWindowWidth() {
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
-      cancelAnimationFrame(frame);
+      if (frame) cancelAnimationFrame(frame);
     };
   }, []);
   return windowWidth;
