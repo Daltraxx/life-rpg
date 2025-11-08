@@ -5,10 +5,10 @@ import styles from "./styles.module.css";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div>
+    <>
       <Header />
       <main className={styles.mainContent}>{children}</main>
       <Footer />
-    </div>
+    </>
   );
 }
