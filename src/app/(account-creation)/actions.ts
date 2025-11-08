@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -7,7 +7,10 @@ import { redirect } from "next/navigation";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 
-export async function createAccount(prevState: SignupState, formData: FormData) {
+export async function createAccount(
+  prevState: SignupState,
+  formData: FormData
+) {
   const supabase = await createSupabaseServerClient();
 
   const rawFormData = Object.fromEntries(formData);
@@ -28,9 +31,23 @@ export async function createAccount(prevState: SignupState, formData: FormData) 
 
   // Add logic for specific error cases like existing email, weak password, etc.
   if (error) {
-    return {
-      message: "Account creation failed. Please try again.",
-    } as SignupState;
+    console.error("Error creating account:", error.code, error.message);
+    // Handle specific error cases
+    switch (error.code) {
+      case "email_exists":
+        return {
+          message: "An account with this email already exists.",
+        } as SignupState;
+      // research ways to make password validaation match supabase rules
+      case "weak_password":
+        return {
+          message: "Password is too weak. Please choose a stronger password.",
+        } as SignupState;
+      default:
+        return {
+          message: "Account creation failed. Please try again.",
+        } as SignupState;
+    }
   }
 
   // Todo: if account creation succeeds, insert additional user data into the "users" table
