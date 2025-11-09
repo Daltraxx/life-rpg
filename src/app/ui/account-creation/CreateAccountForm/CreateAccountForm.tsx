@@ -72,7 +72,17 @@ export default function CreateAccountForm(): ReactNode {
 
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
+  const [usernameTruncated, setUsernameTruncated] = useState(false);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Reset username truncation if user modifies username to be shorter
+    if (
+      e.target.name === "username" &&
+      usernameTruncated &&
+      e.target.value.length < formData.username.length
+    ) {
+      setUsernameTruncated(false);
+    }
+
     setInteractedFields((prev) => ({ ...prev, [e.target.name]: true }));
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -125,10 +135,15 @@ export default function CreateAccountForm(): ReactNode {
   const [usernameForDisplay, setUsernameForDisplay] = useState(
     formData.username || "[new user]"
   );
+
   useEffect(() => {
     // console.log("Heading width:", headingWidth, "Window width:", windowWidth);
-    if (formData.username.length > 18 && headingWidth > windowWidth * 0.85) {
+    // If already truncated and username hasn't been shortened, do nothing
+    // This prevents infinite loop of updates when truncation brings username width under threshold
+    if (usernameTruncated) return;
+    if (headingWidth > windowWidth * 0.85) {
       setUsernameForDisplay(formData.username.slice(0, 18) + "...");
+      setUsernameTruncated(true);
     } else {
       setUsernameForDisplay(formData.username || "[new user]");
     }
@@ -145,10 +160,7 @@ export default function CreateAccountForm(): ReactNode {
         >
           Welcome {usernameForDisplay}!
         </Heading>
-        <Paragraph
-          size="36-responsive"
-          className={styles.subheading}
-        >
+        <Paragraph size="36-responsive" className={styles.subheading}>
           Please complete the following to set up your character profile...
         </Paragraph>
       </div>
