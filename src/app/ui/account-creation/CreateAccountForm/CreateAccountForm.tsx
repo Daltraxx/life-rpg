@@ -134,8 +134,6 @@ export default function CreateAccountForm(): ReactNode {
     }
   }, [formData.username, headingWidth, windowWidth]);
 
-  const testRef = useRef<HTMLParagraphElement>(null);
-
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
@@ -150,7 +148,6 @@ export default function CreateAccountForm(): ReactNode {
         <Paragraph
           size="36-responsive"
           className={styles.subheading}
-          ref={testRef}
         >
           Please complete the following to set up your character profile...
         </Paragraph>
