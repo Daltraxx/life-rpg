@@ -6,11 +6,17 @@ export async function updateSession(
 ): Promise<NextResponse> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
-
   if (!supabaseUrl || !supabaseKey) {
-    throw new Error(
-      "Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set."
-    );
+    if (process.env.NODE_ENV === "development") {
+      throw new Error(
+        "Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set."
+      );
+    } else {
+      console.error("Missing Supabase environment variables");
+      const url = request.nextUrl.clone();
+      url.pathname = "/error"; // TODO: create error page
+      return NextResponse.redirect(url);
+    }
   }
 
   let supabaseResponse = NextResponse.next({ request });
