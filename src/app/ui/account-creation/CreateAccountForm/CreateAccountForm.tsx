@@ -73,18 +73,18 @@ export default function CreateAccountForm(): ReactNode {
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
   const [usernameTruncated, setUsernameTruncated] = useState(false);
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     // Reset username truncation if user modifies username to be shorter
     if (
-      e.target.name === "username" &&
+      target.name === "username" &&
       usernameTruncated &&
-      e.target.value.length < formData.username.length
+      target.value.length < formData.username.length
     ) {
       setUsernameTruncated(false);
     }
 
-    setInteractedFields((prev) => ({ ...prev, [e.target.name]: true }));
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setInteractedFields((prev) => ({ ...prev, [target.name]: true }));
+    setFormData((prev) => ({ ...prev, [target.name]: target.value }));
   };
 
   /**
