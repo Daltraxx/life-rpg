@@ -137,7 +137,6 @@ export default function CreateAccountForm(): ReactNode {
   );
 
   useEffect(() => {
-    // console.log("Heading width:", headingWidth, "Window width:", windowWidth);
     // If already truncated and username hasn't been shortened, do nothing
     // This prevents infinite loop of updates when truncation brings username width under threshold
     if (usernameTruncated) return;
