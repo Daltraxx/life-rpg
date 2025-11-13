@@ -20,6 +20,7 @@ export async function createAccount(
 
   if (!validatedFields.success) {
     return {
+      // NOTE: validatedFields.error.flatten() is deprecated in Zod v4, use z.flattenError instead
       errors: z.flattenError(validatedFields.error), // test this
       message: "Fields not valid. Failed to create account.",
     } as SignupState;
