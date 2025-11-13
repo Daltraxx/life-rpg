@@ -12,6 +12,7 @@ import { Paragraph } from "../../TextWrappers";
 import styles from "./styles.module.css";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
 import useElementWidth from "@/utils/hooks/useElementWidth";
+import getTruncatedString from "@/app/ui/utils/getTruncatedString";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
@@ -137,24 +138,6 @@ export default function CreateAccountForm(): ReactNode {
   const [usernameForDisplay, setUsernameForDisplay] = useState(
     formData.username || "[new user]"
   );
-
-  const getTruncatedString = (
-    string: string,
-    windowWidth: number,
-    stringWidth: number,
-    maxStringWidth: number
-  ) => {
-    let canvas = document.querySelector("canvas");
-    if (!canvas) canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d");
-    const fontSize = windowWidth > 768 ? 48 : 36; // md breakpoint
-    context!.font = `${fontSize}px "Jersey 10"`; // Ensure font matches heading font
-    while (stringWidth > maxStringWidth && string.length > 0) {
-      string = string.slice(0, -1);
-      stringWidth = context!.measureText(string + "...").width; // NOTE: not a perfect measurement but close enough for now
-    }
-    return string + "...";
-  };
 
   useEffect(() => {
     // If already truncated and username hasn't been shortened, do nothing
