@@ -149,7 +149,7 @@ export default function CreateAccountForm(): ReactNode {
     } else {
       setUsernameForDisplay(formData.username || "[new user]");
     }
-  }, [formData.username, headingWidth, windowWidth]);
+  }, [formData.username, headingWidth, windowWidth, usernameTruncated]);
 
   return (
     <Bounded innerClassName={styles.contentContainer}>
