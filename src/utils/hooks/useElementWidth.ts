@@ -35,10 +35,11 @@ export default function useElementWidth(
 
     updateWidth();
 
-    if (!ref.current) return;
+    const element = ref.current;
+    if (!element) return;
 
     const resizeObserver = new ResizeObserver(updateWidth);
-    resizeObserver.observe(ref.current);
+    resizeObserver.observe(element);
 
     return () => {
       resizeObserver.disconnect();
