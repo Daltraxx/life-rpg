@@ -139,16 +139,38 @@ export default function CreateAccountForm(): ReactNode {
     formData.username || "[new user]"
   );
 
+  const getTruncatedString = (
+    string: string,
+    windowWidth: number,
+    stringWidth: number,
+    maxStringWidth: number
+  ) => {
+    let canvas = document.querySelector("canvas");
+    if (!canvas) canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+    const fontSize = windowWidth > 768 ? 48 : 36; // md breakpoint
+    context!.font = `${fontSize}px "Jersey 10"`; // Ensure font matches heading font
+    while (stringWidth > maxStringWidth && string.length > 0) {
+      string = string.slice(0, -1);
+      stringWidth = context!.measureText(string + "...").width;
+    }
+    return string + "...";
+  };
+
   useEffect(() => {
     // If already truncated and username hasn't been shortened, do nothing
     // This prevents infinite loop of updates when truncation brings username width under threshold
     if (usernameTruncated) return;
     const maxHeadingWidth = windowWidth * MAX_HEADING_WIDTH_RATIO;
     if (headingWidth > maxHeadingWidth) {
-      setUsernameForDisplay(
-        formData.username.slice(0, TRUNCATED_USERNAME_LENGTH) + "..."
-      );
       setUsernameTruncated(true);
+      const truncatedUsername = getTruncatedString(
+        formData.username,
+        windowWidth,
+        headingWidth,
+        maxHeadingWidth
+      );
+      setUsernameForDisplay(truncatedUsername);
     } else {
       setUsernameForDisplay(formData.username || "[new user]");
     }
