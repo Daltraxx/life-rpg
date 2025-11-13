@@ -151,7 +151,7 @@ export default function CreateAccountForm(): ReactNode {
     context!.font = `${fontSize}px "Jersey 10"`; // Ensure font matches heading font
     while (stringWidth > maxStringWidth && string.length > 0) {
       string = string.slice(0, -1);
-      stringWidth = context!.measureText(string + "...").width;
+      stringWidth = context!.measureText(string + "...").width; // NOTE: not a perfect measurement but close enough for now
     }
     return string + "...";
   };
