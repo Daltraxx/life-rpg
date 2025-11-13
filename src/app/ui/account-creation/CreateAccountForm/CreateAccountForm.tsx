@@ -152,7 +152,7 @@ export default function CreateAccountForm(): ReactNode {
   }, [formData.username, headingWidth, windowWidth, usernameTruncated]);
 
   return (
-    <Bounded innerClassName={styles.contentContainer}>
+    <Bounded outerClassName={styles.outerContainer} innerClassName={styles.contentContainer}>
       <div className={styles.headerContainer}>
         <Heading
           as="h1"
