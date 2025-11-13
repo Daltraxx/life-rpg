@@ -51,7 +51,6 @@ type Field = keyof ValidationErrorMessages;
  */
 
 const MAX_HEADING_WIDTH_RATIO = 0.85;
-const TRUNCATED_USERNAME_LENGTH = 18;
 
 export default function CreateAccountForm(): ReactNode {
   const [formData, setFormData] = useState({
