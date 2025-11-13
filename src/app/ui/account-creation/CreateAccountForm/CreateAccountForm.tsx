@@ -143,7 +143,8 @@ export default function CreateAccountForm(): ReactNode {
     // If already truncated and username hasn't been shortened, do nothing
     // This prevents infinite loop of updates when truncation brings username width under threshold
     if (usernameTruncated) return;
-    if (headingWidth > windowWidth * MAX_HEADING_WIDTH_RATIO) {
+    const maxHeadingWidth = windowWidth * MAX_HEADING_WIDTH_RATIO;
+    if (headingWidth > maxHeadingWidth) {
       setUsernameForDisplay(
         formData.username.slice(0, TRUNCATED_USERNAME_LENGTH) + "..."
       );
