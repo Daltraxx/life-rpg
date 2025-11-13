@@ -50,6 +50,9 @@ type Field = keyof ValidationErrorMessages;
  * ```
  */
 
+const MAX_HEADING_WIDTH_RATIO = 0.85;
+const TRUNCATED_USERNAME_LENGTH = 18;
+
 export default function CreateAccountForm(): ReactNode {
   const [formData, setFormData] = useState({
     email: "",
@@ -140,8 +143,8 @@ export default function CreateAccountForm(): ReactNode {
     // If already truncated and username hasn't been shortened, do nothing
     // This prevents infinite loop of updates when truncation brings username width under threshold
     if (usernameTruncated) return;
-    if (headingWidth > windowWidth * 0.85) {
-      setUsernameForDisplay(formData.username.slice(0, 18) + "...");
+    if (headingWidth > windowWidth * MAX_HEADING_WIDTH_RATIO) {
+      setUsernameForDisplay(formData.username.slice(0, TRUNCATED_USERNAME_LENGTH) + "...");
       setUsernameTruncated(true);
     } else {
       setUsernameForDisplay(formData.username || "[new user]");
