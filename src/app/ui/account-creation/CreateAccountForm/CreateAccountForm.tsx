@@ -144,7 +144,9 @@ export default function CreateAccountForm(): ReactNode {
     // This prevents infinite loop of updates when truncation brings username width under threshold
     if (usernameTruncated) return;
     if (headingWidth > windowWidth * MAX_HEADING_WIDTH_RATIO) {
-      setUsernameForDisplay(formData.username.slice(0, TRUNCATED_USERNAME_LENGTH) + "...");
+      setUsernameForDisplay(
+        formData.username.slice(0, TRUNCATED_USERNAME_LENGTH) + "..."
+      );
       setUsernameTruncated(true);
     } else {
       setUsernameForDisplay(formData.username || "[new user]");
@@ -152,7 +154,10 @@ export default function CreateAccountForm(): ReactNode {
   }, [formData.username, headingWidth, windowWidth, usernameTruncated]);
 
   return (
-    <Bounded outerClassName={styles.outerContainer} innerClassName={styles.contentContainer}>
+    <Bounded
+      outerClassName={styles.outerContainer}
+      innerClassName={styles.contentContainer}
+    >
       <div className={styles.headerContainer}>
         <Heading
           as="h1"
