@@ -3,6 +3,7 @@ import { z } from "zod";
 // Further validation can be added here as needed
 export const SignupSchema = z
   .object({
+    // NOTE: z.string().email() is deprecated in Zod v4, use z.email() instead
     email: z.email("Invalid email address"),
     username: z
       .string()
