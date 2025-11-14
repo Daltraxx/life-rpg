@@ -33,7 +33,7 @@ export async function createAccount(
 
   // Add logic for specific error cases like existing email, weak password, etc.
   if (error) {
-    console.error("Error creating account:", error.code, error.message);
+    console.error("Error creating account:", error.code);
     // Handle specific error cases
     switch (error.code) {
       case "email_exists":
