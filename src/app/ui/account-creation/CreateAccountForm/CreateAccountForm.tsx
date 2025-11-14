@@ -191,8 +191,8 @@ export default function CreateAccountForm(): ReactNode {
           />
           {errors.email && (
             <div id="email-error" className={styles.errorMessage}>
-              {errors.email.map((error) => (
-                <p key={error}>{error}</p>
+              {errors.email.map((error, i) => (
+                <p key={i}>{error}</p>
               ))}
             </div>
           )}
@@ -212,8 +212,8 @@ export default function CreateAccountForm(): ReactNode {
           />
           {errors.username && (
             <div id="username-error" className={styles.errorMessage}>
-              {errors.username.map((error) => (
-                <p key={error}>{error}</p>
+              {errors.username.map((error, i) => (
+                <p key={i}>{error}</p>
               ))}
             </div>
           )}
@@ -233,8 +233,8 @@ export default function CreateAccountForm(): ReactNode {
           />
           {errors.password && (
             <div id="password-error" className={styles.errorMessage}>
-              {errors.password.map((error) => (
-                <p key={error}>{error}</p>
+              {errors.password.map((error, i) => (
+                <p key={i}>{error}</p>
               ))}
             </div>
           )}
@@ -256,8 +256,8 @@ export default function CreateAccountForm(): ReactNode {
           />
           {errors.confirmPassword && (
             <div id="confirmPassword-error" className={styles.errorMessage}>
-              {errors.confirmPassword.map((error) => (
-                <p key={error}>{error}</p>
+              {errors.confirmPassword.map((error, i) => (
+                <p key={i}>{error}</p>
               ))}
             </div>
           )}
