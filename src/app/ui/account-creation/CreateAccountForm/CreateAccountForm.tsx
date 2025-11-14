@@ -263,7 +263,7 @@ export default function CreateAccountForm(): ReactNode {
           )}
         </div>
 
-        {/* remember to test below error messaging*/}
+        {/* TODO: test below error messaging*/}
         {errorState.message && (
           <div
             id="server-error"
