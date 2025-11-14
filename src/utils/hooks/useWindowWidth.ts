@@ -21,9 +21,7 @@ import { useState, useLayoutEffect } from "react";
  * const isNarrow = width < 768;
  */
 export default function useWindowWidth() {
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window === "undefined" ? 0 : window.innerWidth
-  );
+  const [windowWidth, setWindowWidth] = useState(0);
 
   // Research: useLayoutEffect vs useEffect for reading layout properties in SSR Environments
   useLayoutEffect(() => {
