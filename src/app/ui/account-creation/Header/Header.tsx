@@ -13,7 +13,7 @@ export default function Header() {
       <Link
         href="/"
         className={styles.brandingLink}
-        aria-label="Go to homepage"
+        aria-label="Go to LifeRPG homepage"
       >
         <Heading as="h2" size="72" className={styles.branding}>
           LifeRPG
