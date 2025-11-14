@@ -4,9 +4,10 @@ import styles from "./styles.module.css";
 import { Span } from "../../TextWrappers";
 import clsx from "clsx";
 import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
+import { useMemo } from "react";
 
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
 
   return (
     <Bounded
