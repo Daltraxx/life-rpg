@@ -29,7 +29,7 @@ type ValidationErrorMessages = {
 type Field = keyof ValidationErrorMessages;
 
 const FIELDS: Field[] = ["email", "username", "password", "confirmPassword"];
-const MAX_HEADING_WIDTH_RATIO = 0.85;
+const MAX_HEADING_WIDTH_RATIO = 0.90; // 90% of window width
 
 /**
  * CreateAccountForm - A form component for creating new user accounts.
@@ -136,7 +136,6 @@ export default function CreateAccountForm(): ReactNode {
 
   // Reset truncation state on window resize to re-evaluate
   useEffect(() => {
-    console.log("Resetting username truncation due to window resize");
     setUsernameTruncated(false);
   }, [windowWidth]);
 
