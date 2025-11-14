@@ -40,7 +40,7 @@ export async function createAccount(
         return {
           message: "An account with this email already exists.",
         } as SignupState;
-      // research ways to make password validaation match supabase rules
+      // research ways to make password validation match supabase rules
       case "weak_password":
         return {
           message: "Password is too weak. Please choose a stronger password.",
