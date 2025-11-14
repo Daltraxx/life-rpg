@@ -52,7 +52,7 @@ export async function createAccount(
     }
   }
 
-  // Todo: if account creation succeeds, insert additional user data into the "users" table
+  // TODO: if account creation succeeds, insert additional user data into the "users" table
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   revalidatePath("/");
