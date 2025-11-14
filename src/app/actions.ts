@@ -1,4 +1,4 @@
-'use server';
+"use server";
 
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
@@ -22,7 +22,7 @@ export async function login(prevState: LoginState, formData: FormData) {
     } as LoginState;
   }
 
-  const { error } = await supabase.auth.signInWithPassword(
+  const { data, error } = await supabase.auth.signInWithPassword(
     validatedFields.data
   );
 
