@@ -44,7 +44,7 @@ export default function getTruncatedString(
 
   const context = canvas.getContext("2d");
   // Safety check, should never happen unless browser doesn't support canvas
-  if (!context) return string;
+  if (!context) return string.slice(0, 18) + "...";
 
   const fontSize =
     windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
