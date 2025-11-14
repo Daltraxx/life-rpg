@@ -28,6 +28,9 @@ type ValidationErrorMessages = {
 
 type Field = keyof ValidationErrorMessages;
 
+const FIELDS: Field[] = ["email", "username", "password", "confirmPassword"];
+const MAX_HEADING_WIDTH_RATIO = 0.85;
+
 /**
  * CreateAccountForm - A form component for creating new user accounts.
  *
