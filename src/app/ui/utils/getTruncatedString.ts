@@ -8,12 +8,16 @@
  * @param windowWidth - The current window width in pixels, used to determine font size
  * @param stringWidth - The initial measured width of the string in pixels
  * @param maxStringWidth - The maximum allowed width for the string in pixels
+ * @param fontName - The name of the font to use for text measurement
+ * @param smallFontSize - The font size in pixels to use for windows narrower than the breakpoint
+ * @param largeFontSize - The font size in pixels to use for windows wider than the breakpoint
+ * @param windowWidthBreakpointMD - The window width breakpoint in pixels (default: 768)
  *
- * @returns The truncated string with "..." appended, or the original string with "..." if it fits within the maximum width
+ * @returns The truncated string with "..." appended, or the original string if it fits within the maximum width
  *
  * @remarks
- * - Uses a canvas context to measure text width with the "Jersey 10" font
- * - Font size is 48px for windows wider than 768px (md breakpoint), otherwise 36px
+ * - Uses a canvas context to measure text width with the specified font
+ * - Font size is determined by comparing windowWidth to windowWidthBreakpointMD
  * - Creates a canvas element if one doesn't already exist in the document
  * - Iteratively removes characters from the end until the string fits within maxStringWidth
  * - The measurement includes the ellipsis ("...") in the final width calculation
