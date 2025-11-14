@@ -55,10 +55,11 @@ export async function updateSession(
   }
 
   const publicPaths = ["/", "/create-account", "/auth", "/error"];
+  const pathname = request.nextUrl.pathname;
   const isPublicPath = publicPaths.some(
     (path) =>
-      request.nextUrl.pathname === path ||
-      (path !== "/" && request.nextUrl.pathname.startsWith(`${path}/`))
+      pathname === path ||
+      (path !== "/" && pathname.startsWith(`${path}/`))
   );
 
   if (!user && !isPublicPath) {
