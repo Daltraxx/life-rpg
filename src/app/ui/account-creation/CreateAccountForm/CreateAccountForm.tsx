@@ -204,6 +204,7 @@ export default function CreateAccountForm(): ReactNode {
             id="username"
             type="text"
             name="username"
+            // consider autoComplete="username", problem is it autofills with email
             value={formData.username}
             onChange={handleChange}
             aria-describedby={errors.username ? "username-error" : undefined}
