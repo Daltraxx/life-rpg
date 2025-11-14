@@ -30,14 +30,24 @@ export default function getTruncatedString(
   fontName: string,
   smallFontSize: number,
   largeFontSize: number,
-  windowWidthBreakpointMD: number = 768,
+  windowWidthBreakpointMD: number = 768
 ) {
   if (stringWidth <= maxStringWidth) return string;
 
-  let canvas = document.querySelector("canvas");
-  if (!canvas) canvas = document.createElement("canvas");
+  let canvas: HTMLCanvasElement | null = document.querySelector(
+    "canvas[data-text-measurement]"
+  );
+  if (!canvas) {
+    canvas = document.createElement("canvas");
+    canvas.setAttribute("data-text-measurement", "true");
+  }
+
   const context = canvas.getContext("2d");
-  const fontSize = windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
+  // Safety check, should never happen unless browser doesn't support canvas
+  if (!context) return string;
+
+  const fontSize =
+    windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
   context!.font = `${fontSize}px "${fontName}"`;
   while (stringWidth > maxStringWidth && string.length > 0) {
     string = string.slice(0, -1);
