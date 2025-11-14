@@ -134,11 +134,11 @@ export default function CreateAccountForm(): ReactNode {
     formData.username || "[new user]"
   );
 
-
+  // Reset truncation state on window resize to re-evaluate
   useEffect(() => {
     console.log("Resetting username truncation due to window resize");
     setUsernameTruncated(false);
-   }, [windowWidth]);
+  }, [windowWidth]);
 
   useEffect(() => {
     // If already truncated and username hasn't been shortened, do nothing
