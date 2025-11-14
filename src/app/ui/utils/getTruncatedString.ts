@@ -23,6 +23,7 @@ export default function getTruncatedString(
   windowWidth: number,
   stringWidth: number,
   maxStringWidth: number,
+  fontName: string,
   smallFontSize: number,
   largeFontSize: number,
   windowWidthBreakpointMD: number = 768,
@@ -33,7 +34,7 @@ export default function getTruncatedString(
   if (!canvas) canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
   const fontSize = windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
-  context!.font = `${fontSize}px "Jersey 10"`; // Ensure font matches heading font
+  context!.font = `${fontSize}px "${fontName}"`;
   while (stringWidth > maxStringWidth && string.length > 0) {
     string = string.slice(0, -1);
     stringWidth = context!.measureText(string + "...").width; // NOTE: not a perfect measurement but close enough for now
