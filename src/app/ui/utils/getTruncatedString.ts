@@ -3,14 +3,14 @@
 /**
  * Truncates a string to fit within a specified maximum width by removing characters from the end
  * and appending an ellipsis ("...").
- * 
+ *
  * @param string - The string to be truncated
  * @param windowWidth - The current window width in pixels, used to determine font size
  * @param stringWidth - The initial measured width of the string in pixels
  * @param maxStringWidth - The maximum allowed width for the string in pixels
- * 
+ *
  * @returns The truncated string with "..." appended, or the original string with "..." if it fits within the maximum width
- * 
+ *
  * @remarks
  * - Uses a canvas context to measure text width with the "Jersey 10" font
  * - Font size is 48px for windows wider than 768px (md breakpoint), otherwise 36px
@@ -22,12 +22,17 @@ export default function getTruncatedString(
   string: string,
   windowWidth: number,
   stringWidth: number,
-  maxStringWidth: number
+  maxStringWidth: number,
+  smallFontSize: number = 36,
+  largeFontSize: number = 48,
+  windowWidthBreakpointMD: number = 768,
 ) {
+  if (stringWidth <= maxStringWidth) return string;
+
   let canvas = document.querySelector("canvas");
   if (!canvas) canvas = document.createElement("canvas");
   const context = canvas.getContext("2d");
-  const fontSize = windowWidth > 768 ? 48 : 36; // md breakpoint
+  const fontSize = windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
   context!.font = `${fontSize}px "Jersey 10"`; // Ensure font matches heading font
   while (stringWidth > maxStringWidth && string.length > 0) {
     string = string.slice(0, -1);
