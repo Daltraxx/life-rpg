@@ -53,9 +53,6 @@ const MAX_HEADING_WIDTH_RATIO = 0.85;
  * <CreateAccountForm />
  * ```
  */
-
-const MAX_HEADING_WIDTH_RATIO = 0.85;
-
 export default function CreateAccountForm(): ReactNode {
   const [formData, setFormData] = useState({
     email: "",
@@ -64,16 +61,11 @@ export default function CreateAccountForm(): ReactNode {
     confirmPassword: "",
   });
 
-  const fields: Field[] = ["email", "username", "password", "confirmPassword"];
-  const initialInteractedFields: Record<Field, boolean> = {
-    email: false,
-    username: false,
-    password: false,
-    confirmPassword: false,
-  };
-
   const [interactedFields, setInteractedFields] = useState(
-    initialInteractedFields
+    FIELDS.reduce((interactedFields, field) => {
+      interactedFields[field] = false;
+      return interactedFields;
+    }, {} as Record<Field, boolean>)
   );
 
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
@@ -114,7 +106,7 @@ export default function CreateAccountForm(): ReactNode {
       if (!validatedFields.success) {
         const errors = z.flattenError(validatedFields.error).fieldErrors;
         const filteredErrors: ValidationErrorMessages = {};
-        for (const field of fields) {
+        for (const field of FIELDS) {
           if (interactedFields[field] && errors[field as Field]?.length)
             filteredErrors[field as Field] = errors[field as Field];
         }
