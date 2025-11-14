@@ -136,7 +136,13 @@ export default function CreateAccountForm(): ReactNode {
 
   // Reset truncation state on window resize to re-evaluate
   useEffect(() => {
-    setUsernameTruncated(false);
+    const resizeHandler = setTimeout(() => {
+      setUsernameTruncated(false);
+    }, 300);
+
+    return () => {
+      clearTimeout(resizeHandler);
+    };
   }, [windowWidth]);
 
   useEffect(() => {
