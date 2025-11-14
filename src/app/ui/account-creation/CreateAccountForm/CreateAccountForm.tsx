@@ -1,6 +1,6 @@
 "use client";
 
-import { z } from "zod";
+import { set, z } from "zod";
 import { useState, useEffect, useActionState, ReactNode, useRef } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
@@ -133,6 +133,12 @@ export default function CreateAccountForm(): ReactNode {
   const [usernameForDisplay, setUsernameForDisplay] = useState(
     formData.username || "[new user]"
   );
+
+
+  useEffect(() => {
+    console.log("Resetting username truncation due to window resize");
+    setUsernameTruncated(false);
+   }, [windowWidth]);
 
   useEffect(() => {
     // If already truncated and username hasn't been shortened, do nothing
