@@ -23,8 +23,8 @@ export default function getTruncatedString(
   windowWidth: number,
   stringWidth: number,
   maxStringWidth: number,
-  smallFontSize: number = 36,
-  largeFontSize: number = 48,
+  smallFontSize: number,
+  largeFontSize: number,
   windowWidthBreakpointMD: number = 768,
 ) {
   if (stringWidth <= maxStringWidth) return string;
