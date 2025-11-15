@@ -8,9 +8,9 @@ const getUserErrorLog = (error: AuthError, request: NextRequest) => {
     path: request.nextUrl.pathname,
     message: error.message,
     method: request.method,
+    status: error.status || "unknown",
     userAgent: request.headers.get("user-agent") || "unknown",
     timestamp: new Date().toISOString(),
-    status: error.status || "unknown",
     stack: error.stack,
   };
 
