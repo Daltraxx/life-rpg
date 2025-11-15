@@ -1,4 +1,4 @@
-import { useState, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 
 /**
  * Returns the current browser window width in pixels and updates on resize.
@@ -11,8 +11,6 @@ import { useState, useLayoutEffect } from "react";
  * Remarks:
  * - The initial value is `0` until the effect runs on the client.
  * - This hook relies on the `window` object and should be used in a browser environment.
- * - `useLayoutEffect` is used to minimize visual flicker by applying updates before paint.
- *   If server-side rendering causes warnings, consider conditionally falling back to `useEffect`.
  *
  * @returns The current window width in CSS pixels.
  *
@@ -23,8 +21,7 @@ import { useState, useLayoutEffect } from "react";
 export default function useWindowWidth() {
   const [windowWidth, setWindowWidth] = useState(0);
 
-  // Research: useLayoutEffect vs useEffect for reading layout properties in SSR Environments
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (typeof window === "undefined") return;
 
     setWindowWidth(window.innerWidth);
