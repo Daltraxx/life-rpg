@@ -1,25 +1,41 @@
 import { createServerClient } from "@supabase/ssr";
+import { AuthError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
+
+const getUserErrorLog = (error: AuthError, request: NextRequest) => {
+  const errorDetails = {
+    name: error.name,
+    path: request.nextUrl.pathname,
+    message: error.message,
+    method: request.method,
+    userAgent: request.headers.get("user-agent") || "unknown",
+    timestamp: new Date().toISOString(),
+    status: error.status || "unknown",
+    stack: error.stack,
+  };
+
+  return errorDetails;
+};
 
 /**
  * Updates the user session by validating authentication state and managing cookies.
- * 
+ *
  * This middleware function creates a Supabase server client, validates the current user's
  * authentication status, and handles redirects for protected routes. It ensures proper
  * cookie management between the browser and server to maintain session consistency.
- * 
+ *
  * @param request - The incoming Next.js request object
  * @returns A Next.js response object with updated session cookies
- * 
+ *
  * @throws {Error} Throws an error in development mode if Supabase environment variables are missing
- * 
+ *
  * @remarks
  * - In production, missing environment variables redirect to `/error` instead of throwing
  * - The function checks authentication and redirects unauthenticated users from protected routes to `/`
  * - Public paths that don't require authentication: `/`, `/create-account`, `/auth`, `/error`
  * - The returned `supabaseResponse` object must be returned as-is to prevent session termination
  * - Cookie synchronization between browser and server is critical for maintaining user sessions
- * 
+ *
  * @example
  * ```typescript
  * // In middleware.ts
@@ -77,7 +93,11 @@ export async function updateSession(
   } = await supabase.auth.getUser();
 
   if (error) {
-    console.error("Auth errors in middleware", error);
+    const errorDetails = getUserErrorLog(error, request);
+    console.log(
+      "Auth errors in middleware:\n",
+      errorDetails
+    );
     // Treat auth errors as unauthenticated
   }
 
@@ -85,8 +105,7 @@ export async function updateSession(
   const pathname = request.nextUrl.pathname;
   const isPublicPath = publicPaths.some(
     (path) =>
-      pathname === path ||
-      (path !== "/" && pathname.startsWith(`${path}/`))
+      pathname === path || (path !== "/" && pathname.startsWith(`${path}/`))
   );
 
   if (!user && !isPublicPath) {
