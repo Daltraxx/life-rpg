@@ -1,4 +1,5 @@
 import { useLayoutEffect, useState } from "react";
+import { set } from "zod";
 
 /**
  * A custom React hook that tracks and returns the width of a DOM element.
@@ -27,16 +28,14 @@ export default function useElementWidth(
   const [elementWidth, setElementWidth] = useState(0);
 
   useLayoutEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+
     const updateWidth = () => {
-      if (ref.current) {
-        setElementWidth(ref.current.offsetWidth);
-      }
+      setElementWidth(element.offsetWidth);
     };
 
     updateWidth();
-
-    const element = ref.current;
-    if (!element) return;
 
     const resizeObserver = new ResizeObserver(updateWidth);
     resizeObserver.observe(element);
