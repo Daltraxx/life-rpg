@@ -11,7 +11,7 @@ import { useLayoutEffect, useState } from "react";
  * @remarks
  * This hook uses `useLayoutEffect` to ensure the width is measured synchronously after DOM mutations.
  * It automatically sets up a ResizeObserver to update the width when the element is resized.
- * The observer is cleaned up when the component unmounts. *
+ * The observer is cleaned up when the component unmounts.
  * @example
  * ```tsx
  * const myRef = useRef<HTMLDivElement>(null);
