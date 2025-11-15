@@ -62,10 +62,10 @@ export default function CreateAccountForm(): ReactNode {
   });
 
   const [interactedFields, setInteractedFields] = useState(
-    FIELDS.reduce((interactedFields, field) => {
-      interactedFields[field] = false;
-      return interactedFields;
-    }, {} as Record<Field, boolean>)
+    Object.fromEntries(FIELDS.map((field) => [field, false])) as Record<
+      Field,
+      boolean
+    >
   );
 
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
