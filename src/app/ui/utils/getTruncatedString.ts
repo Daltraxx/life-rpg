@@ -40,6 +40,8 @@ export default function getTruncatedString(
   if (!canvas) {
     canvas = document.createElement("canvas");
     canvas.setAttribute("data-text-measurement", "true");
+    canvas.style.display = "none";
+    document.body.appendChild(canvas);
   }
 
   const context = canvas.getContext("2d");
