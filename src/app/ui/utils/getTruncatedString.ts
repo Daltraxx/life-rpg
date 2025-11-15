@@ -1,5 +1,7 @@
 "use client";
 
+import { es } from "zod/locales";
+
 /**
  * Truncates a string to fit within a specified maximum width by removing characters from the end
  * and appending an ellipsis ("...").
@@ -46,7 +48,14 @@ export default function getTruncatedString(
 
   const context = canvas.getContext("2d");
   // Safety check, should never happen unless browser doesn't support canvas
-  if (!context) return string.slice(0, 18) + "...";
+  if (!context) {
+    // Rough approximation: assume average character is ~8px wide
+    const avgCharWidth = 8;
+    const estimatedMaxChars = Math.floor(maxStringWidth / avgCharWidth) - 3;
+    return estimatedMaxChars > 0
+      ? string.slice(0, estimatedMaxChars) + "..."
+      : "...";
+  }
 
   const fontSize =
     windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
