@@ -1,7 +1,7 @@
 /* Ensures content fills viewport minus header and footer height */
 .mainContent {
   min-height: calc(
-    100vh - var(--create-account-header-height, 6.5rem) -
+    100dvh - var(--create-account-header-height, 6.5rem) -
       var(--create-account-footer-height-mobile, 10.75rem)
   );
 }
