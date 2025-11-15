@@ -27,7 +27,7 @@ export default function useWindowWidth() {
     setWindowWidth(window.innerWidth);
     let frame: number | null = null;
     const handleResize = () => {
-      if (frame) cancelAnimationFrame(frame);
+      if (frame !== null) cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
         setWindowWidth(window.innerWidth);
       });
