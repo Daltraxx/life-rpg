@@ -22,7 +22,7 @@ import { cookies } from "next/headers";
  * ```
  * 
  * @remarks
- * This function must be called in a server actions or route handlers where Next.js cookies() is available. Cookie errors are logged to the 
+ * This function must be called in server actions or route handlers where Next.js cookies() is available. Cookie errors are logged to the 
  * console before being re-thrown.
  */
 export async function createSupabaseServerClient(): Promise<SupabaseClient> {
