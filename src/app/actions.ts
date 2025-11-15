@@ -27,6 +27,7 @@ export async function login(prevState: LoginState, formData: FormData) {
   );
 
   if (error) {
+    console.error("Login failed:", error.message);
     return {
       message: "Authentication failed. Please check your credentials.",
     } as LoginState;
