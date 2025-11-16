@@ -6,7 +6,7 @@ import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers"
 import { useMemo } from "react";
 
 export default function Footer() {
-  const currentYear = useMemo(() => new Date().getFullYear(), []);
+  const currentYear = new Date().getFullYear();
 
   return (
     <Bounded
