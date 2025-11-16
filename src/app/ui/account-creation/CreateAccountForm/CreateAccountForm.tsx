@@ -10,9 +10,7 @@ import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import { Label, Paragraph } from "../../TextWrappers";
 import styles from "./styles.module.css";
-import useWindowWidth from "@/utils/hooks/useWindowWidth";
-import useElementWidth from "@/utils/hooks/useElementWidth";
-import getTruncatedString from "@/app/ui/utils/getTruncatedString";
+import useTruncatedString from "@/utils/hooks/useTruncatedString";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
@@ -127,45 +125,15 @@ export default function CreateAccountForm(): ReactNode {
   );
 
   // Dynamic username display logic designed to prevent layout overflow
-  const windowWidth = useWindowWidth();
   const headingElementRef = useRef<HTMLHeadingElement>(null);
-  const headingWidth = useElementWidth(headingElementRef);
-  const [usernameForDisplay, setUsernameForDisplay] = useState(
-    formData.username || "[new user]"
+  const usernameForDisplay = useTruncatedString(
+    formData.username,
+    usernameTruncated,
+    setUsernameTruncated,
+    headingElementRef,
+    MAX_HEADING_WIDTH_RATIO,
+    "[new user]"
   );
-
-  // Reset truncation state on window resize to re-evaluate
-  useEffect(() => {
-    const resizeHandler = setTimeout(() => {
-      setUsernameTruncated(false);
-    }, 300);
-
-    return () => {
-      clearTimeout(resizeHandler);
-    };
-  }, [windowWidth]);
-
-  useEffect(() => {
-    // If already truncated and username hasn't been shortened, do nothing
-    // This prevents infinite loop of updates when truncation brings username width under threshold
-    if (usernameTruncated) return;
-    const maxHeadingWidth = windowWidth * MAX_HEADING_WIDTH_RATIO;
-    if (headingWidth > maxHeadingWidth) {
-      setUsernameTruncated(true);
-      const truncatedUsername = getTruncatedString(
-        formData.username,
-        windowWidth,
-        headingWidth,
-        maxHeadingWidth,
-        "Jersey 10",
-        36,
-        48
-      );
-      setUsernameForDisplay(truncatedUsername);
-    } else {
-      setUsernameForDisplay(formData.username || "[new user]");
-    }
-  }, [formData.username, headingWidth, windowWidth, usernameTruncated]);
 
   return (
     <Bounded
