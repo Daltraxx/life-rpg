@@ -15,12 +15,14 @@ export default function Footer() {
       outerClassName={styles.boundedContainer}
       innerClassName={styles.contentContainer}
     >
-      <Heading as="h4" size="72" className={clsx(styles.branding, styles.logo)}>
-        LifeRPG
-      </Heading>
-      <Span size="20" className={clsx(styles.branding, styles.copyright)}>
-        © {currentYear}
-      </Span>
+      <div className={styles.brandingContainer}>
+        <Heading as="h4" size="72" className={styles.logo}>
+          LifeRPG
+        </Heading>
+        <Span size="20" className={styles.copyright}>
+          © {currentYear}
+        </Span>
+      </div>
       <RegularLinkWrapper
         href="https://www.daltonpettus.com/"
         target="_blank"
