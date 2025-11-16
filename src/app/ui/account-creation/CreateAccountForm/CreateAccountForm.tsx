@@ -206,7 +206,9 @@ export default function CreateAccountForm(): ReactNode {
           {errors.email && (
             <div id="email-error" className={styles.errorMessage}>
               {errors.email.map((error, i) => (
-                <p key={i}>{error}</p>
+                <Paragraph key={i} size="16">
+                  {error}
+                </Paragraph>
               ))}
             </div>
           )}
@@ -227,7 +229,9 @@ export default function CreateAccountForm(): ReactNode {
           {errors.username && (
             <div id="username-error" className={styles.errorMessage}>
               {errors.username.map((error, i) => (
-                <p key={i}>{error}</p>
+                <Paragraph key={i} size="16">
+                  {error}
+                </Paragraph>
               ))}
             </div>
           )}
@@ -248,7 +252,9 @@ export default function CreateAccountForm(): ReactNode {
           {errors.password && (
             <div id="password-error" className={styles.errorMessage}>
               {errors.password.map((error, i) => (
-                <p key={i}>{error}</p>
+                <Paragraph key={i} size="16">
+                  {error}
+                </Paragraph>
               ))}
             </div>
           )}
@@ -271,7 +277,9 @@ export default function CreateAccountForm(): ReactNode {
           {errors.confirmPassword && (
             <div id="confirmPassword-error" className={styles.errorMessage}>
               {errors.confirmPassword.map((error, i) => (
-                <p key={i}>{error}</p>
+                <Paragraph key={i} size="16">
+                  {error}
+                </Paragraph>
               ))}
             </div>
           )}
@@ -284,7 +292,7 @@ export default function CreateAccountForm(): ReactNode {
             className={styles.serverErrorContainer}
             role="alert"
           >
-            <p>{errorState.message}</p>
+            <Paragraph size="16">{errorState.message}</Paragraph>
           </div>
         )}
 
