@@ -59,11 +59,11 @@ export default function getTruncatedString(
 
   const fontSize =
     windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
-  context!.font = `${fontSize}px "${fontName}"`;
+  context.font = `${fontSize}px "${fontName}"`;
 
   while (stringWidth > maxStringWidth && string.length > 0) {
     string = string.slice(0, -1);
-    stringWidth = context!.measureText(string + "...").width; // NOTE: not a perfect measurement but close enough for now
+    stringWidth = context.measureText(string + "...").width; // NOTE: not a perfect measurement but close enough for now
   }
   return string + "...";
 }
