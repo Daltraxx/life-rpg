@@ -1,6 +1,6 @@
 /* Adjust height for boundedContainer/Footer in globals.css */
 .boundedContainer {
-  background-color: var(--blue-600);
+  background-color: var(--blue-600, #091f36);
   height: var(--create-account-footer-height-mobile);
   overflow: hidden;
   display: flex;
@@ -22,7 +22,7 @@
 }
 
 .brandingContainer {
-  color: var(--orange-300);
+  color: var(--orange-300, #e1b382);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,7 +38,7 @@
 }
 
 .daltraxxLink {
-  color: var(--white, #fff);
+  color: var(--white, #ffffff);
   line-height: 1rem;
 }
 
