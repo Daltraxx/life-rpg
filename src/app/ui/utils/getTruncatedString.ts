@@ -1,7 +1,5 @@
 "use client";
 
-import { es } from "zod/locales";
-
 /**
  * Truncates a string to fit within a specified maximum width by removing characters from the end
  * and appending an ellipsis ("...").
