@@ -43,3 +43,24 @@ export function Span({
     </span>
   );
 }
+
+interface LabelProps extends ComponentProps<"label"> {
+  size?: FontSize;
+  children: ReactNode;
+}
+
+export function Label({
+  size = "20",
+  children,
+  className,
+  ...restProps
+}: LabelProps) {
+  return (
+    <label
+      className={clsx("font-main", fontSizeToTWMap[size], className)}
+      {...restProps}
+    >
+      {children}
+    </label>
+  );
+}
