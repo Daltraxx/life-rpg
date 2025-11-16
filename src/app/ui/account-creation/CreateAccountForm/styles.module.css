@@ -53,8 +53,10 @@
   box-shadow: 0 0 0 2px var(--orange-300, #e1b382);
 }
 
-.errorMessage {
+.errorMessage p {
   color: var(--error-message-orange, #cd6d07);
+  line-height: .6rem;
+  margin-top: 0.5rem;
 }
 
 @media only screen and (min-width: 768px) {
