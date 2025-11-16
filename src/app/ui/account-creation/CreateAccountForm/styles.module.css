@@ -1,6 +1,5 @@
 .outerContainer {
-  max-width: 100%;
-  overflow: hidden;
+  overflow: hidden; /* Hides overflowing username text prior to truncation */
 }
 
 .contentContainer {
