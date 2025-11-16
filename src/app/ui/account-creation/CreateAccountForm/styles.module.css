@@ -37,7 +37,6 @@
 }
 
 .inputContainer label {
-  font-size: 1.25rem;
   color: var(--brown-600, #362009);
 }
 
@@ -76,7 +75,6 @@
   .inputContainer label {
     grid-column: 1;
     grid-row: 1;
-    font-size: 1.5rem;
     justify-self: end;
     min-width: max-content;
   }

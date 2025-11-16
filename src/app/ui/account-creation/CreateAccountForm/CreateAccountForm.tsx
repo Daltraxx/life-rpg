@@ -8,7 +8,7 @@ import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
-import { Paragraph } from "../../TextWrappers";
+import { Label, Paragraph } from "../../TextWrappers";
 import styles from "./styles.module.css";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
 import useElementWidth from "@/utils/hooks/useElementWidth";
@@ -192,7 +192,7 @@ export default function CreateAccountForm(): ReactNode {
         aria-describedby={errorState.message ? "server-error" : undefined}
       >
         <div className={styles.inputContainer}>
-          <label htmlFor="email">Email:</label>
+          <Label htmlFor="email">Email:</Label>
           <input
             id="email"
             type="email"
@@ -213,7 +213,7 @@ export default function CreateAccountForm(): ReactNode {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="username">Display Name:</label>
+          <Label htmlFor="username">Display Name:</Label>
           <input
             id="username"
             type="text"
@@ -234,7 +234,7 @@ export default function CreateAccountForm(): ReactNode {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="password">Password:</label>
+          <Label htmlFor="password">Password:</Label>
           <input
             id="password"
             type="password"
@@ -255,7 +255,7 @@ export default function CreateAccountForm(): ReactNode {
         </div>
 
         <div className={styles.inputContainer}>
-          <label htmlFor="confirmPassword">Confirm Password:</label>
+          <Label htmlFor="confirmPassword">Confirm Password:</Label>
           <input
             id="confirmPassword"
             type="password"
