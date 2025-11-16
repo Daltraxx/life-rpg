@@ -15,7 +15,7 @@ export default function Footer() {
       outerClassName={styles.boundedContainer}
       innerClassName={styles.contentContainer}
     >
-      <Heading as="h4" size="72" className={styles.branding}>
+      <Heading as="h4" size="72" className={clsx(styles.branding, styles.logo)}>
         LifeRPG
       </Heading>
       <Span size="20" className={clsx(styles.branding, styles.copyright)}>
