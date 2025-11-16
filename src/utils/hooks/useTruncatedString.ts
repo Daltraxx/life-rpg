@@ -55,6 +55,17 @@ export default function useTruncatedString(
     stringValue || placeholderText
   );
 
+  // Reset truncation state on window resize to re-evaluate
+  useEffect(() => {
+    const resizeHandler = setTimeout(() => {
+      setStringTruncated(false);
+    }, 300);
+
+    return () => {
+      clearTimeout(resizeHandler);
+    };
+  }, [windowWidth]);
+
   useEffect(() => {
     // If already truncated and  window hasn't been resized,
     // and component using this hook hasn't reset truncation state for re-evaluation, do nothing
@@ -90,17 +101,6 @@ export default function useTruncatedString(
     smallFontSize,
     largeFontSize,
   ]);
-
-  // Reset truncation state on window resize to re-evaluate
-  useEffect(() => {
-    const resizeHandler = setTimeout(() => {
-      setStringTruncated(false);
-    }, 300);
-
-    return () => {
-      clearTimeout(resizeHandler);
-    };
-  }, [windowWidth]);
 
   return displayString;
 }
