@@ -15,7 +15,7 @@ export async function login(prevState: LoginState, formData: FormData) {
     console.error("Supabase client creation failed:", error);
     return {
       message: "Internal server error. Please try again later.",
-    } as LoginState;
+    };
   }
   
 
@@ -28,7 +28,7 @@ export async function login(prevState: LoginState, formData: FormData) {
       // NOTE: validatedFields.error.flatten() is deprecated in Zod v4, use z.flattenError instead
       errors: z.flattenError(validatedFields.error), // test this
       message: "Fields not valid. Failed to log in.",
-    } as LoginState;
+    };
   }
 
   const { data, error } = await supabase.auth.signInWithPassword(
@@ -39,7 +39,7 @@ export async function login(prevState: LoginState, formData: FormData) {
     console.error("Login failed:", error.message);
     return {
       message: "Authentication failed. Please check your credentials.",
-    } as LoginState;
+    };
   }
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
