@@ -5,8 +5,12 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   try {
     return await updateSession(request);
   } catch (error) {
-    console.error("Middleware error:", error);
-    return NextResponse.next();
+    // Catches unexpected errors like missing env vars in dev, network failures, etc.
+    console.error("Unexpected middleware error:", error);
+    // Optionally redirect to error page instead of continuing
+    const url = request.nextUrl.clone();
+    url.pathname = "/error"; // TODO: create error page
+    return NextResponse.redirect(url);
   }
 }
 
