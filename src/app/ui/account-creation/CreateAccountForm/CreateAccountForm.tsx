@@ -29,6 +29,7 @@ type Field = keyof ValidationErrorMessages;
 const FIELDS: Field[] = ["email", "username", "password", "confirmPassword"];
 
 const HEADING_FONT_FAMILY = "Jersey 10";
+const USERNAME_PLACEHOLDER = "[new user]";
 const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
 
 /**
@@ -129,7 +130,7 @@ export default function CreateAccountForm(): ReactNode {
     formData.username,
     headingElementRef,
     MAX_HEADING_WIDTH_RATIO,
-    "[new user]",
+    USERNAME_PLACEHOLDER,
     HEADING_FONT_FAMILY
   );
 
