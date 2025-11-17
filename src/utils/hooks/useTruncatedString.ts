@@ -1,4 +1,4 @@
-import { useEffect, useState, RefObject } from "react";
+import { useEffect, useState, RefObject, useRef } from "react";
 import useWindowWidth from "./useWindowWidth";
 import useElementWidth from "./useElementWidth";
 import getTruncatedString from "@/app/ui/utils/getTruncatedString";
@@ -36,15 +36,14 @@ export default function useTruncatedString(
   );
   const [stringTruncated, setStringTruncated] = useState(false);
 
-  const [prevStringStateValue, setPrevStringStateValue] =
-    useState(stringStateValue);
+  const prevStringStateVal = useRef<string>(stringStateValue);
   
   useEffect(() => {
     // If the string value has changed to a shorter length, reset truncation state
-    if (stringStateValue.length < prevStringStateValue.length) {
+    if (stringStateValue.length < prevStringStateVal.current.length) {
       setStringTruncated(false);
     }
-    setPrevStringStateValue(stringStateValue);
+    prevStringStateVal.current = stringStateValue;
   }, [stringStateValue]);
 
   // Reset truncation state on window resize to re-evaluate
