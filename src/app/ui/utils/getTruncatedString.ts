@@ -28,6 +28,7 @@ type TruncateOptions = {
  * @returns The truncated string with "..." appended, or the original string if it fits within the maximum width
  *
  * @remarks
+ * - Creates a persistent, hidden canvas element in the document body for text measurement (reused across calls)
  * - Uses a canvas context to measure text width with the specified font
  * - Font size is determined by comparing windowWidth to windowWidthBreakpointMD
  * - Creates a canvas element if one doesn't already exist in the document
