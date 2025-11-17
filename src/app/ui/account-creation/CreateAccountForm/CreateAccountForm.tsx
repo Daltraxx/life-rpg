@@ -73,6 +73,9 @@ export default function CreateAccountForm(): ReactNode {
     setFormData((prev) => ({ ...prev, [target.name]: target.value }));
   };
 
+  // State to track if all fields are valid, controls submit button disabled state
+  const [allFieldsValid, setAllFieldsValid] = useState(false);
+
   /**
    * A React effect that validates the form data with debouncing whenever it changes.
    * It uses a 500ms debounce delay to prevent excessive validation calls during rapid typing.
@@ -100,8 +103,10 @@ export default function CreateAccountForm(): ReactNode {
             filteredErrors[field] = errors[field];
         }
         setErrors(filteredErrors);
+        setAllFieldsValid(false);
       } else {
         setErrors({});
+        setAllFieldsValid(true);
       }
     }, 500); // Adjust the delay as needed
 
@@ -282,7 +287,7 @@ export default function CreateAccountForm(): ReactNode {
           type="submit"
           color="blue-600"
           className={styles.submitButton}
-          disabled={isPending || Object.keys(errors).length > 0}
+          disabled={isPending || !allFieldsValid}
         >
           {isPending ? "Creating Account..." : "Create Account!"}
         </ButtonWrapper>
