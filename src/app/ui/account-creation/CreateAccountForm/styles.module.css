@@ -56,7 +56,7 @@
 
 .errorMessage p {
   color: var(--error-message-orange, #cd6d07);
-  line-height: 1.3;
+  line-height: 1.1;
 }
 
 .errorMessage p:first-child {
