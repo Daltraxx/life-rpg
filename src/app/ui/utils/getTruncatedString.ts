@@ -1,5 +1,14 @@
 "use client";
 
+type TruncateOptions = {
+  fontName: string;
+  smallFontSize: number;
+  largeFontSize: number;
+  fontWeight?: number;
+  fontStyle?: string;
+  windowWidthBreakpointMD?: number;
+};
+
 /**
  * Truncates a string to fit within a specified maximum width by removing characters from the end
  * and appending an ellipsis ("...").
@@ -29,14 +38,18 @@ export default function getTruncatedString(
   windowWidth: number,
   stringWidth: number,
   maxStringWidth: number,
-  fontName: string,
-  smallFontSize: number,
-  largeFontSize: number,
-  fontWeight: number = 400,
-  fontStyle: string = "normal",
-  windowWidthBreakpointMD: number = 768
+  options: TruncateOptions
 ) {
   if (stringWidth <= maxStringWidth) return string;
+
+  const {
+    fontName,
+    smallFontSize,
+    largeFontSize,
+    fontWeight = 400,
+    fontStyle = "normal",
+    windowWidthBreakpointMD = 768,
+  } = options;
 
   let canvas: HTMLCanvasElement | null = document.querySelector(
     "canvas[data-text-measurement]"
@@ -61,7 +74,7 @@ export default function getTruncatedString(
 
   const fontSize =
     windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
-  
+
   context.font = `${fontStyle} ${fontWeight} ${fontSize}px "${fontName}"`;
 
   // Could optimize with binary search, but expected string lengths are short enough for iterative approach
