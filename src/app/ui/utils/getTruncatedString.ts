@@ -11,6 +11,8 @@
  * @param fontName - The name of the font to use for text measurement
  * @param smallFontSize - The font size in pixels to use for windows narrower than the breakpoint
  * @param largeFontSize - The font size in pixels to use for windows wider than the breakpoint
+ * @param fontWeight - The font weight to use for text measurement (default: 400)
+ * @param fontStyle - The font style to use for text measurement (default: "normal")
  * @param windowWidthBreakpointMD - The window width breakpoint in pixels (default: 768)
  *
  * @returns The truncated string with "..." appended, or the original string if it fits within the maximum width
