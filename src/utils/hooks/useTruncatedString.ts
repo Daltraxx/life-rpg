@@ -37,7 +37,7 @@ export default function useTruncatedString(
   const [stringTruncated, setStringTruncated] = useState(false);
 
   const prevStringVal = useRef<string>(stringVal);
-  
+
   useEffect(() => {
     // If the string value has changed to a shorter length, reset truncation state
     if (stringVal.length < prevStringVal.current.length) {

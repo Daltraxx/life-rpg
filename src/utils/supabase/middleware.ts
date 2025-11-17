@@ -94,7 +94,7 @@ export async function updateSession(
 
   if (error) {
     const errorDetails = getUserErrorLog(error, request);
-    console.log(
+    console.error(
       "Auth errors in middleware:\n",
       errorDetails
     );
