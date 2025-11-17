@@ -42,7 +42,7 @@ export default function useElementWidth(
     return () => {
       resizeObserver.disconnect();
     };
-  }, [ref.current,...dependencies]); // include dependencies if provided
+  }, [...dependencies]); // include dependencies if provided
 
   return elementWidth;
 }
