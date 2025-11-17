@@ -54,5 +54,5 @@ export async function createAccount(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   revalidatePath("/");
-  redirect("/profile"); // Redirect to profile or desired page after login (need to create page), take into account email confirmation step
+  redirect("/verify-email"); // Redirect to verify email page (need to create page)
 }
