@@ -11,7 +11,7 @@ const getUserErrorLog = (error: AuthError, request: NextRequest) => {
     status: error.status || "unknown",
     userAgent: request.headers.get("user-agent") || "unknown",
     timestamp: new Date().toISOString(),
-    stack: error.stack,
+    ...(process.env.NODE_ENV === "development" && { stack: error.stack }),
   };
 
   return errorDetails;
