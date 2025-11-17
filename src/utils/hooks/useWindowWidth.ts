@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
  * const width = useWindowWidth();
  * const isNarrow = width < 768;
  */
-export default function useWindowWidth() {
+export default function useWindowWidth(): number {
   const [windowWidth, setWindowWidth] = useState(0);
 
   useEffect(() => {
