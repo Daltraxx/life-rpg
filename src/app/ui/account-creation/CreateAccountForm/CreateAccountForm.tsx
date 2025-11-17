@@ -160,7 +160,11 @@ export default function CreateAccountForm(): ReactNode {
             required
           />
           {errors.email && (
-            <div id="email-error" className={styles.errorMessage}>
+            <div
+              id="email-error"
+              className={styles.errorMessage}
+              aria-live="polite"
+            >
               {errors.email.map((error, i) => (
                 <Paragraph key={i} size="16">
                   {error}
@@ -183,7 +187,11 @@ export default function CreateAccountForm(): ReactNode {
             required
           />
           {errors.username && (
-            <div id="username-error" className={styles.errorMessage}>
+            <div
+              id="username-error"
+              className={styles.errorMessage}
+              aria-live="polite"
+            >
               {errors.username.map((error, i) => (
                 <Paragraph key={i} size="16">
                   {error}
@@ -206,7 +214,11 @@ export default function CreateAccountForm(): ReactNode {
             required
           />
           {errors.password && (
-            <div id="password-error" className={styles.errorMessage}>
+            <div
+              id="password-error"
+              className={styles.errorMessage}
+              aria-live="polite"
+            >
               {errors.password.map((error, i) => (
                 <Paragraph key={i} size="16">
                   {error}
@@ -231,7 +243,11 @@ export default function CreateAccountForm(): ReactNode {
             required
           />
           {errors.confirmPassword && (
-            <div id="confirmPassword-error" className={styles.errorMessage}>
+            <div
+              id="confirmPassword-error"
+              className={styles.errorMessage}
+              aria-live="polite"
+            >
               {errors.confirmPassword.map((error, i) => (
                 <Paragraph key={i} size="16">
                   {error}
