@@ -43,6 +43,15 @@ export async function createAccount(
         return {
           message: "Password is too weak. Please choose a stronger password.",
         };
+      case "invalid_email":
+        return {
+          message: "The email address is invalid. Please check and try again.",
+        };
+      case "over_email_send_rate_limit":
+        return {
+          message:
+            "Too many requests. Please wait a while before trying again.",
+        };
       default:
         return {
           message: "Account creation failed. Please try again.",
