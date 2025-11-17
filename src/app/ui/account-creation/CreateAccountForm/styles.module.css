@@ -55,8 +55,7 @@
 
 .errorMessage p {
   color: var(--error-message-orange, #cd6d07);
-  line-height: .6rem;
-  padding-top: 0.5rem;
+  line-height: 1.2;
 }
 
 @media only screen and (min-width: 768px) {
