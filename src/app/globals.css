@@ -15,7 +15,7 @@
 
   --gray-200: hsl(0, 0%, 85%); /* #d9d9d9 */
 
-  --error-message-orange: #cd6d07;
+  --error-message-orange: hsl(31, 93%, 42%) /* #cd6d07 */;
 
   --white: #ffffff;
 
