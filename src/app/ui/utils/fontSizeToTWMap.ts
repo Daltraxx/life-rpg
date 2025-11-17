@@ -3,7 +3,11 @@
  *
  * Most keys represent font sizes in pixels (e.g., "16" = 16px).
  * The special "custom" key maps to an empty string for custom font sizing.
- * Keys with "-responsive" suffix provide mobile-first responsive scaling (e.g., "36-responsive" scales from 30px to 36px at md+ breakpoint).
+ * Keys with "-responsive" suffix provide mobile-first responsive scaling:
+ * - "20-responsive": 16px → 20px (text-base md:text-xl)
+ * - "24-responsive": 20px → 24px (text-xl md:text-2xl)
+ * - "36-responsive": 30px → 36px (text-3xl md:text-4xl)
+ * - "48-responsive": 36px → 48px (text-4xl md:text-5xl)
  * This object is readonly and provides a consistent mapping between
  * numeric font sizes and Tailwind's text size utilities.
  *
@@ -14,7 +18,7 @@
  */
 
 const fontSizeToTWMap = {
-  custom: "",
+  "custom": "",
   "16": "text-base",
   "20-responsive": "text-base md:text-xl",
   "20": "text-xl",
