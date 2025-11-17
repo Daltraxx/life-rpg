@@ -59,7 +59,8 @@ export default function getTruncatedString(
 
   const fontSize =
     windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
-  context.font = ` ${fontStyle} ${fontWeight} ${fontSize}px "${fontName}"`;
+  
+  context.font = `${fontStyle} ${fontWeight} ${fontSize}px "${fontName}"`;
 
   // Could optimize with binary search, but expected string lengths are short enough for iterative approach
   while (stringWidth > maxStringWidth && string.length > 0) {
