@@ -44,6 +44,7 @@
 .inputContainer input {
   font-size: 1.3rem;
   background-color: var(--gray-200, #d9d9d9);
+  height: 2rem;
   width: 100%;
   border: 3px solid var(--brown-600, #362009);
   padding-left: 0.5rem;
