@@ -1,4 +1,4 @@
-import { useEffect, useState, RefObject, use } from "react";
+import { useEffect, useState, RefObject } from "react";
 import useWindowWidth from "./useWindowWidth";
 import useElementWidth from "./useElementWidth";
 import getTruncatedString from "@/app/ui/utils/getTruncatedString";
