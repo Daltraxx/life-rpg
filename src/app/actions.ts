@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { LoginSchema, LoginState } from "@/utils/validations/login";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 
-export async function login(prevState: LoginState, formData: FormData) {
+export async function login(prevState: LoginState, formData: FormData): Promise<LoginState> {
   let supabase;
   try {
     supabase = await createSupabaseServerClient();
@@ -26,7 +26,7 @@ export async function login(prevState: LoginState, formData: FormData) {
   if (!validatedFields.success) {
     return {
       // NOTE: validatedFields.error.flatten() is deprecated in Zod v4, use z.flattenError instead
-      errors: z.flattenError(validatedFields.error), // test this
+      errors: z.flattenError(validatedFields.error).fieldErrors, // test this
       message: "Fields not valid. Failed to log in.",
     };
   }
