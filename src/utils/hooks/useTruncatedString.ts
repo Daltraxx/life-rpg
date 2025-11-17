@@ -7,7 +7,7 @@ import getTruncatedString from "@/app/ui/utils/getTruncatedString";
  * A custom hook that truncates a string based on the available width of an element
  * and a specified maximum width ratio relative to the window width.
  *
- * @param stringStateValue - The string value to be displayed, which may be truncated. Must be a state value.
+ * @param stringStateVal - The string value to be displayed, which may be truncated. Must be a state value.
  * @param elementRef - A reference to the HTML element whose width will be evaluated.
  * @param maxWidthRatio - The ratio of the maximum allowed width relative to the window width.
  * @param placeholderText - The text to display when the string is empty.
@@ -21,7 +21,7 @@ import getTruncatedString from "@/app/ui/utils/getTruncatedString";
  * const truncatedString = useTruncatedString("This is a long string", elementRef, 0.8, "Loading...");
  */
 export default function useTruncatedString(
-  stringStateValue: string,
+  stringStateVal: string,
   elementRef: RefObject<HTMLElement | null>,
   maxWidthRatio: number,
   placeholderText: string,
@@ -32,19 +32,19 @@ export default function useTruncatedString(
   const windowWidth = useWindowWidth();
   const elementWidth = useElementWidth(elementRef);
   const [displayString, setDisplayString] = useState(
-    stringStateValue || placeholderText
+    stringStateVal || placeholderText
   );
   const [stringTruncated, setStringTruncated] = useState(false);
 
-  const prevStringStateVal = useRef<string>(stringStateValue);
+  const prevStringStateVal = useRef<string>(stringStateVal);
   
   useEffect(() => {
     // If the string value has changed to a shorter length, reset truncation state
-    if (stringStateValue.length < prevStringStateVal.current.length) {
+    if (stringStateVal.length < prevStringStateVal.current.length) {
       setStringTruncated(false);
     }
-    prevStringStateVal.current = stringStateValue;
-  }, [stringStateValue]);
+    prevStringStateVal.current = stringStateVal;
+  }, [stringStateVal]);
 
   // Reset truncation state on window resize to re-evaluate
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function useTruncatedString(
     if (stringTruncated) return;
 
     const maxElementWidth = windowWidth * maxWidthRatio;
-    const currentString = stringStateValue || placeholderText;
+    const currentString = stringStateVal || placeholderText;
 
     if (elementWidth > maxElementWidth) {
       setStringTruncated(true);
@@ -82,7 +82,7 @@ export default function useTruncatedString(
       setDisplayString(currentString);
     }
   }, [
-    stringStateValue,
+    stringStateVal,
     elementWidth,
     windowWidth,
     stringTruncated,
