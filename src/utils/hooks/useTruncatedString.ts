@@ -3,8 +3,6 @@ import useWindowWidth from "./useWindowWidth";
 import useElementWidth from "./useElementWidth";
 import getTruncatedString from "@/app/ui/utils/getTruncatedString";
 
-
-
 /**
  * A custom hook that truncates a string based on the available width of an element
  * and a specified maximum width ratio relative to the window width.
@@ -38,7 +36,9 @@ export default function useTruncatedString(
   );
   const [stringTruncated, setStringTruncated] = useState(false);
 
-  const [prevStringStateValue, setPrevStringStateValue] = useState(stringStateValue);
+  const [prevStringStateValue, setPrevStringStateValue] =
+    useState(stringStateValue);
+  
   useEffect(() => {
     // If the string value has changed to a shorter length, reset truncation state
     if (stringStateValue.length < prevStringStateValue.length) {
@@ -59,7 +59,7 @@ export default function useTruncatedString(
   }, [windowWidth]);
 
   useEffect(() => {
-    // If already truncated and  window hasn't been resized,
+    // If already truncated and window hasn't been resized,
     // and component using this hook hasn't reset truncation state for re-evaluation, do nothing
     // This prevents infinite loop of updates when truncation brings username width under threshold
     if (stringTruncated) return;
