@@ -7,8 +7,11 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
   } catch (error) {
     // Catches unexpected errors like missing env vars in dev, network failures, etc.
     console.error("Unexpected middleware error:", error);
-    // Optionally redirect to error page instead of continuing
     const url = request.nextUrl.clone();
+    url.searchParams.set("message", "An unexpected error occurred");
+    if (error instanceof Error) {
+      url.searchParams.set("error", error.message);
+    }
     url.pathname = "/error"; // TODO: create error page
     return NextResponse.redirect(url);
   }
