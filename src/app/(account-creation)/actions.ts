@@ -62,6 +62,6 @@ export async function createAccount(
   // TODO: if account creation succeeds, insert additional user data into the "users" table
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
-  revalidatePath("/");
+  // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
   redirect("/verify-email"); // Redirect to verify email page (need to create page)
 }
