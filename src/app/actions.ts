@@ -8,7 +8,16 @@ import { LoginSchema, LoginState } from "@/utils/validations/login";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 
 export async function login(prevState: LoginState, formData: FormData) {
-  const supabase = await createSupabaseServerClient();
+  let supabase;
+  try {
+    supabase = await createSupabaseServerClient();
+  } catch (error) {
+    console.error("Supabase client creation failed:", error);
+    return {
+      message: "Internal server error. Please try again later.",
+    } as LoginState;
+  }
+  
 
   const rawFormData = Object.fromEntries(formData);
 
