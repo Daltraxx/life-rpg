@@ -150,7 +150,9 @@ export default function CreateAccountForm(): ReactNode {
         aria-describedby={errorState.message ? "server-error" : undefined}
       >
         <div className={styles.inputContainer}>
-          <Label htmlFor="email">Email:</Label>
+          <Label htmlFor="email" size="24-responsive">
+            Email:
+          </Label>
           <input
             id="email"
             type="email"
@@ -177,7 +179,9 @@ export default function CreateAccountForm(): ReactNode {
         </div>
 
         <div className={styles.inputContainer}>
-          <Label htmlFor="username">Display Name:</Label>
+          <Label htmlFor="username" size="24-responsive">
+            Display Name:
+          </Label>
           <input
             id="username"
             type="text"
@@ -204,7 +208,9 @@ export default function CreateAccountForm(): ReactNode {
         </div>
 
         <div className={styles.inputContainer}>
-          <Label htmlFor="password">Password:</Label>
+          <Label htmlFor="password" size="24-responsive">
+            Password:
+          </Label>
           <input
             id="password"
             type="password"
@@ -231,7 +237,9 @@ export default function CreateAccountForm(): ReactNode {
         </div>
 
         <div className={styles.inputContainer}>
-          <Label htmlFor="confirmPassword">Confirm Password:</Label>
+          <Label htmlFor="confirmPassword" size="24-responsive">
+            Confirm Password:
+          </Label>
           <input
             id="confirmPassword"
             type="password"
