@@ -9,9 +9,6 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     console.error("Unexpected middleware error:", error);
     const url = request.nextUrl.clone();
     url.searchParams.set("message", "An unexpected error occurred");
-    if (error instanceof Error) {
-      url.searchParams.set("error", error.message);
-    }
     url.pathname = "/error"; // TODO: create error page
     return NextResponse.redirect(url);
   }
