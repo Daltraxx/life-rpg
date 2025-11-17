@@ -70,7 +70,7 @@ export default function useTruncatedString(
     if (elementWidth > maxElementWidth) {
       setStringTruncated(true);
       const truncatedString = getTruncatedString(
-        stringStateValue,
+        currentString,
         windowWidth,
         elementWidth,
         maxElementWidth,
