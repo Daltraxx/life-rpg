@@ -91,6 +91,7 @@ export default function CreateAccountForm(): ReactNode {
   useEffect(() => {
     const validationHandler = setTimeout(() => {
       const validatedFields = SignupSchema.safeParse(formData);
+      console.log("Validating form data:", formData, validatedFields);
       if (!validatedFields.success) {
         const errors = z.flattenError(validatedFields.error).fieldErrors;
         const filteredErrors: ValidationErrorMessages = {};
@@ -167,7 +168,7 @@ export default function CreateAccountForm(): ReactNode {
               aria-live="polite"
             >
               {errors.email.map((error) => (
-                <Paragraph key={error} size="16">
+                <Paragraph key={error} size="20-responsive">
                   - {error}
                 </Paragraph>
               ))}
@@ -194,7 +195,7 @@ export default function CreateAccountForm(): ReactNode {
               aria-live="polite"
             >
               {errors.username.map((error) => (
-                <Paragraph key={error} size="16">
+                <Paragraph key={error} size="20-responsive">
                   - {error}
                 </Paragraph>
               ))}
@@ -221,7 +222,7 @@ export default function CreateAccountForm(): ReactNode {
               aria-live="polite"
             >
               {errors.password.map((error) => (
-                <Paragraph key={error} size="16">
+                <Paragraph key={error} size="20-responsive">
                   - {error}
                 </Paragraph>
               ))}
@@ -250,7 +251,7 @@ export default function CreateAccountForm(): ReactNode {
               aria-live="polite"
             >
               {errors.confirmPassword.map((error) => (
-                <Paragraph key={error} size="16">
+                <Paragraph key={error} size="20-responsive">
                   - {error}
                 </Paragraph>
               ))}
@@ -265,7 +266,7 @@ export default function CreateAccountForm(): ReactNode {
             className={styles.serverErrorContainer}
             role="alert"
           >
-            <Paragraph size="16">{errorState.message}</Paragraph>
+            <Paragraph size="20-responsive">{errorState.message}</Paragraph>
           </div>
         )}
 
@@ -273,7 +274,7 @@ export default function CreateAccountForm(): ReactNode {
           type="submit"
           color="blue-600"
           className={styles.submitButton}
-          disabled={isPending}
+          disabled={isPending || Object.keys(errors).length > 0}
         >
           {isPending ? "Creating Account..." : "Create Account!"}
         </ButtonWrapper>
