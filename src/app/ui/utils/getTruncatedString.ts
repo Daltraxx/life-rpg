@@ -59,6 +59,7 @@ export default function getTruncatedString(
     windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
   context.font = `${fontSize}px "${fontName}"`;
 
+  // Could optimize with binary search, but expected string lengths are short enough for iterative approach
   while (stringWidth > maxStringWidth && string.length > 0) {
     string = string.slice(0, -1);
     stringWidth = context.measureText(string + "...").width; // NOTE: not a perfect measurement but close enough for now
