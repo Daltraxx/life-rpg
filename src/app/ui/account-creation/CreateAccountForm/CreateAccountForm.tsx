@@ -68,17 +68,7 @@ export default function CreateAccountForm(): ReactNode {
 
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
-  const [usernameTruncated, setUsernameTruncated] = useState(false);
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
-    // Reset username truncation if user modifies username to be shorter
-    if (
-      target.name === "username" &&
-      usernameTruncated &&
-      target.value.length < formData.username.length
-    ) {
-      setUsernameTruncated(false);
-    }
-
     setInteractedFields((prev) => ({ ...prev, [target.name]: true }));
     setFormData((prev) => ({ ...prev, [target.name]: target.value }));
   };
@@ -112,7 +102,7 @@ export default function CreateAccountForm(): ReactNode {
       } else {
         setErrors({});
       }
-    }, 500); // Adjust the delay as needed (500ms in this example)
+    }, 500); // Adjust the delay as needed
 
     return () => {
       clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
@@ -128,8 +118,6 @@ export default function CreateAccountForm(): ReactNode {
   const headingElementRef = useRef<HTMLHeadingElement>(null);
   const usernameForDisplay = useTruncatedString(
     formData.username,
-    usernameTruncated,
-    setUsernameTruncated,
     headingElementRef,
     MAX_HEADING_WIDTH_RATIO,
     "[new user]"
