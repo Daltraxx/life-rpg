@@ -3,7 +3,6 @@ import Heading from "../../Heading";
 import styles from "./styles.module.css";
 import { Span } from "../../TextWrappers";
 import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
-import { useMemo } from "react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
