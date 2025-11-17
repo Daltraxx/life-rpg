@@ -167,7 +167,7 @@ export default function CreateAccountForm(): ReactNode {
             >
               {errors.email.map((error, i) => (
                 <Paragraph key={i} size="16">
-                  {error}
+                  - {error}
                 </Paragraph>
               ))}
             </div>
@@ -194,7 +194,7 @@ export default function CreateAccountForm(): ReactNode {
             >
               {errors.username.map((error, i) => (
                 <Paragraph key={i} size="16">
-                  {error}
+                  - {error}
                 </Paragraph>
               ))}
             </div>
@@ -221,7 +221,7 @@ export default function CreateAccountForm(): ReactNode {
             >
               {errors.password.map((error, i) => (
                 <Paragraph key={i} size="16">
-                  {error}
+                  - {error}
                 </Paragraph>
               ))}
             </div>
@@ -250,7 +250,7 @@ export default function CreateAccountForm(): ReactNode {
             >
               {errors.confirmPassword.map((error, i) => (
                 <Paragraph key={i} size="16">
-                  {error}
+                  - {error}
                 </Paragraph>
               ))}
             </div>
