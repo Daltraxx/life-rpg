@@ -11,7 +11,7 @@ import getTruncatedString from "@/app/ui/utils/getTruncatedString";
  * @param elementRef - A reference to the HTML element whose width will be evaluated.
  * @param maxWidthRatio - The ratio of the maximum allowed width relative to the window width.
  * @param placeholderText - The text to display when the string is empty.
- * @param fontName - The font name used for measuring the string width (default is "Jersey 10").
+ * @param fontName - The font name used for measuring the string width.
  * @param smallFontSize - The font size used when window width is small (< 768px) (default is 36).
  * @param largeFontSize - The font size used when window width is large (>= 768px) (default is 48).
  *
@@ -25,7 +25,7 @@ export default function useTruncatedString(
   elementRef: RefObject<HTMLElement | null>,
   maxWidthRatio: number,
   placeholderText: string,
-  fontName: string = "Jersey 10",
+  fontName: string,
   smallFontSize: number = 36,
   largeFontSize: number = 48
 ): string {

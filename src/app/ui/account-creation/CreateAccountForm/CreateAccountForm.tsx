@@ -120,7 +120,8 @@ export default function CreateAccountForm(): ReactNode {
     formData.username,
     headingElementRef,
     MAX_HEADING_WIDTH_RATIO,
-    "[new user]"
+    "[new user]",
+    "Jersey 10"
   );
 
   return (
