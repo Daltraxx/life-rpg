@@ -14,16 +14,17 @@
  */
 
 const fontSizeToTWMap = {
-  "custom": "",
+  custom: "",
   "16": "text-base",
-  "20": "text-xl",
   "20-responsive": "text-base md:text-xl",
+  "20": "text-xl",
+  "24-responsive": "text-xl md:text-2xl",
   "24": "text-2xl",
   "30": "text-3xl",
-  "36": "text-4xl",
   "36-responsive": "text-3xl md:text-4xl",
-  "48": "text-5xl",
+  "36": "text-4xl",
   "48-responsive": "text-4xl md:text-5xl",
+  "48": "text-5xl",
   "60": "text-6xl",
   "72": "text-7xl",
   "96": "text-8xl",
