@@ -26,20 +26,18 @@ export async function createAccount(
     } as SignupState;
   }
 
+  // TODO: query supabase to check if username or email already exists before attempting to create account
+
   const { data, error } = await supabase.auth.signUp({
     email: validatedFields.data.email,
     password: validatedFields.data.password,
   });
 
-  // Add logic for specific error cases like existing email, weak password, etc.
+  // Add logic for other specific error cases.
   if (error) {
     console.error("Error creating account:", error.code);
     // Handle specific error cases
     switch (error.code) {
-      case "email_exists":
-        return {
-          message: "An account with this email already exists.",
-        } as SignupState;
       // research ways to make password validation match supabase rules
       case "weak_password":
         return {
