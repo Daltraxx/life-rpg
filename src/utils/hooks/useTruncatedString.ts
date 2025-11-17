@@ -7,7 +7,7 @@ import getTruncatedString from "@/app/ui/utils/getTruncatedString";
  * A custom hook that truncates a string based on the available width of an element
  * and a specified maximum width ratio relative to the window width.
  *
- * @param stringVal - The string value to be displayed, which may be truncated..
+ * @param stringVal - The string value to be displayed, which may be truncated.
  * @param elementRef - A reference to the HTML element whose width will be evaluated.
  * @param maxWidthRatio - The ratio of the maximum allowed width relative to the window width.
  * @param placeholderText - The text to display when the string is empty.
@@ -18,7 +18,7 @@ import getTruncatedString from "@/app/ui/utils/getTruncatedString";
  * @returns The string to be displayed, which may be truncated based on the available width.
  *
  * @example
- * const truncatedString = useTruncatedString("This is a long string", elementRef, 0.8, "Loading...");
+ * const truncatedString = useTruncatedString("This is a long string", elementRef, 0.8, "Loading...", "Arial");
  */
 export default function useTruncatedString(
   stringVal: string,
