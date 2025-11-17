@@ -72,9 +72,7 @@ export default function useTruncatedString(
         windowWidth,
         elementWidth,
         maxElementWidth,
-        fontName,
-        smallFontSize,
-        largeFontSize
+        { fontName, smallFontSize, largeFontSize }
       );
       setDisplayString(truncatedString);
     } else {
