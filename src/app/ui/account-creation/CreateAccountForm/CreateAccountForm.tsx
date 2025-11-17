@@ -95,8 +95,8 @@ export default function CreateAccountForm(): ReactNode {
         const errors = z.flattenError(validatedFields.error).fieldErrors;
         const filteredErrors: ValidationErrorMessages = {};
         for (const field of FIELDS) {
-          if (interactedFields[field] && errors[field as Field]?.length)
-            filteredErrors[field as Field] = errors[field as Field];
+          if (interactedFields[field] && errors[field]?.length)
+            filteredErrors[field] = errors[field];
         }
         setErrors(filteredErrors);
       } else {
