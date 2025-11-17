@@ -17,6 +17,7 @@
   gap: 0.5rem;
   text-align: center;
   color: var(--blue-600, #091f36);
+  max-width: 100%;
 }
 
 .heading {
