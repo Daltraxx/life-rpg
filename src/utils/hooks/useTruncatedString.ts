@@ -58,9 +58,8 @@ export default function useTruncatedString(
   }, [windowWidth]);
 
   useEffect(() => {
-    // If already truncated and window hasn't been resized,
-    // and component using this hook hasn't reset truncation state for re-evaluation, do nothing
-    // This prevents infinite loop of updates when truncation brings username width under threshold
+    // If already truncated (window resize and reducing string length will reset this), do nothing to prevent infinite loop
+    // (truncation reduces element width below threshold, which would trigger re-truncation)
     if (stringTruncated) return;
 
     const maxElementWidth = windowWidth * maxWidthRatio;
