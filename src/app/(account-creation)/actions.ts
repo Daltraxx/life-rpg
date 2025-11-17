@@ -10,7 +10,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export async function createAccount(
   prevState: SignupState,
   formData: FormData
-) {
+): Promise<SignupState> {
   //TODO: add rate limiting to prevent abuse
   const supabase = await createSupabaseServerClient();
 
@@ -21,9 +21,9 @@ export async function createAccount(
   if (!validatedFields.success) {
     return {
       // NOTE: validatedFields.error.flatten() is deprecated in Zod v4, use z.flattenError instead
-      errors: z.flattenError(validatedFields.error), // TODO: test this
+      errors: z.flattenError(validatedFields.error).fieldErrors, // TODO: test this
       message: "Fields not valid. Failed to create account.",
-    } as SignupState;
+    };
   }
 
   // TODO: query supabase to check if username or email already exists before attempting to create account
@@ -42,11 +42,11 @@ export async function createAccount(
       case "weak_password":
         return {
           message: "Password is too weak. Please choose a stronger password.",
-        } as SignupState;
+        };
       default:
         return {
           message: "Account creation failed. Please try again.",
-        } as SignupState;
+        };
     }
   }
 
