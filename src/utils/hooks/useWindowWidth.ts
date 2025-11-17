@@ -35,7 +35,7 @@ export default function useWindowWidth() {
     window.addEventListener("resize", handleResize, { passive: true });
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (frame) cancelAnimationFrame(frame);
+      if (frame !== null) cancelAnimationFrame(frame);
     };
   }, []);
   return windowWidth;
