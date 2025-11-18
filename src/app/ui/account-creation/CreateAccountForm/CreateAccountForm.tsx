@@ -98,8 +98,6 @@ export default function CreateAccountForm(): ReactNode {
   useEffect(() => {
     const validationHandler = setTimeout(() => {
       const validatedFields = SignupSchema.safeParse(formData);
-      if (process.env.NODE_ENV === "development")
-        console.log("Validating form data:", formData, validatedFields);
       if (!validatedFields.success) {
         const errors = z.flattenError(validatedFields.error).fieldErrors;
         const filteredErrors: ValidationErrorMessages = {};
