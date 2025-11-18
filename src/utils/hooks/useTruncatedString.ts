@@ -12,8 +12,8 @@ import getTruncatedString from "@/app/ui/utils/getTruncatedString";
  * @param maxWidthRatio - The ratio of the maximum allowed width relative to the window width.
  * @param placeholderText - The text to display when the string is empty.
  * @param fontName - The font name used for measuring the string width.
- * @param smallFontSize - The font size used when window width is small (< 768px) (default is 36).
- * @param largeFontSize - The font size used when window width is large (>= 768px) (default is 48).
+ * @param smallFontSize - The font size used when window width is small (< 768px) (default is 16).
+ * @param largeFontSize - The font size used when window width is large (>= 768px) (default is 16).
  *
  * @returns The string to be displayed, which may be truncated based on the available width.
  *
@@ -26,8 +26,8 @@ export default function useTruncatedString(
   maxWidthRatio: number,
   placeholderText: string,
   fontName: string,
-  smallFontSize: number = 36,
-  largeFontSize: number = 48
+  smallFontSize: number = 16,
+  largeFontSize: number = 16
 ): string {
   const windowWidth = useWindowWidth();
   const elementWidth = useElementWidth(elementRef);
