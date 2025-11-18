@@ -130,7 +130,9 @@ export default function CreateAccountForm(): ReactNode {
     headingElementRef,
     MAX_HEADING_WIDTH_RATIO,
     USERNAME_PLACEHOLDER,
-    HEADING_FONT_FAMILY
+    HEADING_FONT_FAMILY,
+    36,
+    48
   );
 
   return (
