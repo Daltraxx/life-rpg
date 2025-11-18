@@ -17,7 +17,7 @@ export default function FieldErrorsDisplay({
   if (!errors || errors.length === 0) return null;
 
   return (
-    <div id={id} aria-live="polite" {...restProps}>
+    <div {...restProps} id={id} aria-live="polite">
       {errors.map((error) => (
         <Paragraph key={error} size={fontSize}>
           - {error}
