@@ -9,7 +9,7 @@ import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import { Label, Paragraph } from "../../TextWrappers";
-import FieldErrorsDisplay from "../../FieldErrorsDisplay/FieldErrorsDisplay";
+import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 import styles from "./styles.module.css";
 import useTruncatedString from "@/utils/hooks/useTruncatedString";
 
