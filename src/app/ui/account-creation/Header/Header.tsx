@@ -2,8 +2,9 @@ import Link from "next/link";
 import Bounded from "../../Bounded";
 import Heading from "../../Heading";
 import styles from "./styles.module.css";
+import { JSX } from "react";
 
-export default function Header() {
+export default function Header(): JSX.Element {
   return (
     <Bounded
       as="header"
