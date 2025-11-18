@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     });
 
     if (!error) {
-      redirectTo.searchParams.delete("next");
+      redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
       return NextResponse.redirect(redirectTo);
     }
   }
