@@ -151,11 +151,19 @@ export default function CreateAccountForm(): ReactNode {
         const userExists = checkIfUsernameExists(formData.username);
         userExists.then((data) => {
           if (checkCancelled) return;
-          setUsernameExists(!!data);
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            username: data ? ["Username already taken"] : undefined,
-          }));
+          if (data) {
+            setUsernameExists(true);
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              username: ["Username already taken"],
+            }));
+          } else {
+            setUsernameExists(false);
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              username: [],
+            }));
+          }
         }).catch((error) => {
           if (checkCancelled) return;
           console.error("Error during username existence check:", error);
