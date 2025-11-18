@@ -15,26 +15,35 @@ export async function GET(request: NextRequest) {
   redirectTo.searchParams.delete("token_hash");
   redirectTo.searchParams.delete("type");
 
-  if (token_hash && type) {
-    const supabase = await createSupabaseServerClient();
-    const { error } = await supabase.auth.verifyOtp({
-      type,
-      token_hash,
-    });
-
-    if (!error) {
-      redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
-      return NextResponse.redirect(redirectTo);
-    } else {
-      console.error("Error confirming email:", error.message, error.code, { type });
-    }
+  if (!token_hash || !type) {
+    redirectTo.pathname = "/error";
+    redirectTo.searchParams.set(
+      "message",
+      "Invalid confirmation link. Please check your email for the correct link."
+    );
+    return NextResponse.redirect(redirectTo);
   }
+
+  const supabase = await createSupabaseServerClient();
+  const { error } = await supabase.auth.verifyOtp({
+    type,
+    token_hash,
+  });
+
+  if (!error) {
+    redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
+    return NextResponse.redirect(redirectTo);
+  }
+
+  console.error("Error confirming email:", error.message, error.code, {
+    type,
+  });
 
   // On failure, redirect to error page with some instructions
   redirectTo.pathname = "/error";
   redirectTo.searchParams.set(
     "message",
-    "Email confirmation failed. Please try again later."
+    "Confirmation link has expired or already been used. Please request a new one."
   );
   return NextResponse.redirect(redirectTo);
 }
