@@ -173,14 +173,12 @@ export default function CreateAccountForm(): ReactNode {
             aria-describedby={errors.email ? "email-error" : undefined}
             required
           />
-          {errors.email && (
-            <FieldErrorsDisplay
-              errors={errors.email}
-              id="email-error"
-              fontSize="20-responsive"
-              className={styles.errorMessage}
-            />
-          )}
+          <FieldErrorsDisplay
+            errors={errors.email}
+            id="email-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />
         </div>
 
         <div className={styles.inputContainer}>
@@ -197,14 +195,12 @@ export default function CreateAccountForm(): ReactNode {
             aria-describedby={errors.username ? "username-error" : undefined}
             required
           />
-          {errors.username && (
-            <FieldErrorsDisplay
-              errors={errors.username}
-              id="username-error"
-              fontSize="20-responsive"
-              className={styles.errorMessage}
-            />
-          )}
+          <FieldErrorsDisplay
+            errors={errors.username}
+            id="username-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />
         </div>
 
         <div className={styles.inputContainer}>
@@ -221,14 +217,12 @@ export default function CreateAccountForm(): ReactNode {
             aria-describedby={errors.password ? "password-error" : undefined}
             required
           />
-          {errors.password && (
-            <FieldErrorsDisplay
-              errors={errors.password}
-              id="password-error"
-              fontSize="20-responsive"
-              className={styles.errorMessage}
-            />
-          )}
+          <FieldErrorsDisplay
+            errors={errors.password}
+            id="password-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />
         </div>
 
         <div className={styles.inputContainer}>
@@ -247,14 +241,12 @@ export default function CreateAccountForm(): ReactNode {
             }
             required
           />
-          {errors.confirmPassword && (
-            <FieldErrorsDisplay
-              errors={errors.confirmPassword}
-              id="confirmPassword-error"
-              fontSize="20-responsive"
-              className={styles.errorMessage}
-            />
-          )}
+          <FieldErrorsDisplay
+            errors={errors.confirmPassword}
+            id="confirmPassword-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />
         </div>
 
         {/* TODO: test below error messaging*/}
