@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
+// import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
