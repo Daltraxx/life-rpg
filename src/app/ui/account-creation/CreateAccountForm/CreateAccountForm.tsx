@@ -29,6 +29,10 @@ type Field = keyof ValidationErrorMessages;
 
 const FIELDS: Field[] = ["email", "username", "password", "confirmPassword"];
 
+const interactedFieldsInitialState: Record<Field, boolean> = Object.fromEntries(
+  FIELDS.map((field) => [field, false])
+) as Record<Field, boolean>;
+
 const HEADING_FONT_FAMILY = "Jersey 10";
 const USERNAME_PLACEHOLDER = "[new user]";
 const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
@@ -63,12 +67,7 @@ export default function CreateAccountForm(): ReactNode {
     confirmPassword: "",
   });
 
-  const [interactedFields, setInteractedFields] = useState(
-    Object.fromEntries(FIELDS.map((field) => [field, false])) as Record<
-      Field,
-      boolean
-    >
-  );
+  const [interactedFields, setInteractedFields] = useState(interactedFieldsInitialState);
 
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
