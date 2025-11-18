@@ -60,7 +60,7 @@ export default function getTruncatedString(
     canvas = document.createElement("canvas");
     canvas.setAttribute("data-text-measurement", "true");
     canvas.style.display = "none";
-    document.body.appendChild(canvas);
+    document.body?.appendChild(canvas);
   }
 
   const fontSize =
