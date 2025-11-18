@@ -148,10 +148,10 @@ export default function CreateAccountForm(): ReactNode {
       const { success } = SignupSchema.shape.username.safeParse(formData.username);
       if (success && !checkCancelled) {
         setQuerying(true);
-        const userExists = checkIfUsernameExists(formData.username);
-        userExists.then((data) => {
+        const usernameExists = checkIfUsernameExists(formData.username);
+        usernameExists.then((result) => {
           if (checkCancelled) return;
-          if (data) {
+          if (result) {
             setUsernameExists(true);
             setErrors((prevErrors) => ({
               ...prevErrors,
