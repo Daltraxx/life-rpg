@@ -1,13 +1,23 @@
 import styles from "./styles.module.css";
 import Bounded from "../../Bounded";
-import { ButtonWrapper, LinkWrapper, RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
+import {
+  ButtonWrapper,
+  LinkWrapper,
+  RegularLinkWrapper,
+} from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 
 export default function Login() {
   return (
     <Bounded innerClassName={styles.loginContainer}>
       <form className={styles.loginForm} action="">
         <label htmlFor="email-field">Email:</label>
-        <input type="email" id="email-field" name="email" required autoComplete="email" />
+        <input
+          type="email"
+          id="email-field"
+          name="email"
+          required
+          autoComplete="email"
+        />
         <label htmlFor="password-field">Password:</label>
         <input
           type="password"
@@ -16,11 +26,20 @@ export default function Login() {
           required
           autoComplete="current-password"
         />
-        <ButtonWrapper type="submit" className={styles.loginButton}>Login</ButtonWrapper>
-        <RegularLinkWrapper href="/forgot-password" className={styles.forgotPasswordLink}>Forgot Password?</RegularLinkWrapper>
+        <ButtonWrapper type="submit" className={styles.loginButton}>
+          Login
+        </ButtonWrapper>
+        <RegularLinkWrapper
+          href="/forgot-password"
+          className={styles.forgotPasswordLink}
+        >
+          Forgot Password?
+        </RegularLinkWrapper>
       </form>
       <div className={styles.divider}></div>
-      <LinkWrapper href="/create-account" className={styles.createAccountLink}>Create an account</LinkWrapper>
+      <LinkWrapper href="/create-account" className={styles.createAccountLink}>
+        Create an account
+      </LinkWrapper>
     </Bounded>
   );
 }
