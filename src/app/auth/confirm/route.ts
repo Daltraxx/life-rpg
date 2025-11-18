@@ -25,6 +25,8 @@ export async function GET(request: NextRequest) {
     if (!error) {
       redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
       return NextResponse.redirect(redirectTo);
+    } else {
+      console.error("Error confirming email:", error.message, error.code, { type });
     }
   }
 
