@@ -80,9 +80,10 @@ export default function getTruncatedString(
   context.font = `${fontStyle} ${fontWeight} ${fontSize}px "${fontName}"`;
 
   // Could optimize with binary search, but expected string lengths are short enough for iterative approach
-  while (stringWidth > maxStringWidth && string.length > 0) {
-    string = string.slice(0, -1);
-    stringWidth = context.measureText(string + "...").width; // NOTE: not a perfect measurement but close enough for now
+  let truncated = string;
+  while (stringWidth > maxStringWidth && truncated.length > 0) {
+    truncated = truncated.slice(0, -1);
+    stringWidth = context.measureText(truncated + "...").width; // NOTE: not a perfect measurement but close enough for now
   }
-  return string + "...";
+  return truncated + "...";
 }
