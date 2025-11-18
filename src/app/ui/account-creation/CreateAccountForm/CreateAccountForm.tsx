@@ -152,6 +152,10 @@ export default function CreateAccountForm(): ReactNode {
         userExists.then((data) => {
           if (checkCancelled) return;
           setUsernameExists(!!data);
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            username: data ? ["Username already taken"] : undefined,
+          }));
         }).catch((error) => {
           if (checkCancelled) return;
           console.error("Error during username existence check:", error);
