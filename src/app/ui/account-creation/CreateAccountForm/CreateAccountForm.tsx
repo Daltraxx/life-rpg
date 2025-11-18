@@ -12,6 +12,7 @@ import { Label, Paragraph } from "../../TextWrappers";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 import styles from "./styles.module.css";
 import useTruncatedString from "@/utils/hooks/useTruncatedString";
+import checkIfUsernameExists from "@/app/queries/client/checkIfUsernameExists";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
@@ -67,7 +68,9 @@ export default function CreateAccountForm(): ReactNode {
     confirmPassword: "",
   });
 
-  const [interactedFields, setInteractedFields] = useState(interactedFieldsInitialState);
+  const [interactedFields, setInteractedFields] = useState(
+    interactedFieldsInitialState
+  );
 
   const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
@@ -133,6 +136,36 @@ export default function CreateAccountForm(): ReactNode {
     36,
     48
   );
+
+  // Query database to check if username or email already exists before attempting to create account
+  const [querying, setQuerying] = useState(false);
+  const [usernameExists, setUsernameExists] = useState(false);
+  
+
+  useEffect(() => {
+    let checkCancelled = false;
+    const userCheckHandler = setTimeout(() => {
+      const { success } = SignupSchema.shape.username.safeParse(formData.username);
+      if (success && !checkCancelled) {
+        setQuerying(true);
+        const userExists = checkIfUsernameExists(formData.username);
+        userExists.then((data) => {
+          if (checkCancelled) return;
+          setUsernameExists(!!data);
+        }).catch((error) => {
+          if (checkCancelled) return;
+          console.error("Error during username existence check:", error);
+        }).finally(() => {
+          if (checkCancelled) return;
+          setQuerying(false);
+        });
+      }
+    }, 300);
+    return () => {
+      clearTimeout(userCheckHandler);
+      checkCancelled = true;
+    };
+  }, [formData.username]);
 
   return (
     <Bounded
@@ -263,7 +296,7 @@ export default function CreateAccountForm(): ReactNode {
           type="submit"
           color="blue-600"
           className={styles.submitButton}
-          disabled={isPending || !allFieldsValid}
+          disabled={isPending || !allFieldsValid || querying || usernameExists}
         >
           {isPending ? "Creating Account..." : "Create Account!"}
         </ButtonWrapper>
