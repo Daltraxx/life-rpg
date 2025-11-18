@@ -10,6 +10,7 @@ export default async function checkIfUsernameExists(username: string) {
       .select("id")
       .eq("username", username)
       .single();
+    return result.data;
   } catch (error) {
     if (error instanceof Error && "status" in error && error.status === 406) {
       // Username does not exist
