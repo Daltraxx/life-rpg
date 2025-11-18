@@ -3,13 +3,16 @@ import { z } from "zod";
 // Further validation can be added here as needed
 export const SignupSchema = z
   .object({
-    // NOTE: z.string().email() is deprecated in Zod v4, use z.email() instead
     email: z.email("Invalid email address"),
     username: z
       .string()
       .trim()
       .min(3, "Username must be at least 3 characters long")
-      .max(30, "Username must be at most 30 characters long"),
+      .max(30, "Username must be at most 30 characters long")
+      .regex(
+        /^[A-Za-z0-9_ ]+$/,
+        "Username can only contain letters, numbers, underscores, and spaces"
+      ),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters long")
