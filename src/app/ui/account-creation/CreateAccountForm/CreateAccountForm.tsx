@@ -9,6 +9,7 @@ import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
 import { Label, Paragraph } from "../../TextWrappers";
+import FieldErrorsDisplay from "../../FieldErrorsDisplay/FieldErrorsDisplay";
 import styles from "./styles.module.css";
 import useTruncatedString from "@/utils/hooks/useTruncatedString";
 
@@ -173,17 +174,12 @@ export default function CreateAccountForm(): ReactNode {
             required
           />
           {errors.email && (
-            <div
+            <FieldErrorsDisplay
+              errors={errors.email}
               id="email-error"
+              fontSize="20-responsive"
               className={styles.errorMessage}
-              aria-live="polite"
-            >
-              {errors.email.map((error) => (
-                <Paragraph key={error} size="20-responsive">
-                  - {error}
-                </Paragraph>
-              ))}
-            </div>
+            />
           )}
         </div>
 
@@ -201,19 +197,12 @@ export default function CreateAccountForm(): ReactNode {
             aria-describedby={errors.username ? "username-error" : undefined}
             required
           />
-          {errors.username && (
-            <div
-              id="username-error"
-              className={styles.errorMessage}
-              aria-live="polite"
-            >
-              {errors.username.map((error) => (
-                <Paragraph key={error} size="20-responsive">
-                  - {error}
-                </Paragraph>
-              ))}
-            </div>
-          )}
+          {errors.username && <FieldErrorsDisplay
+            errors={errors.username}
+            id="username-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />}
         </div>
 
         <div className={styles.inputContainer}>
@@ -230,19 +219,12 @@ export default function CreateAccountForm(): ReactNode {
             aria-describedby={errors.password ? "password-error" : undefined}
             required
           />
-          {errors.password && (
-            <div
-              id="password-error"
-              className={styles.errorMessage}
-              aria-live="polite"
-            >
-              {errors.password.map((error) => (
-                <Paragraph key={error} size="20-responsive">
-                  - {error}
-                </Paragraph>
-              ))}
-            </div>
-          )}
+          {errors.password && <FieldErrorsDisplay
+            errors={errors.password}
+            id="password-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />}
         </div>
 
         <div className={styles.inputContainer}>
@@ -261,19 +243,12 @@ export default function CreateAccountForm(): ReactNode {
             }
             required
           />
-          {errors.confirmPassword && (
-            <div
-              id="confirmPassword-error"
-              className={styles.errorMessage}
-              aria-live="polite"
-            >
-              {errors.confirmPassword.map((error) => (
-                <Paragraph key={error} size="20-responsive">
-                  - {error}
-                </Paragraph>
-              ))}
-            </div>
-          )}
+          {errors.confirmPassword && <FieldErrorsDisplay
+            errors={errors.confirmPassword}
+            id="confirmPassword-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />}
         </div>
 
         {/* TODO: test below error messaging*/}
