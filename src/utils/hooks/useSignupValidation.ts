@@ -15,6 +15,44 @@ export type ValidationErrorMessages = {
   confirmPassword?: string[];
 };
 
+/**
+ * Validates sign-up form data and returns field error messages, overall validity, and async status.
+ *
+ * This custom React hook performs:
+ * - Debounced client-side validation (~500 ms) against a schema.
+ * - Error reporting only for fields the user has interacted with.
+ * - An asynchronous username-availability check with:
+ *   - Result caching per username value.
+ *   - Request de-duping and out-of-order (stale) response protection.
+ *   - A querying flag while the availability check is in-flight.
+ *
+ * The username availability check only runs when:
+ * - The username passes local (schema) validation,
+ * - The user has interacted with the username field, and
+ * - The value differs from the last successfully checked username.
+ *
+ * The debounce timer is cleared on dependency changes and unmount to avoid
+ * leaking work. Stale async results are ignored to prevent overwriting newer state.
+ *
+ * @param formData - The current values for the sign-up form fields.
+ * @param interactedFields - A map of field names to booleans indicating which fields the user has interacted with; errors are only surfaced for these fields.
+ *
+ * @returns An object containing:
+ * - errors: A map of field names to arrays of validation messages for fields that are invalid and have been interacted with.
+ * - allFieldsValid: True when all fields pass client-side validation and the username (if applicable) is available.
+ * - querying: True while the asynchronous username availability check is in progress.
+ *
+ * @example
+ * const { errors, allFieldsValid, querying } = useSignupValidation(formData, interacted);
+ * // Disable submit while invalid or while username availability is being checked
+ * <button disabled={!allFieldsValid || querying}>Create account</button>
+ * {errors.username && <p role="alert">{errors.username[0]}</p>}
+ *
+ * @remarks
+ * - Errors are cleared when all fields pass schema validation.
+ * - If the username is already taken, an error is added and `allFieldsValid` is set to false.
+ * - Cached username checks are reused to reduce unnecessary network requests.
+ */
 export default function useSignupValidation(
   formData: FormData,
   interactedFields: InteractedFields
