@@ -8,12 +8,12 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
  * - If no row exists, returns false (because `maybeSingle()` returns null).
  * - If multiple rows match, Supabase returns an error and this function throws.
  *
- * @param username The username to check. Case sensitivity depends on database collation/config.
+ * @param username The username to check (normalized: lowercased and trimmed)..
  * @returns Promise<boolean> true if a matching user exists; otherwise false.
  * @throws Error If the Supabase query fails (e.g., network/RLS) or multiple matches are found.
  *
- * @remarks Enforce a unique constraint on "username" to avoid multiple-match errors.
- * Consider normalizing usernames (e.g., lowercasing) before calling if uniqueness is case-insensitive.
+ * @remarks
+ * Enforce a unique constraint on "username" to avoid multiple-match errors.
  *
  * @example
  * const isTaken = await checkIfUsernameExists("alice");
