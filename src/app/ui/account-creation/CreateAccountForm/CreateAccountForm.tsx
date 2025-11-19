@@ -328,7 +328,7 @@ export default function CreateAccountForm(): ReactNode {
           className={styles.submitButton}
           disabled={isPending || !allFieldsValid || querying}
         >
-          {isPending ? "Creating Account..." : "Create Account!"}
+          {!allFieldsValid && "Waiting Patiently..." || (isPending ? "Creating Account..." : "Create Account!")}
         </ButtonWrapper>
       </form>
     </Bounded>
