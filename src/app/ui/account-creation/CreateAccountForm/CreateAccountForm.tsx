@@ -129,10 +129,8 @@ export default function CreateAccountForm(): ReactNode {
       ) {
         prevUsernameRef.current = username;
         setQuerying(true);
-        console.log("Checking if username exists:", username);
         try {
           const exists = await checkIfUsernameExists(username);
-          console.log("Username exists:", exists);
           if (exists) {
             setErrors((prevErrors) => ({
               ...prevErrors,
