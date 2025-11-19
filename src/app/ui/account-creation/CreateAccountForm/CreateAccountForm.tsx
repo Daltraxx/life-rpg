@@ -140,6 +140,11 @@ export default function CreateAccountForm(): ReactNode {
           }
         } catch (error) {
           console.error("Error checking username existence:", error);
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            username: ["Error checking username availability, please try again"],
+          }));
+          setAllFieldsValid(false);
         } finally {
           setQuerying(false);
         }
