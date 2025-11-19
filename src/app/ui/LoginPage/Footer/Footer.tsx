@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <Bounded as="footer" innerClassName={styles.footer} verticalPadding={false}>
       <RegularLinkWrapper
-        href="https://www.daltonpettus.com/"
+        href="https://github.com/Daltraxx"
         target="_blank"
         rel="noopener noreferrer"
         fontSize="36"
