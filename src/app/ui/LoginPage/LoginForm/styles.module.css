@@ -22,7 +22,7 @@
   border-radius: 4px;
 }
 
-.loginForm input:focus {
+.loginForm input:focus-visible {
   outline: 1px solid var(--brown-400, #57340f);
   border-color: var(--brown-400, #57340f);
   box-shadow: 0 0 5px var(--brown-400, #57340f);
