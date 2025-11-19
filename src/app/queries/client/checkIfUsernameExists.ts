@@ -33,15 +33,17 @@ const supabase = createSupabaseBrowserClient();
  *
  * @see Supabase client docs: https://supabase.com/docs
  */
-export default async function checkIfUsernameExists(username: string): Promise<boolean> {
-  let result;
+export default async function checkIfUsernameExists(
+  username: string
+): Promise<boolean> {
   try {
-    result = await supabase
+    const { data, error } = await supabase
       .from("users")
       .select("id")
       .eq("username", username)
-      .single();
-    return result.data !== null;
+      .maybeSingle();
+    if (error) throw error;
+    return data !== null;
   } catch (error) {
     throw new Error(
       `Error checking existing user: ${
