@@ -145,6 +145,8 @@ export default function CreateAccountForm(): ReactNode {
             currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
           )
             return; // Outdated request, ignore result
+          
+          prevUsernameRef.current = username;
           if (exists) {
             setErrors((prevErrors) => ({
               ...prevErrors,
