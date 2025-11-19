@@ -60,7 +60,7 @@ const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
  * <CreateAccountForm />
  * ```
  */
-export default function CreateAccountForm(): ReactNode {
+export default function CreateAccountForm(): ReactElement {
   const [formData, setFormData] = useState({
     email: "",
     username: "",
