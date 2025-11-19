@@ -6,7 +6,7 @@ import {
   RegularLinkWrapper,
 } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 
-export default function Login() {
+export default function LoginForm() {
   return (
     <Bounded innerClassName={styles.loginContainer}>
       <form className={styles.loginForm} action="">
