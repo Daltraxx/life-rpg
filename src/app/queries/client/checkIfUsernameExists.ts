@@ -1,7 +1,5 @@
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 
-const supabase = createSupabaseBrowserClient();
-
 /**
  * Checks whether a user record exists for the given username using `maybeSingle()`.
  *
@@ -26,6 +24,7 @@ const supabase = createSupabaseBrowserClient();
 export default async function checkIfUsernameExists(
   username: string
 ): Promise<boolean> {
+  const supabase = createSupabaseBrowserClient();
   try {
     const { data, error } = await supabase
       .from("users")
