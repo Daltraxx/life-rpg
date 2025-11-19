@@ -3,9 +3,9 @@ import Intro from "./ui/LoginPage/Intro/Intro";
 import Login from "./ui/LoginPage/LoginForm/LoginForm";
 import styles from "./styles.module.css";
 
-export default function LandingPage() {
+export default function LoginPage() {
   return (
-    <main className={styles.landingPageContainer}>
+    <main className={styles.loginPageContainer}>
       <Intro />
       <Login />
       <Footer />
