@@ -38,7 +38,8 @@ export default async function checkIfUsernameExists(
     throw new Error(
       `Error checking existing user: ${
         error instanceof Error ? error.message : String(error)
-      }`
+      }`,
+      { cause: error }
     );
   }
 }
