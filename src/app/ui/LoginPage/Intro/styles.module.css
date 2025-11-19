@@ -8,9 +8,9 @@
 }
 
 .mainHeading {
-  color: var(--orange-300);
+  color: var(--orange-300, #e1b382);
 }
 
 .introParagraph {
-  color: var(--white);
+  color: var(--white, #ffffff);
 }
