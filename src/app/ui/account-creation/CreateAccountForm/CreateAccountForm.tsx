@@ -8,7 +8,7 @@ import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
 import Heading from "../../Heading";
-import { Label, Paragraph } from "../../TextWrappers";
+import { Label, Paragraph, Span } from "../../TextWrappers";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 import styles from "./styles.module.css";
 import useTruncatedString from "@/utils/hooks/useTruncatedString";
@@ -269,7 +269,7 @@ export default function CreateAccountForm(): ReactNode {
           />
           {/* TODO: style loading indicator */}
           {querying && (
-            <span className={styles.loadingIndicator}>Checking availability...</span>
+            <Span className={styles.loadingIndicator} size="24-responsive">Checking availability...</Span>
           )}
           <FieldErrorsDisplay
             errors={errors.username}

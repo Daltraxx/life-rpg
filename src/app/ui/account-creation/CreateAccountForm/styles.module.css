@@ -55,6 +55,10 @@
   box-shadow: 0 0 0 2px var(--orange-300, #e1b382);
 }
 
+.loadingIndicator {
+  color: var(--error-message-orange, #cd6d07)
+}
+
 .errorMessage p {
   color: var(--error-message-orange, #cd6d07);
   line-height: 1.1;
