@@ -82,26 +82,26 @@ export default function CreateAccountForm(): ReactNode {
   // State to track if all fields are valid, controls submit button disabled state
   const [allFieldsValid, setAllFieldsValid] = useState(false);
 
-  
   const [querying, setQuerying] = useState(false);
   const prevUsernameRef = useRef<string>("");
+  const usernameCheckRequestIdRef = useRef<number>(0);
   useEffect(() => {
     /**
      * Validates form data after a debounce delay and checks username availability.
-     * 
+     *
      * This validation handler performs two-stage validation:
      * 1. Validates all form fields against the SignupSchema using Zod
      * 2. Checks if the username is already taken via an async database query
-     * 
+     *
      * @remarks
      * - Uses a 500ms debounce delay to avoid excessive validation calls
      * - Only validates fields that the user has interacted with
      * - Skips username existence check if username field has validation errors
      * - Tracks previous username to avoid redundant API calls
      * - Updates error state and field validity flags based on validation results
-     * 
+     *
      * @throws Will log error to console if username existence check fails
-     * 
+     *
      * @see {@link SignupSchema} for field validation rules
      * @see {@link checkIfUsernameExists} for username availability check
      */
@@ -127,6 +127,7 @@ export default function CreateAccountForm(): ReactNode {
 
       // Additional check for username existence
       const username = formData.username;
+      const currentUsernameCheckRequestId = ++usernameCheckRequestIdRef.current;
       if (
         usernameValid &&
         interactedFields.username &&
@@ -137,6 +138,11 @@ export default function CreateAccountForm(): ReactNode {
         try {
           const exists = await checkIfUsernameExists(username);
           if (exists) {
+            if (
+              currentUsernameCheckRequestId !==
+              usernameCheckRequestIdRef.current
+            )
+              return; // Outdated request, ignore result
             setErrors((prevErrors) => ({
               ...prevErrors,
               username: ["Username already taken"],
@@ -147,7 +153,9 @@ export default function CreateAccountForm(): ReactNode {
           console.error("Error checking username existence:", error);
           setErrors((prevErrors) => ({
             ...prevErrors,
-            username: ["Error checking username availability, please try again"],
+            username: [
+              "Error checking username availability, please try again",
+            ],
           }));
           setAllFieldsValid(false);
         } finally {
