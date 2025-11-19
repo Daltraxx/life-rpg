@@ -1,9 +1,8 @@
 "use client";
 
-import { z } from "zod";
-import { useState, useEffect, useActionState, ReactNode, useRef } from "react";
+import { useState, useActionState, useRef, ReactElement } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
-import { SignupSchema, SignupState } from "@/utils/validations/signup";
+import { SignupState } from "@/utils/validations/signup";
 
 import Bounded from "../../Bounded";
 import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
@@ -12,48 +11,62 @@ import { Label, Paragraph, Span } from "../../TextWrappers";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 import styles from "./styles.module.css";
 import useTruncatedString from "@/utils/hooks/useTruncatedString";
-import checkIfUsernameExists from "@/app/queries/client/checkIfUsernameExists";
+import useSignupValidation, {
+  ValidationErrorMessages,
+} from "@/utils/hooks/useSignupValidation";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
   message: null,
 };
 
-type ValidationErrorMessages = {
-  email?: string[];
-  username?: string[];
-  password?: string[];
-  confirmPassword?: string[];
-};
-
 type Field = keyof ValidationErrorMessages;
 
-const FIELDS: Field[] = ["email", "username", "password", "confirmPassword"];
-
-const interactedFieldsInitialState: Record<Field, boolean> = Object.fromEntries(
+export const FIELDS: Field[] = [
+  "email",
+  "username",
+  "password",
+  "confirmPassword",
+];
+export type InteractedFields = Record<Field, boolean>;
+const INITIAL_INTERACTED_FIELDS: InteractedFields = Object.fromEntries(
   FIELDS.map((field) => [field, false])
-) as Record<Field, boolean>;
+) as InteractedFields;
+
+export type FormData = {
+  email: string;
+  username: string;
+  password: string;
+  confirmPassword: string;
+};
+const INITIAL_FORM_DATA: FormData = {
+  email: "",
+  username: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const HEADING_FONT_FAMILY = "Jersey 10";
 const USERNAME_PLACEHOLDER = "[new user]";
 const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
 
 /**
- * CreateAccountForm - A form component for creating new user accounts.
+ * CreateAccountForm component for user registration.
  *
- * This component provides a multi-field registration form with real-time validation,
- * field-level error messaging, and server-side action handling. It includes:
- * - Email, username, password, and password confirmation fields
- * - Client-side validation using Zod schema (SignupSchema)
- * - Field interaction tracking to show errors only after user interaction
- * - Server-side validation and error handling via useActionState
- * - Accessible error messages with ARIA attributes
- * - Disabled submit state during pending operations
- * - Dynamic welcome message using entered username or placeholder
+ * Renders a form with email, username, password, and confirm password fields.
+ * Includes real-time validation, username availability checking, and dynamic
+ * username display with text truncation to prevent layout overflow.
  *
- * @component
- * @returns {ReactNode} A bounded form container with input fields, validation errors,
+ * @returns {ReactElement} A bounded form container with input fields, validation errors,
  * and a submit button for account creation.
+ *
+ * @remarks
+ * - The username in the heading is dynamically truncated based on viewport size
+ * - Form validation occurs as users interact with fields
+ * - Username availability is checked asynchronously during input
+ * - Submit button is disabled during validation, querying, or form submission
+ * - Server-side errors are displayed below the form fields
+ * - All form fields are required and include appropriate accessibility attributes
  *
  * @example
  * ```tsx
@@ -61,138 +74,20 @@ const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
  * ```
  */
 export default function CreateAccountForm(): ReactElement {
-  const [formData, setFormData] = useState({
-    email: "",
-    username: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   const [interactedFields, setInteractedFields] = useState(
-    interactedFieldsInitialState
+    INITIAL_INTERACTED_FIELDS
   );
-
-  const [errors, setErrors] = useState<ValidationErrorMessages>({});
 
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setInteractedFields((prev) => ({ ...prev, [target.name]: true }));
     setFormData((prev) => ({ ...prev, [target.name]: target.value }));
   };
 
-  // State to track if all fields are valid, controls submit button disabled state
-  const [allFieldsValid, setAllFieldsValid] = useState(false);
-
-  const [querying, setQuerying] = useState(false);
-  const prevUsernameRef = useRef<string>("");
-  const usernameCheckRequestIdRef = useRef<number>(0);
-  const [checkedUsernames, setCheckedUsernames] = useState<Map<string, boolean>>(new Map());
-  // TODO: extract into a custom hook?
-  useEffect(() => {
-    /**
-     * Validation handler that performs field validation and username availability checking.
-     *
-     * This handler is debounced with a 500ms delay to avoid excessive validation calls.
-     * It performs the following operations:
-     *
-     * 1. Validates form data against the SignupSchema using Zod
-     * 2. Filters validation errors to only show errors for fields the user has interacted with
-     * 3. Checks username availability against the backend if the username field is valid and has been modified
-     * 4. Updates error state and form validity state based on validation results
-     *
-     * The username availability check includes:
-     * - Request ID tracking to prevent race conditions from outdated requests
-     * - Comparison with previous username to avoid redundant checks
-     * - Loading state management via setQuerying
-     * - Error handling for network failures
-     *
-     * @remarks
-     * The handler uses a request ID system to ensure that only the most recent username check
-     * result is applied, preventing race conditions when the user types quickly.
-     *
-     * @see {@link SignupSchema} - The Zod schema used for validation
-     * @see {@link checkIfUsernameExists} - The async function that checks username availability
-     */
-    const validationHandler = setTimeout(async () => {
-      const validatedFields = SignupSchema.safeParse(formData);
-      let usernameValid = true;
-
-      if (!validatedFields.success) {
-        const errors = z.flattenError(validatedFields.error).fieldErrors;
-        const filteredErrors: ValidationErrorMessages = {};
-        for (const field of FIELDS) {
-          if (interactedFields[field] && errors[field]?.length) {
-            filteredErrors[field] = errors[field];
-            if (field === "username") usernameValid = false;
-          }
-        }
-        setErrors(filteredErrors);
-        setAllFieldsValid(false);
-      } else {
-        setErrors({});
-        setAllFieldsValid(true);
-      }
-
-      // Additional check for username existence
-      const username = formData.username;
-      const usernameExistsCached = checkedUsernames.get(username);
-      if (usernameExistsCached !== undefined) {
-        // Use cached result
-        if (usernameExistsCached) {
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            username: ["Username already taken"],
-          }));
-        } else {
-          return; // Username is available, no further action needed
-        }
-      }
-      const currentUsernameCheckRequestId = ++usernameCheckRequestIdRef.current;
-      if (
-        usernameValid &&
-        interactedFields.username &&
-        username !== prevUsernameRef.current
-      ) {
-        setQuerying(true);
-        try {
-          const exists = await checkIfUsernameExists(username);
-          setCheckedUsernames((prev) => new Map(prev).set(username, exists));
-          if (
-            currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
-          )
-            return; // Outdated request, ignore result
-
-          prevUsernameRef.current = username;
-          // TODO: consider caching results to avoid re-checking same usernames
-          if (exists) {
-            setErrors((prevErrors) => ({
-              ...prevErrors,
-              username: ["Username already taken"],
-            }));
-            setAllFieldsValid(false);
-          }
-        } catch (error) {
-          console.error("Error checking username existence:", error);
-          setErrors((prevErrors) => ({
-            ...prevErrors,
-            username: [
-              "Error checking username availability, please try again",
-            ],
-          }));
-          setAllFieldsValid(false);
-        } finally {
-          setQuerying(false);
-        }
-      }
-    }, 500); // Adjust the delay as needed
-
-    return () => {
-      clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
-    };
-  }, [formData, interactedFields]);
-
-  const [errorState, formAction, isPending] = useActionState(
-    createAccount,
-    INITIAL_SIGNUP_STATE
+  const { errors, allFieldsValid, querying } = useSignupValidation(
+    formData,
+    interactedFields
   );
 
   // Dynamic username display logic designed to prevent layout overflow
@@ -205,6 +100,11 @@ export default function CreateAccountForm(): ReactElement {
     HEADING_FONT_FAMILY,
     36,
     48
+  );
+
+  const [errorState, formAction, isPending] = useActionState(
+    createAccount,
+    INITIAL_SIGNUP_STATE
   );
 
   return (
@@ -268,7 +168,9 @@ export default function CreateAccountForm(): ReactElement {
             required
           />
           {querying && (
-            <Span className={styles.loadingIndicator} size="24-responsive">Checking availability...</Span>
+            <Span className={styles.loadingIndicator} size="24-responsive">
+              Checking availability...
+            </Span>
           )}
           <FieldErrorsDisplay
             errors={errors.username}
@@ -341,7 +243,8 @@ export default function CreateAccountForm(): ReactElement {
           className={styles.submitButton}
           disabled={isPending || !allFieldsValid || querying}
         >
-          {!allFieldsValid && "Waiting Patiently..." || (isPending ? "Creating Account..." : "Create Account!")}
+          {(!allFieldsValid && "Waiting Patiently...") ||
+            (isPending ? "Creating Account..." : "Create Account!")}
         </ButtonWrapper>
       </form>
     </Bounded>
