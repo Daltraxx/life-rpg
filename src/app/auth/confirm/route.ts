@@ -6,7 +6,19 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get("token_hash");
-  const type = searchParams.get("type") as EmailOtpType | null;
+  
+  const typeParam = searchParams.get("type");
+  const validTypes: EmailOtpType[] = [
+    "signup",
+    "recovery",
+    "email_change",
+    "magiclink",
+  ] as const;
+  const type =
+    typeParam && validTypes.includes(typeParam as EmailOtpType)
+      ? (typeParam as EmailOtpType)
+      : null;
+  
   const next = "profile-setup"; // Redirect to profile setup after confirmation
 
   // Create redirect link without secret token in URL for security
