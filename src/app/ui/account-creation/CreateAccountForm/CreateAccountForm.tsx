@@ -267,7 +267,6 @@ export default function CreateAccountForm(): ReactElement {
             aria-describedby={errors.username ? "username-error" : undefined}
             required
           />
-          {/* TODO: style loading indicator */}
           {querying && (
             <Span className={styles.loadingIndicator} size="24-responsive">Checking availability...</Span>
           )}
