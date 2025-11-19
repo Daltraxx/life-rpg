@@ -25,11 +25,12 @@ export default async function checkIfUsernameExists(
   username: string
 ): Promise<boolean> {
   const supabase = createSupabaseBrowserClient();
+  const normalizedUsername = username.toLowerCase().trim(); // Adjust normalization as needed
   try {
     const { data, error } = await supabase
       .from("users")
       .select("id")
-      .eq("username", username)
+      .eq("username", normalizedUsername)
       .maybeSingle();
     if (error) throw error;
     return data !== null;
