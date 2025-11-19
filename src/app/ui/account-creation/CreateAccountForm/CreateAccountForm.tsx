@@ -85,6 +85,7 @@ export default function CreateAccountForm(): ReactNode {
   const [querying, setQuerying] = useState(false);
   const prevUsernameRef = useRef<string>("");
   const usernameCheckRequestIdRef = useRef<number>(0);
+  const [checkedUsernames, setCheckedUsernames] = useState<Map<string, boolean>>(new Map());
   // TODO: extract into a custom hook?
   useEffect(() => {
     /**
@@ -133,6 +134,18 @@ export default function CreateAccountForm(): ReactNode {
 
       // Additional check for username existence
       const username = formData.username;
+      const usernameExistsCached = checkedUsernames.get(username);
+      if (usernameExistsCached !== undefined) {
+        // Use cached result
+        if (usernameExistsCached) {
+          setErrors((prevErrors) => ({
+            ...prevErrors,
+            username: ["Username already taken"],
+          }));
+        } else {
+          return; // Username is available, no further action needed
+        }
+      }
       const currentUsernameCheckRequestId = ++usernameCheckRequestIdRef.current;
       if (
         usernameValid &&
@@ -142,6 +155,7 @@ export default function CreateAccountForm(): ReactNode {
         setQuerying(true);
         try {
           const exists = await checkIfUsernameExists(username);
+          setCheckedUsernames((prev) => new Map(prev).set(username, exists));
           if (
             currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
           )
