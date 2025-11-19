@@ -146,7 +146,7 @@ export default function CreateAccountForm(): ReactNode {
             currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
           )
             return; // Outdated request, ignore result
-          
+
           prevUsernameRef.current = username;
           // TODO: consider caching results to avoid re-checking same usernames
           if (exists) {
@@ -241,7 +241,7 @@ export default function CreateAccountForm(): ReactNode {
 
         <div className={styles.inputContainer}>
           <Label htmlFor="username" size="24-responsive">
-            Display Name:
+            Display Name:{" "}
           </Label>
           <input
             id="username"
@@ -253,6 +253,10 @@ export default function CreateAccountForm(): ReactNode {
             aria-describedby={errors.username ? "username-error" : undefined}
             required
           />
+          {/* TODO: style loading indicator */}
+          {querying && (
+            <span className={styles.loadingIndicator}>Checking availability...</span>
+          )}
           <FieldErrorsDisplay
             errors={errors.username}
             id="username-error"
