@@ -87,23 +87,28 @@ export default function CreateAccountForm(): ReactNode {
   const usernameCheckRequestIdRef = useRef<number>(0);
   useEffect(() => {
     /**
-     * Validates form data after a debounce delay and checks username availability.
-     *
-     * This validation handler performs two-stage validation:
-     * 1. Validates all form fields against the SignupSchema using Zod
-     * 2. Checks if the username is already taken via an async database query
-     *
+     * Validation handler that performs field validation and username availability checking.
+     * 
+     * This handler is debounced with a 500ms delay to avoid excessive validation calls.
+     * It performs the following operations:
+     * 
+     * 1. Validates form data against the SignupSchema using Zod
+     * 2. Filters validation errors to only show errors for fields the user has interacted with
+     * 3. Checks username availability against the backend if the username field is valid and has been modified
+     * 4. Updates error state and form validity state based on validation results
+     * 
+     * The username availability check includes:
+     * - Request ID tracking to prevent race conditions from outdated requests
+     * - Comparison with previous username to avoid redundant checks
+     * - Loading state management via setQuerying
+     * - Error handling for network failures
+     * 
      * @remarks
-     * - Uses a 500ms debounce delay to avoid excessive validation calls
-     * - Only validates fields that the user has interacted with
-     * - Skips username existence check if username field has validation errors
-     * - Tracks previous username to avoid redundant API calls
-     * - Updates error state and field validity flags based on validation results
-     *
-     * @throws Will log error to console if username existence check fails
-     *
-     * @see {@link SignupSchema} for field validation rules
-     * @see {@link checkIfUsernameExists} for username availability check
+     * The handler uses a request ID system to ensure that only the most recent username check
+     * result is applied, preventing race conditions when the user types quickly.
+     * 
+     * @see {@link SignupSchema} - The Zod schema used for validation
+     * @see {@link checkIfUsernameExists} - The async function that checks username availability
      */
     const validationHandler = setTimeout(async () => {
       const validatedFields = SignupSchema.safeParse(formData);
