@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
       ? (typeParam as EmailOtpType)
       : null;
   
-  const next = "profile-setup"; // Redirect to profile setup after confirmation
+  const next = "/profile-setup"; // Redirect to profile setup after confirmation
 
   // Create redirect link without secret token in URL for security
   const redirectTo = request.nextUrl.clone();
