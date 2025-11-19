@@ -85,6 +85,7 @@ export default function CreateAccountForm(): ReactNode {
   const [querying, setQuerying] = useState(false);
   const prevUsernameRef = useRef<string>("");
   const usernameCheckRequestIdRef = useRef<number>(0);
+  // TODO: extract into a custom hook?
   useEffect(() => {
     /**
      * Validation handler that performs field validation and username availability checking.
