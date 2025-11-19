@@ -43,6 +43,10 @@ export default async function checkIfUsernameExists(username: string): Promise<b
       .single();
     return result.data !== null;
   } catch (error) {
-    throw new Error("Error checking existing user");
-  } 
-};
+    throw new Error(
+      `Error checking existing user: ${
+        error instanceof Error ? error.message : String(error)
+      }`
+    );
+  }
+}
