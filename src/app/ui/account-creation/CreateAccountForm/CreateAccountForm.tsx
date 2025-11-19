@@ -1,6 +1,6 @@
 "use client";
 
-import { z } from "zod";
+import { set, z } from "zod";
 import { useState, useEffect, useActionState, ReactNode, useRef } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
@@ -97,21 +97,54 @@ export default function CreateAccountForm(): ReactNode {
    * - Updates the `errors` state based on the validation results after the debounce delay.
    * - Clears pending validation timeouts on cleanup to prevent memory leaks.
    */
+  const [querying, setQuerying] = useState(false);
+  const prevUsernameRef = useRef<string>("");
   useEffect(() => {
-    const validationHandler = setTimeout(() => {
+    const validationHandler = setTimeout(async () => {
       const validatedFields = SignupSchema.safeParse(formData);
+      let usernameValid = true;
+
       if (!validatedFields.success) {
         const errors = z.flattenError(validatedFields.error).fieldErrors;
         const filteredErrors: ValidationErrorMessages = {};
         for (const field of FIELDS) {
-          if (interactedFields[field] && errors[field]?.length)
+          if (interactedFields[field] && errors[field]?.length) {
             filteredErrors[field] = errors[field];
+            if (field === "username") usernameValid = false;
+          }
         }
         setErrors(filteredErrors);
         setAllFieldsValid(false);
       } else {
         setErrors({});
         setAllFieldsValid(true);
+      }
+
+      // Additional check for username existence
+      const username = formData.username;
+      if (
+        usernameValid &&
+        interactedFields.username &&
+        username !== prevUsernameRef.current
+      ) {
+        prevUsernameRef.current = username;
+        setQuerying(true);
+        console.log("Checking if username exists:", username);
+        try {
+          const exists = await checkIfUsernameExists(username);
+          console.log("Username exists:", exists);
+          if (exists) {
+            setErrors((prevErrors) => ({
+              ...prevErrors,
+              username: ["Username already taken"],
+            }));
+            setAllFieldsValid(false);
+          }
+        } catch (error) {
+          console.error("Error checking username existence:", error);
+        } finally {
+          setQuerying(false);
+        }
       }
     }, 500); // Adjust the delay as needed
 
@@ -136,48 +169,6 @@ export default function CreateAccountForm(): ReactNode {
     36,
     48
   );
-
-  // Query database to check if username or email already exists before attempting to create account
-  const [querying, setQuerying] = useState(false);
-  const [usernameExists, setUsernameExists] = useState(false);
-  
-
-  useEffect(() => {
-    let checkCancelled = false;
-    const userCheckHandler = setTimeout(() => {
-      const { success } = SignupSchema.shape.username.safeParse(formData.username);
-      if (success && !checkCancelled) {
-        setQuerying(true);
-        const usernameExists = checkIfUsernameExists(formData.username);
-        usernameExists.then((result) => {
-          if (checkCancelled) return;
-          if (result) {
-            setUsernameExists(true);
-            setErrors((prevErrors) => ({
-              ...prevErrors,
-              username: ["Username already taken"],
-            }));
-          } else {
-            setUsernameExists(false);
-            setErrors((prevErrors) => ({
-              ...prevErrors,
-              username: [],
-            }));
-          }
-        }).catch((error) => {
-          if (checkCancelled) return;
-          console.error("Error during username existence check:", error);
-        }).finally(() => {
-          if (checkCancelled) return;
-          setQuerying(false);
-        });
-      }
-    }, 300);
-    return () => {
-      clearTimeout(userCheckHandler);
-      checkCancelled = true;
-    };
-  }, [formData.username]);
 
   return (
     <Bounded
@@ -308,7 +299,7 @@ export default function CreateAccountForm(): ReactNode {
           type="submit"
           color="blue-600"
           className={styles.submitButton}
-          disabled={isPending || !allFieldsValid || querying || usernameExists}
+          disabled={isPending || !allFieldsValid || querying}
         >
           {isPending ? "Creating Account..." : "Create Account!"}
         </ButtonWrapper>
