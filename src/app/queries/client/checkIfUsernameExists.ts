@@ -3,35 +3,25 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 const supabase = createSupabaseBrowserClient();
 
 /**
- * Determines whether a user record already exists for the given username.
+ * Checks whether a user record exists for the given username using `maybeSingle()`.
  *
- * Performs a Supabase query against the "users" table, selecting only the "id"
- * field for a single row matching the supplied username. If a row is found,
- * the function resolves to true; otherwise it resolves to false.
+ * Queries the "users" table for a single row selecting only "id" where "username" equals the input.
+ * - If a row exists, returns true.
+ * - If no row exists, returns false (because `maybeSingle()` returns null).
+ * - If multiple rows match, Supabase returns an error and this function throws.
  *
- * @param username - The username to check for existence. Collation / case sensitivity
- *                   is determined by the database configuration.
- * @returns Promise resolving to:
- *          - true if a user with the specified username exists.
- *          - false if no such user is found.
+ * @param username The username to check. Case sensitivity depends on database collation/config.
+ * @returns Promise<boolean> true if a matching user exists; otherwise false.
+ * @throws Error If the Supabase query fails (e.g., network/RLS) or multiple matches are found.
  *
- * @throws Error If the underlying Supabase query fails (e.g., network error, permissions issue).
- *
- * @remarks Relies on an initialized, in-scope `supabase` client instance.
- *          Consider normalizing (e.g., lowercasing) usernames before calling
- *          if uniqueness should be case-insensitive.
+ * @remarks Enforce a unique constraint on "username" to avoid multiple-match errors.
+ * Consider normalizing usernames (e.g., lowercasing) before calling if uniqueness is case-insensitive.
  *
  * @example
- * ```ts
  * const isTaken = await checkIfUsernameExists("alice");
  * if (isTaken) {
  *   console.warn("Username already in use.");
- * } else {
- *   console.info("Username is available.");
  * }
- * ```
- *
- * @see Supabase client docs: https://supabase.com/docs
  */
 export default async function checkIfUsernameExists(
   username: string
