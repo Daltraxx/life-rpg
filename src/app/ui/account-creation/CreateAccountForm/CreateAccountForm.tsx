@@ -88,25 +88,25 @@ export default function CreateAccountForm(): ReactNode {
   useEffect(() => {
     /**
      * Validation handler that performs field validation and username availability checking.
-     * 
+     *
      * This handler is debounced with a 500ms delay to avoid excessive validation calls.
      * It performs the following operations:
-     * 
+     *
      * 1. Validates form data against the SignupSchema using Zod
      * 2. Filters validation errors to only show errors for fields the user has interacted with
      * 3. Checks username availability against the backend if the username field is valid and has been modified
      * 4. Updates error state and form validity state based on validation results
-     * 
+     *
      * The username availability check includes:
      * - Request ID tracking to prevent race conditions from outdated requests
      * - Comparison with previous username to avoid redundant checks
      * - Loading state management via setQuerying
      * - Error handling for network failures
-     * 
+     *
      * @remarks
      * The handler uses a request ID system to ensure that only the most recent username check
      * result is applied, preventing race conditions when the user types quickly.
-     * 
+     *
      * @see {@link SignupSchema} - The Zod schema used for validation
      * @see {@link checkIfUsernameExists} - The async function that checks username availability
      */
@@ -138,16 +138,14 @@ export default function CreateAccountForm(): ReactNode {
         interactedFields.username &&
         username !== prevUsernameRef.current
       ) {
-        prevUsernameRef.current = username;
         setQuerying(true);
         try {
           const exists = await checkIfUsernameExists(username);
+          if (
+            currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
+          )
+            return; // Outdated request, ignore result
           if (exists) {
-            if (
-              currentUsernameCheckRequestId !==
-              usernameCheckRequestIdRef.current
-            )
-              return; // Outdated request, ignore result
             setErrors((prevErrors) => ({
               ...prevErrors,
               username: ["Username already taken"],
