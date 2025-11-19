@@ -36,12 +36,12 @@ export async function GET(request: NextRequest) {
   const token_hash = searchParams.get("token_hash");
 
   const typeParam = searchParams.get("type");
-  const validTypes = [
+  const validTypes: readonly EmailOtpType[] = [
     "signup",
     "recovery",
     "email_change",
     "magiclink",
-  ] as const satisfies readonly EmailOtpType[];
+  ];
   const type =
     typeParam && validTypes.includes(typeParam as EmailOtpType)
       ? (typeParam as EmailOtpType)
