@@ -6,7 +6,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get("token_hash");
-  
+
   const typeParam = searchParams.get("type");
   const validTypes: EmailOtpType[] = [
     "signup",
@@ -23,7 +23,6 @@ export async function GET(request: NextRequest) {
 
   // Create redirect link without secret token in URL for security
   const redirectTo = request.nextUrl.clone();
-  redirectTo.pathname = next;
   redirectTo.searchParams.delete("token_hash");
   redirectTo.searchParams.delete("type");
 
@@ -43,6 +42,7 @@ export async function GET(request: NextRequest) {
   });
 
   if (!error) {
+    redirectTo.pathname = next;
     redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
     return NextResponse.redirect(redirectTo);
   }
