@@ -82,24 +82,29 @@ export default function CreateAccountForm(): ReactNode {
   // State to track if all fields are valid, controls submit button disabled state
   const [allFieldsValid, setAllFieldsValid] = useState(false);
 
-  /**
-   * A React effect that validates the form data with debouncing whenever it changes.
-   * It uses a 500ms debounce delay to prevent excessive validation calls during rapid typing.
-   * The effect validates using `SignupSchema` and updates the `errors` state with validation
-   * errors only for fields that have been interacted with.
-   *
-   * If the validation is successful, it clears the errors.
-   *
-   * Dependencies:
-   * - `formData`: The current state of the form data.
-   *
-   * Side Effects:
-   * - Updates the `errors` state based on the validation results after the debounce delay.
-   * - Clears pending validation timeouts on cleanup to prevent memory leaks.
-   */
+  
   const [querying, setQuerying] = useState(false);
   const prevUsernameRef = useRef<string>("");
   useEffect(() => {
+    /**
+     * Validates form data after a debounce delay and checks username availability.
+     * 
+     * This validation handler performs two-stage validation:
+     * 1. Validates all form fields against the SignupSchema using Zod
+     * 2. Checks if the username is already taken via an async database query
+     * 
+     * @remarks
+     * - Uses a 500ms debounce delay to avoid excessive validation calls
+     * - Only validates fields that the user has interacted with
+     * - Skips username existence check if username field has validation errors
+     * - Tracks previous username to avoid redundant API calls
+     * - Updates error state and field validity flags based on validation results
+     * 
+     * @throws Will log error to console if username existence check fails
+     * 
+     * @see {@link SignupSchema} for field validation rules
+     * @see {@link checkIfUsernameExists} for username availability check
+     */
     const validationHandler = setTimeout(async () => {
       const validatedFields = SignupSchema.safeParse(formData);
       let usernameValid = true;
