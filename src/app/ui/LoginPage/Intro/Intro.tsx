@@ -1,10 +1,10 @@
-import { JSX } from "react";
+import { ReactElement } from "react";
 import Bounded from "../../Bounded";
 import Heading from "../../Heading";
 import { Paragraph } from "../../TextWrappers";
 import styles from "./styles.module.css";
 
-export default function Intro(): JSX.Element {
+export default function Intro(): ReactElement {
   return (
     <Bounded innerClassName={styles.introContainer}>
       <Heading as="h1" size="96" className={styles.mainHeading}>
