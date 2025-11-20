@@ -111,12 +111,13 @@ export default function useSignupValidation(
           return; // Username is available, no further action needed
         }
       }
-      const currentUsernameCheckRequestId = ++usernameCheckRequestIdRef.current;
       if (
         usernameValid &&
         interactedFields.username &&
         username !== prevUsernameRef.current
       ) {
+        const currentUsernameCheckRequestId =
+          ++usernameCheckRequestIdRef.current;
         setQuerying(true);
         try {
           const exists = await checkIfUsernameExists(
