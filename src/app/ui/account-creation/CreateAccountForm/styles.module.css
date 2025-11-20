@@ -56,7 +56,7 @@
 }
 
 .loadingIndicator {
-  color: var(--orange-500, #cd6d07)
+  color: var(--orange-500, #cd6d07);
 }
 
 .errorMessage p {
