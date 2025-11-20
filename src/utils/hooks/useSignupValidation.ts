@@ -103,6 +103,8 @@ export default function useSignupValidation(
             ...prevErrors,
             username: ["Username already taken"],
           }));
+          setAllFieldsValid(false);
+          return;
         } else {
           return; // Username is available, no further action needed
         }
