@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { User } from "@supabase/supabase-js";
+import checkIfUsernameExists from "../queries/client/checkIfUsernameExists";
 
 export async function createAccount(
   prevState: SignupState,
@@ -27,7 +28,7 @@ export async function createAccount(
     };
   }
 
-  // TODO: query supabase to check if username or email already exists before attempting to create account
+  // Query supabase to check if username or email already exists before attempting to create account
 
   const { data, error } = await supabase.auth.signUp({
     email: validatedFields.data.email,
@@ -69,8 +70,8 @@ export async function createAccount(
   }
 
   // If account creation succeeds, insert additional user data into the "users" table
-  const user: User = data.user;
   const userData = validatedFields.data;
+  const user: User = data.user;
   const { error: insertError } = await supabase.from("users").insert({
     id: user.id,
     username: userData.username,
