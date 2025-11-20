@@ -25,14 +25,16 @@ export type ValidationErrorMessages = {
  *   - Result caching per username value.
  *   - Request de-duping and out-of-order (stale) response protection.
  *   - A querying flag while the availability check is in-flight.
+ *   - Uses AbortController to cancel in-flight username requests on unmount or dependency change.
+ *   - Passes the AbortController signal to `checkIfUsernameExists` for proper cancellation.
  *
  * The username availability check only runs when:
  * - The username passes local (schema) validation,
  * - The user has interacted with the username field, and
  * - The value differs from the last successfully checked username.
  *
- * The debounce timer is cleared on dependency changes and unmount to avoid
- * leaking work. Stale async results are ignored to prevent overwriting newer state.
+ * The debounce timer is cleared and any in-flight username check is aborted on dependency changes and unmount to avoid
+ * leaking work or updating state after unmount. Stale async results are ignored to prevent overwriting newer state.
  *
  * @param formData - The current values for the sign-up form fields.
  * @param interactedFields - A map of field names to booleans indicating which fields the user has interacted with; errors are only surfaced for these fields.
@@ -52,6 +54,7 @@ export type ValidationErrorMessages = {
  * - Errors are cleared when all fields pass schema validation.
  * - If the username is already taken, an error is added and `allFieldsValid` is set to false.
  * - Cached username checks are reused to reduce unnecessary network requests.
+ * - Username availability requests are properly aborted on unmount or when dependencies change.
  */
 export default function useSignupValidation(
   formData: FormData,
@@ -73,6 +76,7 @@ export default function useSignupValidation(
   >(new Map());
 
   useEffect(() => {
+    const abortController = new AbortController();
     const validationHandler = setTimeout(async () => {
       const validatedFields = SignupSchema.safeParse(formData);
       let usernameValid = true;
@@ -117,7 +121,10 @@ export default function useSignupValidation(
       ) {
         setQuerying(true);
         try {
-          const exists = await checkIfUsernameExists(username);
+          const exists = await checkIfUsernameExists(
+            username,
+            abortController.signal
+          );
           setCheckedUsernames((prev) => new Map(prev).set(username, exists));
           if (
             currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
@@ -133,6 +140,7 @@ export default function useSignupValidation(
             setAllFieldsValid(false);
           }
         } catch (error) {
+          if (error instanceof Error && error.name === "AbortError") return; // Request was aborted, ignore
           console.error("Error checking username existence:", error);
           setErrors((prevErrors) => ({
             ...prevErrors,
@@ -149,6 +157,7 @@ export default function useSignupValidation(
 
     return () => {
       clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
+      abortController.abort(); // Abort any in-flight username check on cleanup
     };
   }, [formData, interactedFields]);
 
