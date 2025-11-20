@@ -34,11 +34,6 @@ export async function createAccount(
     password: validatedFields.data.password,
   });
 
-  if (!data.user)
-    return {
-      message: "Account creation failed. Please try again.",
-    };
-
   // Add logic for other specific error cases.
   if (error) {
     console.error("Error creating account:", error.code);
@@ -66,6 +61,12 @@ export async function createAccount(
   }
 
   // If account creation succeeds, insert additional user data into the "users" table
+  if (!data.user) {
+    console.error("No user data returned after account creation.");
+    const redirectTo = "/?message=Profile setup failed. Please try logging in.";
+    redirect(redirectTo);
+  }
+
   const user: User = data.user;
   const userData = validatedFields.data;
   const { error: insertError } = await supabase.from("users").insert({
