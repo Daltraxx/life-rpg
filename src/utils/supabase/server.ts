@@ -38,7 +38,7 @@ type ClientOptions = {
  * This function must be called in server actions or route handlers where Next.js cookies() is available. Cookie errors are logged to the 
  * console before being re-thrown.
  */
-export async function createSupabaseServerClient({ admin = false }: ClientOptions): Promise<SupabaseClient> {
+export async function createSupabaseServerClient({ admin = false }: ClientOptions = {}): Promise<SupabaseClient> {
   const cookieStore = await cookies();
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
