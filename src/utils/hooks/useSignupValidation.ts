@@ -71,9 +71,7 @@ export default function useSignupValidation(
   const [querying, setQuerying] = useState(false);
   const prevUsernameRef = useRef<string>("");
   const usernameCheckRequestIdRef = useRef<number>(0);
-  const [checkedUsernames, setCheckedUsernames] = useState<
-    Map<string, boolean>
-  >(new Map());
+  const checkedUsernamesRef = useRef<Map<string, boolean>>(new Map());
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -99,7 +97,7 @@ export default function useSignupValidation(
 
       // Additional check for username existence
       const username = formData.username;
-      const usernameExistsCached = checkedUsernames.get(username);
+      const usernameExistsCached = checkedUsernamesRef.current.get(username);
       if (usernameExistsCached !== undefined) {
         // Use cached result
         if (usernameExistsCached) {
@@ -125,7 +123,7 @@ export default function useSignupValidation(
             username,
             abortController.signal
           );
-          setCheckedUsernames((prev) => new Map(prev).set(username, exists));
+          checkedUsernamesRef.current.set(username, exists);
           if (
             currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
           )
