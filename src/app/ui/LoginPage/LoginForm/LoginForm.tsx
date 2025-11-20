@@ -1,3 +1,7 @@
+"use client";
+
+import { useSearchParams } from "next/navigation";
+
 import styles from "./styles.module.css";
 import Bounded from "../../Bounded";
 import {
@@ -5,10 +9,14 @@ import {
   LinkWrapper,
   RegularLinkWrapper,
 } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
+import { Paragraph } from "../../TextWrappers";
 
 export default function LoginForm() {
+  const searchParams = useSearchParams();
+  const message = searchParams.get("message");
   return (
     <Bounded innerClassName={styles.loginContainer}>
+      {message && (<Paragraph className={styles.message}>{message}</Paragraph>)}
       <form className={styles.loginForm} action="">
         <label htmlFor="email-field">Email:</label>
         <input
