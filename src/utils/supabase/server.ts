@@ -13,16 +13,25 @@ type ClientOptions = {
  * using Next.js cookie store for session management. It handles both reading and writing
  * cookies required for Supabase authentication.
  * 
+ * @param {ClientOptions} options - Configuration options for the Supabase client
+ * @param {boolean} [options.admin=false] - When true, uses the service role key for admin operations; 
+ * when false, uses the publishable key for standard operations
+ * 
  * @returns {Promise<SupabaseClient>} A promise that resolves to a configured Supabase client instance
  * 
- * @throws {Error} When required environment variables (NEXT_PUBLIC_SUPABASE_URL or 
- * NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) are not defined
+ * @throws {Error} When required environment variables (NEXT_PUBLIC_SUPABASE_URL, 
+ * NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, or SUPABASE_SERVICE_ROLE_KEY when admin is true) are not defined
  * @throws {Error} When cookie operations fail during the setAll process
  * 
  * @example
  * ```typescript
- * const supabase = await createSupabaseServerClient();
+ * // Standard client
+ * const supabase = await createSupabaseServerClient({ admin: false });
  * const { data, error } = await supabase.from('users').select('*');
+ * 
+ * // Admin client with elevated permissions
+ * const adminSupabase = await createSupabaseServerClient({ admin: true });
+ * await adminSupabase.auth.admin.deleteUser(userId);
  * ```
  * 
  * @remarks
