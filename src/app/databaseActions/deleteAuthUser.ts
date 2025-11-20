@@ -31,8 +31,5 @@ export async function deleteAuthUser(userId: string): Promise<void> {
     throw new Error("Failed to delete user account.");
   }
 
-  // Delete user data from other tables if exists
-  await supabaseAdmin.from("users").delete().eq("id", userId);
-
   await supabaseAdmin.auth.signOut();
 }
