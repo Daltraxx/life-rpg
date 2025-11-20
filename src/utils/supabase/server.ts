@@ -13,7 +13,7 @@ type ClientOptions = {
  * using Next.js cookie store for session management. It handles both reading and writing
  * cookies required for Supabase authentication.
  * 
- * @param {ClientOptions} options - Configuration options for the Supabase client
+ * @param {ClientOptions} [options] - Optional configuration options for the Supabase client
  * @param {boolean} [options.admin=false] - When true, uses the service role key for admin operations; 
  * when false, uses the publishable key for standard operations
  * 
@@ -25,9 +25,12 @@ type ClientOptions = {
  * 
  * @example
  * ```typescript
- * // Standard client
- * const supabase = await createSupabaseServerClient({ admin: false });
+ * // Standard client (default behavior)
+ * const supabase = await createSupabaseServerClient();
  * const { data, error } = await supabase.from('users').select('*');
+ * 
+ * // Explicitly non-admin client
+ * const supabase = await createSupabaseServerClient({ admin: false });
  * 
  * // Admin client with elevated permissions
  * const adminSupabase = await createSupabaseServerClient({ admin: true });
