@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { User } from "@supabase/supabase-js";
 
 export async function createAccount(
   prevState: SignupState,
@@ -33,6 +34,11 @@ export async function createAccount(
     password: validatedFields.data.password,
   });
 
+  if (!data.user)
+    return {
+      message: "Account creation failed. Please try again.",
+    };
+
   // Add logic for other specific error cases.
   if (error) {
     console.error("Error creating account:", error.code);
@@ -59,7 +65,19 @@ export async function createAccount(
     }
   }
 
-  // TODO: if account creation succeeds, insert additional user data into the "users" table
+  // If account creation succeeds, insert additional user data into the "users" table
+  const user: User = data.user;
+  const userData = validatedFields.data;
+  const { error: insertError } = await supabase.from("users").insert({
+    id: user.id,
+    username: userData.username,
+  });
+  if (insertError) {
+    console.error("Error inserting user data:", insertError);
+    return {
+      message: "Account creation failed during user data setup. Please try again.",
+    };
+  }
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
