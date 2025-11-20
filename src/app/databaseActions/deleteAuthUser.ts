@@ -7,8 +7,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * 
  * This function performs the following operations:
  * 1. Deletes the user from Supabase authentication system
- * 2. Removes the user's data from the "users" table
- * 3. Signs out the current session
+ * 2. Signs out the current session
  * 
  * @param userId - The unique identifier of the user to be deleted
  * @returns A promise that resolves when the user and their data have been successfully deleted
