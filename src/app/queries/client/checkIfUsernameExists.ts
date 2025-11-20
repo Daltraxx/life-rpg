@@ -8,7 +8,8 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
  * - If no row exists, returns false (because `maybeSingle()` returns null).
  * - If multiple rows match, Supabase returns an error and this function throws.
  *
- * @param username The username to check (normalized: lowercased and trimmed)..
+ * @param username The username to check (normalized: lowercased and trimmed).
+ * @param signal Optional AbortSignal to cancel the query if needed.
  * @returns Promise<boolean> true if a matching user exists; otherwise false.
  * @throws Error If the Supabase query fails (e.g., network/RLS) or multiple matches are found.
  *
@@ -20,6 +21,12 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
  * if (isTaken) {
  *   console.warn("Username already in use.");
  * }
+ *
+ * @example
+ * // With AbortController for cancellation
+ * const controller = new AbortController();
+ * const isTaken = await checkIfUsernameExists("alice", controller.signal);
+ * // Later: controller.abort();
  */
 export default async function checkIfUsernameExists(
   username: string,
