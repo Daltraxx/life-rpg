@@ -7,7 +7,6 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * 
  * This function performs the following operations:
  * 1. Deletes the user from Supabase authentication system
- * 2. Signs out the current session
  * 
  * @param userId - The unique identifier of the user to be deleted
  * @returns A promise that resolves when the user and their data have been successfully deleted
@@ -29,6 +28,4 @@ export async function deleteAuthUser(userId: string): Promise<void> {
     console.error("Error deleting user:", error);
     throw new Error("Failed to delete user account.");
   }
-
-  await supabaseAdmin.auth.signOut();
 }
