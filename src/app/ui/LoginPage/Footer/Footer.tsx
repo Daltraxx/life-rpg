@@ -11,6 +11,7 @@ export default function Footer() {
         href="https://github.com/Daltraxx"
         target="_blank"
         rel="noopener noreferrer"
+        aria-label="Visit daltraxx INC. on GitHub (opens in new tab)"
         fontSize="36"
         color="orange-300"
       >
