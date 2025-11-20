@@ -2,6 +2,10 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+type ClientOptions = {
+  admin?: boolean;
+};
+
 /**
  * Creates and configures a Supabase client for server-side operations in Next.js.
  * 
@@ -25,11 +29,11 @@ import { cookies } from "next/headers";
  * This function must be called in server actions or route handlers where Next.js cookies() is available. Cookie errors are logged to the 
  * console before being re-thrown.
  */
-export async function createSupabaseServerClient(): Promise<SupabaseClient> {
+export async function createSupabaseServerClient({ admin = false }: ClientOptions): Promise<SupabaseClient> {
   const cookieStore = await cookies();
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
+  const supabaseKey = admin ? process.env.SUPABASE_SERVICE_ROLE_KEY : process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
   if (!supabaseUrl || !supabaseKey) {
     throw new Error(
