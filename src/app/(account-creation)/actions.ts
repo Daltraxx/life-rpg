@@ -66,6 +66,7 @@ export async function createAccount(
   const { data, error } = await supabase.auth.signUp({
     email: userData.email,
     password: userData.password,
+    options: { data: { username: userData.username } }, // store username in auth metadata
   });
 
   // Add logic for other specific error cases.
