@@ -51,7 +51,7 @@ export default async function checkIfUsernameOrEmailExists(
   } catch (error) {
     if (error instanceof Error) {
       throw new Error(
-        `Error checking existing username or email: ${error.message}`
+        `Error checking for existing username and email: ${error.message}`
       );
     }
     throw error;
