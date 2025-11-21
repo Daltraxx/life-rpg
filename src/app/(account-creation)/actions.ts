@@ -69,7 +69,9 @@ export async function createAccount(
     options: { data: { username: userData.username } }, // store username in auth metadata
   });
 
-  // Add logic for other specific error cases.
+  // Inserting in users table is handled by Supabase trigger
+
+  // TODO: Add logic for other specific error cases if necessary.
   if (error) {
     console.error("Error creating account:", error.code);
     // Handle specific error cases
@@ -93,28 +95,6 @@ export async function createAccount(
           message: "Account creation failed. Please try again.",
         };
     }
-  }
-
-  // Handle case where no user data is returned
-  if (!data.user) {
-    console.error("No user data returned after account creation.");
-    return {
-      message: "Account creation failed. Please try again.",
-    };
-  }
-
-  // If account creation succeeds, insert additional user data into the "users" table
-  const user: User = data.user;
-  const { error: insertError } = await supabase.from("users").insert({
-    id: user.id,
-    username: userData.username,
-  });
-  if (insertError) {
-    console.error("Error inserting user data:", insertError);
-    return {
-      message:
-        "Account creation failed during user data setup. Please try again.",
-    };
   }
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
