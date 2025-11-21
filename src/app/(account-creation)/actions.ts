@@ -42,7 +42,8 @@ export async function createAccount(
   } catch (error) {
     console.error("Error checking existing username or email:", error);
     return {
-      message: "Error checking for existing username and email. Please try again.",
+      message:
+        "Error checking for existing username and email. Please try again.",
     };
   }
 
@@ -52,9 +53,9 @@ export async function createAccount(
       message: null,
     };
     const errors: SignupState["errors"] = errorState.errors;
-    if (emailExists)
+    emailExists &&
       errors!.email!.push("An account with this email already exists.");
-    if (usernameExists)
+    usernameExists &&
       errors!.username!.push(
         "Username already taken. Please choose a different username."
       );
