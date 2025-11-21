@@ -7,7 +7,7 @@ import { redirect } from "next/navigation";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { User } from "@supabase/supabase-js";
-import checkIfUsernameExists from "../queries/client/checkIfUsernameExists";
+import checkIfUsernameOrEmailExists from "../queries/server/checkIfUsernameOrEmailExists";
 
 export async function createAccount(
   prevState: SignupState,
@@ -29,10 +29,29 @@ export async function createAccount(
   }
 
   // Query supabase to check if username or email already exists before attempting to create account
+  const userData = validatedFields.data;
+  const { usernameExists, emailExists, rowsFound } =
+    await checkIfUsernameOrEmailExists(userData.email, userData.username);
+
+  if (rowsFound > 0) {
+    const errorState: SignupState = {
+      errors: { username: [], email: [] },
+      message: null,
+    };
+    const errors: SignupState["errors"] = errorState.errors;
+    if (emailExists)
+      errors!.email!.push("An account with this email already exists.");
+    if (usernameExists)
+      errors!.username!.push(
+        "Username already taken. Please choose a different username."
+      );
+    errorState.message = "Cannot create account due to existing credentials.";
+    return errorState;
+  }
 
   const { data, error } = await supabase.auth.signUp({
-    email: validatedFields.data.email,
-    password: validatedFields.data.password,
+    email: userData.email,
+    password: userData.password,
   });
 
   // Add logic for other specific error cases.
@@ -70,7 +89,6 @@ export async function createAccount(
   }
 
   // If account creation succeeds, insert additional user data into the "users" table
-  const userData = validatedFields.data;
   const user: User = data.user;
   const { error: insertError } = await supabase.from("users").insert({
     id: user.id,
