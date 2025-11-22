@@ -1,5 +1,3 @@
-"use server";
-
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@supabase/supabase-js";
 
@@ -32,7 +30,7 @@ import { createClient } from "@supabase/supabase-js";
  * await adminClient.from("users").select("*"); // RLS bypassed if using service role
  * ```
  */
-export async function createSupabaseAdminClient(): Promise<SupabaseClient> { 
+export function createSupabaseAdminClient(): SupabaseClient { 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !supabaseKey) {
