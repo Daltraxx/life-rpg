@@ -168,7 +168,11 @@ export default function CreateAccountForm(): ReactElement {
             required
           />
           {querying && (
-            <Span className={styles.loadingIndicator} size="24-responsive">
+            <Span
+              className={styles.loadingIndicator}
+              size="24-responsive"
+              aria-live="polite"
+            >
               Checking availability...
             </Span>
           )}
