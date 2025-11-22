@@ -37,8 +37,7 @@ export default async function checkIfUsernameOrEmailExists(
     let query = supabase
       .from("users")
       .select("email, username")
-      .or(`username.ilike.${normalizedUsername}`)
-      .or(`email.eq.${email}`);
+      .or(`username.ilike.${normalizedUsername},email.eq.${email}`);
 
     if (signal) query = query.abortSignal(signal);
 
