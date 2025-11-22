@@ -69,7 +69,6 @@ export default function useSignupValidation(
   const [allFieldsValid, setAllFieldsValid] = useState(false);
 
   const [querying, setQuerying] = useState(false);
-  const prevUsernameRef = useRef<string>("");
   const usernameCheckRequestIdRef = useRef<number>(0);
   // TODO: Consider adding a cache eviction strategy (LRU cache) if this map could grow large
   const checkedUsernamesRef = useRef<Map<string, boolean>>(new Map());
@@ -112,11 +111,7 @@ export default function useSignupValidation(
           return; // Username is available, no further action needed
         }
       }
-      if (
-        usernameValid &&
-        interactedFields.username &&
-        username !== prevUsernameRef.current
-      ) {
+      if (usernameValid && interactedFields.username) {
         const currentUsernameCheckRequestId =
           ++usernameCheckRequestIdRef.current;
         setQuerying(true);
@@ -131,7 +126,6 @@ export default function useSignupValidation(
           )
             return; // Outdated request, ignore result
 
-          prevUsernameRef.current = username;
           if (exists) {
             setErrors((prevErrors) => ({
               ...prevErrors,
