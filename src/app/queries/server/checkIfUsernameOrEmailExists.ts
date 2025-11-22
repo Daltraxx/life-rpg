@@ -45,12 +45,10 @@ export default async function checkIfUsernameOrEmailExists(
     ({ data, error } = await query);
     if (error) throw error;
   } catch (error) {
-    if (error instanceof Error) {
-      throw new Error(
-        `Error checking for existing username and email: ${error.message}`
-      );
-    }
-    throw error;
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(
+      `Error checking for existing username and email: ${message}`
+    );
   }
   let usernameExists = false;
   let emailExists = false;
