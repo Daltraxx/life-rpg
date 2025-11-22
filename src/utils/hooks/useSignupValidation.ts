@@ -154,7 +154,7 @@ export default function useSignupValidation(
       clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
       abortController.abort(); // Abort any in-flight username check on cleanup
     };
-  }, [formData, interactedFields]);
+  }, [formData, interactedFields, debounceDelay]);
 
   return { errors, allFieldsValid, querying };
 }
