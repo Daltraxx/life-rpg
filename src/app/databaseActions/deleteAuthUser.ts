@@ -25,7 +25,7 @@ import { createSupabaseAdminClient } from "@/utils/supabase/admin";
  * This function requires either:
  * - The authenticated user to be deleting their own account (currentUser.id === userId), OR
  * - The authenticated user to have admin role (user_metadata.role === "admin")
- * 
+ *
  * Any errors during the deletion process are logged to the console before throwing.
  * Cascading deletes in the database ensure that all related data for the user is also removed.
  * DO NOT USE THIS FUNCTION ON THE CLIENT SIDE TO AVOID SECURITY RISKS.
@@ -34,16 +34,20 @@ import { createSupabaseAdminClient } from "@/utils/supabase/admin";
  * ```typescript
  * // User deleting their own account
  * await deleteAuthUser(currentUser.id);
- * 
+ *
  * // Admin deleting another user's account
  * await deleteAuthUser('user-123-abc');
  * ```
  */
 export async function deleteAuthUser(userId: string): Promise<void> {
   // Validate input
-  if (!userId || typeof userId !== "string" || userId.trim() === "") {
+  if (!userId || typeof userId !== "string" || userId.trim() === "")
     throw new Error("Invalid userId: must be a non-empty string");
-  }
+
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  if (!uuidRegex.test(userId))
+    throw new Error("Invalid userId: must be a valid UUID format");
 
   // Add authorization check
   const supabaseAdmin = await createSupabaseAdminClient();
