@@ -69,7 +69,8 @@ export async function GET(request: NextRequest) {
 
   if (!error) {
     redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
-    return NextResponse.redirect("/profile-setup");
+    redirectTo.pathname = "/profile-setup";
+    return NextResponse.redirect(redirectTo);
   }
 
   console.error("Error confirming email:", error.message, error.code, {
