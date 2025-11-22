@@ -40,6 +40,8 @@ export async function GET(request: NextRequest) {
     "recovery",
     "email_change",
     "magiclink",
+    "email",
+    "invite"
   ];
   const typeParam = searchParams.get("type");
   const type =
@@ -73,7 +75,7 @@ export async function GET(request: NextRequest) {
     );
     return NextResponse.redirect(redirectTo);
   }
-  
+
   let error;
   try {
     ({ error } = await supabase.auth.verifyOtp({
