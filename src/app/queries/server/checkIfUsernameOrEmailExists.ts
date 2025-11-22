@@ -1,3 +1,4 @@
+import getEscapedUsername from "@/utils/helpers/getEscapedUsername";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { PostgrestError } from "@supabase/supabase-js";
 
@@ -31,13 +32,17 @@ export default async function checkIfUsernameOrEmailExists(
 }> {
   const supabase = await createSupabaseServerClient();
   const normalizedUsername = username.toLowerCase().trim();
+
+  // Escape ILIKE wildcards (% and _) to prevent unintended pattern matching
+  const escapedUsername = getEscapedUsername(normalizedUsername);
+
   let data: { email: string; username: string }[] | null,
     error: PostgrestError | null;
   try {
     let query = supabase
       .from("users")
       .select("email, username")
-      .or(`username.ilike.${normalizedUsername},email.eq.${email}`);
+      .or(`username.ilike.${escapedUsername},email.eq.${email}`);
 
     if (signal) query = query.abortSignal(signal);
 
