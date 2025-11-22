@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
     "email_change",
     "magiclink",
     "email",
-    "invite"
+    "invite",
   ];
   const typeParam = searchParams.get("type");
   const type =
@@ -102,11 +102,19 @@ export async function GET(request: NextRequest) {
     type,
   });
 
+  let errorMessage =
+    "Confirmation link has expired or already been used. Please request a new one.";
+  // Provide more specific messages based on error code
+  if (error.code === "otp_expired") {
+    errorMessage =
+      "This confirmation link has expired. Please request a new one.";
+  } else if (error.code === "otp_disabled") {
+    errorMessage =
+      "This confirmation link has already been used. Please request a new one.";
+  }
+
   // On failure, redirect to error page with some instructions
   redirectTo.pathname = "/error"; // TODO: create error page
-  redirectTo.searchParams.set(
-    "message",
-    "Confirmation link has expired or already been used. Please request a new one."
-  );
+  redirectTo.searchParams.set("message", errorMessage);
   return NextResponse.redirect(redirectTo);
 }
