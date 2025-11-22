@@ -35,21 +35,14 @@ export default async function checkIfUsernameExists(
   const supabase = createSupabaseBrowserClient();
   const normalizedUsername = username.toLowerCase().trim(); // Adjust normalization as needed
   try {
-    let data, error;
-    if (signal) {
-      ({ data, error } = await supabase
-        .from("users")
-        .select("id")
-        .eq("username", normalizedUsername)
-        .abortSignal(signal)
-        .maybeSingle());
-    } else {
-      ({ data, error } = await supabase
-        .from("users")
-        .select("id")
-        .eq("username", normalizedUsername)
-        .maybeSingle());
-    }
+    let query = supabase
+      .from("users")
+      .select("id")
+      .eq("username", normalizedUsername);
+
+    if (signal) query = query.abortSignal(signal);
+
+    const { data, error } = await query.maybeSingle();
     if (error) throw error;
     return data !== null;
   } catch (error) {
