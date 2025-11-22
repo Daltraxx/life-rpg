@@ -6,24 +6,36 @@ import { createSupabaseAdminClient } from "@/utils/supabase/admin";
  * Deletes an authenticated user from the Supabase authentication system.
  *
  * This function performs the following operations:
- * 1. Deletes the user from Supabase authentication system
+ * 1. Validates the userId parameter
+ * 2. Verifies the current user is authenticated
+ * 3. Checks authorization (user must be deleting their own account OR have admin role)
+ * 4. Deletes the user from Supabase authentication system
  *
  * Note: Associated data in database tables will only be deleted if you have configured
  * CASCADE foreign key constraints or database triggers. Verify your schema configuration.
  *
  * @param userId - The unique identifier of the user to be deleted
  * @returns A promise that resolves when the user and their data have been successfully deleted
- * @throws {Error} Throws an error with message "Failed to delete user account: [error details]" if the user deletion fails
+ * @throws {Error} Throws "Invalid userId: must be a non-empty string" if userId is invalid
+ * @throws {Error} Throws "Unauthorized: No authenticated user" if no user is currently authenticated
+ * @throws {Error} Throws "Unauthorized: Insufficient permissions to delete this user" if the current user is neither deleting their own account nor has admin role
+ * @throws {Error} Throws "Failed to delete user account: [error details]" if the user deletion fails
  *
  * @remarks
- * This function requires admin privileges to delete users from the authentication system.
+ * This function requires either:
+ * - The authenticated user to be deleting their own account (currentUser.id === userId), OR
+ * - The authenticated user to have admin role (user_metadata.role === "admin")
+ * 
  * Any errors during the deletion process are logged to the console before throwing.
  * Cascading deletes in the database ensure that all related data for the user is also removed.
- * Ensure that the `userId` provided is valid and corresponds to an existing user.
  * DO NOT USE THIS FUNCTION ON THE CLIENT SIDE TO AVOID SECURITY RISKS.
  *
  * @example
  * ```typescript
+ * // User deleting their own account
+ * await deleteAuthUser(currentUser.id);
+ * 
+ * // Admin deleting another user's account
  * await deleteAuthUser('user-123-abc');
  * ```
  */
