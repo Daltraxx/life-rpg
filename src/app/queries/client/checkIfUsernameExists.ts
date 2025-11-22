@@ -33,7 +33,7 @@ export default async function checkIfUsernameExists(
   username: string,
   signal?: AbortSignal
 ): Promise<boolean> {
-  // Consider adding:
+  // TODO: Consider adding:
   // Rate-limiting on this endpoint/function call
   // CAPTCHA for repeated checks
   // Honeypot fields to detect automated scanning
