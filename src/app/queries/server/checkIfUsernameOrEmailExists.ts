@@ -30,6 +30,9 @@ export default async function checkIfUsernameOrEmailExists(
   emailExists: boolean;
   rowsFound: number;
 }> {
+  if (!email || !username)
+    throw new Error("Email and username are required parameters");
+
   const supabase = await createSupabaseServerClient();
   const normalizedUsername = username.toLowerCase().trim();
 
