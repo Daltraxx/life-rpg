@@ -54,9 +54,9 @@ export async function createAccount(
       message: null,
     };
     const errors: SignupState["errors"] = errorState.errors;
-    emailExists &&
+    if (emailExists)
       errors!.email!.push("An account with this email already exists.");
-    usernameExists &&
+    if (usernameExists)
       errors!.username!.push(
         "Username already taken. Please choose a different username."
       );
