@@ -3,14 +3,17 @@
 import { createSupabaseAdminClient } from "@/utils/supabase/admin";
 
 /**
- * Deletes an authenticated user and their associated data from the system (via cascade).
+ * Deletes an authenticated user from the Supabase authentication system.
  * 
  * This function performs the following operations:
  * 1. Deletes the user from Supabase authentication system
  * 
+ * Note: Associated data in database tables will only be deleted if you have configured
+ * CASCADE foreign key constraints or database triggers. Verify your schema configuration.
+ * 
  * @param userId - The unique identifier of the user to be deleted
  * @returns A promise that resolves when the user and their data have been successfully deleted
- * @throws {Error} Throws an error with message "Failed to delete user account." if the user deletion fails
+ * @throws {Error} Throws an error with message "Failed to delete user account: [error details]" if the user deletion fails
  * 
  * @remarks
  * This function requires admin privileges to delete users from the authentication system.
