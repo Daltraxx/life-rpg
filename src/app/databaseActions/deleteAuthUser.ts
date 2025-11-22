@@ -3,7 +3,7 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 
 /**
- * Deletes an authenticated user and their associated data from the system.
+ * Deletes an authenticated user and their associated data from the system (via cascade).
  * 
  * This function performs the following operations:
  * 1. Deletes the user from Supabase authentication system
