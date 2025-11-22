@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { z } from "zod";
+import { int, z } from "zod";
 import { SignupSchema } from "@/utils/validations/signup";
 import checkIfUsernameExists from "@/app/queries/client/checkIfUsernameExists";
 import {
@@ -99,7 +99,7 @@ export default function useSignupValidation(
       // Additional check for username existence
       const username = formData.username;
       const usernameExistsCached = checkedUsernamesRef.current.get(username);
-      if (usernameExistsCached !== undefined) {
+      if (usernameExistsCached !== undefined && interactedFields.username) {
         // Use cached result
         if (usernameExistsCached) {
           setErrors((prevErrors) => ({
