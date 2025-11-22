@@ -38,7 +38,7 @@ export default async function checkIfUsernameExists(
     let query = supabase
       .from("users")
       .select("id")
-      .eq("username", normalizedUsername);
+      .ilike("username", normalizedUsername);
 
     if (signal) query = query.abortSignal(signal);
 
