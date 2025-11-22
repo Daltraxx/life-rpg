@@ -145,7 +145,10 @@ export default function useSignupValidation(
           }));
           setAllFieldsValid(false);
         } finally {
-          setQuerying(false);
+          if (
+            currentUsernameCheckRequestId === usernameCheckRequestIdRef.current
+          )
+            setQuerying(false);
         }
       }
     }, debounceDelay);
