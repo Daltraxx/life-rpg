@@ -31,15 +31,11 @@ export async function createAccount(
   const userData = validatedFields.data;
   let usernameExists = false;
   let emailExists = false;
-  let rowsFound = 0;
   try {
-    const result = await checkIfUsernameOrEmailExists(
+    ({ usernameExists, emailExists } = await checkIfUsernameOrEmailExists(
       userData.email,
       userData.username
-    );
-    usernameExists = result.usernameExists;
-    emailExists = result.emailExists;
-    rowsFound = result.rowsFound;
+    ));
   } catch (error) {
     console.error("Error checking existing username or email:", error);
     return {
@@ -48,13 +44,15 @@ export async function createAccount(
     };
   }
 
-  if (rowsFound > 0) {
+  if (usernameExists || emailExists) {
     const errorState: SignupState = {
       errors: { username: [], email: [] },
       message: "Cannot create account due to existing credentials.",
     };
     if (emailExists)
-      errorState.errors?.email!.push("An account with this email already exists.");
+      errorState.errors?.email!.push(
+        "An account with this email already exists."
+      );
     if (usernameExists)
       errorState.errors?.username!.push(
         "Username already taken. Please choose a different username."
