@@ -16,7 +16,6 @@ export default function LoginForm() {
   const message = searchParams.get("message");
   return (
     <Bounded innerClassName={styles.loginContainer}>
-      {message && (<Paragraph className={styles.message}>{message}</Paragraph>)}
       <form className={styles.loginForm} action="">
         <label htmlFor="email-field">Email:</label>
         <input
