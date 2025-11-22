@@ -22,6 +22,11 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * ```
  */
 export async function deleteAuthUser(userId: string): Promise<void> {
+  // Validate input
+  if (!userId || typeof userId !== 'string' || userId.trim() === '') {
+    throw new Error('Invalid userId: must be a non-empty string');
+  }
+  
   const supabaseAdmin = await createSupabaseServerClient({ admin: true });
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
   if (error) {
