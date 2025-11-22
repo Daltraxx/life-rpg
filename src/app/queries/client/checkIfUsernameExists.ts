@@ -51,7 +51,7 @@ export default async function checkIfUsernameExists(
     return data !== null;
   } catch (error) {
     throw new Error(
-      `Error checking existing user: ${
+      `Error checking if username exists: ${
         error instanceof Error ? error.message : String(error)
       }`,
       { cause: error }
