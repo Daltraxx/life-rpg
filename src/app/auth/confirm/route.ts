@@ -46,8 +46,6 @@ export async function GET(request: NextRequest) {
     typeParam && validTypes.includes(typeParam as EmailOtpType)
       ? (typeParam as EmailOtpType)
       : null;
-  
-  const next = "/profile-setup"; // Redirect to profile setup after confirmation
 
   // Create redirect link without secret token in URL for security
   const redirectTo = request.nextUrl.clone();
@@ -70,9 +68,8 @@ export async function GET(request: NextRequest) {
   });
 
   if (!error) {
-    redirectTo.pathname = next;
     redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
-    return NextResponse.redirect(redirectTo);
+    return NextResponse.redirect("/profile-setup");
   }
 
   console.error("Error confirming email:", error.message, error.code, {
