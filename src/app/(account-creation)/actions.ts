@@ -78,6 +78,15 @@ export async function createAccount(
         return {
           message: "An account with this email already exists.",
         };
+      case "user_already_exists":
+        return {
+          message: "An account with this email already exists.",
+        };
+      case "invalid_password":
+        return {
+          message:
+            "Password does not meet the required criteria. Please choose a stronger password.",
+        };
       case "weak_password":
         return {
           message: "Password is too weak. Please choose a stronger password.",
