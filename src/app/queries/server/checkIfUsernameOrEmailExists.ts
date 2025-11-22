@@ -3,18 +3,18 @@ import { PostgrestError } from "@supabase/supabase-js";
 
 /**
  * Checks if a username or email already exists in the users table.
- * 
+ *
  * @param email - The email address to check for existence in the database
  * @param username - The username to check for existence in the database (case-insensitive)
  * @param signal - Optional AbortSignal to allow cancellation of the database query
- * 
+ *
  * @returns A promise that resolves to an object containing:
  * - `usernameExists`: boolean indicating if the username already exists
  * - `emailExists`: boolean indicating if the email already exists
  * - `rowsFound`: number of matching rows found in the database
- * 
+ *
  * @throws {Error} If there's an error querying the database
- * 
+ *
  * @remarks
  * - The username comparison is case-insensitive and trimmed
  * - Uses Supabase client to query the users table
@@ -34,21 +34,15 @@ export default async function checkIfUsernameOrEmailExists(
   let data: { email: string; username: string }[] | null,
     error: PostgrestError | null;
   try {
-    if (signal) {
-      ({ data, error } = await supabase
-        .from("users")
-        .select("email, username")
-        .or(`username.ilike.${normalizedUsername}`)
-        .or(`email.eq.${email}`)
-        .abortSignal(signal));
-    } else {
-      ({ data, error } = await supabase
-        .from("users")
-        .select("email, username")
-        .or(`username.ilike.${normalizedUsername}`)
-        .or(`email.eq.${email}`));
-    }
+    let query = supabase
+      .from("users")
+      .select("email, username")
+      .or(`username.ilike.${normalizedUsername}`)
+      .or(`email.eq.${email}`);
 
+    if (signal) query = query.abortSignal(signal);
+
+    ({ data, error } = await query);
     if (error) throw error;
   } catch (error) {
     if (error instanceof Error) {
