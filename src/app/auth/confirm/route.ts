@@ -61,11 +61,34 @@ export async function GET(request: NextRequest) {
     return NextResponse.redirect(redirectTo);
   }
 
-  const supabase = await createSupabaseServerClient();
-  const { error } = await supabase.auth.verifyOtp({
-    type,
-    token_hash,
-  });
+  let supabase;
+  try {
+    supabase = await createSupabaseServerClient();
+  } catch (error) {
+    console.error("Error creating Supabase client:", error);
+    redirectTo.pathname = "/error";
+    redirectTo.searchParams.set(
+      "message",
+      "An unexpected error occurred. Please try again."
+    );
+    return NextResponse.redirect(redirectTo);
+  }
+  
+  let error;
+  try {
+    ({ error } = await supabase.auth.verifyOtp({
+      type,
+      token_hash,
+    }));
+  } catch (err) {
+    console.error("Exception during OTP verification:", err);
+    redirectTo.pathname = "/error";
+    redirectTo.searchParams.set(
+      "message",
+      "An unexpected error occurred during verification. Please try again."
+    );
+    return NextResponse.redirect(redirectTo);
+  }
 
   if (!error) {
     redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
