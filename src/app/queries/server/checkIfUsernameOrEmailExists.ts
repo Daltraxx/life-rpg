@@ -54,7 +54,7 @@ export default async function checkIfUsernameOrEmailExists(
   }
   let usernameExists = false;
   let emailExists = false;
-  let rowsFound;
+  let rowsFound = 0;
 
   if (data && data.length > 0) {
     data.forEach((row) => {
@@ -62,8 +62,6 @@ export default async function checkIfUsernameOrEmailExists(
       if (row.email === email) emailExists = true;
     });
     rowsFound = data.length;
-  } else {
-    rowsFound = 0;
   }
 
   return { usernameExists, emailExists, rowsFound };
