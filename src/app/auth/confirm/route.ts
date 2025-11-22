@@ -78,7 +78,7 @@ export async function GET(request: NextRequest) {
   });
 
   // On failure, redirect to error page with some instructions
-  redirectTo.pathname = "/error";
+  redirectTo.pathname = "/error"; // TODO: create error page
   redirectTo.searchParams.set(
     "message",
     "Confirmation link has expired or already been used. Please request a new one."
