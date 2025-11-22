@@ -166,7 +166,7 @@ export default function CreateAccountForm(): ReactElement {
 
         <div className={styles.inputContainer}>
           <Label htmlFor="username" size="24-responsive">
-            Display Name:{" "}
+            Display Name:
           </Label>
           <input
             id="username"
