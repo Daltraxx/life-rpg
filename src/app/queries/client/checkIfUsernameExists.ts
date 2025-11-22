@@ -1,9 +1,10 @@
+import getEscapedUsername from "@/utils/helpers/getEscapedUsername";
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 
 /**
  * Checks whether a user record exists for the given username using `maybeSingle()`.
  *
- * Queries the "users" table for a single row selecting only "id" where "username" equals the input.
+ * Queries the "users" table for a single row selecting only "id" where "username" equals the input (case-insensitive).
  * - If a row exists, returns true.
  * - If no row exists, returns false (because `maybeSingle()` returns null).
  * - If multiple rows match, Supabase returns an error and this function throws.
@@ -37,12 +38,13 @@ export default async function checkIfUsernameExists(
   // CAPTCHA for repeated checks
   // Honeypot fields to detect automated scanning
   const supabase = createSupabaseBrowserClient();
-  const normalizedUsername = username.toLowerCase().trim(); // Adjust normalization as needed
+  const normalizedUsername = username.toLowerCase().trim(); 
+  const escapedUsername = getEscapedUsername(normalizedUsername);
   try {
     let query = supabase
       .from("users")
       .select("id")
-      .ilike("username", normalizedUsername);
+      .ilike("username", escapedUsername);
 
     if (signal) query = query.abortSignal(signal);
 
