@@ -9,7 +9,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  *
  * Query parameters:
  * - token_hash: Hashed OTP token included in the confirmation link email.
- * - type: Verification type; one of "signup" | "recovery" | "email_change" | "magiclink".
+ * - type: Verification type; one of "signup" | "recovery" | "email_change" | "magiclink" | "email" | "invite".
  *
  * Behavior:
  * - Validates required query parameters and allowed verification types.
