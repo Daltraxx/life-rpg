@@ -148,7 +148,7 @@ export default function useSignupValidation(
           setQuerying(false);
         }
       }
-    }, debounceDelay); // Adjust the delay as needed
+    }, debounceDelay);
 
     return () => {
       clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
