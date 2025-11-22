@@ -32,6 +32,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * @returns A redirect response to either the profile setup page or an error page with guidance.
  */
 export async function GET(request: NextRequest) {
+  // TODO: rate limit this endpoint to prevent abuse
   const { searchParams } = new URL(request.url);
   const token_hash = searchParams.get("token_hash");
 
