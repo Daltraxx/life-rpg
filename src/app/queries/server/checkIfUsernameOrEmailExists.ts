@@ -38,13 +38,15 @@ export default async function checkIfUsernameOrEmailExists(
       ({ data, error } = await supabase
         .from("users")
         .select("email, username")
-        .or(`username.eq.${normalizedUsername},email.eq.${email}`)
+        .or(`username.ilike.${normalizedUsername}`)
+        .or(`email.eq.${email}`)
         .abortSignal(signal));
     } else {
       ({ data, error } = await supabase
         .from("users")
         .select("email, username")
-        .or(`username.eq.${normalizedUsername},email.eq.${email}`));
+        .or(`username.ilike.${normalizedUsername}`)
+        .or(`email.eq.${email}`));
     }
 
     if (error) throw error;
