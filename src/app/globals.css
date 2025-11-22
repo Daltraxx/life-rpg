@@ -24,6 +24,8 @@
   --create-account-header-height: 6.5rem;
   --create-account-footer-height-mobile: 10.75rem;
   --create-account-footer-height-large: 7.5rem;
+
+  --border-radius-sm: 4px;
 }
 
 @theme inline {
