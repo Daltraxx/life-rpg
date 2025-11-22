@@ -71,7 +71,14 @@ export async function deleteAuthUser(userId: string): Promise<void> {
 
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
   if (error) {
-    console.error("Error deleting user:", error);
+    // Check if error is due to user not found
+    if (error.message?.includes('not found') || error.status === 404) {
+      console.warn(`User ${userId} not found, may have been already deleted`);
+      return; // Idempotent behavior
+    }
+    console.error("Error deleting user:", { userId, error });
     throw new Error(`Failed to delete user account: ${error.message}`);
   }
+
+  console.info(`Successfully deleted user: ${userId}`);
 }
