@@ -14,7 +14,6 @@ import useTruncatedString from "@/utils/hooks/useTruncatedString";
 import useSignupValidation, {
   ValidationErrorMessages,
 } from "@/utils/hooks/useSignupValidation";
-import { get } from "http";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
