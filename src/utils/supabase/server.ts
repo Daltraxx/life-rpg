@@ -40,6 +40,9 @@ type ClientOptions = {
  * @remarks
  * This function must be called in server actions or route handlers where Next.js cookies() is available. Cookie errors are logged to the 
  * console before being re-thrown.
+ * 
+ * **Security Warning**: When `admin: true` is used, the client bypasses Row Level Security (RLS) policies 
+ * and has full database access. Only use admin mode in trusted server-side code, never expose the service role key to clients.
  */
 export async function createSupabaseServerClient({ admin = false }: ClientOptions = {}): Promise<SupabaseClient> {
   const cookieStore = await cookies();
