@@ -26,6 +26,10 @@
   --create-account-footer-height-large: 7.5rem;
 
   --border-radius-sm: 4px;
+
+  --input-height: 2.5rem;
+  --input-font-size: 1.25rem;
+  --input-padding: 0.5rem;
 }
 
 @theme inline {
