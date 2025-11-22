@@ -53,11 +53,10 @@ export async function createAccount(
       errors: { username: [], email: [] },
       message: "Cannot create account due to existing credentials.",
     };
-    const errors: SignupState["errors"] = errorState.errors;
     if (emailExists)
-      errors!.email!.push("An account with this email already exists.");
+      errorState.errors?.email!.push("An account with this email already exists.");
     if (usernameExists)
-      errors!.username!.push(
+      errorState.errors?.username!.push(
         "Username already taken. Please choose a different username."
       );
     return errorState;
