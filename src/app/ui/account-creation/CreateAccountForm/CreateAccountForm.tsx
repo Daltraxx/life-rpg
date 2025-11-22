@@ -39,7 +39,7 @@ export type FormData = {
   password: string;
   confirmPassword: string;
 };
-const INITIAL_FORM_DATA: FormData = {
+export const INITIAL_FORM_DATA: FormData = {
   email: "",
   username: "",
   password: "",
