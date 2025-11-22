@@ -14,6 +14,7 @@ import useTruncatedString from "@/utils/hooks/useTruncatedString";
 import useSignupValidation, {
   ValidationErrorMessages,
 } from "@/utils/hooks/useSignupValidation";
+import { get } from "http";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
@@ -44,6 +45,17 @@ const INITIAL_FORM_DATA: FormData = {
   username: "",
   password: "",
   confirmPassword: "",
+};
+
+const getSubmitButtonText = (
+  querying: boolean,
+  allFieldsValid: boolean,
+  isPending: boolean
+): string => {
+  if (querying) return "Checking availability...";
+  if (!allFieldsValid) return "Waiting Patiently...";
+  if (isPending) return "Creating Account...";
+  return "Create Account!";
 };
 
 const HEADING_FONT_FAMILY = "Jersey 10";
@@ -247,13 +259,7 @@ export default function CreateAccountForm(): ReactElement {
           className={styles.submitButton}
           disabled={isPending || !allFieldsValid || querying}
         >
-          {querying
-            ? "Checking availability..."
-            : !allFieldsValid
-            ? "Waiting Patiently..."
-            : isPending
-            ? "Creating Account..."
-            : "Create Account!"}
+          {getSubmitButtonText(querying, allFieldsValid, isPending)}
         </ButtonWrapper>
       </form>
     </Bounded>
