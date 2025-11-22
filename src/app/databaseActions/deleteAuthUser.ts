@@ -15,6 +15,9 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * @remarks
  * This function requires admin privileges to delete users from the authentication system.
  * Any errors during the deletion process are logged to the console before throwing.
+ * Cascading deletes in the database ensure that all related data for the user is also removed.
+ * Ensure that the `userId` provided is valid and corresponds to an existing user.
+ * DO NOT USE THIS FUNCTION ON THE CLIENT SIDE TO AVOID SECURITY RISKS.
  * 
  * @example
  * ```typescript
@@ -26,7 +29,7 @@ export async function deleteAuthUser(userId: string): Promise<void> {
   if (!userId || typeof userId !== 'string' || userId.trim() === '') {
     throw new Error('Invalid userId: must be a non-empty string');
   }
-  
+
   const supabaseAdmin = await createSupabaseServerClient({ admin: true });
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
   if (error) {
