@@ -56,7 +56,8 @@ export default async function checkIfUsernameOrEmailExists(
 
   if (data && data.length > 0) {
     data.forEach((row) => {
-      if (row.username === normalizedUsername) usernameExists = true;
+      if (row.username.toLowerCase().trim() === normalizedUsername)
+        usernameExists = true;
       if (row.email === email) emailExists = true;
     });
     rowsFound = data.length;
