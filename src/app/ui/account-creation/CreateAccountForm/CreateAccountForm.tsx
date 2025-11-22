@@ -33,13 +33,13 @@ const INITIAL_INTERACTED_FIELDS: InteractedFields = Object.fromEntries(
   FIELDS.map((field) => [field, false])
 ) as InteractedFields;
 
-export type FormData = {
+export type SignupFormData = {
   email: string;
   username: string;
   password: string;
   confirmPassword: string;
 };
-export const INITIAL_FORM_DATA: FormData = {
+export const INITIAL_FORM_DATA: SignupFormData = {
   email: "",
   username: "",
   password: "",

@@ -5,7 +5,7 @@ import checkIfUsernameExists from "@/app/queries/client/checkIfUsernameExists";
 import {
   FIELDS,
   type InteractedFields,
-  type FormData,
+  type SignupFormData,
 } from "@/app/ui/account-creation/CreateAccountForm/CreateAccountForm";
 
 export type ValidationErrorMessages = {
@@ -36,7 +36,7 @@ export type ValidationErrorMessages = {
  * The debounce timer is cleared and any in-flight username check is aborted on dependency changes and unmount to avoid
  * leaking work or updating state after unmount. Stale async results are ignored to prevent overwriting newer state.
  *
- * @param formData - The current values for the sign-up form fields.
+ * @param SignupFormData - The current values for the sign-up form fields.
  * @param interactedFields - A map of field names to booleans indicating which fields the user has interacted with; errors are only surfaced for these fields.
  *
  * @returns An object containing:
@@ -57,7 +57,7 @@ export type ValidationErrorMessages = {
  * - Username availability requests are properly aborted on unmount or when dependencies change.
  */
 export default function useSignupValidation(
-  formData: FormData,
+  formData: SignupFormData,
   interactedFields: InteractedFields,
   debounceDelay = 500
 ): {
