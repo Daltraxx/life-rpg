@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { int, z } from "zod";
+import { z } from "zod";
 import { SignupSchema } from "@/utils/validations/signup";
 import checkIfUsernameExists from "@/app/queries/client/checkIfUsernameExists";
 import {
