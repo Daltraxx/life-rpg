@@ -29,7 +29,9 @@ export async function createAccount(
 
   // Query supabase to check if username or email already exists before attempting to create account
   const userData = validatedFields.data;
-  let usernameExists, emailExists, rowsFound;
+  let usernameExists = false;
+  let emailExists = false;
+  let rowsFound = 0;
   try {
     const result = await checkIfUsernameOrEmailExists(
       userData.email,
