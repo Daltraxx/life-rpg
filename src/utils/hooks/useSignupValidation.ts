@@ -58,7 +58,8 @@ export type ValidationErrorMessages = {
  */
 export default function useSignupValidation(
   formData: FormData,
-  interactedFields: InteractedFields
+  interactedFields: InteractedFields,
+  debounceDelay = 500
 ): {
   errors: ValidationErrorMessages;
   allFieldsValid: boolean;
@@ -147,7 +148,7 @@ export default function useSignupValidation(
           setQuerying(false);
         }
       }
-    }, 500); // Adjust the delay as needed
+    }, debounceDelay); // Adjust the delay as needed
 
     return () => {
       clearTimeout(validationHandler); // Cleanup the timeout on unmount or when formData changes
