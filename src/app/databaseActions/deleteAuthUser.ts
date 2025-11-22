@@ -1,6 +1,6 @@
 "use server";
 
-import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { createSupabaseAdminClient } from "@/utils/supabase/admin";
 
 /**
  * Deletes an authenticated user and their associated data from the system (via cascade).
@@ -30,7 +30,7 @@ export async function deleteAuthUser(userId: string): Promise<void> {
     throw new Error('Invalid userId: must be a non-empty string');
   }
 
-  const supabaseAdmin = await createSupabaseServerClient({ admin: true });
+  const supabaseAdmin = await createSupabaseAdminClient();
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
   if (error) {
     console.error("Error deleting user:", error);
