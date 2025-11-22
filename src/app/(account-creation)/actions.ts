@@ -77,6 +77,10 @@ export async function createAccount(
     // Handle specific error cases
     switch (error.code) {
       // research ways to make password validation match supabase rules
+      case "email_exists":
+        return {
+          message: "An account with this email already exists.",
+        };
       case "weak_password":
         return {
           message: "Password is too weak. Please choose a stronger password.",
