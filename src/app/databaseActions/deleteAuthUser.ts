@@ -26,6 +26,6 @@ export async function deleteAuthUser(userId: string): Promise<void> {
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
   if (error) {
     console.error("Error deleting user:", error);
-    throw new Error("Failed to delete user account.");
+    throw new Error(`Failed to delete user account: ${error.message}`);
   }
 }
