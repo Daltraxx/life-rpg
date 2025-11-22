@@ -2,7 +2,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-type ClientOptions = {
+export type ClientOptions = {
   admin?: boolean;
 };
 
