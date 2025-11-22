@@ -32,6 +32,10 @@ export default async function checkIfUsernameExists(
   username: string,
   signal?: AbortSignal
 ): Promise<boolean> {
+  // Consider adding:
+  // Rate-limiting on this endpoint/function call
+  // CAPTCHA for repeated checks
+  // Honeypot fields to detect automated scanning
   const supabase = createSupabaseBrowserClient();
   const normalizedUsername = username.toLowerCase().trim(); // Adjust normalization as needed
   try {
