@@ -15,6 +15,7 @@ export const SignupSchema = z
     ),
     usertag: z.string()
       .trim()
+      .toLowerCase()
       .min(3, "User Tag must be at least 3 characters long")
       .max(30, "User Tag must be at most 30 characters long")
       .regex(
