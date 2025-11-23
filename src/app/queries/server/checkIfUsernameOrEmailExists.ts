@@ -12,7 +12,7 @@ import { PostgrestError } from "@supabase/supabase-js";
  * @returns A promise that resolves to an object containing:
  * - `usernameExists`: boolean indicating if the username already exists
  * - `emailExists`: boolean indicating if the email already exists
- * - `rowsFound`: number of matching rows found in the database
+ * - `rowsFound`: number of matching rows found in the database (to determine if both belong to same user)
  *
  * @throws {Error} If there's an error querying the database
  *
