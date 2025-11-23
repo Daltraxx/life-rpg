@@ -29,10 +29,9 @@ export const FIELDS: Field[] = [
   "confirmPassword",
 ];
 export type InteractedFields = Record<Field, boolean>;
-const INITIAL_INTERACTED_FIELDS: InteractedFields = FIELDS.reduce(
-  (acc, field) => ({ ...acc, [field]: false }),
-  {} as InteractedFields
-);
+export const INITIAL_INTERACTED_FIELDS: InteractedFields = Object.fromEntries(
+  FIELDS.map((field) => [field, false])
+) as InteractedFields;
 
 export type SignupFormData = {
   email: string;
