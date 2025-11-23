@@ -7,30 +7,31 @@ import { redirect } from "next/navigation";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import checkIfUsernameOrEmailExists from "../queries/server/checkIfUsernameOrEmailExists";
+import checkIfUsertagExists from "../queries/client/checkIfUsertagExists";
 
 /**
  * Server action to create a new user account.
- * 
+ *
  * This function handles the account creation process including:
  * - Validating form data against the signup schema
  * - Checking for existing username/email (note: subject to TOCTOU race condition)
  * - Creating the user account in Supabase Auth
  * - Redirecting to email verification page on success
- * 
+ *
  * @param prevState - The previous state of the signup form
  * @param formData - The form data submitted by the user
  * @returns A SignupState object containing errors and messages, or redirects on success
- * 
+ *
  * @remarks
- * **TOCTOU Vulnerability**: The pre-check for existing username/email is subject to a 
- * Time-of-Check to Time-of-Use (TOCTOU) race condition. Another user could register 
- * with the same credentials between our check and the actual signup call. This is 
+ * **TOCTOU Vulnerability**: The pre-check for existing username/email is subject to a
+ * Time-of-Check to Time-of-Use (TOCTOU) race condition. Another user could register
+ * with the same credentials between our check and the actual signup call. This is
  * acceptable because:
  * 1. Supabase will ultimately reject duplicate emails with proper error codes
  * 2. The pre-check provides better UX by giving specific feedback earlier
  * 3. The race condition window is very small in practice
  * 4. Username uniqueness is enforced by database constraints as a final safeguard
- * 
+ *
  * @todo Add rate limiting to prevent abuse
  * @todo Consider caching username/email checks to reduce database queries
  */
@@ -53,45 +54,37 @@ export async function createAccount(
     };
   }
 
-  // Query supabase to check if username or email already exists before attempting to create account
+  // Query supabase to check if usertag already exists before attempting to create account
   // WARNING: TOCTOU vulnerability - this check is not atomic with the signup operation below.
   // See function documentation for why this is acceptable.
   const userData = validatedFields.data;
-  let usernameExists = false;
-  let emailExists = false;
+  let usertagExists = false;
   try {
-    ({ usernameExists, emailExists } = await checkIfUsernameOrEmailExists(
-      userData.email,
-      userData.username
-    ));
+    usertagExists = await checkIfUsertagExists(
+      userData.usertag
+    );
   } catch (error) {
-    console.error("Error checking existing username or email:", error);
-    return {
+      console.error("Error checking existing usertag:", error);
+      return {
       message:
-        "Error checking for existing username and email. Please try again.",
+        "Error checking for existing usertag. Please try again.",
     };
   }
 
-  if (usernameExists || emailExists) {
-    const errorState: SignupState = {
-      errors: { username: [], email: [] },
-      message: "Cannot create account due to existing credentials.",
-    };
-    if (emailExists)
-      errorState.errors!.email!.push(
-        "An account with this email already exists."
-      );
-    if (usernameExists)
-      errorState.errors!.username!.push(
-        "Username already taken. Please choose a different username."
-      );
-    return errorState;
+  if (usertagExists) {
+    return {
+      errors: {
+        usertag: ["User Tag already exists. Please choose another."]
+      }
+    }
   }
 
   const { data, error } = await supabase.auth.signUp({
     email: userData.email,
     password: userData.password,
-    options: { data: { username: userData.username } }, // store username in auth metadata
+    options: {
+      data: { username: userData.username, usertag: userData.usertag },
+    }, // store username and usertag in auth metadata
   });
 
   // Inserting in users table is handled by Supabase trigger
