@@ -1,5 +1,6 @@
 "use server";
 
+import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { createSupabaseAdminClient } from "@/utils/supabase/admin";
 
 /**
@@ -50,10 +51,10 @@ export async function deleteAuthUser(userId: string): Promise<void> {
     throw new Error("Invalid userId: must be a valid UUID format");
 
   // Add authorization check
-  const supabaseAdmin = await createSupabaseAdminClient();
+  const supabase = await createSupabaseServerClient();
   const {
     data: { user: currentUser },
-  } = await supabaseAdmin.auth.getUser();
+  } = await supabase.auth.getUser();
 
   if (!currentUser) {
     throw new Error("Unauthorized: No authenticated user");
@@ -69,9 +70,10 @@ export async function deleteAuthUser(userId: string): Promise<void> {
     );
   }
 
+  const supabaseAdmin = createSupabaseAdminClient();
   const { error } = await supabaseAdmin.auth.admin.deleteUser(userId);
   if (error) {
-    if (error.message?.includes('not found') || error.status === 404) {
+    if (error.message?.includes("not found") || error.status === 404) {
       console.warn(`User ${userId} not found, may have been already deleted`);
       return; // Idempotent behavior
     }
