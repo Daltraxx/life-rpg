@@ -17,7 +17,7 @@ import { createClient } from "@supabase/supabase-js";
  * - Error if either required environment variable is missing.
  *
  * Returns:
- * - A Promise that resolves to a configured SupabaseClient instance.
+ * - A configured SupabaseClient instance.
  *
  * Security Notes:
  * - The service role key has elevated privileges and bypasses Row Level Security (RLS).
@@ -26,7 +26,7 @@ import { createClient } from "@supabase/supabase-js";
  *
  * Example:
  * ```ts
- * const adminClient = await createSupabaseAdminClient();
+ * const adminClient = createSupabaseAdminClient();
  * await adminClient.from("users").select("*"); // RLS bypassed if using service role
  * ```
  */
