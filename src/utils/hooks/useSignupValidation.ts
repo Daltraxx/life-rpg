@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { SignupSchema } from "@/utils/validations/signup";
-import checkIfUsernameExists from "@/app/queries/client/checkIfUsernameExists";
+import checkIfUsernameExists from "@/app/queries/client/checkIfUsertagExists";
 import {
   FIELDS,
   type InteractedFields,
@@ -71,15 +71,15 @@ export default function useSignupValidation(
   const [allFieldsValid, setAllFieldsValid] = useState(false);
 
   const [querying, setQuerying] = useState(false);
-  const usernameCheckRequestIdRef = useRef<number>(0);
+  const usertagRequestIdRef = useRef<number>(0);
   // TODO: Consider adding a cache eviction strategy (LRU cache) if this map could grow large
-  const checkedUsernamesRef = useRef<Map<string, boolean>>(new Map());
+  const checkedUsertagsRef = useRef<Map<string, boolean>>(new Map());
 
   useEffect(() => {
     const abortController = new AbortController();
     const validationHandler = setTimeout(async () => {
       const validatedFields = SignupSchema.safeParse(formData);
-      let usernameValid = true;
+      let usertagValid = true;
 
       if (!validatedFields.success) {
         const errors = z.flattenError(validatedFields.error).fieldErrors;
@@ -87,7 +87,7 @@ export default function useSignupValidation(
         for (const field of FIELDS) {
           if (interactedFields[field] && errors[field]?.length) {
             filteredErrors[field] = errors[field];
-            if (field === "username") usernameValid = false;
+            if (field === "usertag") usertagValid = false;
           }
         }
         setErrors(filteredErrors);
@@ -97,57 +97,57 @@ export default function useSignupValidation(
         setAllFieldsValid(true);
       }
 
-      // Additional check for username existence
-      const username = formData.username;
-      const usernameExistsCached = checkedUsernamesRef.current.get(username);
-      if (usernameExistsCached !== undefined && interactedFields.username) {
+      // Additional check for usertag existence
+      const usertag = formData.usertag;
+      const usertagExistsCached = checkedUsertagsRef.current.get(usertag);
+      if (usertagExistsCached !== undefined && interactedFields.usertag) {
         // Use cached result
-        if (usernameExistsCached) {
+        if (usertagExistsCached) {
           setErrors((prevErrors) => ({
             ...prevErrors,
-            username: ["Username already taken"],
+            usertag: ["User Tag already taken"],
           }));
           setAllFieldsValid(false);
           return;
         } else {
-          return; // Username is available, no further action needed
+          return; // User Tag is available, no further action needed
         }
       }
-      if (usernameValid && interactedFields.username) {
-        const currentUsernameCheckRequestId =
-          ++usernameCheckRequestIdRef.current;
+      if (usertagValid && interactedFields.usertag) {
+        const currentUsertagCheckRequestId =
+          ++usertagRequestIdRef.current;
         setQuerying(true);
         try {
           const exists = await checkIfUsernameExists(
-            username,
+            usertag,
             abortController.signal
           );
-          checkedUsernamesRef.current.set(username, exists);
+          checkedUsertagsRef.current.set(usertag, exists);
           if (
-            currentUsernameCheckRequestId !== usernameCheckRequestIdRef.current
+            currentUsertagCheckRequestId !== usertagRequestIdRef.current
           )
             return; // Outdated request, ignore result
 
           if (exists) {
             setErrors((prevErrors) => ({
               ...prevErrors,
-              username: ["Username already taken"],
+              usertag: ["User Tag already taken"],
             }));
             setAllFieldsValid(false);
           }
         } catch (error) {
           if (error instanceof Error && error.name === "AbortError") return; // Request was aborted, ignore
-          console.error("Error checking username existence:", error);
+          console.error("Error checking usertag existence:", error);
           setErrors((prevErrors) => ({
             ...prevErrors,
-            username: [
-              "Error checking username availability, please try again",
+            usertag: [
+              "Error checking User Tag availability, please try again",
             ],
           }));
           setAllFieldsValid(false);
         } finally {
           if (
-            currentUsernameCheckRequestId === usernameCheckRequestIdRef.current
+            currentUsertagCheckRequestId === usertagRequestIdRef.current
           )
             setQuerying(false);
         }
