@@ -1,3 +1,4 @@
+import escapeSingleQuotes from "@/utils/helpers/escapeSingleQuotes";
 import getEscapedUsername from "@/utils/helpers/getEscapedUsername";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { PostgrestError } from "@supabase/supabase-js";
@@ -38,6 +39,8 @@ export default async function checkIfUsernameOrEmailExists(
 
   // Escape ILIKE wildcards (% and _) to prevent unintended pattern matching
   const escapedUsername = getEscapedUsername(normalizedUsername);
+  // Escape single quotes in email by doubling them and wrapping in quotes to prevent query issues
+  const escapedEmail = escapeSingleQuotes(email);
 
   let data: { email: string; username: string }[] | null,
     error: PostgrestError | null;
@@ -45,7 +48,7 @@ export default async function checkIfUsernameOrEmailExists(
     let query = supabase
       .from("users")
       .select("email, username")
-      .or(`username.ilike.${escapedUsername},email.eq."${email}"`);
+      .or(`username.ilike.${escapedUsername},email.eq.${escapedEmail}`);
 
     if (signal) query = query.abortSignal(signal);
 
