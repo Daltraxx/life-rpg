@@ -13,13 +13,13 @@ export const SignupSchema = z
         /^[A-Za-z0-9_ ]+$/,
         "Username can only contain letters, numbers, underscores, and spaces"
     ),
-    handle: z.string()
+    usertag: z.string()
       .trim()
-      .min(3, "Handle must be at least 3 characters long")
-      .max(30, "Handle must be at most 30 characters long")
+      .min(3, "User Tag must be at least 3 characters long")
+      .max(30, "User Tag must be at most 30 characters long")
       .regex(
         /^[A-Za-z0-9_ ]+$/,
-        "Handle can only contain letters, numbers, underscores, and spaces"
+        "User Tag can only contain letters, numbers, underscores, and spaces"
     ),
     password: z
       .string()
@@ -40,6 +40,7 @@ export type SignupState = {
   errors?: {
     email?: string[];
     username?: string[];
+    usertag?: string[];
     password?: string[];
     confirmPassword?: string[];
   };

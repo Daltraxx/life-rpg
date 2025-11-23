@@ -25,7 +25,7 @@ type Field = keyof ValidationErrorMessages;
 export const FIELDS: Field[] = [
   "email",
   "username",
-  "handle",
+  "usertag",
   "password",
   "confirmPassword",
 ];
@@ -37,12 +37,14 @@ export const INITIAL_INTERACTED_FIELDS: InteractedFields = Object.fromEntries(
 export type SignupFormData = {
   email: string;
   username: string;
+  usertag: string;
   password: string;
   confirmPassword: string;
 };
 export const INITIAL_FORM_DATA: SignupFormData = {
   email: "",
   username: "",
+  usertag: "",
   password: "",
   confirmPassword: "",
 };
@@ -179,6 +181,27 @@ export default function CreateAccountForm(): ReactElement {
             aria-describedby={errors.username ? "username-error" : undefined}
             required
           />
+          <FieldErrorsDisplay
+            errors={errors.username}
+            id="username-error"
+            fontSize="20-responsive"
+            className={styles.errorMessage}
+          />
+        </div>
+
+        <div className={styles.inputContainer}>
+          <Label htmlFor="handle" size="24-responsive">
+            User Tag:
+          </Label>
+          <input
+            id="usertag"
+            type="text"
+            name="usertag"
+            value={formData.usertag}
+            onChange={handleChange}
+            aria-describedby={errors.usertag ? "usertag-error" : undefined}
+            required
+          />
           {querying && (
             <Span
               className={styles.loadingIndicator}
@@ -189,8 +212,8 @@ export default function CreateAccountForm(): ReactElement {
             </Span>
           )}
           <FieldErrorsDisplay
-            errors={errors.username}
-            id="username-error"
+            errors={errors.usertag}
+            id="handle-error"
             fontSize="20-responsive"
             className={styles.errorMessage}
           />

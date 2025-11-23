@@ -11,7 +11,7 @@ import {
 export type ValidationErrorMessages = {
   email?: string[];
   username?: string[];
-  handle?: string[];
+  usertag?: string[];
   password?: string[];
   confirmPassword?: string[];
 };
