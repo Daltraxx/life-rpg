@@ -25,7 +25,7 @@ import { createSupabaseAdminClient } from "@/utils/supabase/admin";
  * @remarks
  * This function requires either:
  * - The authenticated user to be deleting their own account (currentUser.id === userId), OR
- * - The authenticated user to have admin role (user_metadata.role === "admin")
+ * - The authenticated user to have admin role (app_metadata.role === "admin")
  *
  * Any errors during the deletion process are logged to the console before throwing.
  * Cascading deletes in the database ensure that all related data for the user is also removed.
