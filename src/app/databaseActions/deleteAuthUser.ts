@@ -61,7 +61,7 @@ export async function deleteAuthUser(userId: string): Promise<void> {
 
   // Check if user is deleting their own account OR is an admin
   const isOwnAccount = currentUser.id === userId;
-  const isAdmin = currentUser.user_metadata?.role === "admin"; // TODO: Implement role management system and adjust as needed
+  const isAdmin = currentUser.app_metadata?.role === "admin"; // TODO: Implement role management system and adjust as needed
 
   if (!isOwnAccount && !isAdmin) {
     throw new Error(
