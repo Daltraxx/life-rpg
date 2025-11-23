@@ -22,14 +22,14 @@
  * const { data, error } = await supabase
  *   .from("users")
  *   .select("*")
- *   .ilike("username", escapedUsername, { escape: '\\' });
+ *   .ilike("username", escapedUsername);
  * 
  * // Supabase Usage with OR condition:
  * const escapedUsername = getEscapedUsername("user_name%");
  * const { data, error } = await supabase
  *   .from("users")
  *   .select("*")
- *   .or(`username.ilike.${escapedUsername} ESCAPE '\\',email.eq.${escapedEmail}`);
+ *   .or(`username.ilike.${escapedUsername},email.eq.${escapedEmail}`);
  * ```
  */
 export default function getEscapedUsername(normalizedUsername: string): string {
