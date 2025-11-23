@@ -16,6 +16,20 @@
  * 
  * // SQL Usage (PostgreSQL):
  * // SELECT * FROM users WHERE username ILIKE ${escapedUsername} ESCAPE '\'
+ * 
+ * // Supabase Usage with ILIKE:
+ * const escapedUsername = getEscapedUsername("user_name%");
+ * const { data, error } = await supabase
+ *   .from("users")
+ *   .select("*")
+ *   .ilike("username", escapedUsername, { escape: '\\' });
+ * 
+ * // Supabase Usage with OR condition:
+ * const escapedUsername = getEscapedUsername("user_name%");
+ * const { data, error } = await supabase
+ *   .from("users")
+ *   .select("*")
+ *   .or(`username.ilike.${escapedUsername} ESCAPE '\\',email.eq.${escapedEmail}`);
  * ```
  */
 export default function getEscapedUsername(normalizedUsername: string): string {
