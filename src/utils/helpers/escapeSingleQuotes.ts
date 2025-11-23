@@ -24,6 +24,9 @@
  * @returns A PostgreSQL-safe single-quoted string literal with internal quotes escaped.
  */
 export default function escapeSingleQuotes(input: string): string {
+  if (input == null)
+    throw new TypeError("escapeSingleQuotes: input must be a non-null string");
+
   // Escape single quotes by doubling them
   const escaped = input.replace(/'/g, "''");
   // Wrap the escaped string in single quotes
