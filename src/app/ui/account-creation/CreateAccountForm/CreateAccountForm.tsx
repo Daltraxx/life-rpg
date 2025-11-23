@@ -25,6 +25,7 @@ type Field = keyof ValidationErrorMessages;
 export const FIELDS: Field[] = [
   "email",
   "username",
+  "handle",
   "password",
   "confirmPassword",
 ];

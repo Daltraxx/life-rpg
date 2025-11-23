@@ -12,7 +12,15 @@ export const SignupSchema = z
       .regex(
         /^[A-Za-z0-9_ ]+$/,
         "Username can only contain letters, numbers, underscores, and spaces"
-      ),
+    ),
+    handle: z.string()
+      .trim()
+      .min(3, "Username must be at least 3 characters long")
+      .max(30, "Username must be at most 30 characters long")
+      .regex(
+        /^[A-Za-z0-9_ ]+$/,
+        "Username can only contain letters, numbers, underscores, and spaces"
+    ),
     password: z
       .string()
       .min(8, "Password must be at least 8 characters long")
