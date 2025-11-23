@@ -13,6 +13,9 @@
  * ```typescript
  * getEscapedUsername("user_name%") // Returns "user\_name\%"
  * getEscapedUsername("path\\to\\user") // Returns "path\\\\to\\\\user"
+ * 
+ * // SQL Usage (PostgreSQL):
+ * // SELECT * FROM users WHERE username ILIKE ${escapedUsername} ESCAPE '\'
  * ```
  */
 export default function getEscapedUsername(normalizedUsername: string): string {
