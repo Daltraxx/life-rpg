@@ -1,4 +1,3 @@
-
 /**
  * Escapes single quotes in a string for safe inclusion as a single-quoted literal
  * in PostgreSQL (including Supabase) SQL statements.
