@@ -78,11 +78,11 @@ export async function createAccount(
       message: "Cannot create account due to existing credentials.",
     };
     if (emailExists)
-      errorState.errors?.email!.push(
+      errorState.errors!.email!.push(
         "An account with this email already exists."
       );
     if (usernameExists)
-      errorState.errors?.username!.push(
+      errorState.errors!.username!.push(
         "Username already taken. Please choose a different username."
       );
     return errorState;
