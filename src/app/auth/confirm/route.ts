@@ -106,12 +106,47 @@ export async function GET(request: NextRequest) {
   let errorMessage =
     "Confirmation link has expired or already been used. Please request a new one.";
   // Provide more specific messages based on error code
-  if (error.code === "otp_expired") {
-    errorMessage =
-      "This confirmation link has expired. Please request a new one.";
-  } else if (error.code === "otp_disabled") {
-    errorMessage =
-      "This confirmation link has already been used. Please request a new one.";
+  switch (error.code) {
+    case "otp_expired":
+      errorMessage =
+        "This confirmation link has expired. Please request a new one.";
+      break;
+    case "otp_disabled":
+      errorMessage =
+        "This confirmation link has already been used. Please request a new one.";
+      break;
+    case "user_banned":
+      errorMessage =
+        "Your account has been suspended. Please contact support for assistance.";
+      break;
+    case "validation_failed":
+      errorMessage =
+        "Invalid confirmation link or parameters. Please check the link and try again, or request a new confirmation email.";
+      break;
+    case "over_email_send_rate_limit":
+      errorMessage =
+        "Too many email confirmation requests. Please wait a few minutes before trying again.";
+      break;
+    case "over_sms_send_rate_limit":
+      errorMessage =
+        "Too many SMS confirmation requests. Please wait a few minutes before trying again.";
+      break;
+    case "over_request_rate_limit":
+      errorMessage =
+        "Too many confirmation attempts. Please wait a few minutes before trying again.";
+      break;
+    case "email_provider_disabled":
+      errorMessage =
+        "Email confirmation service is temporarily unavailable. Please try again later or contact support.";
+      break;
+    case "phone_provider_disabled":
+      errorMessage =
+        "SMS confirmation service is temporarily unavailable. Please try again later or contact support.";
+      break;
+    case "mfa_verification_failed":
+      errorMessage =
+        "Multi-factor authentication verification failed. Please check your authentication method and try again.";
+      break;
   }
 
   // On failure, redirect to error page with some instructions
