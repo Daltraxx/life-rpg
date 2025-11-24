@@ -19,8 +19,8 @@ export const SignupSchema = z
       .min(3, "User Tag must be at least 3 characters long")
       .max(30, "User Tag must be at most 30 characters long")
       .regex(
-        /^[A-Za-z0-9_ ]+$/,
-        "User Tag can only contain letters, numbers, underscores, and spaces"
+        /^[A-Za-z0-9_]+$/,
+        "User Tag can only contain letters, numbers, and underscores"
     ),
     password: z
       .string()
