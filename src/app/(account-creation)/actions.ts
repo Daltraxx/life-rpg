@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
-import checkIfUsertagExists from "../queries/client/checkIfUsertagExists";
+import checkIfUsertagExists from "../queries/server/checkIfUsertagExists";
 
 /**
  * Server action to create a new user account.
