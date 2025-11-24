@@ -13,7 +13,7 @@ import checkIfUsertagExists from "../queries/client/checkIfUsertagExists";
  *
  * This function handles the account creation process including:
  * - Validating form data against the signup schema
- * - Checking for existing username/email (note: subject to TOCTOU race condition)
+ * - Checking for existing usertag (note: subject to TOCTOU race condition)
  * - Creating the user account in Supabase Auth
  * - Redirecting to email verification page on success
  *
@@ -22,17 +22,17 @@ import checkIfUsertagExists from "../queries/client/checkIfUsertagExists";
  * @returns A SignupState object containing errors and messages, or redirects on success
  *
  * @remarks
- * **TOCTOU Vulnerability**: The pre-check for existing username/email is subject to a
+ * **TOCTOU Vulnerability**: The pre-check for existing usertag is subject to a
  * Time-of-Check to Time-of-Use (TOCTOU) race condition. Another user could register
- * with the same credentials between our check and the actual signup call. This is
+ * with the same usertag between our check and the actual signup call. This is
  * acceptable because:
  * 1. Supabase will ultimately reject duplicate emails with proper error codes
  * 2. The pre-check provides better UX by giving specific feedback earlier
  * 3. The race condition window is very small in practice
- * 4. Username uniqueness is enforced by database constraints as a final safeguard
+ * 4. Usertag uniqueness is enforced by database constraints as a final safeguard
  *
  * @todo Add rate limiting to prevent abuse
- * @todo Consider caching username/email checks to reduce database queries
+ * @todo Consider caching usertag checks to reduce database queries
  */
 export async function createAccount(
   prevState: SignupState,
@@ -59,23 +59,20 @@ export async function createAccount(
   const userData = validatedFields.data;
   let usertagExists = false;
   try {
-    usertagExists = await checkIfUsertagExists(
-      userData.usertag
-    );
+    usertagExists = await checkIfUsertagExists(userData.usertag);
   } catch (error) {
-      console.error("Error checking existing usertag:", error);
-      return {
-      message:
-        "Error checking for existing usertag. Please try again.",
+    console.error("Error checking existing usertag:", error);
+    return {
+      message: "Error checking for existing usertag. Please try again.",
     };
   }
 
   if (usertagExists) {
     return {
       errors: {
-        usertag: ["User Tag already exists. Please choose another."]
-      }
-    }
+        usertag: ["User Tag already exists. Please choose another."],
+      },
+    };
   }
 
   const { data, error } = await supabase.auth.signUp({
