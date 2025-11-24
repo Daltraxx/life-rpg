@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { z } from "zod";
 import { SignupSchema } from "@/utils/validations/signup";
-import checkIfUsernameExists from "@/app/queries/client/checkIfUsertagExists";
+import checkIfUsertagExists from "@/app/queries/client/checkIfUsertagExists";
 import {
   FIELDS,
   type InteractedFields,
@@ -118,7 +118,7 @@ export default function useSignupValidation(
           ++usertagRequestIdRef.current;
         setQuerying(true);
         try {
-          const exists = await checkIfUsernameExists(
+          const exists = await checkIfUsertagExists(
             usertag,
             abortController.signal
           );
