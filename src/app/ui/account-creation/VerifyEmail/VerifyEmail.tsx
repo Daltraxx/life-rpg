@@ -1,4 +1,4 @@
-import styles from "./VerifyEmail.module.css";
+import styles from "./styles.module.css";
 
 export default function VerifyEmail() {
   return (
