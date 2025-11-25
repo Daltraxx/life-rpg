@@ -1,3 +1,9 @@
+.outerContainer {
+  flex-grow: 1; /* Ensures container fills available space, allowing vertical centering of children */
+  display: flex;
+  align-items: center;
+}
+
 .contentContainer {
   display: flex;
   justify-content: center;

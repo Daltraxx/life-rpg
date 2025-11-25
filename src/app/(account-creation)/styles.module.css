@@ -1,9 +1,12 @@
-/* Ensures content fills viewport minus header and footer height */
 .mainContent {
+  /* Ensures content fills viewport minus header and footer height */
   min-height: calc(
     100dvh - var(--create-account-header-height, 6.5rem) -
       var(--create-account-footer-height-mobile, 10.75rem)
   );
+  /* To set up children to be aligned vertically if desired */
+  display: flex;
+  flex-direction: column;
 }
 
 @media only screen and (min-width: 768px) {
