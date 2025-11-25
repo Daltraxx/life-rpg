@@ -3,7 +3,7 @@
 
 export default function VerifyEmail() { 
   return (
-    <section>
+    <section role="status" aria-live="polite">
       <h1>Account Created Successfully!</h1>
       <p>Please check your email to verify your account so we can get started.</p>
     </section>
