@@ -1,5 +1,5 @@
 import CreateAccountForm from "@/app/ui/account-creation/CreateAccountForm/CreateAccountForm";
-import { Metadata } from "next";
+import { type Metadata } from "next";
 export const metadata: Metadata = {
   title: "Create Account",
 };
