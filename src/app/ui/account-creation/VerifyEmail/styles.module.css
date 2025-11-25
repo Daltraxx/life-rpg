@@ -15,4 +15,5 @@
   gap: 1rem;
   color: var(--blue-600, #091f36);
   text-align: center;
+  max-width: 38rem;
 }
