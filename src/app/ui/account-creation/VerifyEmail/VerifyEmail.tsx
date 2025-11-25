@@ -1,4 +1,5 @@
 import styles from "./VerifyEmail.module.css";
+
 export default function VerifyEmail() {
   return (
     <section role="status" aria-live="polite" className={styles.verifyEmail}>
