@@ -92,21 +92,22 @@ export async function updateSession(
     error,
   } = await supabase.auth.getUser();
 
-  if (error) {
-    const errorDetails = getUserErrorLog(error, request);
-    console.error(
-      "Auth errors in middleware:\n",
-      errorDetails
-    );
-    // Treat auth errors as unauthenticated
-  }
-
-  const publicPaths = ["/", "/create-account", "/auth", "/error"];
+  const publicPaths = ["/", "/create-account", "/auth", "/error", "/verify-email"];
   const pathname = request.nextUrl.pathname;
   const isPublicPath = publicPaths.some(
     (path) =>
       pathname === path || (path !== "/" && pathname.startsWith(`${path}/`))
   );
+
+  if (error) {
+    if (error.name === "AuthSessionMissingError" && isPublicPath) {
+      // no user session and is public path, allow access, no need to log error
+    } else {
+      const errorDetails = getUserErrorLog(error, request);
+      console.error("Auth errors in middleware:\n", errorDetails);
+      // Treat auth errors as unauthenticated
+    }
+  }
 
   if (!user && !isPublicPath) {
     // no user and is not public path, potentially respond by redirecting the user to the login page
