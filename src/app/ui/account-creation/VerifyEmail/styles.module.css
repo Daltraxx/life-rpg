@@ -1,0 +1,12 @@
+.contentContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.verifyEmailSection {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--blue-600, #091f36);
+  text-align: center;
+}
