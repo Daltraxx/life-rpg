@@ -5,7 +5,7 @@
   --foreground: #171717;
 
   --blue-400: hsl(211, 71%, 20%); /* #0f3257 */
-  --blue-600: hsl(211, 71%, 12%); /* #091f36 */
+  --blue-600: hsl(211, 71%, 12%); /* #091f36 - primary font color against white backgrounds */
 
   --brown-400: hsl(31, 71%, 20%); /* #57340f */
   --brown-600: hsl(31, 71%, 12%); /* #362009 */
