@@ -4,7 +4,7 @@
     100dvh - var(--create-account-header-height, 6.5rem) -
       var(--create-account-footer-height-mobile, 10.75rem)
   );
-  /* To set up children to be aligned vertically if desired */
+  /* To set up children to be aligned with different vertical justifications if desired */
   display: flex;
   flex-direction: column;
 }
