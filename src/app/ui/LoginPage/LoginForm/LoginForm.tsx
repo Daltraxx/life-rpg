@@ -1,12 +1,12 @@
 "use client";
 
 import styles from "./styles.module.css";
-import Bounded from "../../Bounded";
+import Bounded from "@/app/ui/Bounded";
 import {
   ButtonWrapper,
-  LinkWrapper,
-  RegularLinkWrapper,
-} from "../../ButtonLinkWrappers/ButtonLinkWrappers";
+  LinkWrapper
+} from "@/app/ui/ButtonLikeWrappers/ButtonLikeWrappers";
+import { BasicLinkWrapper } from "@/app/ui/BasicLinkWrapper/BasicLinkWrapper";
 
 export default function LoginForm() {
   return (
@@ -31,12 +31,12 @@ export default function LoginForm() {
         <ButtonWrapper type="submit" className={styles.loginButton}>
           Login
         </ButtonWrapper>
-        <RegularLinkWrapper
+        <BasicLinkWrapper
           href="/forgot-password"
           className={styles.forgotPasswordLink}
         >
           Forgot Password?
-        </RegularLinkWrapper>
+        </BasicLinkWrapper>
       </form>
       <div className={styles.divider}></div>
       <LinkWrapper href="/create-account" className={styles.createAccountLink}>

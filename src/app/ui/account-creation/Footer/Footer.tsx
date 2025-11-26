@@ -2,7 +2,7 @@ import Bounded from "../../Bounded";
 import Heading from "../../Heading";
 import styles from "./styles.module.css";
 import { Span } from "../../TextWrappers";
-import { RegularLinkWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
+import { BasicLinkWrapper } from "@/app/ui/BasicLinkWrapper/BasicLinkWrapper";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -21,7 +21,7 @@ export default function Footer() {
           © {currentYear}
         </Span>
       </div>
-      <RegularLinkWrapper
+      <BasicLinkWrapper
         href="https://www.daltonpettus.com/"
         target="_blank"
         rel="noopener noreferrer"
@@ -31,7 +31,7 @@ export default function Footer() {
         className={styles.daltraxxLink}
       >
         by Daltraxx INC.
-      </RegularLinkWrapper>
+      </BasicLinkWrapper>
     </Bounded>
   );
 }

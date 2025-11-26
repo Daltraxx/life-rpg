@@ -1,0 +1,39 @@
+.link {
+  text-decoration: none;
+  padding: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.brown600 {
+  color: var(--brown-600, #362009);
+}
+.brown600:hover {
+  color: var(--brown-400, #57340f);
+}
+.brown600:active {
+  color: var(--brown-600, #362009);
+}
+
+.blue600 {
+  color: var(--blue-600, #091f36);
+}
+.blue600:hover {
+  color: var(--blue-400, #0f3257);
+}
+.blue600:active {
+  color: var(--blue-600, #091f36);
+}
+
+.orange300 {
+  color: var(--orange-300, #E1B382);
+}
+.orange300:hover {
+  color: var(--orange-200, #e8c6a1);
+}
+.orange300:active {
+  color: var(--orange-300, #E1B382);
+} 

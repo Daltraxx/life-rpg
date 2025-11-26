@@ -5,7 +5,7 @@ import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupState } from "@/utils/validations/signup";
 
 import Bounded from "../../Bounded";
-import { ButtonWrapper } from "../../ButtonLinkWrappers/ButtonLinkWrappers";
+import { ButtonWrapper } from "../../ButtonLikeWrappers/ButtonLikeWrappers";
 import Heading from "../../Heading";
 import { Label, Paragraph, Span } from "../../TextWrappers";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
