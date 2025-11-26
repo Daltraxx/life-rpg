@@ -6,15 +6,71 @@ import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
 /**
- * Color variants for buttons and links.
+ * Color variants for buttons and links with button appearance.
  * Use "custom" with className prop to provide your own color styling.
  */
-type Color = "brown-600" | "blue-600" | "orange-300" | "custom";
+const buttonColorMap = {
+  "brown-600": styles.buttonBrown600,
+  "blue-600": styles.buttonBlue600,
+  "orange-300": styles.buttonOrange300,
+  custom: "",
+} satisfies Record<string, string>;
+
+type Color = keyof typeof buttonColorMap;
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fontSize?: FontSize;
   color?: Color;
   children: ReactNode;
+}
+
+const DEFAULT_COLOR: Color = "brown-600";
+
+/**
+ * A styled wrapper component that provides consistent visual appearance for interactive elements.
+ * This component can be used to wrap either button elements (via ButtonWrapper) or Next.js Link components (via LinkWrapper).
+ * Both wrappers share the same visual styling but differ in their underlying HTML element and behavior.
+ *
+ * @param color - The color variant of the button/link. Defaults to DEFAULT_COLOR.
+ * @param fontSize - The font size of the button/link text. Defaults to "20".
+ * @param children - The content to be displayed inside the button/link.
+ * @param className - Additional CSS classes to apply to the component.
+ * @param restProps - Additional props to be spread onto the underlying element.
+ *
+ * @example
+ * ```tsx
+ * // As a button
+ * <ButtonWrapper color="primary" fontSize="16">
+ *   Click me
+ * </ButtonWrapper>
+ *
+ * // As a link
+ * <LinkWrapper color="primary" fontSize="16" href="/dashboard">
+ *   Go to Dashboard
+ * </LinkWrapper>
+ * ```
+ */
+export function ButtonWrapper({
+  color = DEFAULT_COLOR,
+  fontSize = "20",
+  children,
+  className,
+  ...restProps
+}: ButtonProps) {
+  return (
+    <button
+      type="button"
+      className={clsx(
+        styles.button,
+        buttonColorMap[color],
+        fontSizeToTWMap[fontSize],
+        className
+      )}
+      {...restProps}
+    >
+      {children}
+    </button>
+  );
 }
 
 interface LinkWrapperProps extends LinkProps {
@@ -26,26 +82,6 @@ interface LinkWrapperProps extends LinkProps {
   rel?: string;
 }
 
-const buttonColorMap = {
-  "brown-600": styles.buttonBrown600,
-  "blue-600": styles.buttonBlue600,
-  "orange-300": styles.buttonOrange300,
-  "custom": "",
-} satisfies Record<Color, string>;
-  className,
-  ...restProps
-}: ButtonProps) {
-  return (
-    <button
-      type="button"
-      className={clsx(styles.button, buttonColorMap[color], fontSizeToTWMap[fontSize], className)}
-      {...restProps}
-    >
-      {children}
-    </button>
-  );
-}
-
 export function LinkWrapper({
   color = DEFAULT_COLOR,
   fontSize = "20",
@@ -55,7 +91,12 @@ export function LinkWrapper({
 }: LinkWrapperProps) {
   return (
     <Link
-      className={clsx(styles.button, buttonColorMap[color], fontSizeToTWMap[fontSize], className)}
+      className={clsx(
+        styles.button,
+        buttonColorMap[color],
+        fontSizeToTWMap[fontSize],
+        className
+      )}
       {...restProps}
     >
       {children}
@@ -63,22 +104,67 @@ export function LinkWrapper({
   );
 }
 
-const linkColorMap = {
+// RegularLinkWrapper component for links that look like regular text links (not buttons)
+
+const regularLinkColorMap = {
   "brown-600": styles.regularLinkBrown600,
   "blue-600": styles.regularLinkBlue600,
   "orange-300": styles.regularLinkOrange300,
-  "custom": "",
-} satisfies Record<Color, string>;
+  custom: "",
+} satisfies Record<string, string>;
 
+type RegularLinkColor = keyof typeof regularLinkColorMap;
+
+interface RegularLinkWrapperProps extends LinkProps {
+  fontSize?: FontSize;
+  color?: RegularLinkColor;
+  children: ReactNode;
+  className?: string;
+  target?: string;
+  rel?: string;
+}
+
+const DEFAULT_REGULAR_LINK_COLOR: RegularLinkColor = "brown-600";
+
+/**
+ * Renders a Next.js `Link` styled as a regular text link with color and font-size utilities applied.
+ *
+ * Uses `clsx` to merge:
+ * - a base style for regular links,
+ * - a color class from `regularLinkColorMap` based on `color`,
+ * - a font-size utility from `fontSizeToTWMap` based on `fontSize`,
+ * - any additional classes passed via `className`.
+ *
+ * @remarks
+ * - Intended for inline textual navigation links (not primary buttons).
+ * - `fontSize` maps to predefined Tailwind utility classes; values outside the map may result in missing styles.
+ * - Additional `Link` props can be passed through `restProps` (e.g., `href`, `prefetch`, `replace`).
+ *
+ * @param color - Visual theme key selecting the link color; defaults to `DEFAULT_REGULAR_LINK_COLOR`.
+ * @param fontSize - Font size key mapped to Tailwind classes; defaults to `"16"`.
+ * @param children - React nodes rendered inside the link.
+ * @param className - Optional additional class names to append to computed styles.
+ * @param restProps - Additional Next.js `Link` props forwarded to the underlying component.
+ *
+ * @returns A styled Next.js `Link` element wrapping the provided `children`.
+ */
 export function RegularLinkWrapper({
-  color = DEFAULT_COLOR,
+  color = DEFAULT_REGULAR_LINK_COLOR,
   fontSize = "16",
   children,
   className,
   ...restProps
-}: LinkWrapperProps) {
+}: RegularLinkWrapperProps) {
   return (
-    <Link className={clsx(styles.regularLink, regularLinkColorMap[color], fontSizeToTWMap[fontSize], className)} {...restProps}>
+    <Link
+      className={clsx(
+        styles.regularLink,
+        regularLinkColorMap[color],
+        fontSizeToTWMap[fontSize],
+        className
+      )}
+      {...restProps}
+    >
       {children}
     </Link>
   );
