@@ -124,6 +124,17 @@ export async function createAccount(
     }
   }
 
+  // Set cookie to track unverified signup
+  const { cookies } = await import("next/headers");
+  const cookieStore = await cookies();
+  cookieStore.set("unverified_signup", "true", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    maxAge: 60 * 60 * 2, // 2 hours
+    path: "/",
+  });
+
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
   redirect("/verify-email"); // Redirect to verify email page (need to create page)
