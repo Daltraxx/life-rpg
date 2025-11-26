@@ -32,13 +32,6 @@ const buttonColorMap = {
   "orange-300": styles.buttonOrange300,
   "custom": "",
 } satisfies Record<Color, string>;
-
-const DEFAULT_COLOR: Color = "brown-600";
-
-export function ButtonWrapper({
-  color = DEFAULT_COLOR,
-  fontSize = "20",
-  children,
   className,
   ...restProps
 }: ButtonProps) {
