@@ -78,7 +78,7 @@ export function RegularLinkWrapper({
   ...restProps
 }: LinkWrapperProps) {
   return (
-    <Link className={clsx(styles.regularLink, linkColorMap[color], fontSizeToTWMap[fontSize], className)} {...restProps}>
+    <Link className={clsx(styles.regularLink, regularLinkColorMap[color], fontSizeToTWMap[fontSize], className)} {...restProps}>
       {children}
     </Link>
   );
