@@ -2,6 +2,33 @@ import { ComponentProps, ReactNode } from "react";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "./utils/fontSizeToTWMap";
 
+/**
+ * A paragraph, span, and label component that renders text with customizable font sizes.
+ * 
+ * @param props - The component props
+ * @param props.size - The font size key from fontSizeToTWMap. Defaults to "20"
+ * @param props.children - The content to be rendered inside the label
+ * @param props.className - Additional CSS classes to apply to the label
+ * @param props.restProps - Any additional HTML label attributes
+ * 
+ * @returns A styled text element with the specified font size and classes
+ * 
+ * @example
+ * ```tsx
+ * <Paragraph size="28" className="text-gray-700">
+ *   This is a paragraph.
+ * </Paragraph>
+ * 
+ * <Label size="24" className="text-blue-500">
+ *   Username
+ * </Label>
+ * 
+ * <Span size="18" className="italic">
+ *   Important Note
+ * </Span>
+ * ```
+ */
+
 interface PProps extends ComponentProps<"p"> {
   size?: FontSize;
   children: ReactNode;
