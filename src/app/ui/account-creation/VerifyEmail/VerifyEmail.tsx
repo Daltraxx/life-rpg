@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 export default function VerifyEmail() {
   return (
     <Bounded outerClassName={styles.outerContainer} innerClassName={styles.contentContainer}>
-      <section role="status" aria-live="polite" className={styles.verifyEmailSection}>
+      <section className={styles.verifyEmailSection}>
         <Heading as="h1" size="48-responsive">
           Account Created Successfully!
         </Heading>
