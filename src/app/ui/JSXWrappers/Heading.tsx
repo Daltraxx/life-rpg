@@ -1,6 +1,6 @@
 import { ComponentProps, ReactNode } from "react";
 import clsx from "clsx";
-import { fontSizeToTWMap, FontSize } from "./utils/fontSizeToTWMap";
+import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
 type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 

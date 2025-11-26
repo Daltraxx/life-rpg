@@ -4,10 +4,10 @@ import { useState, useActionState, useRef, ReactElement } from "react";
 import { createAccount } from "@/app/(account-creation)/actions";
 import { SignupState } from "@/utils/validations/signup";
 
-import Bounded from "../../Bounded";
-import { ButtonWrapper } from "../../ButtonLikeWrappers/ButtonLikeWrappers";
-import Heading from "../../Heading";
-import { Label, Paragraph, Span } from "../../TextWrappers";
+import Bounded from "@/app/ui/JSXWrappers/Bounded";
+import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
+import Heading from "@/app/ui/JSXWrappers/Heading";
+import { Label, Paragraph, Span } from "@/app/ui/JSXWrappers/TextWrappers";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 import styles from "./styles.module.css";
 import useTruncatedString from "@/utils/hooks/useTruncatedString";

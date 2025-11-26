@@ -1,12 +1,12 @@
 "use client";
 
 import styles from "./styles.module.css";
-import Bounded from "@/app/ui/Bounded";
+import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import {
   ButtonWrapper,
-  LinkWrapper
-} from "@/app/ui/ButtonLikeWrappers/ButtonLikeWrappers";
-import { BasicLinkWrapper } from "@/app/ui/BasicLinkWrapper/BasicLinkWrapper";
+  LinkWrapper,
+} from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
+import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";
 
 export default function LoginForm() {
   return (

@@ -1,8 +1,8 @@
-import Bounded from "../../Bounded";
-import Heading from "../../Heading";
+import Bounded from "@/app/ui/JSXWrappers/Bounded";
+import Heading from "@/app/ui/JSXWrappers/Heading";
 import styles from "./styles.module.css";
-import { Span } from "../../TextWrappers";
-import { BasicLinkWrapper } from "@/app/ui/BasicLinkWrapper/BasicLinkWrapper";
+import { Span } from "@/app/ui/JSXWrappers/TextWrappers";
+import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();

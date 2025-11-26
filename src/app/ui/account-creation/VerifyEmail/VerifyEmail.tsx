@@ -1,11 +1,14 @@
-import Bounded from "../../Bounded";
-import Heading from "../../Heading";
-import { Paragraph } from "../../TextWrappers";
+import Bounded from "@/app/ui/JSXWrappers/Bounded";
+import Heading from "@/app/ui/JSXWrappers/Heading";
+import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 
 export default function VerifyEmail() {
   return (
-    <Bounded outerClassName={styles.outerContainer} innerClassName={styles.contentContainer}>
+    <Bounded
+      outerClassName={styles.outerContainer}
+      innerClassName={styles.contentContainer}
+    >
       <section className={styles.verifyEmailSection}>
         <Heading as="h1" size="48-responsive">
           Account Created Successfully!

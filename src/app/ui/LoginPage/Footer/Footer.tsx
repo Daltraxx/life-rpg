@@ -1,5 +1,5 @@
-import { BasicLinkWrapper } from "@/app/ui/BasicLinkWrapper/BasicLinkWrapper";
-import Bounded from "../../Bounded";
+import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";
+import Bounded from "../../JSXWrappers/Bounded";
 import styles from "./styles.module.css";
 
 export default function Footer() {
