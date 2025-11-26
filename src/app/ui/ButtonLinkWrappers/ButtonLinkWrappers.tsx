@@ -40,12 +40,12 @@ const DEFAULT_COLOR: Color = "brown-600";
  * @example
  * ```tsx
  * // As a button
- * <ButtonWrapper color="primary" fontSize="16">
+ * <ButtonWrapper color="brown-600" fontSize="16">
  *   Click me
  * </ButtonWrapper>
  *
  * // As a link
- * <LinkWrapper color="primary" fontSize="16" href="/dashboard">
+ * <LinkWrapper color="brown-600" fontSize="16" href="/dashboard">
  *   Go to Dashboard
  * </LinkWrapper>
  * ```
