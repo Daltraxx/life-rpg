@@ -101,7 +101,9 @@ export async function updateSession(
 
   if (error) {
     if (error.name === "AuthSessionMissingError" && isPublicPath) {
-      // no user session and is public path, allow access, no need to log error
+      if (process.env.NODE_ENV === "development") {
+        console.debug("No session on public path:", pathname);
+      }
     } else {
       const errorDetails = getUserErrorLog(error, request);
       console.error("Auth errors in middleware:\n", errorDetails);
