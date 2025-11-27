@@ -10,6 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default async function VerifyEmailPage() {
+  // TODO:
+  // extract email logic into a utility function
+  // add loading state while verifying cookie
   const cookieStore = await cookies();
   const pendingVerification = cookieStore.get("pending_verification");
   let email = "your email"
