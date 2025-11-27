@@ -3,23 +3,37 @@ import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
 /**
- * A paragraph component that wraps text content with customizable font size.
+ * A paragraph, span, and label component that renders text with customizable font sizes.
  * 
  * @param props - The component props
- * @param props.size - The font size preset. Defaults to "20". Must be a valid key in fontSizeToTWMap.
- * @param props.children - The text content to be rendered inside the paragraph
- * @param props.className - Additional CSS classes to apply to the paragraph element
- * @param props.restProps - Any additional HTML paragraph element attributes
+ * @param props.size - The font size key from fontSizeToTWMap. Defaults to "20"
+ * @param props.children - The content to be rendered inside the label
+ * @param props.className - Additional CSS classes to apply to the label
+ * @param props.restProps - Any additional HTML label attributes
  * 
- * @returns A styled paragraph element with the main font family and specified font size
+ * @returns A styled text element with the specified font size and classes
  * 
  * @example
  * ```tsx
- * <Paragraph size="24" className="text-blue-500">
- *   This is a paragraph with size 24
+ * <Paragraph size="28" className="text-gray-700">
+ *   This is a paragraph.
  * </Paragraph>
+ * 
+ * <Label size="24" className="text-blue-500" htmlFor="username">
+ *   Username
+ * </Label>
+ * 
+ * <Span size="18" className="italic">
+ *   Important Note
+ * </Span>
  * ```
  */
+
+interface PProps extends ComponentProps<"p"> {
+  size?: FontSize;
+  children: ReactNode;
+}
+
 export function Paragraph({
   size = "20",
   children,
@@ -36,29 +50,11 @@ export function Paragraph({
   );
 }
 
-interface PProps extends ComponentProps<"p"> {
+interface SpanProps extends ComponentProps<"span"> {
   size?: FontSize;
   children: ReactNode;
 }
 
-/**
- * A wrapper component for the HTML span element with customizable font size.
- * 
- * @param props - The component props
- * @param props.size - The font size key that maps to Tailwind CSS classes. Defaults to "20"
- * @param props.children - The content to be rendered inside the span element
- * @param props.className - Additional CSS classes to apply to the span element
- * @param props.restProps - Any additional HTML span attributes
- * 
- * @returns A styled span element with the main font and specified font size
- * 
- * @example
- * ```tsx
- * <Span size="16" className="text-blue-500">
- *   Hello World
- * </Span>
- * ```
- */
 export function Span({
   size = "20",
   children,
@@ -75,29 +71,12 @@ export function Span({
   );
 }
 
-interface SpanProps extends ComponentProps<"span"> {
+interface LabelProps extends ComponentProps<"label"> {
+  htmlFor: string;
   size?: FontSize;
   children: ReactNode;
 }
 
-/**
- * A customizable label component with configurable font size.
- *
- * @param props - The component props
- * @param props.size - The font size from predefined sizes. Defaults to "20"
- * @param props.children - The content to be rendered inside the label
- * @param props.className - Additional CSS classes to apply to the label
- * @param props.restProps - Any additional HTML label attributes
- *
- * @returns A styled label element with the specified properties
- *
- * @example
- * ```tsx
- * <Label size="24" className="custom-class">
- *   Username
- * </Label>
- * ```
- */
 export function Label({
   size = "20",
   children,
@@ -112,10 +91,4 @@ export function Label({
       {children}
     </label>
   );
-}
-
-interface LabelProps extends ComponentProps<"label"> {
-  htmlFor: string;
-  size?: FontSize;
-  children: ReactNode;
 }
