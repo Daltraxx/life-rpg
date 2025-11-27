@@ -7,12 +7,13 @@ import {
   LinkWrapper,
 } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";
+import { Label } from "../../JSXWrappers/TextWrappers";
 
 export default function LoginForm() {
   return (
     <Bounded innerClassName={styles.loginContainer}>
       <form className={styles.loginForm} action="">
-        <label htmlFor="email-field">Email:</label>
+        <Label htmlFor="email-field" size="20">Email:</Label>
         <input
           type="email"
           id="email-field"
@@ -20,7 +21,7 @@ export default function LoginForm() {
           required
           autoComplete="email"
         />
-        <label htmlFor="password-field">Password:</label>
+        <Label htmlFor="password-field" size="20">Password:</Label>
         <input
           type="password"
           id="password-field"
