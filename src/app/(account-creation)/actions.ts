@@ -3,6 +3,7 @@
 import { z } from "zod";
 // import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import crypto from "crypto";
 
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
@@ -134,6 +135,41 @@ export async function createAccount(
     maxAge: 60 * 60 * 2, // 2 hours
     path: "/",
   });
+
+  // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
+  // Build a minimal payload with expiry and a nonce
+  if (data.user) {
+    const payload = {
+      email: data.user.email,
+      exp: Date.now() + 5 * 60 * 1000, // 5 minutes
+      nonce: crypto.randomUUID(),
+    };
+
+    // Sign the payload
+    const secret = process.env.COOKIE_SIGNING_SECRET;
+    if (secret) {
+      const serialized = JSON.stringify(payload);
+      const signature = crypto
+        .createHmac("sha256", secret)
+        .update(serialized)
+        .digest("base64url");
+
+      const value = `${Buffer.from(serialized).toString(
+        "base64url"
+      )}.${signature}`;
+
+      // HttpOnly, Secure, short-lived cookie
+      cookieStore.set("pending_verification", value, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 5, // 5 minutes
+        path: "/",
+      });
+    } else {
+      console.warn("COOKIE_SIGNING_SECRET is not set; skipping signed cookie.");
+    }
+  }
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
