@@ -197,6 +197,7 @@ export default function CreateAccountForm(): ReactElement {
             id="usertag"
             type="text"
             name="usertag"
+            autoComplete="none"
             value={formData.usertag}
             onChange={handleChange}
             aria-describedby={errors.usertag ? "usertag-error" : undefined}
