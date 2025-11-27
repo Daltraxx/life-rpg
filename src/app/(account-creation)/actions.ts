@@ -138,6 +138,7 @@ export async function createAccount(
 
   // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
   // Build a minimal payload with expiry and a nonce
+  // TODO: extract cookie signing logic into a utility function
   if (data.user) {
     const payload = {
       email: data.user.email,
