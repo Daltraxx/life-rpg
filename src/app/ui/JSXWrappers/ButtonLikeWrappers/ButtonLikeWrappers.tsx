@@ -12,7 +12,7 @@ import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 const buttonColorMap = {
   "brown-600": styles.buttonBrown600,
   "blue-600": styles.buttonBlue600,
-  "orange-300": styles.buttonOrange300,
+  "orange-600": styles.buttonOrange600,
   custom: "",
 } satisfies Record<string, string>;
 

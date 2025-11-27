@@ -56,11 +56,11 @@
 }
 
 .loadingIndicator {
-  color: var(--orange-500, #cd6d07);
+  color: var(--orange-600, #cd6d07);
 }
 
 .errorMessage p {
-  color: var(--orange-500, #cd6d07);
+  color: var(--orange-600, #cd6d07);
   line-height: 1.1;
 }
 
