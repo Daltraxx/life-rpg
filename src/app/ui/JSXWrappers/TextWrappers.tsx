@@ -72,6 +72,7 @@ export function Span({
 }
 
 interface LabelProps extends ComponentProps<"label"> {
+  htmlFor: string;
   size?: FontSize;
   children: ReactNode;
 }
