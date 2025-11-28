@@ -12,7 +12,6 @@ type BoundedProps = {
  * Bounded container component that centers content with max-width constraint.
  *
  * @param as - The element type to render (default: "section")
- * @param className - Additional CSS classes to apply to the outer element
  * @param outerClassName - Additional CSS classes to apply to the outer element
  * @param innerClassName - Additional CSS classes to apply to the inner wrapper
  * @param verticalPadding - Whether to apply vertical padding (default: true)
