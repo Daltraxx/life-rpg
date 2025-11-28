@@ -1,6 +1,5 @@
 import { type EmailOtpType } from "@supabase/supabase-js";
 import { type NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 
@@ -95,8 +94,6 @@ export async function GET(request: NextRequest) {
   }
 
   if (!error) {
-    // On success, revalidate necessary paths to update auth state
-    revalidatePath("/profile-setup");
     // Redirect to profile setup page
     redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
     redirectTo.pathname = "/profile-setup";
