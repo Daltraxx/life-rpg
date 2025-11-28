@@ -11,18 +11,20 @@ export interface HeadingProps extends ComponentProps<HeadingLevel> {
   children: ReactNode;
 }
 
+const DEFAULT_SIZE: FontSize = "36";
+
 /**
  * A flexible heading component that renders semantic HTML heading elements with customizable styling.
- * 
+ *
  * @param props - The component props
  * @param props.as - The HTML heading element to render (h1-h6). Defaults to "h2"
  * @param props.size - The font size from the predefined size map. Defaults to "36"
  * @param props.children - The content to be rendered inside the heading
  * @param props.className - Additional CSS classes to apply to the heading
  * @param props - Additional HTML attributes can be spread onto the heading element
- * 
+ *
  * @returns A rendered heading element with applied styles and content
- * 
+ *
  * @example
  * ```tsx
  * <Heading as="h1" size="48" className="text-blue-500">
@@ -32,18 +34,14 @@ export interface HeadingProps extends ComponentProps<HeadingLevel> {
  */
 export default function Heading({
   as: Comp = "h2",
-  size = "36",
+  size = DEFAULT_SIZE,
   children,
   className,
   ...restProps
 }: HeadingProps) {
   return (
     <Comp
-      className={clsx(
-        "font-main",
-        fontSizeToTWMap[size],
-        className
-      )}
+      className={clsx("font-main", fontSizeToTWMap[size], className)}
       {...restProps}
     >
       {children}
