@@ -1,6 +1,42 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import crypto from "crypto";
 
+/**
+ * Derives the pending email address awaiting verification from a signed, expiring cookie,
+ * falling back to the provided value if the cookie is absent, invalid, expired, or unverifiable.
+ *
+ * The cookie (named "pending_verification") is expected to contain two dot-delimited parts:
+ *   1. A Base64URL-encoded JSON payload: { email: string; exp: number }
+ *   2. An HMAC-SHA256 signature (Base64URL) over the UTF-8 JSON payload string.
+ *
+ * Validation steps:
+ *   - Decode and parse the payload.
+ *   - Recompute the HMAC-SHA256 signature using process.env.COOKIE_SIGNING_SECRET.
+ *   - Reject if signatures differ.
+ *   - Reject if current time exceeds payload.exp (epoch millis).
+ *
+ * On any validation failure (missing secret, bad format, bad signature, expired cookie, JSON error)
+ * the function logs an error and returns the fallback email instead of throwing.
+ *
+ * Security notes:
+ *   - Uses HMAC for integrity; does not encrypt the payload. Do not place sensitive data beyond the email.
+ *   - Relies on Base64URL encoding (no padding) for both payload and signature.
+ *   - Ensure COOKIE_SIGNING_SECRET is a sufficiently random, long secret (e.g., 32+ bytes).
+ *
+ * @param fallback A trusted email value to return if no valid pending verification cookie is found.
+ * @param cookieStore A read-only cookie store abstraction (e.g., from Next.js) used to access "pending_verification".
+ * @returns The email extracted from a valid, unexpired, signed cookie; otherwise the provided fallback.
+ *
+ * @example
+ * // For use in a Next.js server component page:
+ * const email = getPendingVerificationEmail(user.email, cookies);
+ * return <VerifyEmail email={email} />;
+ * }
+ *
+ * @remarks
+ * This helper is resilient: all internal errors are caught and logged. It never throws.
+ * Prefer rotating the signing secret periodically; doing so will invalidate existing pending cookies.
+ */
 export default function getPendingVerificationEmail(
   fallback: string,
   cookieStore: ReadonlyRequestCookies
