@@ -29,11 +29,11 @@
 }
 
 .orange300 {
-  color: var(--orange-300, #E1B382);
+  color: var(--orange-300, #e1b382);
 }
 .orange300:hover {
   color: var(--orange-200, #e8c6a1);
 }
 .orange300:active {
-  color: var(--orange-300, #E1B382);
+  color: var(--orange-300, #e1b382);
 } 
