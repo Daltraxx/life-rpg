@@ -101,7 +101,7 @@ export async function updateSession(
   const cookies = request.cookies;
   if (cookies.get("unverified_signup") && user?.email_confirmed_at)
     // Remove unverified_signup cookie if user has verified their email
-    cookies.delete("unverified_signup");
+     supabaseResponse.cookies.delete("unverified_signup");
   if (cookies.get("unverified_signup"))
     // Allow access to verify-email page if unverified_signup cookie is present
     publicPaths.push("/verify-email");
