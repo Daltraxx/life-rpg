@@ -9,6 +9,7 @@ import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import checkIfUsertagExists from "../queries/server/checkIfUsertagExists";
 import setUnverifiedSignup from "@/utils/cookies/setUnverifiedSignup";
+import setPendingVerificationEmail from "@/utils/cookies/setPendingVerificationEmail";
 
 /**
  * Server action to create a new user account.
@@ -135,36 +136,7 @@ export async function createAccount(
   // Build a minimal payload with expiry and a nonce
   // TODO: extract cookie signing logic into a utility function
   if (data.user) {
-    const payload = {
-      email: data.user.email,
-      exp: Date.now() + 5 * 60 * 1000, // 5 minutes
-      nonce: crypto.randomUUID(),
-    };
-
-    // Sign the payload
-    const secret = process.env.COOKIE_SIGNING_SECRET;
-    if (secret) {
-      const serialized = JSON.stringify(payload);
-      const signature = crypto
-        .createHmac("sha256", secret)
-        .update(serialized)
-        .digest("base64url");
-
-      const value = `${Buffer.from(serialized).toString(
-        "base64url"
-      )}.${signature}`;
-
-      // HttpOnly, Secure, short-lived cookie
-      cookieStore.set("pending_verification", value, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 60 * 5, // 5 minutes
-        path: "/",
-      });
-    } else {
-      console.warn("COOKIE_SIGNING_SECRET is not set; skipping signed cookie.");
-    }
+    setPendingVerificationEmail(data.user.email, cookieStore);
   }
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
