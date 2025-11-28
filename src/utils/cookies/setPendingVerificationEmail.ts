@@ -10,7 +10,7 @@ import crypto from "crypto";
  * The payload includes:
  * - `email`: The email address being verified.
  * - `exp`: The expiration time of the cookie, set to 5 minutes from the current time.
- * - `nonce`: A unique identifier for the request, generated using `crypto.randomUUID()`.
+ * - `nonce`: A unique identifier for the request, generated using `crypto.randomUUID()`, to prevent replay attacks.
  *
  * The cookie is signed using a secret defined in the environment variable `COOKIE_SIGNING_SECRET`.
  * If the secret is not set, a warning is logged, and the cookie is not created.
