@@ -1,6 +1,6 @@
 "use server";
 
-import { z } from "zod";
+import { set, z } from "zod";
 // import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import crypto from "crypto";
@@ -8,6 +8,7 @@ import crypto from "crypto";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import checkIfUsertagExists from "../queries/server/checkIfUsertagExists";
+import setUnverifiedSignup from "@/utils/cookies/setUnverifiedSignup";
 
 /**
  * Server action to create a new user account.
@@ -128,13 +129,7 @@ export async function createAccount(
   // Set cookie to track unverified signup
   const { cookies } = await import("next/headers");
   const cookieStore = await cookies();
-  cookieStore.set("unverified_signup", "true", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 2, // 2 hours
-    path: "/",
-  });
+  setUnverifiedSignup(cookieStore);
 
   // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
   // Build a minimal payload with expiry and a nonce
