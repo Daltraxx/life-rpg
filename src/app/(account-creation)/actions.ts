@@ -1,9 +1,8 @@
 "use server";
 
-import { set, z } from "zod";
+import { z } from "zod";
 // import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import crypto from "crypto";
 
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";

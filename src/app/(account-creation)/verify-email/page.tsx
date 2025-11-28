@@ -2,8 +2,6 @@ import VerifyEmail from "@/app/ui/account-creation/VerifyEmail/VerifyEmail";
 
 import { type Metadata } from "next";
 import { cookies } from "next/headers";
-import crypto from "crypto";
-import { get } from "http";
 import getPendingVerificationEmail from "@/utils/cookies/getPendingVerificationEmail";
 
 export const metadata: Metadata = {
