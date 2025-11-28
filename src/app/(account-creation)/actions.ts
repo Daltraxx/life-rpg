@@ -3,6 +3,7 @@
 import { z } from "zod";
 // import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
@@ -127,7 +128,6 @@ export async function createAccount(
   }
 
   // Set cookie to track unverified signup
-  const { cookies } = await import("next/headers");
   const cookieStore = await cookies();
   setUnverifiedSignup(cookieStore);
 
