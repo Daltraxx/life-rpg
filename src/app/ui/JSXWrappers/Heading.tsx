@@ -19,7 +19,7 @@ export interface HeadingProps extends ComponentProps<HeadingLevel> {
  * @param props.size - The font size from the predefined size map. Defaults to "36"
  * @param props.children - The content to be rendered inside the heading
  * @param props.className - Additional CSS classes to apply to the heading
- * @param props.restProps - Any additional HTML attributes to spread onto the heading element
+ * @param props - Additional HTML attributes can be spread onto the heading element
  * 
  * @returns A rendered heading element with applied styles and content
  * 
