@@ -32,6 +32,7 @@ const DEFAULT_COLOR: Color = "brown-600";
  * Both wrappers share the same visual styling but differ in their underlying HTML element and behavior.
  *
  * @param color - The color variant of the button/link. Defaults to DEFAULT_COLOR.
+ * @param type - The button type attribute. Defaults to "button".
  * @param fontSize - The font size of the button/link text. Defaults to "20".
  * @param children - The content to be displayed inside the button/link.
  * @param className - Additional CSS classes to apply to the component.
@@ -53,13 +54,14 @@ const DEFAULT_COLOR: Color = "brown-600";
 export function ButtonWrapper({
   color = DEFAULT_COLOR,
   fontSize = "20",
+  type = "button",
   children,
   className,
   ...restProps
 }: ButtonProps) {
   return (
     <button
-      type="button"
+      type={type}
       className={clsx(
         styles.button,
         buttonColorMap[color],
