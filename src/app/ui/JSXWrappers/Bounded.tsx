@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-type BoundedProps = {
+export type BoundedProps = {
   as?: React.ElementType;
   outerClassName?: string;
   innerClassName?: string;
