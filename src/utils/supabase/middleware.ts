@@ -92,9 +92,15 @@ export async function updateSession(
     error,
   } = await supabase.auth.getUser();
 
-  const publicPaths = ["/", "/create-account", "/auth", "/error"];
   const cookies = request.cookies;
   const unverifiedSignupCookie = cookies.get("unverified_signup");
+  const publicPaths = [
+    "/",
+    "/create-account",
+    "/auth",
+    "/error",
+    ...(unverifiedSignupCookie ? ["/verify-email"] : []),
+  ];
   if (unverifiedSignupCookie) {
     if (user?.email_confirmed_at) {
       // User has verified email - remove the cookie
