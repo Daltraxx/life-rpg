@@ -57,7 +57,11 @@ export default function getPendingVerificationEmail(
   const pendingVerification = cookieStore.get("pending_verification");
   if (pendingVerification) {
     try {
-      const [payloadB64, signature] = pendingVerification.value.split(".");
+      const parts = pendingVerification.value.split(".");
+      if (parts.length !== 2) {
+        throw new Error("Invalid cookie format");
+      }
+      const [payloadB64, signature] = parts;
 
       // Verify signature
       const secret = process.env.COOKIE_SIGNING_SECRET;
