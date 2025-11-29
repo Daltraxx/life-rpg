@@ -1,5 +1,17 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import { CookiePayload } from "./setPendingVerificationEmail";
 import crypto from "crypto";
+
+const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
+  return (
+    typeof payload === "object" &&
+    payload !== null &&
+    "email" in payload &&
+    typeof payload.email === "string" &&
+    "exp" in payload &&
+    typeof payload.exp === "number"
+  );
+};
 
 /**
  * Derives the pending email address awaiting verification from a signed, expiring cookie,
@@ -61,7 +73,10 @@ export default function getPendingVerificationEmail(
         throw new Error("Invalid signature");
       }
 
-      const payload = JSON.parse(serialized);
+      const payload: CookiePayload = JSON.parse(serialized);
+      if (!isValidCookiePayload(payload)) {
+        throw new Error("Invalid payload structure");
+      }
 
       // Check expiration
       if (Date.now() > payload.exp) {

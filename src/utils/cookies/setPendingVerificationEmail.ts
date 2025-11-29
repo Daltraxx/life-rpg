@@ -1,6 +1,12 @@
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import crypto from "crypto";
 
+export type CookiePayload = {
+  email: string;
+  exp: number;
+  nonce: string;
+};
+
 /**
  * Sets a pending verification email cookie with a signed payload.
  *
@@ -29,7 +35,7 @@ export default function setPendingVerificationEmail(
   if (!email) return;
 
   // Create the payload
-  const payload = {
+  const payload : CookiePayload = {
     email: email,
     exp: Date.now() + 5 * 60 * 1000, // 5 minutes
     nonce: crypto.randomUUID(),
