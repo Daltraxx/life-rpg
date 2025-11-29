@@ -50,8 +50,8 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  * Prefer rotating the signing secret periodically; doing so will invalidate existing pending cookies.
  */
 export default function getPendingVerificationEmail(
-  fallback: string,
-  cookieStore: ResponseCookies
+  cookieStore: ResponseCookies,
+  fallback: string
 ): string {
   let email = fallback;
   const pendingVerification = cookieStore.get("pending_verification");
