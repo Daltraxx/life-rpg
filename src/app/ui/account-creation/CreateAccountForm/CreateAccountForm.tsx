@@ -27,7 +27,6 @@ export const FIELDS: Field[] = [
   "username",
   "usertag",
   "password",
-  "confirmPassword",
 ];
 export type InteractedFields = Record<Field, boolean>;
 export const INITIAL_INTERACTED_FIELDS: InteractedFields = Object.fromEntries(
@@ -39,14 +38,12 @@ export type SignupFormData = {
   username: string;
   usertag: string;
   password: string;
-  confirmPassword: string;
 };
 export const INITIAL_FORM_DATA: SignupFormData = {
   email: "",
   username: "",
   usertag: "",
   password: "",
-  confirmPassword: "",
 };
 
 const getSubmitButtonText = (
@@ -67,7 +64,7 @@ const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
 /**
  * CreateAccountForm component for user registration.
  *
- * Renders a form with email, username, password, and confirm password fields.
+ * Renders a form with email, username, usertag, and password  fields.
  * Includes real-time validation, username availability checking, and dynamic
  * username display with text truncation to prevent layout overflow.
  *
@@ -77,7 +74,7 @@ const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
  * @remarks
  * - The username in the heading is dynamically truncated based on viewport size
  * - Form validation occurs as users interact with fields
- * - Username availability is checked asynchronously during input
+ * - Usertag availability is checked asynchronously during input
  * - Submit button is disabled during validation, querying, or form submission
  * - Server-side errors are displayed below the form fields
  * - All form fields are required and include appropriate accessibility attributes
@@ -88,7 +85,7 @@ const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
  * ```
  */
 export default function CreateAccountForm(): ReactElement {
-  // TODO: remove confirmPassword input and add "show password" toggle
+  // TODO: add "show password" toggle
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   const [interactedFields, setInteractedFields] = useState(
@@ -239,30 +236,6 @@ export default function CreateAccountForm(): ReactElement {
           <FieldErrorsDisplay
             errors={errors.password}
             id="password-error"
-            fontSize="20-responsive"
-            className={styles.errorMessage}
-          />
-        </div>
-
-        <div className={styles.inputContainer}>
-          <Label htmlFor="confirmPassword" size="24-responsive">
-            Confirm Password:
-          </Label>
-          <input
-            id="confirmPassword"
-            type="password"
-            name="confirmPassword"
-            autoComplete="new-password"
-            value={formData.confirmPassword}
-            onChange={handleChange}
-            aria-describedby={
-              errors.confirmPassword ? "confirmPassword-error" : undefined
-            }
-            required
-          />
-          <FieldErrorsDisplay
-            errors={errors.confirmPassword}
-            id="confirmPassword-error"
             fontSize="20-responsive"
             className={styles.errorMessage}
           />

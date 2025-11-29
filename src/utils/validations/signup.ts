@@ -29,12 +29,7 @@ export const SignupSchema = z
       .regex(
         /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_+=~`<>,.;:'"()\[\]{}\\|/-]).*$/,
         "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
-      ),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+      )
   });
 
 export type SignupState = {
@@ -43,7 +38,6 @@ export type SignupState = {
     username?: string[];
     usertag?: string[];
     password?: string[];
-    confirmPassword?: string[];
   };
   message?: string | null;
 };
