@@ -131,9 +131,18 @@ export async function createAccount(
   const cookieStore = await cookies();
   setUnverifiedSignup(cookieStore);
 
+  // If signup succeeded but user data is missing, return error
+  if (!data?.user?.email) {
+    console.error("Signup succeeded but user data is missing");
+    return {
+      message:
+        "Account creation succeeded but verification setup failed. Please try logging in.",
+    };
+  }
+
   // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
   // Build a minimal payload with expiry and a nonce
-  if (data.user) {
+  if (data.user.email) {
     setPendingVerificationEmail(data.user.email, cookieStore);
   }
 
