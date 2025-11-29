@@ -84,7 +84,7 @@ export default function getPendingVerificationEmail(
       }
 
       // Check expiration
-      if (Date.now() > payload.exp) {
+      if (Date.now() >= payload.exp) {
         throw new Error("Cookie expired");
       }
       email = payload.email;
