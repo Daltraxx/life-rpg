@@ -141,10 +141,7 @@ export async function createAccount(
   setUnverifiedSignup(cookieStore);
 
   // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
-  // Build a minimal payload with expiry and a nonce
-  if (data.user.email) {
-    setPendingVerificationEmail(data.user.email, cookieStore);
-  }
+  setPendingVerificationEmail(data.user.email, cookieStore);
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
