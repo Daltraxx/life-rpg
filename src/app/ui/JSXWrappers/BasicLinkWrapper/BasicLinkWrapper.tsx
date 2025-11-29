@@ -53,8 +53,18 @@ export function BasicLinkWrapper({
   fontSize = "16",
   children,
   className,
+  target,
+  rel,
   ...restProps
 }: BasicLinkWrapperProps) {
+  // Ensure that if target is "_blank", rel includes "noopener noreferrer" for security
+  const secureRel =
+    target === "_blank"
+      ? rel
+        ? `${rel} noopener noreferrer`
+        : "noopener noreferrer"
+      : rel;
+  
   return (
     <Link
       className={clsx(
@@ -63,6 +73,8 @@ export function BasicLinkWrapper({
         fontSizeToTWMap[fontSize],
         className
       )}
+      target={target}
+      rel={secureRel}
       {...restProps}
     >
       {children}
