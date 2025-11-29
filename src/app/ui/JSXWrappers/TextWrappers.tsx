@@ -3,91 +3,83 @@ import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
 /**
- * A paragraph, span, and label component that renders text with customizable font sizes.
- * 
- * @param props - The component props
- * @param props.size - The font size key from fontSizeToTWMap. Defaults to "20"
- * @param props.children - The content to be rendered inside the label
- * @param props.className - Additional CSS classes to apply to the label
- * @param props - Supports all standard HTML attributes for the respective element
- * 
- * @returns A styled text element with the specified font size and classes
- * 
+ * Creates a React component that wraps a specified HTML text element (`p`, `span`, or `label`)
+ * with custom styling and props.
+ *
+ * @template T - The HTML element type to wrap ("p", "span", or "label").
+ * @param element - The HTML element tag to use for the wrapper.
+ * @returns A React functional component that renders the specified element with font styling,
+ *          size, and additional props.
+ *
+ * @remarks
+ * The returned component accepts a `size` prop to control font size, a `className` prop for custom classes,
+ * and any other valid props for the specified element type. The `children` prop is used to render content inside the element.
+ *
  * @example
  * ```tsx
- * <Paragraph size="28" className="text-gray-700">
- *   This is a paragraph.
- * </Paragraph>
- * 
- * <Label size="24" className="text-blue-500" htmlFor="username">
- *   Username
- * </Label>
- * 
- * <Span size="18" className="italic">
- *   Important Note
- * </Span>
+ * const Paragraph = createTextWrapper("p");
+ * <Paragraph size="24" className="text-red-500">Hello World</Paragraph>
  * ```
  */
-
-interface PProps extends ComponentProps<"p"> {
-  size?: FontSize;
-  children: ReactNode;
+function createTextWrapper<T extends "p" | "span" | "label">(element: T) {
+  return function TextWrapper({
+    size = "20",
+    children,
+    className,
+    ...restProps
+  }: ComponentProps<T> & { size?: FontSize; children: ReactNode }) {
+    const Element = element as any;
+    return (
+      <Element
+        className={clsx("font-main", fontSizeToTWMap[size], className)}
+        {...restProps}
+      >
+        {children}
+      </Element>
+    );
+  };
 }
 
-export function Paragraph({
-  size = "20",
-  children,
-  className,
-  ...restProps
-}: PProps) {
-  return (
-    <p
-      className={clsx("font-main", fontSizeToTWMap[size], className)}
-      {...restProps}
-    >
-      {children}
-    </p>
-  );
-}
+/**
+ * A paragraph text wrapper component.
+ *
+ * This component is created using the `createTextWrapper` factory function
+ * and renders a standard HTML `<p>` element with additional styling or functionality
+ * as defined by the wrapper implementation.
+ *
+ * @example
+ * ```tsx
+ * <Paragraph>This is a paragraph of text.</Paragraph>
+ * ```
+ */
+export const Paragraph = createTextWrapper("p");
 
-interface SpanProps extends ComponentProps<"span"> {
-  size?: FontSize;
-  children: ReactNode;
-}
+/**
+ * A styled span element wrapper component.
+ *
+ * This component is created using the `createTextWrapper` utility function to provide
+ * a reusable span element with consistent styling and behavior across the application.
+ *
+ * @example
+ * ```tsx
+ * <Span>This is some text</Span>
+ * ```
+ *
+ * @see {@link createTextWrapper} for the wrapper factory function
+ */
+export const Span = createTextWrapper("span");
 
-export function Span({
-  size = "20",
-  children,
-  className,
-  ...restProps
-}: SpanProps) {
-  return (
-    <span
-      className={clsx("font-main", fontSizeToTWMap[size], className)}
-      {...restProps}
-    >
-      {children}
-    </span>
-  );
-}
-
-interface LabelProps extends ComponentProps<"label"> {
-  size?: FontSize;
-  children: ReactNode;
-}
-
-export function Label({
-  size = "20",
-  children,
-  className,
-  ...restProps
-}: LabelProps) {
-  return (
-    <label
-      className={clsx("font-main", fontSizeToTWMap[size], className)}
-      {...restProps}
-    >
-      {children}
-    </label>
-  );
-}
+/**
+ * A styled label element wrapper component.
+ *
+ * This component is created using the `createTextWrapper` utility function to provide
+ * a reusable label element with consistent styling and behavior across the application.
+ *
+ * @example
+ * ```tsx
+ * <Label>This is a label</Label>
+ * ```
+ *
+ * @see {@link createTextWrapper} for the wrapper factory function
+ */
+export const Label = createTextWrapper("label");
