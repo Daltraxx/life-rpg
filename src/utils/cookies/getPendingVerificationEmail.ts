@@ -1,4 +1,4 @@
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import type { ResponseCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { CookiePayload } from "./setPendingVerificationEmail";
 import crypto from "crypto";
 
@@ -51,7 +51,7 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  */
 export default function getPendingVerificationEmail(
   fallback: string,
-  cookieStore: ReadonlyRequestCookies
+  cookieStore: ResponseCookies
 ): string {
   let email = fallback;
   const pendingVerification = cookieStore.get("pending_verification");

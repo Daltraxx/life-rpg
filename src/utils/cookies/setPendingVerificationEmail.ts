@@ -1,4 +1,4 @@
-import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import type { ResponseCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import crypto from "crypto";
 
 export type CookiePayload = {
@@ -49,7 +49,7 @@ const COOKIE_EXPIRATION_MS = 5 * 60 * 1000; // 5 minutes
  */
 export default function setPendingVerificationEmail(
   email: string | undefined,
-  cookieStore: ReadonlyRequestCookies
+  cookieStore: ResponseCookies
 ) {
   if (!email) return;
 
