@@ -7,7 +7,7 @@ import {
   LinkWrapper,
 } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";
-import { Label } from "../../JSXWrappers/TextWrappers";
+import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 
 export default function LoginForm() {
   return (
