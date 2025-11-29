@@ -35,7 +35,7 @@ export default function setPendingVerificationEmail(
   if (!email) return;
 
   // Create the payload
-  const payload : CookiePayload = {
+  const payload: CookiePayload = {
     email: email,
     exp: Date.now() + 5 * 60 * 1000, // 5 minutes
     nonce: crypto.randomUUID(),
@@ -56,13 +56,17 @@ export default function setPendingVerificationEmail(
     )}.${signature}`;
 
     // HttpOnly, Secure, short-lived cookie
-    cookieStore.set("pending_verification", value, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      maxAge: 60 * 5, // 5 minutes
-      path: "/verify-email",
-    });
+    try {
+      cookieStore.set("pending_verification", value, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 5, // 5 minutes
+        path: "/verify-email",
+      });
+    } catch (error) {
+      console.error("Failed to set pending verification cookie:", error);
+    }
   } else {
     console.warn("COOKIE_SIGNING_SECRET is not set; skipping signed cookie.");
   }
