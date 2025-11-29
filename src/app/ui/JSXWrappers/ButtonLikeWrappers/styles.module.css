@@ -29,10 +29,10 @@
 }
 
 .buttonOrange600 {
-  background-color: var(--orange-600, #E1B382);
+  background-color: var(--orange-600, #cd6d07);
 }
 .buttonOrange600:hover {
-  background-color: hsl(31, 93%, 50%);
+  background-color: var(--orange-500, #f68309);
 }
 .buttonOrange600:active {
   background-color: var(--orange-600, #E1B382);
