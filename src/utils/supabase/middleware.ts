@@ -94,12 +94,16 @@ export async function updateSession(
 
   const publicPaths = ["/", "/create-account", "/auth", "/error"];
   const cookies = request.cookies;
-  if (cookies.get("unverified_signup") && user?.email_confirmed_at)
-    // Remove unverified_signup cookie if user has verified their email
-    supabaseResponse.cookies.delete("unverified_signup");
-  if (cookies.get("unverified_signup"))
-    // Allow access to verify-email page if unverified_signup cookie is present
+  const unverifiedSignupCookie = cookies.get("unverified_signup");
+  if (unverifiedSignupCookie) {
+    if (user?.email_confirmed_at) {
+      // User has verified email - remove the cookie
+      supabaseResponse.cookies.delete("unverified_signup");
+    }
+    // Allow access to verify-email page while cookie exists
+    // (cookie deletion takes effect on next request)
     publicPaths.push("/verify-email");
+  }
 
   const pathname = request.nextUrl.pathname;
   const isPublicPath = publicPaths.some(
