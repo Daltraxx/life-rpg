@@ -1,4 +1,4 @@
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { CookiePayload } from "./setPendingVerificationEmail";
 import crypto from "crypto";
 

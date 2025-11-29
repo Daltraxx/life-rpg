@@ -1,7 +1,7 @@
 // NOTE: Importing ReadonlyRequestCookies from "next/dist/server/web/spec-extension/adapters/request-cookies"
 // relies on a deep internal Next.js path. This may break in future Next.js releases if internal APIs change.
 // Prefer using public APIs or types if available, and monitor Next.js changelogs for breaking changes.
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
+import type { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 /**
  * Sets an "unverified_signup" HTTP-only cookie to flag that a user has begun (but not yet completed)
