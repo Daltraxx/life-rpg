@@ -190,6 +190,7 @@ export default function CreateAccountForm(): ReactElement {
           />
         </div>
 
+        {/*Autocomplete off to prevent browser overwriting during password autofill (google specifically) */}
         <div className={styles.inputContainer}>
           <Label htmlFor="handle" size="24-responsive">
             User Tag:
@@ -198,7 +199,7 @@ export default function CreateAccountForm(): ReactElement {
             id="usertag"
             type="text"
             name="usertag"
-            autoComplete="none"
+            autoComplete="off"
             value={formData.usertag}
             onChange={handleChange}
             aria-describedby={errors.usertag ? "usertag-error" : undefined}
