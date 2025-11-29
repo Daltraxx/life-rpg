@@ -9,7 +9,7 @@ import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
  * @param props.size - The font size key from fontSizeToTWMap. Defaults to "20"
  * @param props.children - The content to be rendered inside the label
  * @param props.className - Additional CSS classes to apply to the label
- * @param props.restProps - Any additional HTML label attributes
+ * @param props - Supports all standard HTML attributes for the respective element
  * 
  * @returns A styled text element with the specified font size and classes
  * 
