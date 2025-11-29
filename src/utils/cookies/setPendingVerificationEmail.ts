@@ -8,6 +8,7 @@ export type CookiePayload = {
 };
 
 const COOKIE_EXPIRATION_MS = 5 * 60 * 1000; // 5 minutes
+const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
 
 /**
  * Sets a pending verification email cookie with a signed payload.
@@ -80,7 +81,7 @@ export default function setPendingVerificationEmail(
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 5, // 5 minutes
+        maxAge: COOKIE_MAX_AGE_SECONDS, // 5 minutes
         path: "/verify-email",
       });
     } catch (error) {
