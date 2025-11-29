@@ -61,9 +61,12 @@ export function BasicLinkWrapper({
   // Ensure that if target is "_blank", rel includes "noopener noreferrer" for security
   const secureRel =
     target === "_blank"
-      ? rel
-        ? `${rel} noopener noreferrer`
-        : "noopener noreferrer"
+      ? (() => {
+          const tokens = new Set(rel ? rel.split(/\s+/) : []);
+          tokens.add("noopener");
+          tokens.add("noreferrer");
+          return Array.from(tokens).join(" ");
+        })()
       : rel;
 
   return (
