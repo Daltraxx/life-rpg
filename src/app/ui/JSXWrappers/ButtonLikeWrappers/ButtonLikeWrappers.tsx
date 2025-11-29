@@ -27,29 +27,23 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 const DEFAULT_COLOR: Color = "brown-600";
 
 /**
- * A styled wrapper component that provides consistent visual appearance for interactive elements.
- * This component can be used to wrap either button elements (via ButtonWrapper) or Next.js Link components (via LinkWrapper).
- * Both wrappers share the same visual styling but differ in their underlying HTML element and behavior.
+ * Renders a styled button element that standardizes color and font sizing via
+ * predefined Tailwind class maps.
  *
- * @param color - The color variant of the button/link. Defaults to DEFAULT_COLOR.
- * @param type - The button type attribute. Defaults to "button".
- * @param fontSize - The font size of the button/link text. Defaults to "20".
- * @param children - The content to be displayed inside the button/link.
- * @param className - Additional CSS classes to apply to the component.
- * @param restProps - Additional props to be spread onto the underlying element.
+ * @remarks
+ * - Applies base styling from `styles.button`, then augments with `buttonColorMap[color]`
+ *   and `fontSizeToTWMap[fontSize]`.
+ * - Additional classes can be merged through `className`.
+ * - Forwards any extra props (e.g., onClick, disabled, aria-*) to the underlying <button>.
  *
- * @example
- * ```tsx
- * // As a button
- * <ButtonWrapper color="brown-600" fontSize="16">
- *   Click me
- * </ButtonWrapper>
+ * @param color - Semantic color key used to select a Tailwind color class. Defaults to `DEFAULT_COLOR`.
+ * @param fontSize - Font size key mapped to a Tailwind class (e.g., "20"). Defaults to `"20"`.
+ * @param type - HTML button type ("button", "submit", "reset"). Defaults to `"button"`.
+ * @param children - Button content, typically text or icons rendered inside the button.
+ * @param className - Optional additional class names merged with computed classes.
+ * @param restProps - Any other valid button attributes and event handlers forwarded to <button>.
  *
- * // As a link
- * <LinkWrapper color="brown-600" fontSize="16" href="/dashboard">
- *   Go to Dashboard
- * </LinkWrapper>
- * ```
+ * @returns A button element with standardized styling and behavior.
  */
 export function ButtonWrapper({
   color = DEFAULT_COLOR,
@@ -84,6 +78,24 @@ interface LinkWrapperProps extends LinkProps {
   rel?: string;
 }
 
+/**
+ * A styled Next.js Link component with consistent button-like appearance.
+ * Shares visual styling with ButtonWrapper but renders as a Link for navigation.
+ *
+ * @param color - The color variant. Defaults to "brown-600".
+ * @param fontSize - The font size. Defaults to "20".
+ * @param children - The content to display.
+ * @param className - Additional CSS classes.
+ * @param href - The destination URL (required by Next.js Link).
+ * @param restProps - Additional LinkProps to be spread onto the Link.
+ *
+ * @example
+ * ```tsx
+ * <LinkWrapper href="/dashboard" color="blue-600" fontSize="16">
+ *   Go to Dashboard
+ * </LinkWrapper>
+ * ```
+ */
 export function LinkWrapper({
   color = DEFAULT_COLOR,
   fontSize = "20",
