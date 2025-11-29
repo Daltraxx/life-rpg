@@ -29,6 +29,23 @@ const COOKIE_EXPIRATION_MS = 5 * 60 * 1000; // 5 minutes
  * - `sameSite`: Set to "lax" to provide some protection against CSRF attacks.
  * - `maxAge`: The cookie will expire after 5 minutes.
  * - `path`: The cookie is available for the "/verify-email" path.
+ * 
+ * Privacy and security considerations:
+ * - The email address is stored in a cookie (server-set, HttpOnly). Although
+ *   it is not accessible to client-side scripts, it will be sent with requests
+ *   matching the cookie path and may appear in server logs if improperly handled.
+ *   Avoid logging cookie values, payloads, or raw emails.
+ * - The payload is only integrity-protected (signed), not encrypted. Anyone
+ *   with access to the raw cookie value can read the email address. If the email
+ *   must be kept confidential from intermediaries or client storage, encrypt
+ *   the payload in addition to signing.
+ * - Ensure `COOKIE_SIGNING_SECRET` is long, random, and rotated periodically.
+ *   If the secret is missing, the cookie is not set, preventing unsigned data
+ *   from being stored.
+ * - The nonce mitigates replay; verification handlers should also validate
+ *   the expiration (`exp`) and match the signature before trusting the payload.
+ * - The cookie is short-lived (5 minutes). Keep its scope narrow (`path=/verify-email`)
+ *   and avoid widening its path or domain to reduce exposure.
  */
 export default function setPendingVerificationEmail(
   email: string | undefined,
