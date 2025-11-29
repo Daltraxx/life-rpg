@@ -41,6 +41,7 @@ const DEFAULT_COLOR: BasicLinkColor = "brown-600";
  * - Additional `Link` props can be passed through `restProps` (e.g., `href`, `prefetch`, `replace`).
  *
  * @param color - Visual theme key selecting the link color; defaults to `DEFAULT_COLOR`.
+ *  Use "custom" to skip the built-in color class and provide your own via `className`.
  * @param fontSize - Font size key mapped to Tailwind classes; defaults to `"16"`.
  * @param children - React nodes rendered inside the link.
  * @param className - Optional additional class names to append to computed styles.
@@ -64,7 +65,7 @@ export function BasicLinkWrapper({
         ? `${rel} noopener noreferrer`
         : "noopener noreferrer"
       : rel;
-  
+
   return (
     <Link
       className={clsx(
