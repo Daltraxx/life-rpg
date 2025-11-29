@@ -18,7 +18,7 @@ export default function VerifyEmail({ email }: { email: string }) {
           Account Created Successfully!
         </Heading>
         <Paragraph size="36-responsive">
-          Please check {email} to verify your account so we can get started.
+          Please check <strong>{email}</strong> to verify your account so we can get started.
         </Paragraph>
       </section>
     </Bounded>
