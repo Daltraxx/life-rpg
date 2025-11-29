@@ -89,7 +89,10 @@ export default function getPendingVerificationEmail(
       }
       email = payload.email;
     } catch (error) {
-      console.error("Invalid cookie:", error);
+      console.error(
+        "Invalid cookie:",
+        error instanceof Error ? error.message : "Unknown error"
+      );
     }
   }
   return email;
