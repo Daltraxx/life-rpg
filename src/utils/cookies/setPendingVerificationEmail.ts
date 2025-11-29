@@ -7,6 +7,8 @@ export type CookiePayload = {
   nonce: string;
 };
 
+const COOKIE_EXPIRATION_MS = 5 * 60 * 1000; // 5 minutes
+
 /**
  * Sets a pending verification email cookie with a signed payload.
  *
@@ -37,7 +39,7 @@ export default function setPendingVerificationEmail(
   // Create the payload
   const payload: CookiePayload = {
     email: email,
-    exp: Date.now() + 5 * 60 * 1000, // 5 minutes
+    exp: Date.now() + COOKIE_EXPIRATION_MS, // 5 minutes
     nonce: crypto.randomUUID(),
   };
 
