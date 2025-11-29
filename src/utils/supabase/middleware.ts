@@ -1,5 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
-import { AuthError } from "@supabase/supabase-js";
+import { AuthError, AuthSessionMissingError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
@@ -108,7 +108,7 @@ export async function updateSession(
   );
 
   if (error) {
-    if (error.name === "AuthSessionMissingError" && isPublicPath) {
+    if (error instanceof AuthSessionMissingError && isPublicPath) {
       if (process.env.NODE_ENV === "development") {
         console.debug("No session on public path:", pathname);
       }
