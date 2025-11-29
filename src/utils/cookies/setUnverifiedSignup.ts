@@ -1,3 +1,6 @@
+// NOTE: Importing ReadonlyRequestCookies from "next/dist/server/web/spec-extension/adapters/request-cookies"
+// relies on a deep internal Next.js path. This may break in future Next.js releases if internal APIs change.
+// Prefer using public APIs or types if available, and monitor Next.js changelogs for breaking changes.
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
 /**
