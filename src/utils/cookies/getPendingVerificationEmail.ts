@@ -69,7 +69,12 @@ export default function getPendingVerificationEmail(
         .update(serialized)
         .digest("base64url");
 
-      if (signature !== expectedSignature) {
+      if (
+        !crypto.timingSafeEqual(
+          Buffer.from(signature, "base64url"),
+          Buffer.from(expectedSignature, "base64url")
+        )
+      ) {
         throw new Error("Invalid signature");
       }
 
