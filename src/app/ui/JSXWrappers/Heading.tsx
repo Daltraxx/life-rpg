@@ -2,7 +2,7 @@ import { ComponentProps, ReactNode } from "react";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
-type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 // NOTE: Forwarding refs is no longer necessary in React 19
 export interface HeadingProps extends ComponentProps<HeadingLevel> {
