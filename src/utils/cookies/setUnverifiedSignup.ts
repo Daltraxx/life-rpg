@@ -40,7 +40,7 @@ import { CookieStore } from "@/utils/types/cookies";
  * @remarks If you later need to clear this cookie manually, set the same name with an immediate expiration
  * (e.g., maxAge: 0) or use a delete helper if available.
  */
-export default function setUnverifiedSignup(cookieStore: CookieStore) {
+export default function setUnverifiedSignup(cookieStore: CookieStore): void {
   cookieStore.set("unverified_signup", "true", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
