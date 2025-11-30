@@ -3,6 +3,7 @@ import { type FontSize, fontSizeToTWMap } from "@/app/ui/utils/fontSizeToTWMap";
 import { type ReactNode } from "react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
+import getSecureRel from "../../utils/getSecureRel";
 
 const basicLinkColorMap = {
   "brown-600": styles.brown600,
@@ -57,15 +58,7 @@ export function BasicLinkWrapper({
   ...restProps
 }: BasicLinkWrapperProps) {
   // Ensure that if target is "_blank", rel includes "noopener noreferrer" for security
-  const secureRel =
-    target === "_blank"
-      ? (() => {
-          const tokens = new Set(rel?.trim() ? rel.split(/\s+/) : []);
-          tokens.add("noopener");
-          tokens.add("noreferrer");
-          return Array.from(tokens).join(" ");
-        })()
-      : rel;
+  const secureRel = getSecureRel(target, rel);
 
   return (
     <Link

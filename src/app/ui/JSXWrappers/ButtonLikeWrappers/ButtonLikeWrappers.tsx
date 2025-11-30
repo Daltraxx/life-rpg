@@ -4,6 +4,7 @@ import Link from "next/link";
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
+import getSecureRel from "../../utils/getSecureRel";
 
 /**
  * Color variants for buttons and links with button appearance.
@@ -101,8 +102,11 @@ export function LinkWrapper({
   fontSize = "20",
   children,
   className,
+  target,
+  rel,
   ...restProps
 }: LinkWrapperProps) {
+  const secureRel = getSecureRel(target, rel);
   return (
     <Link
       className={clsx(
@@ -111,6 +115,8 @@ export function LinkWrapper({
         fontSizeToTWMap[fontSize],
         className
       )}
+      target={target}
+      rel={secureRel}
       {...restProps}
     >
       {children}
