@@ -104,11 +104,6 @@
   margin-bottom: -0.5rem;
 }
 
-.submitButton[disabled] {
-  background-color: var(--red-500, #ef2101);
-  cursor: not-allowed;
-}
-
 @media only screen and (min-width: 768px) {
   .formContainer {
     width: 100%;

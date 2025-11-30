@@ -42,3 +42,8 @@
 .buttonOrange600:active {
   background-color: var(--orange-650, #c56907);
 }
+
+.button[disabled] {
+  cursor: not-allowed;
+  background-color: var(--gray-600, #66666e);
+}
