@@ -35,8 +35,8 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  *   - Relies on Base64URL encoding (no padding) for both payload and signature.
  *   - Ensure COOKIE_SIGNING_SECRET is a sufficiently random, long secret (e.g., 32+ bytes).
  *
- * @param fallback A trusted email value to return if no valid pending verification cookie is found.
  * @param cookieStore A read-only cookie store abstraction (e.g., from Next.js) used to access "pending_verification".
+ * @param fallback A trusted email value to return if no valid pending verification cookie is found.
  * @returns The email extracted from a valid, unexpired, signed cookie; otherwise the provided fallback.
  *
  * @example
