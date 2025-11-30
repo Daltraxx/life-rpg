@@ -82,7 +82,7 @@ export default function getPendingVerificationEmail(
         throw new Error("Invalid signature");
       }
 
-      const payload: CookiePayload = JSON.parse(serialized);
+      const payload: unknown = JSON.parse(serialized);
       if (!isValidCookiePayload(payload)) {
         throw new Error("Invalid payload structure");
       }
