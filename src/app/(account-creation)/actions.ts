@@ -136,12 +136,19 @@ export async function createAccount(
     };
   }
 
-  // Set cookie to track unverified signup
+  // Set cookies for unverified signup and pending verification email
   const cookieStore = await cookies();
-  setUnverifiedSignup(cookieStore);
-
-  // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
-  setPendingVerificationEmail(data.user.email, cookieStore);
+  try {
+    setUnverifiedSignup(cookieStore);
+    // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
+    setPendingVerificationEmail(data.user.email, cookieStore);
+  } catch (error) {
+    console.error("Error setting verification cookies:", error);
+    return {
+      message:
+        "Account created successfully, but verification setup failed. Please try logging in.",
+    };
+  }
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
