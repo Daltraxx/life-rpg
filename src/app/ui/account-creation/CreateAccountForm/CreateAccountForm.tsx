@@ -17,7 +17,6 @@ import useSignupValidation, {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import clsx from "clsx";
 
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
