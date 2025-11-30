@@ -23,7 +23,7 @@ import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
  * ```
  */
 function createTextWrapper<T extends "p" | "span" | "label">(element: T) {
-  return function TextWrapper({
+  const TextWrapper = function ({
     size = "20",
     children,
     className,
@@ -38,6 +38,9 @@ function createTextWrapper<T extends "p" | "span" | "label">(element: T) {
       children
     );
   };
+
+  TextWrapper.displayName = `TextWrapper(${element})`;
+  return TextWrapper;
 }
 
 /**
