@@ -223,7 +223,7 @@ export default function CreateAccountForm(): ReactElement {
           />
         </div>
 
-        <div className={clsx(styles.inputContainer)}>
+        <div className={styles.inputContainer}>
           <Label htmlFor="password" size="24-responsive">
             Password:
           </Label>
