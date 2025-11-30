@@ -25,7 +25,7 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  *   - Decode and parse the payload.
  *   - Recompute the HMAC-SHA256 signature using process.env.COOKIE_SIGNING_SECRET.
  *   - Reject if signatures differ.
- *   - Reject if current time exceeds payload.exp (epoch millis).
+ *   - Reject if current time is greater than or equal to payload.exp (epoch millis).
  *
  * On any validation failure (missing secret, bad format, bad signature, expired cookie, JSON error)
  * the function logs an error and returns the fallback email instead of throwing.
