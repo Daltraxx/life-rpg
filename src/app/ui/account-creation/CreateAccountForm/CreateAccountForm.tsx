@@ -84,7 +84,6 @@ const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
  * ```
  */
 export default function CreateAccountForm(): ReactElement {
-  // TODO: add "show password" toggle
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   const [interactedFields, setInteractedFields] = useState(
