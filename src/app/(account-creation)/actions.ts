@@ -127,7 +127,7 @@ export async function createAccount(
     }
   }
 
-  // If signup succeeded but user data is missing, return error
+  // If signup succeeded but user data is missing, return error, should not happen
   if (!data?.user?.email) {
     console.error("Signup succeeded but user data is missing");
     return {
