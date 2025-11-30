@@ -1,23 +1,34 @@
+export type CookieOptions = {
+  maxAge?: number;
+  expires?: Date;
+  path?: string;
+  domain?: string;
+  secure?: boolean;
+  httpOnly?: boolean;
+  sameSite?: "strict" | "lax" | "none";
+};
+
 /**
- * Represents a generic cookie storage interface for managing browser cookies.
- *
- * This minimal interface provides a simplified abstraction for cookie operations,
- * allowing for different implementations of cookie storage mechanisms.
+ * Represents a store for managing browser cookies.
+ * Provides methods to get, set, and delete cookie values.
  *
  * @interface CookieStore
  *
  * @example
  * ```typescript
- * const cookieStore: CookieStore = await cookies();
+ * const cookieStore: CookieStore = // ... implementation
  *
  * // Get a cookie
- * const token = cookieStore.get('auth_token');
- * if (token) {
- *   console.log(token.value);
+ * const cookie = cookieStore.get('session');
+ * if (cookie) {
+ *   console.log(cookie.value);
  * }
  *
  * // Set a cookie
- * cookieStore.set('user_id', '12345', { maxAge: 3600 });
+ * cookieStore.set('session', 'abc123', { maxAge: 3600 });
+ *
+ * // Delete a cookie
+ * cookieStore.delete('session');
  * ```
  */
 export interface CookieStore {
@@ -33,8 +44,13 @@ export interface CookieStore {
    *
    * @param name - The name of the cookie to set
    * @param value - The value to store in the cookie
-   * @param options - Optional configuration options for the cookie (e.g., maxAge, path, domain, secure, httpOnly)
-   * @returns void
+   * @param options - Optional configuration for the cookie (e.g., expiration, path, domain)
    */
-  set(name: string, value: string, options?: Record<string, unknown>): void;
+  set(name: string, value: string, options?: CookieOptions): void;
+  /**
+   * Deletes a cookie by name.
+   *
+   * @param name - The name of the cookie to delete
+   */
+  delete(name: string): void;
 }
