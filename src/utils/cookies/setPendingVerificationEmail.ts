@@ -56,7 +56,7 @@ export default function setPendingVerificationEmail(
 
   // Create the payload
   const payload: CookiePayload = {
-    email: email,
+    email,
     exp: Date.now() + COOKIE_EXPIRATION_MS, // 5 minutes
     nonce: crypto.randomUUID(),
   };
