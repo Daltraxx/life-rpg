@@ -77,7 +77,7 @@ export const Span = createTextWrapper("span");
  *
  * @example
  * ```tsx
- * <Label>This is a label</Label>
+ * <Label htmlFor="input-id">This is a label</Label>
  * ```
  *
  * @see {@link createTextWrapper} for the wrapper factory function
