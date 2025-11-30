@@ -1,3 +1,4 @@
+import React from "react";
 import { ComponentProps, ReactNode } from "react";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
@@ -28,14 +29,13 @@ function createTextWrapper<T extends "p" | "span" | "label">(element: T) {
     className,
     ...restProps
   }: ComponentProps<T> & { size?: FontSize; children: ReactNode }) {
-    const Element = element as any;
-    return (
-      <Element
-        className={clsx("font-main", fontSizeToTWMap[size], className)}
-        {...restProps}
-      >
-        {children}
-      </Element>
+    return React.createElement(
+      element,
+      {
+        className: clsx("font-main", fontSizeToTWMap[size], className),
+        ...restProps,
+      },
+      children
     );
   };
 }
