@@ -242,12 +242,13 @@ export default function CreateAccountForm(): ReactElement {
               type="button"
               className={styles.passwordToggleButton}
               onClick={handlePasswordToggle}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              aria-pressed={showPassword}
             >
               <FontAwesomeIcon
                 icon={passwordIcon}
                 className={styles.passwordToggle}
-                aria-label={showPassword ? "Hide password" : "Show password"}
-                aria-pressed={showPassword}
+                aria-hidden="true"
               />
             </button>
           </div>
