@@ -30,7 +30,7 @@ const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
  * - `sameSite`: Set to "lax" to provide some protection against CSRF attacks.
  * - `maxAge`: The cookie will expire after 5 minutes.
  * - `path`: The cookie is available for the "/verify-email" path.
- * 
+ *
  * Privacy and security considerations:
  * - The email address is stored in a cookie (server-set, HttpOnly). Although
  *   it is not accessible to client-side scripts, it will be sent with requests
@@ -51,8 +51,8 @@ const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
 export default function setPendingVerificationEmail(
   email: string | undefined,
   cookieStore: CookieStore
-) {
-  if (!email) return;
+): boolean {
+  if (!email) return false;
 
   // Create the payload
   const payload: CookiePayload = {
@@ -84,10 +84,13 @@ export default function setPendingVerificationEmail(
         maxAge: COOKIE_MAX_AGE_SECONDS, // 5 minutes
         path: "/verify-email",
       });
+      return true;
     } catch (error) {
       console.error("Failed to set pending verification cookie:", error);
+      return false;
     }
   } else {
     console.warn("COOKIE_SIGNING_SECRET is not set; skipping signed cookie.");
+    return false;
   }
 }
