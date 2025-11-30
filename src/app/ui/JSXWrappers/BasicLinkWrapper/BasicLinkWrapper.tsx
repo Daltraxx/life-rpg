@@ -1,7 +1,6 @@
 import Link, { LinkProps } from "next/link";
-import { FontSize } from "../../utils/fontSizeToTWMap";
+import { type FontSize, fontSizeToTWMap } from "../../utils/fontSizeToTWMap";
 import { type ReactNode } from "react";
-import { fontSizeToTWMap } from "../../utils/fontSizeToTWMap";
 import clsx from "clsx";
 import styles from "./styles.module.css";
 
