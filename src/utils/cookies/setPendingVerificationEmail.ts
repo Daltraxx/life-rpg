@@ -91,6 +91,6 @@ export default function setPendingVerificationEmail(
     }
   } else {
     console.warn("COOKIE_SIGNING_SECRET is not set; skipping signed cookie.");
-    return false;
+    throw new Error("COOKIE_SIGNING_SECRET environment variable is required");
   }
 }
