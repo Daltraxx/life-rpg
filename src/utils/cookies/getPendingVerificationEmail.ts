@@ -1,5 +1,5 @@
-import type { ResponseCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 import { CookiePayload } from "./setPendingVerificationEmail";
+import { CookieStore } from "../types/cookies";
 import crypto from "crypto";
 
 const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
@@ -50,7 +50,7 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  * Prefer rotating the signing secret periodically; doing so will invalidate existing pending cookies.
  */
 export default function getPendingVerificationEmail(
-  cookieStore: ResponseCookies,
+  cookieStore: CookieStore,
   fallback: string
 ): string {
   let email = fallback;
