@@ -61,7 +61,7 @@ export function BasicLinkWrapper({
   const secureRel =
     target === "_blank"
       ? (() => {
-          const tokens = new Set(rel ? rel.split(/\s+/) : []);
+          const tokens = new Set(rel?.trim() ? rel.split(/\s+/) : []);
           tokens.add("noopener");
           tokens.add("noreferrer");
           return Array.from(tokens).join(" ");
