@@ -35,6 +35,7 @@ export default function LoginForm() {
         <BasicLinkWrapper
           href="/forgot-password"
           className={styles.forgotPasswordLink}
+          fontSize="20"
         >
           Forgot Password?
         </BasicLinkWrapper>
