@@ -60,19 +60,20 @@
 }
 
 .passwordInputContainer {
+  --toggle-button-size: 2.5rem;
   position: relative;
   display: flex;
   align-items: center;
 }
 
 .passwordInputContainer input {
-  width: calc(100% - 2.5rem); /* Adjust width to accommodate toggle button */
+  width: calc(100% - var(--toggle-button-size)); /* Adjust width to accommodate toggle button */
 }
 
 .passwordToggleButton {
-  width: 2.5rem;
+  width: var(--toggle-button-size);
   background-color: var(--brown-600, #362009);
-  height: 2.5rem;
+  height: var(--toggle-button-size);
   display: flex;
   align-items: center;
   justify-content: center;
