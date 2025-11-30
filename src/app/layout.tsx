@@ -4,6 +4,10 @@ import { jersey } from "./ui/fonts";
 import "./globals.css";
 import clsx from "clsx";
 
+import { config } from "@fortawesome/fontawesome-svg-core";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+config.autoAddCss = false;
+
 export const metadata: Metadata = {
   title: {
     template: "%s | Life RPG",
