@@ -41,7 +41,7 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  *
  * @example
  * // For use in a Next.js server component page:
- * const email = getPendingVerificationEmail(user.email, cookies);
+ * const email = getPendingVerificationEmail(cookiesStore, user.email);
  * return <VerifyEmail email={email} />;
  * }
  *
