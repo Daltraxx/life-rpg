@@ -1,5 +1,5 @@
 import React from "react";
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps } from "react";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
