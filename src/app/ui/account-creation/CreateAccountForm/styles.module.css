@@ -67,6 +67,7 @@
 
 .passwordInputContainer input {
   width: calc(100% - var(--toggle-button-size)); /* Adjust width to accommodate toggle button */
+  border-right: none;
 }
 
 .passwordToggleButton {
