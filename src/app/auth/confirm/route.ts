@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
   }
 
   if (!error) {
-    // Redirect to profile setup page
+    // On success redirect to profile setup page
     redirectTo.searchParams.delete("next"); // Part of supabase docs, remove if unnecessary
     redirectTo.pathname = "/profile-setup";
     return NextResponse.redirect(redirectTo);
