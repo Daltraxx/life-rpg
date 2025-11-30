@@ -92,9 +92,8 @@ export default function CreateAccountForm(): ReactElement {
   );
 
   const [showPassword, setShowPassword] = useState(false);
-  const passwordIcon = showPassword ? faEye : faEyeSlash;
+  const passwordIcon = showPassword ? faEyeSlash : faEye;
   const handlePasswordToggle = () => {
-    console.log("Toggling password visibility");
     setShowPassword((prev) => !prev);
   };
 
