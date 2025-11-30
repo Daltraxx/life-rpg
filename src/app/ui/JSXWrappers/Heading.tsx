@@ -1,4 +1,4 @@
-import { ComponentProps, ReactNode } from "react";
+import { ComponentProps } from "react";
 import clsx from "clsx";
 import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
 
@@ -8,7 +8,6 @@ export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 export interface HeadingProps extends ComponentProps<HeadingLevel> {
   as?: HeadingLevel;
   size?: FontSize;
-  children: ReactNode;
 }
 
 const DEFAULT_SIZE: FontSize = "36";
