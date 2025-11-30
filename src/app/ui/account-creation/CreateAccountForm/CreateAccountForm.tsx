@@ -15,6 +15,10 @@ import useSignupValidation, {
   ValidationErrorMessages,
 } from "@/utils/hooks/useSignupValidation";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import clsx from "clsx";
+
 const INITIAL_SIGNUP_STATE: SignupState = {
   errors: {},
   message: null,
@@ -22,12 +26,7 @@ const INITIAL_SIGNUP_STATE: SignupState = {
 
 type Field = keyof ValidationErrorMessages;
 
-export const FIELDS: Field[] = [
-  "email",
-  "username",
-  "usertag",
-  "password",
-];
+export const FIELDS: Field[] = ["email", "username", "usertag", "password"];
 export type InteractedFields = Record<Field, boolean>;
 export const INITIAL_INTERACTED_FIELDS: InteractedFields = Object.fromEntries(
   FIELDS.map((field) => [field, false])
@@ -91,6 +90,13 @@ export default function CreateAccountForm(): ReactElement {
   const [interactedFields, setInteractedFields] = useState(
     INITIAL_INTERACTED_FIELDS
   );
+
+  const [showPassword, setShowPassword] = useState(false);
+  const passwordIcon = showPassword ? faEye : faEyeSlash;
+  const handlePasswordToggle = () => {
+    console.log("Toggling password visibility");
+    setShowPassword((prev) => !prev);
+  };
 
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     setInteractedFields((prev) => ({ ...prev, [target.name]: true }));
@@ -219,20 +225,34 @@ export default function CreateAccountForm(): ReactElement {
           />
         </div>
 
-        <div className={styles.inputContainer}>
+        <div
+          className={clsx(styles.inputContainer)}
+        >
           <Label htmlFor="password" size="24-responsive">
             Password:
           </Label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            autoComplete="new-password"
-            value={formData.password}
-            onChange={handleChange}
-            aria-describedby={errors.password ? "password-error" : undefined}
-            required
-          />
+          <div className={styles.passwordInputContainer}>
+            <input
+              id="password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              autoComplete="new-password"
+              value={formData.password}
+              onChange={handleChange}
+              aria-describedby={errors.password ? "password-error" : undefined}
+              required
+            />
+            <button
+              type="button"
+              className={styles.passwordToggleButton}
+              onClick={handlePasswordToggle}
+            >
+              <FontAwesomeIcon
+                icon={passwordIcon}
+                className={styles.passwordToggle}
+              />
+            </button>
+          </div>
           <FieldErrorsDisplay
             errors={errors.password}
             id="password-error"
