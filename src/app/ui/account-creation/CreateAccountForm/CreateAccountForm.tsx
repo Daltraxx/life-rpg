@@ -224,9 +224,7 @@ export default function CreateAccountForm(): ReactElement {
           />
         </div>
 
-        <div
-          className={clsx(styles.inputContainer)}
-        >
+        <div className={clsx(styles.inputContainer)}>
           <Label htmlFor="password" size="24-responsive">
             Password:
           </Label>
@@ -249,6 +247,8 @@ export default function CreateAccountForm(): ReactElement {
               <FontAwesomeIcon
                 icon={passwordIcon}
                 className={styles.passwordToggle}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
               />
             </button>
           </div>
