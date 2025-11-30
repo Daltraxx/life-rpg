@@ -9,8 +9,8 @@ export default function VerifyEmail({ email }: { email: string }) {
   // A "Resend verification email" button in case they don't receive it
   // A link to navigate back to login or home page
   // Additional guidance on what to do if the email doesn't arrive (e.g., check spam folder)
-  
-  email = email?.trim() || PLACEHOLDER_EMAIL;
+
+  const displayEmail = email.trim() || PLACEHOLDER_EMAIL;
 
   return (
     <Bounded
@@ -22,7 +22,7 @@ export default function VerifyEmail({ email }: { email: string }) {
           Account Created Successfully!
         </Heading>
         <Paragraph size="36-responsive">
-          Please check <strong>{email}</strong> to verify your account so we can
+          Please check <strong>{displayEmail}</strong> to verify your account so we can
           get started.
         </Paragraph>
       </section>
