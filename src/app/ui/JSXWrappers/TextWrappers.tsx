@@ -28,7 +28,7 @@ function createTextWrapper<T extends "p" | "span" | "label">(element: T) {
     children,
     className,
     ...restProps
-  }: ComponentProps<T> & { size?: FontSize; children: ReactNode }) {
+  }: ComponentProps<T> & { size?: FontSize }) {
     return React.createElement(
       element,
       {
