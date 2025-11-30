@@ -61,7 +61,6 @@
 
 .passwordInputContainer {
   --toggle-button-size: 2.5rem;
-  position: relative;
   display: flex;
   align-items: center;
 }
