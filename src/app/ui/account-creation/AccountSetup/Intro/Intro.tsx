@@ -1,10 +1,11 @@
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import introCopy from "@/copy/account-creation/account-setup/intro";
 import { Span } from "@/app/ui/JSXWrappers/TextWrappers";
+import Heading from "@/app/ui/JSXWrappers/Heading";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index}>
-    <h3>{explainer.title}</h3>
+    <Heading as="h3">{explainer.title}</Heading>
     <ul>
       {explainer.points.map((point, pointIndex) => (
         <li key={pointIndex}>
@@ -27,8 +28,8 @@ export default function Intro() {
     <Bounded>
       <section>
         {/* TODO: Replace USER with actual user name */}
-        <Span>Hello USER!</Span>
-        <h1>{introCopy.heading}</h1>
+        <Span size="48-responsive">Hello USER!</Span>
+        <Heading as="h1" size="36-responsive">{introCopy.heading}</Heading>
       </section>
 
       <section>{explainerSections}</section>
