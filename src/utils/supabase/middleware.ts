@@ -100,6 +100,12 @@ export async function updateSession(
     "/error",
     ...(unverifiedSignupCookie ? ["/verify-email"] : []),
   ];
+
+  // In development, allow unrestricted access to account setup and verify email pages
+  if (process.env.NODE_ENV === "development") { 
+    publicPaths.push("/verify-email", "/account-setup");
+  }
+
   if (unverifiedSignupCookie && user?.email_confirmed_at) {
     // User has verified email - remove the cookie
     supabaseResponse.cookies.delete("unverified_signup");
