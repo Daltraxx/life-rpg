@@ -1,4 +1,4 @@
-export const introCopy = {
+const introCopy = {
   heading: "Time to setup your LifeRPG",
   explainers: [
     {

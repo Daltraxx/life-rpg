@@ -1,3 +1,5 @@
+import Intro from "@/app/ui/account-creation/AccountSetup/Intro/Intro";
+
 import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Account Setup",
@@ -6,5 +8,5 @@ export const metadata: Metadata = {
 };
 
 export default function AccountSetupPage() {
-  return <div>Account Setup Page</div>;
+  return <Intro />;
 }
