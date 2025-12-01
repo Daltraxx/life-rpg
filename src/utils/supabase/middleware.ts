@@ -102,6 +102,7 @@ export async function updateSession(
   ];
 
   // In development, allow unrestricted access to account setup and verify email pages
+  // TODO: Remove this  in production after testing
   if (process.env.NODE_ENV === "development") { 
     publicPaths.push("/verify-email", "/account-setup");
   }
