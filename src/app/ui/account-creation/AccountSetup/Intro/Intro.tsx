@@ -1,6 +1,6 @@
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import introCopy from "@/copy/account-creation/account-setup/intro";
-import { Span } from "@/app/ui/JSXWrappers/TextWrappers";
+import { ListItem, Span } from "@/app/ui/JSXWrappers/TextWrappers";
 import Heading from "@/app/ui/JSXWrappers/Heading";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
@@ -8,16 +8,16 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
     <Heading as="h3">{explainer.title}</Heading>
     <ul>
       {explainer.points.map((point, pointIndex) => (
-        <li key={pointIndex}>
+        <ListItem key={pointIndex}>
           {point.text}
           {point.nestedPoints && (
             <ul>
               {point.nestedPoints.map((nestedPoint, nestedPointIndex) => (
-                <li key={nestedPointIndex}>{nestedPoint}</li>
+                <ListItem key={nestedPointIndex}>{nestedPoint}</ListItem>
               ))}
             </ul>
           )}
-        </li>
+        </ListItem>
       ))}
     </ul>
   </section>

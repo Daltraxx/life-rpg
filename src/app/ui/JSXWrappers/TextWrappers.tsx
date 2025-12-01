@@ -22,7 +22,9 @@ import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
  * <Paragraph size="24" className="text-red-500">Hello World</Paragraph>
  * ```
  */
-function createTextWrapper<T extends "p" | "span" | "label">(element: T) {
+function createTextWrapper<T extends "p" | "span" | "label" | "li">(
+  element: T
+) {
   const TextWrapper = function ({
     size = "20",
     children,
@@ -86,3 +88,18 @@ export const Span = createTextWrapper("span");
  * @see {@link createTextWrapper} for the wrapper factory function
  */
 export const Label = createTextWrapper("label");
+
+/**
+ * A styled list item element wrapper component.
+ *
+ * This component is created using the `createTextWrapper` utility function to provide
+ * a reusable list item element with consistent styling and behavior across the application.
+ *
+ * @example
+ * ```tsx
+ * <ListItem>This is a list item</ListItem>
+ * ```
+ *
+ * @see {@link createTextWrapper} for the wrapper factory function
+ */
+export const ListItem = createTextWrapper("li");
