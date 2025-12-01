@@ -1,4 +1,19 @@
-const introCopy = {
+interface ExplainerPoint {
+  text: string;
+  nestedPoints?: string[];
+}
+
+interface Explainer {
+  title: string;
+  points: ExplainerPoint[];
+}
+
+interface IntroCopy {
+  heading: string;
+  explainers: Explainer[];
+}
+
+const introCopy: IntroCopy = {
   heading: "Time to setup your LifeRPG",
   explainers: [
     {
