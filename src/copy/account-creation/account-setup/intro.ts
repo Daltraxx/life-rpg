@@ -94,3 +94,5 @@ export const introCopy = {
     },
   ],
 };
+
+export default introCopy;
