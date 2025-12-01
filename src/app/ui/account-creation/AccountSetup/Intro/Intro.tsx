@@ -5,9 +5,11 @@ import Heading from "@/app/ui/JSXWrappers/Heading";
 import styles from "./styles.module.css";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
-  <section key={index}>
-    <Heading as="h3">{explainer.title}</Heading>
-    <ul>
+  <section key={index} className={styles.explainerSection}>
+    <Heading as="h3" size="30" className={styles.explainerSectionHeading}>
+      {explainer.title}
+    </Heading>
+    <ul className={styles.explainerPointsList}>
       {explainer.points.map((point, pointIndex) => (
         <ListItem key={pointIndex}>
           {point.text}
@@ -30,10 +32,14 @@ export default function Intro() {
       <section className={styles.introHeader}>
         {/* TODO: Replace USER with actual user name */}
         <Span size="48-responsive">Hello USER!</Span>
-        <Heading as="h1" size="36-responsive">{introCopy.heading}</Heading>
+        <Heading as="h1" size="48-responsive">
+          {introCopy.heading}
+        </Heading>
       </section>
 
-      <section>{explainerSections}</section>
+      <section className={styles.explainerSectionsContainer}>
+        {explainerSections}
+      </section>
     </Bounded>
   );
 }
