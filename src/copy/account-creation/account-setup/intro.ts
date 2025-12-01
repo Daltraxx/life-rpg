@@ -63,7 +63,7 @@ const introCopy: IntroCopy = {
       ],
     },
     {
-      title: "Getting Started:",
+      title: "Other important things to note!",
       points: [
         {
           text: "Try to keep your daily quest size manageable. Your daily points will be negatively affected by in-complete tasks. You can always add more and modify things later.",
