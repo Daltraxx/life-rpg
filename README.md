@@ -1,7 +1,10 @@
 # LifeRPG
 
-This is an application where users can create accounts in which they define the personal attributes they wish to hone or improve as well as the regular tasks ("quests") that will earn experience points towards both leveling those attributes and their overall player level. The levelling system is designed to reward players who complete their quests consistently to encourage habit formation and strengthening. In short, the goal of this application is to help users bolster the reward they feel from accomplishing daily productivity goals by emulating the feedback loop of RPGs. In other words, the overarching goal is help those who feel they could benefit from such a system reap real-life progress towards manifesting their aspirational goals. 
+LifeRPG is an application where users create accounts to define personal attributes they wish to hone and regular tasks ("quests") that earn experience points. These quests level both individual attributes and overall player level.
 
+The leveling system rewards consistent quest completion to encourage habit formation. By emulating the feedback loop of RPGs, LifeRPG helps users feel more rewarded when accomplishing daily productivity goals.
+
+The overarching goal is to help users who feel they'd benefit from such a system reap real-life progress towards their aspirational goals.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
