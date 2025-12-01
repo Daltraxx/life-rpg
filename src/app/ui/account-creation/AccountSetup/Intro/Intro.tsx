@@ -26,6 +26,7 @@ export default function Intro() {
   return (
     <Bounded>
       <section>
+        {/* TODO: Replace USER with actual user name */}
         <Span>Hello USER!</Span>
         <h1>{introCopy.heading}</h1>
       </section>
