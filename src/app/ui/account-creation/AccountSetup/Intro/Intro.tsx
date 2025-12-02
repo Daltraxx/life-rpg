@@ -35,7 +35,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   const supabase = createSupabaseBrowserClient();
   const [userName, setUserName] = useState<string>("user");
 
-  const getUserData = useCallback(async () => {
+  const setUsernameFromDatabase = useCallback(async () => {
     if (!authUser?.id) {
       console.warn("No authenticated user found.");
       return;
@@ -61,8 +61,8 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   }, [authUser, supabase]);
 
   useEffect(() => {
-    getUserData();
-  }, [getUserData]);
+    setUsernameFromDatabase();
+  }, [setUsernameFromDatabase]);
 
   return (
     <Bounded innerClassName={styles.contentContainer}>
