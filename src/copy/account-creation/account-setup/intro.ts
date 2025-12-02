@@ -34,7 +34,7 @@ const introCopy: IntroCopy = {
         {
           text: "Example of Attributes as used by the Creator, just to get an idea:",
           nestedPoints: [
-            "Vitality — For generally health-giving habits, such as eating healthy and going to bed at the chosen hour",
+            "Vitality — For general health-giving habits, such as eating healthy and going to bed at the chosen hour",
             "Intelligence — Intellectual pursuits and challenges, reading, etc.",
             "Fitness — Cardio and weight training",
             "Dexterity — Skillfulness with movement, strengthened by sports and even practicing drawing",
