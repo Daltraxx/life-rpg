@@ -42,7 +42,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
         .select("username")
         .eq("id", authUser?.id)
         .single();
-      
+
       if (error && status !== 406) {
         console.error("Error fetching user data:", error);
         throw error;
@@ -51,11 +51,8 @@ export default function Intro({ authUser }: { authUser: User | null }) {
       if (data) {
         setUserName(data.username);
       }
-
-
     } catch (error) {
       console.error("Error fetching user data:", error);
-
     }
   }, [authUser, supabase]);
 
