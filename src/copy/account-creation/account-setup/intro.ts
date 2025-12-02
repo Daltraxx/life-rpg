@@ -48,7 +48,7 @@ const introCopy: IntroCopy = {
       title: "Defining your Quests:",
       points: [
         {
-          text: "Quests are what will show up every day when you log on, and whose completion will determine your points for the day.",
+          text: "Quests are what will show up every day when you log in, and whose completion will determine your points for the day.",
         },
         {
           text: "When defining a quest, you select which attributes are strengthened by it. Note that attributes level independently — they do not determine how much that quest is worth. Instead, they are present to give you a gauge of what aspects of yourself you are improving each day and a deserved sense of accomplishment in doing so.",
