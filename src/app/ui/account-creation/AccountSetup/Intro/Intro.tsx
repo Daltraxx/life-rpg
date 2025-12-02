@@ -62,7 +62,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
 
   useEffect(() => {
     getUserData();
-  }, [getUserData, authUser]);
+  }, [getUserData]);
 
   return (
     <Bounded innerClassName={styles.contentContainer}>
