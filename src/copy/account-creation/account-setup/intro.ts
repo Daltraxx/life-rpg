@@ -14,7 +14,7 @@ interface IntroCopy {
 }
 
 const introCopy: IntroCopy = {
-  heading: "Time to setup your LifeRPG",
+  heading: "Time to set up your LifeRPG",
   explainers: [
     {
       title: "Defining your Attributes:",
