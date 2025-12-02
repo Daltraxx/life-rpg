@@ -66,7 +66,7 @@ const introCopy: IntroCopy = {
       title: "Other important things to note!",
       points: [
         {
-          text: "Try to keep your daily quest size manageable. Your daily points will be negatively affected by in-complete tasks. You can always add more and modify things later.",
+          text: "Try to keep your daily quest size manageable. Your daily points will be negatively affected by incomplete tasks. You can always add more and modify things later.",
         },
         {
           text: "Be honest! When setting how much your attributes are strengthened by a particular task, and in playing this game in general. Do your best to define the game in such a way that it ensures the numbers mean something. We should feel a sense of accomplishment when numbers go up, that doesn't work if we cheat ourselves.",
