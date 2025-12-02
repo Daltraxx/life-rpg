@@ -8,6 +8,8 @@ import styles from "./styles.module.css";
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
+import getUsername from "@/app/queries/client/getUsername";
+import { set } from "zod";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index} className={styles.explainerSection}>
@@ -41,20 +43,8 @@ export default function Intro({ authUser }: { authUser: User | null }) {
       return;
     }
     try {
-      const { data, error, status } = await supabase
-        .from("users")
-        .select("username")
-        .eq("id", authUser?.id)
-        .single();
-
-      if (error && status !== 406) {
-        console.error("Error fetching user data:", error);
-        throw error;
-      }
-
-      if (data) {
-        setUserName(data.username);
-      }
+      const username = await getUsername(authUser, supabase);
+      if (username) setUserName(username);
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
