@@ -36,6 +36,10 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   const [userName, setUserName] = useState<string>("user");
 
   const getUserData = useCallback(async () => {
+    if (!authUser?.id) {
+      console.warn("No authenticated user found.");
+      return;
+    }
     try {
       const { data, error, status } = await supabase
         .from("users")
