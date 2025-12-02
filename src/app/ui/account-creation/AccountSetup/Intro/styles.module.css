@@ -41,3 +41,16 @@
   list-style-type: disc;
   margin-left: 1.5rem;
 }
+
+@media only screen and (min-width: 768px) {
+  .explainerSectionsContainer {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4rem;
+  }
+
+  .explainerSection {
+    flex: 1 1 30%;
+  }
+}
