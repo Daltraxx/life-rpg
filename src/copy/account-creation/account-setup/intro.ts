@@ -32,7 +32,7 @@ const introCopy: IntroCopy = {
           text: "When defining your daily quests, the attributes you define will be available when choosing which attributes are strengthened by that quest.",
         },
         {
-          text: "Example of Attributes as used by the Creator, just to get an idea",
+          text: "Example of Attributes as used by the Creator, just to get an idea:",
           nestedPoints: [
             "Vitality — For generally health-giving habits, such as eating healthy and going to bed at the chosen hour",
             "Intelligence — Intellectual pursuits and challenges, reading, etc.",
