@@ -63,7 +63,6 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <section className={styles.introHeader}>
-        {/* TODO: Replace USER with actual user name */}
         <Span size="48-responsive">Hello {userName}!</Span>
         <Heading as="h1" size="48-responsive">
           {introCopy.heading}
