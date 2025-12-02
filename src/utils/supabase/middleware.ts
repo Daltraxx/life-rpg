@@ -101,11 +101,12 @@ export async function updateSession(
     ...(unverifiedSignupCookie ? ["/verify-email"] : []),
   ];
 
-  // In development, allow unrestricted access to account setup and verify email pages
-  // TODO: Remove this  in production after testing
-  // if (process.env.NODE_ENV === "development") { 
-  //   publicPaths.push("/verify-email", "/account-setup");
-  // }
+  // In development, allow unrestricted access when desired to account setup and verify email pages
+  // TODO: Remove this  in production, make sure to test normal user flow
+  const unrestrictedDevModeAccess = true;
+  if (process.env.NODE_ENV === "development" && unrestrictedDevModeAccess) { 
+    publicPaths.push("/verify-email", "/account-setup");
+  }
 
   if (unverifiedSignupCookie && user?.email_confirmed_at) {
     // User has verified email - remove the cookie
