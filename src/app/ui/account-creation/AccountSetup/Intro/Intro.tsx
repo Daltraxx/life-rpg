@@ -31,7 +31,7 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
   </section>
 ));
 
-export default async function Intro({ authUser }: { authUser: User | null }) {
+export default function Intro({ authUser }: { authUser: User | null }) {
   const supabase = createSupabaseBrowserClient();
   const [userName, setUserName] = useState<string>("user");
 
