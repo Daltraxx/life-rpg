@@ -15,6 +15,7 @@ export default async function AccountSetupPage() {
     error,
   } = await supabase.auth.getUser();
 
+  // TODO: Consider removing unrestricted dev access for production
   if (
     (error || !user) &&
     (process.env.NODE_ENV !== "development" ||
