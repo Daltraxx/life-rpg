@@ -1,8 +1,13 @@
+"use client";
+
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import introCopy from "@/copy/account-creation/account-setup/intro";
 import { ListItem, Span } from "@/app/ui/JSXWrappers/TextWrappers";
 import Heading from "@/app/ui/JSXWrappers/Heading";
 import styles from "./styles.module.css";
+import { createSupabaseBrowserClient } from "@/utils/supabase/client";
+import type { User } from "@supabase/supabase-js";
+import { useCallback, useState } from "react";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index} className={styles.explainerSection}>
@@ -26,7 +31,34 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
   </section>
 ));
 
-export default function Intro() {
+export default async function Intro({ authUser }: { authUser: User | null }) {
+  const supabase = createSupabaseBrowserClient();
+  const [userName, setUserName] = useState<string>("user");
+
+  const getUserData = useCallback(async () => {
+    try {
+      const { data, error, status } = await supabase
+        .from("users")
+        .select("username")
+        .eq("id", authUser?.id)
+        .single();
+      
+      if (error && status !== 406) {
+        console.error("Error fetching user data:", error);
+        throw error;
+      }
+
+      if (data) {
+        setUserName(data.username);
+      }
+
+
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      
+    }
+  }, [authUser, supabase]);
+
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <section className={styles.introHeader}>
