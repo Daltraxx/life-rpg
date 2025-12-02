@@ -7,7 +7,7 @@ import Heading from "@/app/ui/JSXWrappers/Heading";
 import styles from "./styles.module.css";
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index} className={styles.explainerSection}>
@@ -55,9 +55,13 @@ export default async function Intro({ authUser }: { authUser: User | null }) {
 
     } catch (error) {
       console.error("Error fetching user data:", error);
-      
+
     }
   }, [authUser, supabase]);
+
+  useEffect(() => {
+    getUserData();
+  }, [getUserData, authUser]);
 
   return (
     <Bounded innerClassName={styles.contentContainer}>
