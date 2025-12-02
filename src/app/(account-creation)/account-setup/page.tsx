@@ -1,6 +1,7 @@
 import Intro from "@/app/ui/account-creation/AccountSetup/Intro/Intro";
 import type { Metadata } from "next";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Account Setup",
@@ -11,6 +12,12 @@ export default async function AccountSetupPage() {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
+    error
   } = await supabase.auth.getUser();
+
+  if (error || !user) {
+    console.error("Error fetching authenticated user:", error);
+    redirect("/");
+  }
   return <Intro authUser={user} />;
 }
