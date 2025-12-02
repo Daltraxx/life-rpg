@@ -22,6 +22,13 @@ import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
  * <Paragraph size="24" className="text-red-500">Hello World</Paragraph>
  * ```
  */
+/**
+ * Creates a React component that wraps a specified HTML text element (`p`, `span`, `label`, or `li`)
+ * with custom styling and props.
+ *
+ * @template T - The HTML element type to wrap ("p", "span", "label", or "li").
+ * @param element - The HTML element tag to use for the wrapper.
+ */
 function createTextWrapper<T extends "p" | "span" | "label" | "li">(
   element: T
 ) {
