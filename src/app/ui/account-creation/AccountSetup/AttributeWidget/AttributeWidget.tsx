@@ -6,15 +6,21 @@ import styles from "./styles.module.css";
 
 export default function AttributeWidget() {
   return (
-      <section>
-        <Heading as="h3">Add Attributes</Heading>
-        <Label htmlFor="add-attribute">Attribute Name</Label>
-        <div>
-          <input type="text" id="add-attribute" />
-          <button type="button">ADD</button>
+    <section>
+      <Heading as="h3" size="36">
+        Add Attributes
+      </Heading>
+      <Label htmlFor="add-attribute" size="20">
+        Attribute Name
+      </Label>
+      <div>
+        <input type="text" id="add-attribute" />
+        <button type="button">ADD</button>
       </div>
       <section>
-        <Heading as="h4">Current Attributes</Heading>
+        <Heading as="h4" size="24">
+          Current Attributes
+        </Heading>
         <ul>
           <li>
             <button>
