@@ -30,7 +30,7 @@
 }
 
 .addAttributeButton:hover {
-  background-color: #123e6d;
+  background-color: var(--blue-400, #123e6d);
 }
 
 .addAttributeButton:active {
