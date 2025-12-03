@@ -30,12 +30,17 @@ export default async function AccountSetupPage() {
     }
     redirect("/");
   }
+
+  // Provide mock user for unrestricted dev mode
+  const authUser = isUnrestrictedDevMode && !user 
+    ? { id: 'dev-mock-user', email: 'dev@example.com' } as any
+    : user;
+
   return (
     <>
-      <Intro authUser={user} />
+      <Intro authUser={authUser} />
       <Bounded>
         <AttributeWidget />
       </Bounded>
     </>
-  );
-}
+  );}
