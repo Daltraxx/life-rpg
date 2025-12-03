@@ -24,13 +24,13 @@
 }
 
 .buttonBlue600 {
-  background-color: var(--blue-600, #091f36);
+  background-color: var(--blue-700, #091f36);
 }
 .buttonBlue600:hover {
-  background-color: var(--blue-400, #0f3257);
+  background-color: var(--blue-500, #0f3257);
 }
 .buttonBlue600:active {
-  background-color: var(--blue-500, #0c2846);
+  background-color: var(--blue-600, #0c2846);
 }
 
 .buttonOrange600 {

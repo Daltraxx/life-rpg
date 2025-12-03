@@ -1,5 +1,5 @@
 .loginPageContainer {
-  background-color: var(--blue-600);
+  background-color: var(--blue-700);
   min-height: 100vh;
   display: flex;
   flex-direction: column;

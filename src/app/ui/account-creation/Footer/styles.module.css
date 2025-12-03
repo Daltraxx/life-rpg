@@ -1,6 +1,6 @@
 /* Adjust height for boundedContainer/Footer in globals.css */
 .boundedContainer {
-  background-color: var(--blue-600, #091f36);
+  background-color: var(--blue-700, #091f36);
   height: var(--create-account-footer-height-mobile);
   overflow: hidden;
   display: flex;

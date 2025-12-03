@@ -16,7 +16,7 @@
   align-items: center;
   gap: 0.5rem;
   text-align: center;
-  color: var(--blue-600, #091f36);
+  color: var(--blue-700, #091f36);
   max-width: 100%;
 }
 

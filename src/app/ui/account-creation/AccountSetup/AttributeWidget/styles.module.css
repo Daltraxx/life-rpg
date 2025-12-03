@@ -1,5 +1,5 @@
 .widgetContainer {
-  color: var(--blue-600, #091f36);
+  color: var(--blue-700, #091f36);
 }
 
 .addAttributeContainer {
@@ -9,7 +9,7 @@
 }
 
 .addAttributeField {
-  border: 2px solid var(--blue-600, #091f36);
+  border: 2px solid var(--blue-700, #091f36);
 }
 
 .addAttributeField input {
@@ -21,7 +21,7 @@
 }
 
 .addAttributeButton {
-  background-color: var(--blue-600, #091f36);
+  background-color: var(--blue-700, #091f36);
   color: var(--white, #ffffff);
   border: none;
   padding: 0rem 0.75rem;
@@ -34,7 +34,7 @@
 }
 
 .addAttributeButton:active {
-  background-color: var(--blue-400, #0f3257);
+  background-color: var(--blue-500, #0f3257);
 }
 
 .removeAttributeIcon {
@@ -43,5 +43,5 @@
 }
 
 .removeAttributeIcon path {
-  fill: var(--blue-600, #091f36);
+  fill: var(--blue-700, #091f36);
 }

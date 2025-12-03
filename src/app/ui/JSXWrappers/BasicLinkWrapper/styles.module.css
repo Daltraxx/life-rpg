@@ -19,13 +19,13 @@
 }
 
 .blue600 {
-  color: var(--blue-600, #091f36);
+  color: var(--blue-700, #091f36);
 }
 .blue600:hover {
-  color: var(--blue-400, #0f3257);
+  color: var(--blue-500, #0f3257);
 }
 .blue600:active {
-  color: var(--blue-600, #091f36);
+  color: var(--blue-700, #091f36);
 }
 
 .orange300 {
