@@ -25,7 +25,7 @@ const introCopy: IntroCopy = {
         {
           text: "Some suggestions have already been selected, but feel free to remove them. Choose what suits your envisioned lifestyle, put some thought into it and make it make sense.",
           nestedPoints: [
-            "The only non-negotiable attribute is Discipline. This is because Discipline is inherently strengthened with every quest completed. The amount Discipline is strengthened is something that can be increased for especially high-effort tasks, but we'll get to that!",
+            "The only non-negotiable attribute is Discipline. This is because Discipline is inherently strengthened with every quest completed. The amount that Discipline is strengthened can be increased for especially high-effort tasks, but we'll get to that!",
           ],
         },
         {
