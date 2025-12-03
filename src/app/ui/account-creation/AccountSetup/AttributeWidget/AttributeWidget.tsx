@@ -1,5 +1,7 @@
 import Heading from "@/app/ui/JSXWrappers/Heading";
-import { Label } from '../../../JSXWrappers/TextWrappers';
+import { Label } from "../../../JSXWrappers/TextWrappers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
 
 export default function AttributeWidget() {
   return (
@@ -13,12 +15,32 @@ export default function AttributeWidget() {
       <section>
         <Heading as="h4">Current Attributes</Heading>
         <ul>
-          <li>Discipline</li>
-          <li>Vitality</li>
-          <li>Intelligence</li>
-          <li>Fitness</li>
+          <li>
+            <button>
+              <FontAwesomeIcon icon={faSquareXmark} />
+            </button>
+            Discipline
+          </li>
+          <li>
+            <button>
+              <FontAwesomeIcon icon={faSquareXmark} />
+            </button>
+            Vitality
+          </li>
+          <li>
+            <button>
+              <FontAwesomeIcon icon={faSquareXmark} />
+            </button>
+            Intelligence
+          </li>
+          <li>
+            <button>
+              <FontAwesomeIcon icon={faSquareXmark} />
+            </button>
+            Fitness
+          </li>
         </ul>
       </section>
-      </section>
+    </section>
   );
 }
