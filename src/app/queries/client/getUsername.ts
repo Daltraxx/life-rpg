@@ -6,8 +6,7 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
  * @param authUser - The authenticated user object containing the user's ID
  * @param supabase - The Supabase client instance used to query the database
  * @returns A promise that resolves to the username string if found, or null if not found or an error occurs
- *
- * @throws Will throw an error if the database query fails with a status other than 406
+ * @throws Will log an error to the console if the database query fails
  *
  * @example
  * ```typescript
