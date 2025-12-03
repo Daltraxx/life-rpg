@@ -7,15 +7,15 @@ import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import styles from "./styles.module.css";
 import { useState } from "react";
 
-const INITIAL_ATTRIBUTES: Set<string> = new Set<string>([
+const INITIAL_ATTRIBUTES: string[] = [
   "Discipline",
   "Vitality",
   "Intelligence",
   "Fitness",
-]);
+];
 
 export default function AttributeWidget() {
-  const [attributes, setAttributes] = useState<Set<string>>(INITIAL_ATTRIBUTES);
+  const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
 
   const attributeList = Array.from(attributes).map((attribute) => (
     <li key={attribute}>
