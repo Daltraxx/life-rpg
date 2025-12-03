@@ -2,6 +2,11 @@
   color: var(--blue-600, #091f36);
 }
 
+.removeAttributeIcon {
+  height: 2rem;
+  width: 2.5rem;
+}
+
 .removeAttributeIcon path {
   fill: var(--blue-600, #091f36);
 }
