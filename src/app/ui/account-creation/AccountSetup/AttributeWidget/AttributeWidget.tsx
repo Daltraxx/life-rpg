@@ -1,10 +1,34 @@
+"use client";
+
 import Heading from "@/app/ui/JSXWrappers/Heading";
 import { Label } from "../../../JSXWrappers/TextWrappers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import styles from "./styles.module.css";
+import { useState } from "react";
+
+const INITIAL_ATTRIBUTES: Set<string> = new Set<string>([
+  "Discipline",
+  "Vitality",
+  "Intelligence",
+  "Fitness",
+]);
 
 export default function AttributeWidget() {
+  const [attributes, setAttributes] = useState<Set<string>>(INITIAL_ATTRIBUTES);
+
+  const attributeList = Array.from(attributes).map((attribute) => (
+    <li key={attribute}>
+      <button>
+        <FontAwesomeIcon
+          icon={faRectangleXmark}
+          className={styles.removeAttributeIcon}
+        />
+      </button>
+      {attribute}
+    </li>
+  ));
+
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36">
@@ -22,42 +46,7 @@ export default function AttributeWidget() {
           Current Attributes
         </Heading>
         <ul>
-          <li>
-            <button>
-              <FontAwesomeIcon
-                icon={faRectangleXmark}
-                className={styles.removeAttributeIcon}
-              />
-            </button>
-            Discipline
-          </li>
-          <li>
-            <button>
-              <FontAwesomeIcon
-                icon={faRectangleXmark}
-                className={styles.removeAttributeIcon}
-              />
-            </button>
-            Vitality
-          </li>
-          <li>
-            <button>
-              <FontAwesomeIcon
-                icon={faRectangleXmark}
-                className={styles.removeAttributeIcon}
-              />
-            </button>
-            Intelligence
-          </li>
-          <li>
-            <button>
-              <FontAwesomeIcon
-                icon={faRectangleXmark}
-                className={styles.removeAttributeIcon}
-              />
-            </button>
-            Fitness
-          </li>
+           {attributeList}
         </ul>
       </section>
     </section>
