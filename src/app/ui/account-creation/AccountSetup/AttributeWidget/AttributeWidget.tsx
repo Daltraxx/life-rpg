@@ -19,10 +19,11 @@ export default function AttributeWidget() {
 
   const attributeList = Array.from(attributes).map((attribute) => (
     <li key={attribute}>
-      <button>
+      <button aria-label={`Remove ${attribute}`}>
         <FontAwesomeIcon
           icon={faRectangleXmark}
           className={styles.removeAttributeIcon}
+          aria-hidden="true"
         />
       </button>
       {attribute}
