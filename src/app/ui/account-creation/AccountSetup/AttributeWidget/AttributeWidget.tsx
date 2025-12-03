@@ -1,7 +1,8 @@
 import Heading from "@/app/ui/JSXWrappers/Heading";
 import { Label } from "../../../JSXWrappers/TextWrappers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquareXmark } from "@fortawesome/free-solid-svg-icons";
+import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
+import styles from "./styles.module.css";
 
 export default function AttributeWidget() {
   return (
@@ -17,25 +18,37 @@ export default function AttributeWidget() {
         <ul>
           <li>
             <button>
-              <FontAwesomeIcon icon={faSquareXmark} />
+              <FontAwesomeIcon
+                icon={faRectangleXmark}
+                className={styles.removeAttributeIcon}
+              />
             </button>
             Discipline
           </li>
           <li>
             <button>
-              <FontAwesomeIcon icon={faSquareXmark} />
+              <FontAwesomeIcon
+                icon={faRectangleXmark}
+                className={styles.removeAttributeIcon}
+              />
             </button>
             Vitality
           </li>
           <li>
             <button>
-              <FontAwesomeIcon icon={faSquareXmark} />
+              <FontAwesomeIcon
+                icon={faRectangleXmark}
+                className={styles.removeAttributeIcon}
+              />
             </button>
             Intelligence
           </li>
           <li>
             <button>
-              <FontAwesomeIcon icon={faSquareXmark} />
+              <FontAwesomeIcon
+                icon={faRectangleXmark}
+                className={styles.removeAttributeIcon}
+              />
             </button>
             Fitness
           </li>
