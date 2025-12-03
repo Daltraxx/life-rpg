@@ -33,9 +33,7 @@ export default async function getUsername(
       throw error;
     }
 
-    if (data) return data.username;
-
-    return null;
+    return data?.username ?? null;
   } catch (error) {
     console.error("Error fetching user data:", error);
     throw error;
