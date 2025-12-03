@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 
 export default function AttributeWidget() {
   return (
-    <section>
+    <section className={styles.widgetContainer}>
       <Heading as="h3" size="36">
         Add Attributes
       </Heading>

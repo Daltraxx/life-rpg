@@ -1,3 +1,7 @@
+.widgetContainer {
+  color: var(--blue-600, #091f36);
+}
+
 .removeAttributeIcon path {
   fill: var(--blue-600, #091f36);
 }
