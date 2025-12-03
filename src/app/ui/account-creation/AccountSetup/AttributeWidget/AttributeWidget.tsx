@@ -36,7 +36,7 @@ export default function AttributeWidget() {
       </Heading>
 
       <div className={styles.addAttributeContainer}>
-        <Label htmlFor="add-attribute" size="20">
+        <Label htmlFor="add-attribute" size="20" className={styles.addAttributeLabel}>
           Attribute Name:
         </Label>
         <div className={styles.addAttributeField}>

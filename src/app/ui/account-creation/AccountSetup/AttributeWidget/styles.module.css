@@ -4,16 +4,20 @@
 
 .addAttributeContainer {
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
   font-size: 20px;
+  width: 100%;
 }
 
 .addAttributeField {
+  --button-width: 3.375rem;
   border: 2px solid var(--blue-700, #091f36);
 }
 
 .addAttributeField input {
   padding-left: 0.5rem;
+  width: calc(100% - var(--button-width));
 }
 
 .addAttributeField input:focus {
@@ -27,6 +31,7 @@
   padding: 0rem 0.75rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  width: var(--button-width);
 }
 
 .addAttributeButton:hover {
@@ -44,4 +49,11 @@
 
 .removeAttributeIcon path {
   fill: var(--blue-700, #091f36);
+}
+
+@media only screen and (min-width: 425px) {
+  .addAttributeContainer {
+    flex-direction: row;
+    align-items: center;
+  }
 }
