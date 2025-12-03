@@ -14,6 +14,8 @@ const INITIAL_ATTRIBUTES: string[] = [
   "Fitness",
 ];
 
+const attributeSet = new Set(INITIAL_ATTRIBUTES);
+
 export default function AttributeWidget() {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
 
