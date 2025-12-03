@@ -1,14 +1,14 @@
-interface ExplainerPoint {
+export interface ExplainerPoint {
   text: string;
   nestedPoints?: string[];
 }
 
-interface Explainer {
+export interface Explainer {
   title: string;
   points: ExplainerPoint[];
 }
 
-interface IntroCopy {
+export interface IntroCopy {
   heading: string;
   explainers: Explainer[];
 }
