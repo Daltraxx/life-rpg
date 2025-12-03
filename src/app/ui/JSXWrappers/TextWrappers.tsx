@@ -101,6 +101,7 @@ export const Label = createTextWrapper("label");
  *
  * This component is created using the `createTextWrapper` utility function to provide
  * a reusable list item element with consistent styling and behavior across the application.
+ * Only use within `<ul>` or `<ol>` elements.
  *
  * @example
  * ```tsx
