@@ -102,7 +102,7 @@ export async function updateSession(
   ];
 
   // In development, allow unrestricted access when desired to account setup and verify email pages
-  // TODO: Remove this  in production, make sure to test normal user flow
+  // TODO: Consider removing in production, make sure to test normal user flow
   if (
     process.env.NODE_ENV === "development" &&
     process.env.UNRESTRICTED_DEV_MODE_ACCESS === "true"
