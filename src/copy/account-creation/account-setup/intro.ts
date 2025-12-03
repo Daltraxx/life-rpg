@@ -20,7 +20,7 @@ const introCopy: IntroCopy = {
       title: "Defining your Attributes:",
       points: [
         {
-          text: "Attributes like Strength, Dexterity, Vigor, and Intelligence? You can use those! Many adapt some of these archetypal attributes where they make sense. But, since those don't fit neatly into everyone's lives and goals, you should just define what attributes you believe are worth strengthening for yourself.",
+          text: "Attributes like Strength, Dexterity, Vigor, and Intelligence? You can use those! Many users adapt some of these archetypal attributes where they make sense. But, since those don't fit neatly into everyone's lives and goals, you should just define what attributes you believe are worth strengthening for yourself.",
         },
         {
           text: "Some suggestions have already been selected, but feel free to remove them. Choose what suits your envisioned lifestyle, put some thought into it and make it make sense.",
