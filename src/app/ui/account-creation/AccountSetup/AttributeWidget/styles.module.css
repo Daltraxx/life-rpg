@@ -2,6 +2,41 @@
   color: var(--blue-600, #091f36);
 }
 
+.addAttributeContainer {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 20px;
+}
+
+.addAttributeField {
+  border: 2px solid var(--blue-600, #091f36);
+}
+
+.addAttributeField input {
+  padding-left: 0.5rem;
+}
+
+.addAttributeField input:focus {
+  outline: none;
+}
+
+.addAttributeButton {
+  background-color: var(--blue-600, #091f36);
+  color: var(--white, #ffffff);
+  border: none;
+  padding: 0rem 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.addAttributeButton:hover {
+  background-color: #123e6d;
+}
+
+.addAttributeButton:active {
+  background-color: var(--blue-400, #0f3257);
+}
+
 .removeAttributeIcon {
   height: 2rem;
   width: 2.5rem;

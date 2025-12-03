@@ -34,20 +34,22 @@ export default function AttributeWidget() {
       <Heading as="h3" size="36">
         Add Attributes
       </Heading>
-      <Label htmlFor="add-attribute" size="20">
-        Attribute Name
-      </Label>
-      <div>
-        <input type="text" id="add-attribute" />
-        <button type="button">ADD</button>
+
+      <div className={styles.addAttributeContainer}>
+        <Label htmlFor="add-attribute" size="20">
+          Attribute Name:
+        </Label>
+        <div className={styles.addAttributeField}>
+          <input type="text" id="add-attribute" />
+          <button type="button" className={styles.addAttributeButton}>ADD</button>
+        </div>
       </div>
+
       <section>
         <Heading as="h4" size="24">
           Current Attributes
         </Heading>
-        <ul>
-           {attributeList}
-        </ul>
+        <ul>{attributeList}</ul>
       </section>
     </section>
   );
