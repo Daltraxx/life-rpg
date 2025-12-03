@@ -21,7 +21,11 @@ export default async function AccountSetupPage() {
     (process.env.NODE_ENV !== "development" ||
       process.env.UNRESTRICTED_DEV_MODE_ACCESS !== "true")
   ) {
-    console.error("Error fetching authenticated user:", error);
+    if (error) {
+      console.error("Error fetching authenticated user:", error);
+    } else {
+      console.warn("No authenticated user found.");
+    }
     redirect("/");
   }
   return <Intro authUser={user} />;
