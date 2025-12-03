@@ -2,6 +2,8 @@ import Intro from "@/app/ui/account-creation/AccountSetup/Intro/Intro";
 import type { Metadata } from "next";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
+import Bounded from '../../ui/JSXWrappers/Bounded';
+import AttributeWidget from "@/app/ui/account-creation/AccountSetup/AttributeWidget/AttributeWidget";
 
 export const metadata: Metadata = {
   title: "Account Setup",
@@ -19,11 +21,8 @@ export default async function AccountSetupPage() {
   const isUnrestrictedDevMode =
     process.env.NODE_ENV === "development" &&
     process.env.UNRESTRICTED_DEV_MODE_ACCESS === "true";
-  
-  if (
-    (error || !user) &&
-    !isUnrestrictedDevMode
-  ) {
+
+  if ((error || !user) && !isUnrestrictedDevMode) {
     if (error) {
       console.error("Error fetching authenticated user:", error);
     } else {
@@ -31,5 +30,12 @@ export default async function AccountSetupPage() {
     }
     redirect("/");
   }
-  return <Intro authUser={user} />;
+  return (
+    <>
+      <Intro authUser={user} />
+      <Bounded>
+        <AttributeWidget />
+      </Bounded>
+    </>
+  );
 }
