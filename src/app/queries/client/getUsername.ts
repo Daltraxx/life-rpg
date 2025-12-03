@@ -2,13 +2,13 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
 
 /**
  * Retrieves the username for a given authenticated user from the Supabase database.
- * 
+ *
  * @param authUser - The authenticated user object containing the user's ID
  * @param supabase - The Supabase client instance used to query the database
  * @returns A promise that resolves to the username string if found, or null if not found or an error occurs
- * 
+ *
  * @throws Will throw an error if the database query fails with a status other than 406
- * 
+ *
  * @example
  * ```typescript
  * const username = await getUsername(authUser, supabaseClient);
@@ -22,17 +22,13 @@ export default async function getUsername(
   supabase: SupabaseClient
 ): Promise<string | null> {
   try {
-    const { data, error, status } = await supabase
+    const { data, error } = await supabase
       .from("users")
       .select("username")
       .eq("id", authUser?.id)
       .single();
 
-    if (error && status !== 406) {
-      // 406 means no data found, which is acceptable
-      console.error("Error fetching user data:", error);
-      throw error;
-    }
+    if (error) throw error;
 
     if (data) return data.username;
 
