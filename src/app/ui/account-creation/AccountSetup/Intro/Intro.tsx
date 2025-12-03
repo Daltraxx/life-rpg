@@ -46,7 +46,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
       const username = await getUsername(authUser, supabase);
       if (username) setUserName(username);
     } catch (error) {
-      console.error("Error fetching user data:");
+      console.error("Error fetching user data:", error);
     }
   }, [authUser]);
 
