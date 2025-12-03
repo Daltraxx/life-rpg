@@ -25,7 +25,7 @@ export default async function getUsername(
     const { data, error } = await supabase
       .from("users")
       .select("username")
-      .eq("id", authUser?.id)
+      .eq("id", authUser.id)
       .single();
 
     if (error && error.code !== "PGRST116") {
