@@ -16,10 +16,13 @@ export default async function AccountSetupPage() {
   } = await supabase.auth.getUser();
 
   // TODO: Consider removing unrestricted dev access for production
+  const isUnrestrictedDevMode =
+    process.env.NODE_ENV === "development" &&
+    process.env.UNRESTRICTED_DEV_MODE_ACCESS === "true";
+  
   if (
     (error || !user) &&
-    (process.env.NODE_ENV !== "development" ||
-      process.env.UNRESTRICTED_DEV_MODE_ACCESS !== "true")
+    !isUnrestrictedDevMode
   ) {
     if (error) {
       console.error("Error fetching authenticated user:", error);
