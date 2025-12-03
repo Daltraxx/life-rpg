@@ -6,7 +6,8 @@ import type { SupabaseClient, User } from "@supabase/supabase-js";
  * @param authUser - The authenticated user object containing the user's ID
  * @param supabase - The Supabase client instance used to query the database
  * @returns A promise that resolves to the username string if found, or null if not found or an error occurs
- * @throws Will log an error to the console if the database query fails
+ *
+ * @throws Will throw an error if the database query fails with a code other than PGRST116 (no data found)
  *
  * @example
  * ```typescript
@@ -27,13 +28,16 @@ export default async function getUsername(
       .eq("id", authUser?.id)
       .single();
 
-    if (error) throw error;
+    if (error && error.code !== "PGRST116") {
+      // If error is something other than no data found, throw it
+      throw error;
+    }
 
     if (data) return data.username;
 
     return null;
   } catch (error) {
     console.error("Error fetching user data:", error);
-    return null;
+    throw error;
   }
 }
