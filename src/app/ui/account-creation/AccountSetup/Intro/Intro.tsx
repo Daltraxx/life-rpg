@@ -9,6 +9,7 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
 import getUsername from "@/app/queries/client/getUsername";
+import { useRouter } from "next/router";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index} className={styles.explainerSection}>
@@ -36,6 +37,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   // Singleton pattern for Supabase client in the browser
   const supabase = createSupabaseBrowserClient();
   const [userName, setUserName] = useState<string>("user");
+  const router = useRouter();
 
   const setUsernameFromDatabase = useCallback(async () => {
     if (!authUser?.id) {
@@ -44,7 +46,12 @@ export default function Intro({ authUser }: { authUser: User | null }) {
     }
     try {
       const username = await getUsername(authUser, supabase);
-      if (username) setUserName(username);
+      if (username) {
+        setUserName(username);
+      } else {
+        console.warn("Username not found for user");
+        router.push("/error?message=User%20not%20found");
+      }
     } catch (error) {
       console.error("Error fetching user data:", error);
     }
