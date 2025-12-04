@@ -4,7 +4,6 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import AttributeWidget from "@/app/ui/account-creation/AccountSetup/AttributeWidget/AttributeWidget";
-import { testUser } from "@/app/mock-data/testUser";
 
 export const metadata: Metadata = {
   title: "Account Setup",
@@ -19,12 +18,7 @@ export default async function AccountSetupPage() {
     error,
   } = await supabase.auth.getUser();
 
-  // TODO: Consider removing unrestricted dev access for production
-  const isUnrestrictedDevMode =
-    process.env.NODE_ENV === "development" &&
-    process.env.UNRESTRICTED_DEV_MODE_ACCESS === "true";
-
-  if ((error || !user) && !isUnrestrictedDevMode) {
+  if ((error || !user)) {
     if (error) {
       console.error("Error fetching authenticated user:", error);
     } else {
@@ -33,12 +27,9 @@ export default async function AccountSetupPage() {
     redirect("/");
   }
 
-  // Provide mock user for unrestricted dev mode
-  const authUser = isUnrestrictedDevMode && !user ? testUser : user;
-
   return (
     <>
-      <Intro authUser={authUser} />
+      <Intro authUser={user} />
       <Bounded>
         <AttributeWidget />
       </Bounded>
