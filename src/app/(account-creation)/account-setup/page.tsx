@@ -32,9 +32,13 @@ export default async function AccountSetupPage() {
   }
 
   // Provide mock user for unrestricted dev mode
-  const authUser = isUnrestrictedDevMode && !user 
-    ? { id: 'dev-mock-user', email: 'dev@example.com' } as any
-    : user;
+  const authUser =
+    isUnrestrictedDevMode && !user
+      ? ({
+          id: "2cfd834b-c244-4047-ad88-091b997f26d8",
+          email: "dpettus0713@gmail.com",
+        } as any)
+      : user;
 
   return (
     <>

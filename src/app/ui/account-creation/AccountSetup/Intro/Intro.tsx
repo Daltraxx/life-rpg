@@ -9,7 +9,7 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { useCallback, useEffect, useState } from "react";
 import getUsername from "@/app/queries/client/getUsername";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index} className={styles.explainerSection}>
