@@ -7,7 +7,7 @@ import Heading from "@/app/ui/JSXWrappers/Heading";
 import styles from "./styles.module.css";
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import getUsername from "@/app/queries/client/getUsername";
 import { useRouter } from "next/navigation";
 
@@ -34,7 +34,7 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
 ));
 
 export default function Intro({ authUser }: { authUser: User | null }) {
-  const supabase = createSupabaseBrowserClient();
+  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
   const [userName, setUserName] = useState<string>("user");
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
