@@ -13,14 +13,13 @@ const INITIAL_ATTRIBUTES: string[] = [
   "Fitness",
 ];
 
-const attributeSet = new Set(INITIAL_ATTRIBUTES);
-
 interface AddAttributeError {
   message: string;
 }
 
 export default function AttributeWidget() {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
+  const [attributeSet] = useState(() => new Set(INITIAL_ATTRIBUTES));
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState<AddAttributeError>(
     { message: "" }
