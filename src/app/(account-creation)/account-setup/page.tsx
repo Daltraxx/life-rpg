@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Set up your account to start progressing with Life RPG. Choose the attributes you wish to level, and the daily quests that will get you there.",
 };
 export default async function AccountSetupPage() {
+  // TODO: add caching for user profile data to limit database requests
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
