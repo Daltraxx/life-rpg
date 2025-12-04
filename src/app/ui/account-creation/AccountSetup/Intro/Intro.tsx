@@ -7,7 +7,7 @@ import Heading from "@/app/ui/JSXWrappers/Heading";
 import styles from "./styles.module.css";
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import getUsername from "@/app/queries/client/getUsername";
 import { useRouter } from "next/navigation";
 
