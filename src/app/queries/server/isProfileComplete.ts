@@ -24,7 +24,7 @@ export default async function isProfileComplete(
     .from("users")
     .select("profile_complete")
     .eq("id", user.id)
-    .single();
+    .single<{ profile_complete: boolean }>();
   if (error) {
     throw error;
   }
