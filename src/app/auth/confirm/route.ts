@@ -15,14 +15,14 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * - Validates required query parameters and allowed verification types.
  * - Uses `supabase.auth.verifyOtp` to complete verification with `type` and `token_hash`.
  * - Removes sensitive parameters (`token_hash`, `type`) and the optional `next` param from the URL before redirecting.
- * - On successful verification, redirects to the profile setup page.
+ * - On successful verification, redirects to the account setup page.
  * - On invalid/missing parameters or verification failure, redirects to a generic error page with a helpful message.
  *
  * Security:
  * - Strips `token_hash` from the redirect URL to prevent leaking secrets via browser history, logs, or referrers.
  *
  * Redirects:
- * - Success: `/profile-setup`
+ * - Success: `/account-setup`
  * - Failure: `/error?message=...`
  *
  * Logging:
