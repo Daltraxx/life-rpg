@@ -1,5 +1,7 @@
 import type { SupabaseClient, User } from "@supabase/supabase-js";
 
+const PGRST_NO_ROWS_ERROR_CODE = "PGRST116";
+
 /**
  * Retrieves the username for a given authenticated user from the Supabase database.
  *
@@ -25,9 +27,9 @@ export default async function getUsername(
     .from("users")
     .select("username")
     .eq("id", authUser.id)
-    .single();
+    .single<{ username: string }>();
 
-  if (error && error.code !== "PGRST116") {
+  if (error && error.code !== PGRST_NO_ROWS_ERROR_CODE) {
     // If error is something other than no data found, throw it
     throw error;
   }
