@@ -145,30 +145,7 @@ export async function updateSession(
   const isAuthenticatedUserPath = authenticatedUserPaths.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`)
   );
-  
-  if (user && !isAuthenticatedUserPath) {
-    // Redirect authenticated users to complete profile or profile page
-    const { data, error } = await supabase
-      .from("users")
-      .select("profile_complete")
-      .eq("id", user.id)
-      .single();
-    
-    const url = request.nextUrl.clone();
-    if (error) {
-      console.error("Error fetching user profile completion data:", error);
-      url.pathname = "/error";
-      return NextResponse.redirect(url);
-    }
-    url.pathname = data.profile_complete ? "/profile" : "/account-setup";
-    return NextResponse.redirect(url);
-  }
 
-  // Paths accessible to users who have signed up but not yet verified their email
-  const authenticatedUserPaths = ["/account-setup", "/profile"];
-  const isAuthenticatedUserPath = authenticatedUserPaths.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`)
-  );
   if (user && !isAuthenticatedUserPath) {
     // Redirect authenticated users to complete profile or profile page
     const { data, error } = await supabase
@@ -176,7 +153,7 @@ export async function updateSession(
       .select("profile_complete")
       .eq("id", user.id)
       .single();
-    
+
     const url = request.nextUrl.clone();
     if (error) {
       console.error("Error fetching user profile completion data:", error);
