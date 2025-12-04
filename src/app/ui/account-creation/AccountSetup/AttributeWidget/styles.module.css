@@ -62,6 +62,18 @@
   cursor: pointer;
 }
 
+.removeAttributeButton path {
+  fill: var(--blue-700, #091f36);
+}
+
+.disciplineAttributeRemoveButton {
+  height: 2rem;
+}
+
+.disciplineAttributeRemoveButton path {
+  fill: var(--gray-600, #66666e);
+}
+
 .removeAttributeButton:hover path {
   fill: var(--orange-500, #123e6d);
 }
@@ -73,10 +85,6 @@
 .removeAttributeIcon {
   height: 100%;
   width: 2.5rem;
-}
-
-.removeAttributeIcon path {
-  fill: var(--blue-700, #091f36);
 }
 
 @media only screen and (min-width: 425px) {

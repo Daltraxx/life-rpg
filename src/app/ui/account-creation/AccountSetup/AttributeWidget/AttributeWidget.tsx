@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import styles from "./styles.module.css";
 import { useState } from "react";
+import clsx from "clsx";
 
 const INITIAL_ATTRIBUTES: string[] = [
   "Discipline",
@@ -27,9 +28,14 @@ export default function AttributeWidget() {
       <button
         aria-label={`Remove ${attribute}`}
         type="button"
-        className={styles.removeAttributeButton}
+        className={clsx(
+          attribute !== "Discipline" && styles.removeAttributeButton,
+          attribute === "Discipline" && styles.disciplineAttributeRemoveButton
+        )}
         name={attribute}
+        title={attribute === "Discipline" ? "Discipline is a required attribute" : undefined}
         onClick={() => handleDeleteAttribute(attribute)}
+        disabled={attribute === "Discipline"}
       >
         <FontAwesomeIcon
           icon={faRectangleXmark}
