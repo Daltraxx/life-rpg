@@ -1,3 +1,4 @@
+import isProfileComplete from "@/app/queries/server/isProfileComplete";
 import { createServerClient } from "@supabase/ssr";
 import { AuthError, AuthSessionMissingError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
@@ -148,20 +149,16 @@ export async function updateSession(
 
   if (user && !isAuthenticatedUserPath) {
     // Redirect authenticated users to complete profile or profile page
-    const { data, error } = await supabase
-      .from("users")
-      .select("profile_complete")
-      .eq("id", user.id)
-      .single();
-
     const url = request.nextUrl.clone();
-    if (error) {
+    try {
+      const profileComplete = await isProfileComplete(user, supabase);
+      url.pathname = profileComplete ? "/profile" : "/account-setup";
+      return NextResponse.redirect(url);
+    } catch (error) {
       console.error("Error fetching user profile completion data:", error);
       url.pathname = "/error";
       return NextResponse.redirect(url);
     }
-    url.pathname = data.profile_complete ? "/profile" : "/account-setup";
-    return NextResponse.redirect(url);
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
