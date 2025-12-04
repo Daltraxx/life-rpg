@@ -272,7 +272,7 @@ export default function CreateAccountForm(): ReactElement {
 
         <ButtonWrapper
           type="submit"
-          color="blue-600"
+          color="blue-700"
           className={styles.submitButton}
           disabled={isPending || !allFieldsValid || querying}
         >
