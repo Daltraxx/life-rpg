@@ -41,8 +41,10 @@
   border-left: none;
 }
 
-.addAttributeButton:hover {
-  background-color: var(--blue-400, #123e6d);
+@media (hover: hover) {
+  .addAttributeButton:hover {
+    background-color: var(--blue-400, #123e6d);
+  }
 }
 
 .addAttributeButton:active {
