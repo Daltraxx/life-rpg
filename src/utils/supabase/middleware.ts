@@ -152,6 +152,7 @@ export async function updateSession(
     const url = request.nextUrl.clone();
     try {
       const profileComplete = await isProfileComplete(user, supabase);
+      // TODO: create profile page
       url.pathname = profileComplete ? "/profile" : "/account-setup";
       return NextResponse.redirect(url);
     } catch (error) {
