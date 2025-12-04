@@ -24,7 +24,13 @@ export default function AttributeWidget() {
 
   const attributeList = attributes.map((attribute) => (
     <ListItem key={attribute} className={styles.attributeItem} size="24">
-      <button aria-label={`Remove ${attribute}`} type="button" className={styles.removeAttributeButton}>
+      <button
+        aria-label={`Remove ${attribute}`}
+        type="button"
+        className={styles.removeAttributeButton}
+        name={attribute}
+        onClick={() => handleDeleteAttribute(attribute)}
+      >
         <FontAwesomeIcon
           icon={faRectangleXmark}
           className={styles.removeAttributeIcon}
@@ -34,6 +40,11 @@ export default function AttributeWidget() {
       {attribute}
     </ListItem>
   ));
+
+  const handleDeleteAttribute = (attribute: string) => {
+    attributeSet.delete(attribute);
+    setAttributes(Array.from(attributeSet));
+  };
 
   return (
     <section className={styles.widgetContainer}>
