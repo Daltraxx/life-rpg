@@ -19,7 +19,7 @@ const attributeSet = new Set(INITIAL_ATTRIBUTES);
 export default function AttributeWidget() {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
 
-  const attributeList = Array.from(attributes).map((attribute) => (
+  const attributeList = attributes.map((attribute) => (
     <li key={attribute}>
       <button aria-label={`Remove ${attribute}`}>
         <FontAwesomeIcon
@@ -39,12 +39,18 @@ export default function AttributeWidget() {
       </Heading>
 
       <div className={styles.addAttributeContainer}>
-        <Label htmlFor="add-attribute" size="20" className={styles.addAttributeLabel}>
+        <Label
+          htmlFor="add-attribute"
+          size="20"
+          className={styles.addAttributeLabel}
+        >
           Attribute Name:
         </Label>
         <div className={styles.addAttributeField}>
           <input type="text" id="add-attribute" />
-          <button type="button" className={styles.addAttributeButton}>ADD</button>
+          <button type="button" className={styles.addAttributeButton}>
+            ADD
+          </button>
         </div>
       </div>
 
