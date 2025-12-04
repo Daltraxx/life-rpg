@@ -1,12 +1,10 @@
 "use client";
 
 import Heading from "@/app/ui/JSXWrappers/Heading";
-import { Label, ListItem } from "../../../JSXWrappers/TextWrappers";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
+import { Label } from "../../../JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { useState } from "react";
-import clsx from "clsx";
+import AttributeListItem from "./AttributeList/AttributeListItem";
 
 const INITIAL_ATTRIBUTES: string[] = [
   "Discipline",
@@ -23,34 +21,18 @@ export default function AttributeWidget() {
     INITIAL_ATTRIBUTES.length
   );
 
-  const attributeList = attributes.map((attribute) => (
-    <ListItem key={attribute} className={styles.attributeItem} size="24">
-      <button
-        aria-label={`Remove ${attribute}`}
-        type="button"
-        className={clsx(
-          attribute !== "Discipline" && styles.removeAttributeButton,
-          attribute === "Discipline" && styles.disciplineAttributeRemoveButton
-        )}
-        name={attribute}
-        title={attribute === "Discipline" ? "Discipline is a required attribute" : undefined}
-        onClick={() => handleDeleteAttribute(attribute)}
-        disabled={attribute === "Discipline"}
-      >
-        <FontAwesomeIcon
-          icon={faRectangleXmark}
-          className={styles.removeAttributeIcon}
-          aria-hidden="true"
-        />
-      </button>
-      {attribute}
-    </ListItem>
-  ));
-
   const handleDeleteAttribute = (attribute: string) => {
     attributeSet.delete(attribute);
     setAttributes(Array.from(attributeSet));
   };
+
+  const attributeList = attributes.map((attribute) => (
+    <AttributeListItem
+      key={attribute}
+      attribute={attribute}
+      onDelete={handleDeleteAttribute}
+    />
+  ));
 
   return (
     <section className={styles.widgetContainer}>

@@ -51,42 +51,6 @@
   background-color: var(--blue-500, #0f3257);
 }
 
-.attributeItem {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.removeAttributeButton {
-  height: 2rem;
-  cursor: pointer;
-}
-
-.removeAttributeButton path {
-  fill: var(--blue-700, #091f36);
-}
-
-.disciplineAttributeRemoveButton {
-  height: 2rem;
-}
-
-.disciplineAttributeRemoveButton path {
-  fill: var(--gray-600, #66666e);
-}
-
-.removeAttributeButton:hover path {
-  fill: var(--orange-500, #123e6d);
-}
-
-.removeAttributeButton:active path {
-  fill: var(--orange-600, #0f3257);
-}
-
-.removeAttributeIcon {
-  height: 100%;
-  width: 2.5rem;
-}
-
 @media only screen and (min-width: 425px) {
   .addAttributeContainer {
     flex-direction: row;
