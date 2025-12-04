@@ -29,8 +29,7 @@ export default function AttributeWidget() {
   const handleAddAttribute = (attribute: string) => {
     const trimmedAttribute = attribute.trim();
     const newAttribute =
-      trimmedAttribute.charAt(0).toUpperCase() +
-      trimmedAttribute.slice(1);
+      trimmedAttribute.charAt(0).toUpperCase() + trimmedAttribute.slice(1);
     if (newAttribute.length === 0) {
       setAddAttributeError({ message: "Please enter an attribute." });
       return;
@@ -89,10 +88,7 @@ export default function AttributeWidget() {
           </button>
         </div>
         {addAttributeError.message && (
-          <p
-            id="attribute-error"
-            className={styles.attributeError}
-          >
+          <p id="attribute-error" className={styles.attributeError}>
             {addAttributeError.message}
           </p>
         )}
