@@ -7,7 +7,7 @@ import getSecureRel from "../../utils/getSecureRel";
 
 const basicLinkColorMap = {
   "brown-600": styles.brown600,
-  "blue-700": styles.blue600,
+  "blue-700": styles.blue700,
   "orange-300": styles.orange300,
   custom: "",
 } satisfies Record<string, string>;
