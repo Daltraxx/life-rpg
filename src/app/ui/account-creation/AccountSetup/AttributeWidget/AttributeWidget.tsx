@@ -18,6 +18,9 @@ const attributeSet = new Set(INITIAL_ATTRIBUTES);
 
 export default function AttributeWidget() {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
+  const [nextAttributeKey, setNextAttributeKey] = useState<number>(
+    INITIAL_ATTRIBUTES.length
+  );
 
   const attributeList = attributes.map((attribute) => (
     <li key={attribute}>
@@ -54,12 +57,12 @@ export default function AttributeWidget() {
         </div>
       </div>
 
-      <section>
+      <div>
         <Heading as="h4" size="24">
           Current Attributes
         </Heading>
         <ul>{attributeList}</ul>
-      </section>
+      </div>
     </section>
   );
 }
