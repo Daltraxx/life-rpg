@@ -62,6 +62,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
     setUsernameFromDatabase();
   }, [setUsernameFromDatabase]);
 
+  // TODO: Add loading state while fetching username?
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <section className={styles.introHeader}>
