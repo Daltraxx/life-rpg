@@ -21,9 +21,6 @@ interface AddAttributeError {
 
 export default function AttributeWidget() {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
-  // const [nextAttributeKey, setNextAttributeKey] = useState<number>(
-  //   INITIAL_ATTRIBUTES.length
-  // );
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState<AddAttributeError>(
     { message: "" }
