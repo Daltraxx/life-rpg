@@ -1,7 +1,7 @@
 "use client";
 
 import Heading from "@/app/ui/JSXWrappers/Heading";
-import { Label } from "../../../JSXWrappers/TextWrappers";
+import { Label, ListItem } from "../../../JSXWrappers/TextWrappers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import styles from "./styles.module.css";
@@ -23,8 +23,8 @@ export default function AttributeWidget() {
   );
 
   const attributeList = attributes.map((attribute) => (
-    <li key={attribute}>
-      <button aria-label={`Remove ${attribute}`}>
+    <ListItem key={attribute} className={styles.attributeItem} size="24">
+      <button aria-label={`Remove ${attribute}`} type="button" className={styles.removeAttributeButton}>
         <FontAwesomeIcon
           icon={faRectangleXmark}
           className={styles.removeAttributeIcon}
@@ -32,7 +32,7 @@ export default function AttributeWidget() {
         />
       </button>
       {attribute}
-    </li>
+    </ListItem>
   ));
 
   return (
