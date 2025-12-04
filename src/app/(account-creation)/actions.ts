@@ -7,7 +7,7 @@ import { cookies } from "next/headers";
 
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
-import checkIfUsertagExists from "../queries/server/checkIfUsertagExists";
+import checkIfUsertagExists from "@/app/queries/server/checkIfUsertagExists";
 import setUnverifiedSignup from "@/utils/cookies/setUnverifiedSignup";
 import setPendingVerificationEmail from "@/utils/cookies/setPendingVerificationEmail";
 
