@@ -50,7 +50,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
         setUserName(username);
       } else {
         console.warn("Username not found for user");
-        router.push("/error?message=User%20not%20found");
+        router.push("/error?message=user%20not%20found");
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
