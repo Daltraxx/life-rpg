@@ -2,7 +2,7 @@ import Intro from "@/app/ui/account-creation/AccountSetup/Intro/Intro";
 import type { Metadata } from "next";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import Bounded from "../../ui/JSXWrappers/Bounded";
+import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import AttributeWidget from "@/app/ui/account-creation/AccountSetup/AttributeWidget/AttributeWidget";
 import { testUser } from "@/app/mock-data/testUser";
 
