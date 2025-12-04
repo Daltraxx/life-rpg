@@ -38,36 +38,47 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   const [userName, setUserName] = useState<string>("user");
   const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
+  useEffect(() => {
+    let isMounted = true;
 
-  const setUsernameFromDatabase = useCallback(async () => {
     if (!authUser?.id) {
       console.warn("No authenticated user found.");
+      router.push("/error?message=no%20authenticated%20user");
       return;
     }
-    try {
-      const username = await getUsername(authUser, supabase);
-      if (username) {
-        setUserName(username);
-      } else {
-        console.warn("Username not found for user");
-        router.push("/error?message=user%20not%20found");
+
+    const fetchUsername = async () => {
+      try {
+        const username = await getUsername(authUser, supabase);
+        if (!isMounted) return;
+
+        if (username) {
+          setUserName(username);
+        } else {
+          console.warn("Username not found for user");
+          router.push("/error?message=user%20not%20found");
+        }
+        setLoading(false);
+      } catch (error) {
+        if (!isMounted) return;
+        console.error("Error fetching user data:", error);
+        router.push("/error?message=database%20error");
       }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      router.push("/error?message=database%20error");
-    }
-  }, [authUser]);
+    };
 
-  useEffect(() => {
-    setUsernameFromDatabase();
-  }, [setUsernameFromDatabase]);
+    fetchUsername();
 
-  // TODO: Add loading state while fetching username?
+    return () => {
+      isMounted = false;
+    };
+  }, [authUser, supabase, router]);
+  
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <section className={styles.introHeader}>
-        <Span size="48-responsive">Hello {loading ? "loading username..." : userName}!</Span>
+        <Span size="48-responsive">
+          Hello {loading ? "loading username..." : userName}!
+        </Span>
         <Heading as="h1" size="48-responsive">
           {introCopy.heading}
         </Heading>
