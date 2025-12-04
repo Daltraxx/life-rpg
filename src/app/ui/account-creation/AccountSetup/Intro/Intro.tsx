@@ -54,6 +54,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
+      router.push("/error?message=database%20error");
     }
   }, [authUser]);
 
