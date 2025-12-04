@@ -13,7 +13,6 @@ export type ValidationErrorMessages = {
   username?: string[];
   usertag?: string[];
   password?: string[];
-  confirmPassword?: string[];
 };
 
 /**
