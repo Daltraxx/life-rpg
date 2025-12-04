@@ -34,7 +34,6 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
 ));
 
 export default function Intro({ authUser }: { authUser: User | null }) {
-  // Singleton pattern for Supabase client in the browser
   const supabase = createSupabaseBrowserClient();
   const [userName, setUserName] = useState<string>("user");
   const router = useRouter();
