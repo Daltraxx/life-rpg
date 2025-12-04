@@ -32,7 +32,6 @@
 .addAttributeButton {
   background-color: var(--blue-700, #091f36);
   color: var(--white, #ffffff);
-  border: none;
   padding: 0rem 0.75rem;
   cursor: pointer;
   transition: background-color 0.2s ease;
