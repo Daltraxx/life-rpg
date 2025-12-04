@@ -76,6 +76,11 @@ export default function AttributeWidget() {
             id="add-attribute"
             value={newAttribute}
             onChange={(e) => setNewAttribute(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleAddAttribute(newAttribute);
+              }
+            }}
             aria-describedby="attribute-error"
           />
           <button
