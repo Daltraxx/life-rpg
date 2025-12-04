@@ -21,21 +21,16 @@ export default async function getUsername(
   authUser: User,
   supabase: SupabaseClient
 ): Promise<string | null> {
-  try {
-    const { data, error } = await supabase
-      .from("users")
-      .select("username")
-      .eq("id", authUser.id)
-      .single();
+  const { data, error } = await supabase
+    .from("users")
+    .select("username")
+    .eq("id", authUser.id)
+    .single();
 
-    if (error && error.code !== "PGRST116") {
-      // If error is something other than no data found, throw it
-      throw error;
-    }
-
-    return data?.username ?? null;
-  } catch (error) {
-    console.error("Error fetching user data:", error);
+  if (error && error.code !== "PGRST116") {
+    // If error is something other than no data found, throw it
     throw error;
   }
+
+  return data?.username ?? null;
 }
