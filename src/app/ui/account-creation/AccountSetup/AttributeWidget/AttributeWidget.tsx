@@ -15,11 +15,37 @@ const INITIAL_ATTRIBUTES: string[] = [
 
 const attributeSet = new Set(INITIAL_ATTRIBUTES);
 
+interface AddAttributeError {
+  message: string;
+}
+
 export default function AttributeWidget() {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
-  const [nextAttributeKey, setNextAttributeKey] = useState<number>(
-    INITIAL_ATTRIBUTES.length
+  // const [nextAttributeKey, setNextAttributeKey] = useState<number>(
+  //   INITIAL_ATTRIBUTES.length
+  // );
+  const [newAttribute, setNewAttribute] = useState<string>("");
+  const [addAttributeError, setAddAttributeError] = useState<AddAttributeError>(
+    { message: "" }
   );
+
+  const handleAddAttribute = (attribute: string) => {
+    const newAttribute =
+      attribute.trimStart().charAt(0).toUpperCase() +
+      attribute.trimEnd().slice(1);
+    if (newAttribute.length === 0) {
+      setAddAttributeError({ message: "Please enter an attribute." });
+      return;
+    }
+    if (attributeSet.has(newAttribute)) {
+      setAddAttributeError({ message: "Attribute already exists." });
+      return;
+    }
+    setAddAttributeError({ message: "" });
+    attributeSet.add(newAttribute);
+    setAttributes(Array.from(attributeSet));
+    setNewAttribute("");
+  };
 
   const handleDeleteAttribute = (attribute: string) => {
     attributeSet.delete(attribute);
@@ -49,11 +75,29 @@ export default function AttributeWidget() {
           Attribute Name:
         </Label>
         <div className={styles.addAttributeField}>
-          <input type="text" id="add-attribute" />
-          <button type="button" className={styles.addAttributeButton}>
+          <input
+            type="text"
+            id="add-attribute"
+            value={newAttribute}
+            onChange={(e) => setNewAttribute(e.target.value)}
+            aria-describedby="attribute-error"
+          />
+          <button
+            type="button"
+            className={styles.addAttributeButton}
+            onClick={() => handleAddAttribute(newAttribute)}
+          >
             ADD
           </button>
         </div>
+        {addAttributeError.message && (
+          <p
+            id="attribute-error"
+            className={styles.attributeError}
+          >
+            {addAttributeError.message}
+          </p>
+        )}
       </div>
 
       <div>
