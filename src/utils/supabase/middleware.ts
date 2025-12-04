@@ -141,8 +141,8 @@ export async function updateSession(
     return NextResponse.redirect(url);
   }
 
-  // Paths accessible to users who have signed up but not yet verified their email
-  const authenticatedUserPaths = ["/account-setup", "/profile"];
+  // Paths accessible to authenticated (email-verified) users
+  const authenticatedUserPaths = ["/account-setup", "/profile", "/error"];
   const isAuthenticatedUserPath = authenticatedUserPaths.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`)
   );
