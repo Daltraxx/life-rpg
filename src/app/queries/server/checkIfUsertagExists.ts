@@ -1,4 +1,4 @@
-import { createSupabaseServerClient } from "@/utils/supabase/server";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 /**
  * Checks whether a user record exists for the given usertag using `maybeSingle()`.
@@ -9,6 +9,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * - If multiple rows match, Supabase returns an error and this function throws.
  *
  * @param usertag The usertag to check (normalized: lowercased and trimmed).
+ * @param supabase The Supabase client instance to use for the query.
  * @param signal Optional AbortSignal to cancel the query if needed.
  * @returns Promise<boolean> true if a matching user exists; otherwise false.
  * @throws Error If the Supabase query fails (e.g., network/RLS) or multiple matches are found.
@@ -30,6 +31,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  */
 export default async function checkIfUsertagExists(
   usertag: string,
+  supabase: SupabaseClient,
   signal?: AbortSignal
 ): Promise<boolean> {
   // TODO: Add protections such as:
@@ -38,7 +40,6 @@ export default async function checkIfUsertagExists(
   // Honeypot fields to detect automated scanning
   const normalizedUsertag = usertag.toLowerCase().trim();
   try {
-    const supabase = await createSupabaseServerClient();
     let query = supabase
       .from("users")
       .select("id")

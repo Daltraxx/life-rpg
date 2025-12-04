@@ -62,7 +62,7 @@ export async function createAccount(
   const userData = validatedFields.data;
   let usertagExists = false;
   try {
-    usertagExists = await checkIfUsertagExists(userData.usertag);
+    usertagExists = await checkIfUsertagExists(userData.usertag, supabase);
   } catch (error) {
     console.error("Error checking existing usertag:", error);
     return {
