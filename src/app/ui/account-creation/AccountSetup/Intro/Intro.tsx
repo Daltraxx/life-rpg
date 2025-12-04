@@ -36,6 +36,7 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
 export default function Intro({ authUser }: { authUser: User | null }) {
   const supabase = createSupabaseBrowserClient();
   const [userName, setUserName] = useState<string>("user");
+  const [loading, setLoading] = useState<boolean>(true);
   const router = useRouter();
 
   const setUsernameFromDatabase = useCallback(async () => {
@@ -51,6 +52,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
         console.warn("Username not found for user");
         router.push("/error?message=user%20not%20found");
       }
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching user data:", error);
       router.push("/error?message=database%20error");
@@ -65,7 +67,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <section className={styles.introHeader}>
-        <Span size="48-responsive">Hello {userName}!</Span>
+        <Span size="48-responsive">Hello {loading ? "loading username..." : userName}!</Span>
         <Heading as="h1" size="48-responsive">
           {introCopy.heading}
         </Heading>
