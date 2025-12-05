@@ -5,8 +5,13 @@
 }
 
 .removeAttributeButton {
-  height: 2rem;
   cursor: pointer;
+}
+
+.removeAttributeButton,
+.disciplineAttributeRemoveButton {
+  height: 2rem;
+  width: 2.5rem;
 }
 
 .removeAttributeButton path {
@@ -22,15 +27,11 @@
   fill: var(--orange-600, #cd6d07);
 }
 
-.disciplineAttributeRemoveButton {
-  height: 2rem;
-}
-
 .disciplineAttributeRemoveButton path {
   fill: var(--gray-600, #66666e);
 }
 
 .removeAttributeIcon {
   height: 100%;
-  width: 2.5rem;
+  width: 100%;
 }
