@@ -3,7 +3,7 @@
 import Heading from "@/app/ui/JSXWrappers/Heading";
 import { Label } from "../../../../JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
-import { useState } from "react";
+import { JSX, useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
 
 const INITIAL_ATTRIBUTES: string[] = [
@@ -15,19 +15,19 @@ const INITIAL_ATTRIBUTES: string[] = [
 
 /**
  * AttributeWidget component for managing custom attributes in account setup.
- * 
+ *
  * Allows users to add and delete custom attributes with validation to prevent
  * empty entries and duplicates. Maintains a set of attributes and displays them
  * in a list format.
- * 
+ *
  * @component
  * @returns {JSX.Element} A section containing an attribute input form and a list
  *                        of current attributes with delete functionality.
- * 
+ *
  * @example
  * // Basic usage in account setup flow
  * <AttributeWidget />
- * 
+ *
  * @remarks
  * - Uses a Set for efficient duplicate checking
  * - Automatically capitalizes the first letter of attribute names
@@ -35,7 +35,7 @@ const INITIAL_ATTRIBUTES: string[] = [
  * - Enter key and button click both trigger attribute addition
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
  */
-export default function AttributeWidget() {
+export default function AttributeWidget(): JSX.Element {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
   const [attributeSet] = useState(() => new Set(INITIAL_ATTRIBUTES));
   const [newAttribute, setNewAttribute] = useState<string>("");
