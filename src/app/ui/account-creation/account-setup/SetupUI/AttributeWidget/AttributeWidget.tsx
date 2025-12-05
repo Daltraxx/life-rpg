@@ -97,7 +97,7 @@ export default function AttributeWidget(): JSX.Element {
                 handleAddAttribute(newAttribute);
               }
             }}
-            aria-describedby="attribute-error"
+            aria-describedby={addAttributeError ? "attribute-error" : undefined}
           />
           <button
             type="button"
