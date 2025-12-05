@@ -23,8 +23,10 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 **users**: Core user accounts with level and experience tracking
 - `id`: UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE
   - User identifier linked to authentication
-- `username`: VARCHAR(50) UNIQUE NOT NULL
-  - Unique username (max 50 chars)
+- `username`: VARCHAR(50) NOT NULL
+  - Username (max 50 chars)
+- `usertag`: VARCHAR(50) UNIQUE NOT NULL
+  - Unique usertag for potential social features
 - `created_at`: TIMESTAMP DEFAULT NOW()
   - Account creation timestamp
 - `last_login`: TIMESTAMP
