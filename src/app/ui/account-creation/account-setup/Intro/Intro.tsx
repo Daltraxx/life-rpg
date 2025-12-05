@@ -33,6 +33,19 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
   </section>
 ));
 
+/**
+ * Intro component responsible for greeting the authenticated user and rendering
+ * the introductory content for the account setup flow.
+ *
+ * It initializes a Supabase browser client, fetches the current user's username,
+ * and displays a loading state until the username is resolved. If no authenticated
+ * user is present, the component redirects to an error page. It also handles cases
+ * where the username cannot be fetched or database errors occur by redirecting
+ * to corresponding error routes.
+ *
+ * @param authUser - The currently authenticated user or `null` if none is available.
+ * @returns A bounded layout containing a greeting with the user's name and intro content.
+ */
 export default function Intro({ authUser }: { authUser: User | null }) {
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
   const [userName, setUserName] = useState<string>("user");
