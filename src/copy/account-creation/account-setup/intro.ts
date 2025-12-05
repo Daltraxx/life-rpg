@@ -58,7 +58,7 @@ const introCopy: IntroCopy = {
           ],
         },
         {
-          text: "You have a pool of 100 points to allocate across the quests you've defined. Think of them as shares of the day's total required effort and/or importance. For more significant or more arduous tasks, allocate more points. Do your best to make everything make sense as a whole, granting yourself greater rewards for more important or more difficult tasks while making the smaller tasks feel like easy points.",
+          text: "You have a pool of 100 points to allocate across the quests you've defined. Think of them as shares of the day's total required effort and/or importance. For more significant or more arduous tasks, allocate more points. Do your best to make everything make sense as a whole, granting yourself greater rewards for more important or difficult tasks while making smaller tasks feel like easy points.",
         },
       ],
     },
