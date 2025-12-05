@@ -10,6 +10,8 @@ interface AttributeListItemProps {
   onDelete: (attribute: string) => void;
 }
 
+const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
+
 /**
  * Renders a single attribute list item with a remove button.
  * 
@@ -34,7 +36,7 @@ export default function AttributeListItem({
   attribute,
   onDelete,
 }: AttributeListItemProps): JSX.Element {
-  const isDiscipline = attribute === "Discipline";
+  const isDiscipline = attribute === REQUIRED_DISCIPLINE_ATTRIBUTE;
 
   return (
     <ListItem className={styles.attributeItem} size="24">
