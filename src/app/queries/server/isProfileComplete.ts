@@ -2,6 +2,8 @@ import type { User, SupabaseClient } from "@supabase/supabase-js";
 
 /**
  * Checks whether a user's profile is complete by querying the database.
+ * A complete profile is determined by the `profile_complete` field in the `users` table.
+ * The column holds a boolean value and cannot be null
  * 
  * @param user - The user object whose profile completion status needs to be checked
  * @param supabase - The Supabase client instance used to query the database
