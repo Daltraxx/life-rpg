@@ -93,7 +93,7 @@ export async function updateSession(
   } = await supabase.auth.getUser();
 
   const unverifiedSignupCookie = request.cookies.get("unverified_signup");
-  const publicPaths = [
+  const unauthenticatedPaths = [
     "/",
     "/create-account",
     "/auth",
@@ -107,13 +107,13 @@ export async function updateSession(
   }
 
   const pathname = request.nextUrl.pathname;
-  const isPublicPath = publicPaths.some(
+  const isUnauthenticatedPath = unauthenticatedPaths.some(
     (path) =>
       pathname === path || (path !== "/" && pathname.startsWith(`${path}/`))
   );
 
   if (error) {
-    if (error instanceof AuthSessionMissingError && isPublicPath) {
+    if (error instanceof AuthSessionMissingError && isUnauthenticatedPath) {
       if (process.env.NODE_ENV === "development") {
         console.debug("No session on public path:", pathname);
       }
@@ -124,7 +124,7 @@ export async function updateSession(
     }
   }
 
-  if (!user && !isPublicPath) {
+  if (!user && !isUnauthenticatedPath) {
     // no user and is not public path, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/";
