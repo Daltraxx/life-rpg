@@ -23,7 +23,7 @@ const introCopy: IntroCopy = {
           text: "Attributes like Strength, Dexterity, Vigor, and Intelligence? You can use those! Many users adapt some of these archetypal attributes where they make sense. But, since those don't fit neatly into everyone's lives and goals, you should just define what attributes you believe are worth strengthening for yourself.",
         },
         {
-          text: "Some suggestions have already been selected, but feel free to remove them. Choose what suits your envisioned lifestyle, put some thought into it and make it make sense.",
+          text: "Some suggestions have already been selected, but feel free to remove them. Put some thought into it. Choose what suits your envisioned lifestyle and do what makes sense for you.",
           nestedPoints: [
             "The only non-negotiable attribute is Discipline. This is because Discipline is inherently strengthened with every quest completed. The amount that Discipline is strengthened can be increased for especially high-effort tasks, but we'll get to that!",
           ],
