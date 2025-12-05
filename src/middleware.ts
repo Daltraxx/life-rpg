@@ -23,7 +23,6 @@ export const config = {
      * - favicon.ico (favicon file)
      * - robots.txt, sitemap.xml, manifest.json (common static files)
      * - error (error page)
-     * - mock-data (mock data for development/testing)
      * - any files with extensions commonly used for images and icons
      * Feel free to modify this pattern to include more paths.
      */
