@@ -41,6 +41,9 @@
 }
 
 @media (hover: hover) {
+  .addAttributeButton:focus {
+    background-color: var(--blue-500, #0f3257);
+  }
   .addAttributeButton:hover {
     background-color: var(--blue-400, #123e6d);
   }
