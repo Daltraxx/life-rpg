@@ -92,7 +92,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
     <Bounded innerClassName={styles.contentContainer}>
       <section className={styles.introHeader}>
         <Span size="48-responsive">
-          Hello {loading ? "loading username..." : userName}!
+          Hello {loading ? "..." : userName}!
         </Span>
         <Heading as="h1" size="48-responsive">
           {introCopy.heading}
