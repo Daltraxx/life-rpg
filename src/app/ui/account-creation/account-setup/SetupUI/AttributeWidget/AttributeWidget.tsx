@@ -3,8 +3,9 @@
 import Heading from "@/app/ui/JSXWrappers/Heading";
 import { Label } from "../../../../JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
-import { JSX, useState } from "react";
+import { JSX, useEffect, useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
+import { set } from "zod";
 
 const INITIAL_ATTRIBUTES: string[] = [
   "Discipline",
@@ -37,7 +38,9 @@ const INITIAL_ATTRIBUTES: string[] = [
  */
 export default function AttributeWidget(): JSX.Element {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
-  const [attributeSet] = useState(() => new Set(INITIAL_ATTRIBUTES));
+  const [attributeSet, setAttributeSet] = useState(
+    () => new Set(INITIAL_ATTRIBUTES)
+  );
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
 
@@ -54,8 +57,8 @@ export default function AttributeWidget(): JSX.Element {
       return;
     }
     setAddAttributeError("");
-    attributeSet.add(newAttribute);
-    setAttributes(Array.from(attributeSet));
+    setAttributeSet((prevSet) => new Set(prevSet).add(newAttribute));
+    setAttributes((prevAttributes) => [...prevAttributes, newAttribute]);
     setNewAttribute("");
   };
 
