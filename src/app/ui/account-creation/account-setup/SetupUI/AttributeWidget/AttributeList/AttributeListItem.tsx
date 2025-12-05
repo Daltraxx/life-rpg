@@ -48,7 +48,7 @@ export default function AttributeListItem({
           isDiscipline && styles.disciplineAttributeRemoveButton
         )}
         title={isDiscipline ? "Discipline is a required attribute" : undefined}
-        onClick={() => onDelete(attribute)}
+        onClick={isDiscipline ? undefined : () => onDelete(attribute)}
         disabled={isDiscipline}
       >
         <FontAwesomeIcon
