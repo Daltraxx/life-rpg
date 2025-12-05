@@ -12,73 +12,125 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### Tables
 
-- **strength_levels**: Lookup table for strength rank multipliers (E-S)
-  - `level`: Primary key, strength rank enum (E, D, C, B, A, S)
-  - `multiplier`: Decimal (4, 2) multiplier for experience calculation
-  - `updated_at`: Timestamp of last update DEFAULT NOW()
+**strength_levels**: Lookup table for strength rank multipliers (E-S)
+- `level`: strength_rank PRIMARY KEY
+  - Strength rank enum (E, D, C, B, A, S)
+- `multiplier`: DECIMAL(4, 2) NOT NULL
+  - Multiplier for experience calculation
+- `updated_at`: TIMESTAMP DEFAULT NOW()
+  - Timestamp of last update
 
-- **users**: Core user accounts with level and experience tracking
-  - `id`: UUID, references auth.users(id) ON DELETE CASCADE
-  - `username`: Username (max 50 chars)
-  - `usertag`: Unique usertag (max 50 chars)
-  - `created_at`: Account creation timestamp DEFAULT NOW()
-  - `last_login`: Last login timestamp
-  - `verified`: Account verification status DEFAULT FALSE
-  - `profile_complete`: Whether user has defined their tasks DEFAULT FALSE
-  - `level`: Overall player level DEFAULT 1
-  - `experience`: Total experience points DECIMAL(10, 2) DEFAULT 0
-  - `updated_at`: Timestamp of last update DEFAULT NOW()
+**users**: Core user accounts with level and experience tracking
+- `id`: UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE
+  - User identifier linked to authentication
+- `username`: VARCHAR(50) UNIQUE NOT NULL
+  - Unique username (max 50 chars)
+- `created_at`: TIMESTAMP DEFAULT NOW()
+  - Account creation timestamp
+- `last_login`: TIMESTAMP
+  - Last login timestamp
+- `verified`: BOOLEAN DEFAULT FALSE
+  - Account verification status
+- `profile_complete`: BOOLEAN DEFAULT FALSE
+  - Whether user has defined their tasks
+- `level`: INT DEFAULT 1
+  - Overall player level
+- `experience`: DECIMAL(10, 2) DEFAULT 0
+  - Total experience points
+- `updated_at`: TIMESTAMP DEFAULT NOW()
+  - Timestamp of last update
 
-- **user_attributes**: Player-defined attributes that level independently
-  - `id`: Serial primary key
-  - `user_id`: References users(id) ON DELETE CASCADE
-  - `name`: Attribute name (max 50 chars, unique per user_id)
-  - `level`: Attribute level (default 1)
-  - `experience`: Attribute experience points DEFAULT 0
-  - `created_at`: Creation timestamp DEFAULT NOW()
-  - `updated_at`: Timestamp of last update DEFAULT NOW()
+**user_attributes**: Player-defined attributes that level independently
+- `id`: SERIAL PRIMARY KEY
+  - Unique attribute identifier
+- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+  - Owner of the attribute
+- `name`: VARCHAR(50) NOT NULL, UNIQUE (user_id, name)
+  - Attribute name (max 50 chars, unique per user)
+- `level`: INT DEFAULT 1
+  - Current attribute level
+- `experience`: DECIMAL(10, 2) DEFAULT 0
+  - Attribute experience points
+- `created_at`: TIMESTAMP DEFAULT NOW()
+  - Creation timestamp
+- `updated_at`: TIMESTAMP DEFAULT NOW()
+  - Timestamp of last update
 
-- **tasks**: Quests assigned by users with frequency, streak, and strength mechanics
-  - `id`: Serial primary key
-  - `user_id`: References users(id) ON DELETE CASCADE
-  - `name`: Task name (max 200 chars)
-  - `description`: Optional task description (nullable)
-  - `created_at`: Creation timestamp DEFAULT NOW()
-  - `is_completed`: Completion status DEFAULT FALSE
-  - `frequency`: How often task must be completed (min 0) DEFAULT 1 (daily)
-  - `rest_frequency`: Allowed rest days without streak reset (min 0) DEFAULT 0
-  - `last_rest_date`: Date of last rest day (nullable)
-  - `experience_share`: Base points value (0-100)
-  - `streak`: Current streak count DEFAULT 0
-  - `strength_points`: Accumulated strength points DEFAULT 0
-  - `strength_level`: Current strength rank (E-S) DEFAULT ('E')
-  - `last_completed_date`: Date of last completion (nullable)
-  - `updated_at`: Timestamp of last update DEFAULT NOW()
+**tasks**: Quests assigned by users with frequency, streak, and strength mechanics
+- `id`: SERIAL PRIMARY KEY
+  - Unique task identifier
+- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+  - Owner of the task
+- `name`: VARCHAR(200) NOT NULL
+  - Task name (max 200 chars)
+- `description`: TEXT
+  - Optional task description
+- `created_at`: TIMESTAMP DEFAULT NOW()
+  - Creation timestamp
+- `is_completed`: BOOLEAN DEFAULT FALSE
+  - Completion status
+- `frequency`: INT DEFAULT 1 CHECK (frequency >= 0)
+  - How often task must be completed (daily by default)
+- `rest_frequency`: INT DEFAULT 0 CHECK (rest_frequency >= 0)
+  - Allowed rest days without streak reset
+- `last_rest_date`: DATE
+  - Date of last rest day
+- `experience_share`: INT NOT NULL CHECK (experience_share BETWEEN 0 AND 100)
+  - Base points value (0-100)
+- `streak`: INT DEFAULT 0
+  - Current streak count
+- `strength_points`: INT DEFAULT 0
+  - Accumulated strength points
+- `strength_level`: strength_rank REFERENCES strength_levels(level) DEFAULT 'E'
+  - Current strength rank (E-S)
+- `last_completed_date`: DATE
+  - Date of last completion
+- `updated_at`: TIMESTAMP DEFAULT NOW()
+  - Timestamp of last update
 
-- **task_completions**: Records each task completion with streak and experience earned
-  - `id`: Serial primary key
-  - `task_id`: References tasks(id) ON DELETE CASCADE
-  - `completed_at`: Completion timestamp DEFAULT NOW()
-  - `streak_count`: Streak at time of completion DEFAULT 1
-  - `experience_earned`: Experience points awarded DEFAULT 0
-  - `updated_at`: Timestamp of last update DEFAULT NOW()
+**task_completions**: Records each task completion with streak and experience earned
+- `id`: SERIAL PRIMARY KEY
+  - Unique completion record identifier
+- `task_id`: INT REFERENCES tasks(id) ON DELETE CASCADE
+  - Reference to completed task
+- `completed_at`: TIMESTAMP DEFAULT NOW()
+  - Completion timestamp
+- `streak_count`: INT DEFAULT 1
+  - Streak at time of completion
+- `experience_earned`: DECIMAL(8, 2) DEFAULT 0
+  - Experience points awarded
+- `updated_at`: TIMESTAMP DEFAULT NOW()
+  - Timestamp of last update
 
-- **experience_log**: Audit trail of all experience transactions
-  - `id`: Serial primary key
-  - `user_id`: References users(id) ON DELETE CASCADE
-  - `task_id`: References tasks table (nullable) ON DELETE SET NULL
-  - `experience_amount`: Experience points in transaction
-  - `reason`: Description of transaction (nullable)
-  - `created_at`: Transaction timestamp DEFAULT NOW()
+**experience_log**: Audit trail of all experience transactions
+- `id`: SERIAL PRIMARY KEY
+  - Unique log entry identifier
+- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+  - User who earned/lost experience
+- `task_id`: INT REFERENCES tasks(id) ON DELETE SET NULL
+  - Related task (nullable)
+- `experience_amount`: DECIMAL(8, 2) NOT NULL
+  - Experience points in transaction
+- `reason`: TEXT
+  - Description of transaction
+- `created_at`: TIMESTAMP DEFAULT NOW()
+  - Transaction timestamp
 
-- **tasks_attributes**: Junction table linking tasks to attributes with power multipliers
-  - `id`: Serial primary key
-  - `user_id`: References users(id) ON DELETE CASCADE
-  - `task_id`: References tasks(id) ON DELETE CASCADE
-  - `attribute_id`: References user_attributes(id) ON DELETE CASCADE
-  - `attribute_power`: Power multiplier DEFAULT 1
-  - `updated_at`: Timestamp of last update DEFAULT NOW
-  - Unique constraint on (task_id, attribute_id)
+**tasks_attributes**: Junction table linking tasks to attributes with power multipliers
+- `id`: SERIAL PRIMARY KEY
+  - Unique junction record identifier
+- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+  - Owner of the task-attribute relationship
+- `task_id`: INT REFERENCES tasks(id) ON DELETE CASCADE
+  - Reference to task
+- `attribute_id`: INT REFERENCES user_attributes(id) ON DELETE CASCADE
+  - Reference to attribute
+- `attribute_power`: INT DEFAULT 1
+  - Power multiplier for this attribute
+- `updated_at`: TIMESTAMP DEFAULT NOW()
+  - Timestamp of last update
+- UNIQUE (task_id, attribute_id)
+  - Ensures each task-attribute pair is unique
 
 ### Key Features
 
