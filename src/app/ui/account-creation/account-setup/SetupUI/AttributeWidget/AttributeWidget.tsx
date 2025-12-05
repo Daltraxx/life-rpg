@@ -1,7 +1,7 @@
 "use client";
 
 import Heading from "@/app/ui/JSXWrappers/Heading";
-import { Label } from "../../../JSXWrappers/TextWrappers";
+import { Label } from "../../../../JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";

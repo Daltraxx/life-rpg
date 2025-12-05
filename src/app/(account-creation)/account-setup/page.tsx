@@ -1,9 +1,8 @@
-import Intro from "@/app/ui/account-creation/AccountSetup/Intro/Intro";
+import Intro from "@/app/ui/account-creation/account-setup/Intro/Intro";
 import type { Metadata } from "next";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import Bounded from "@/app/ui/JSXWrappers/Bounded";
-import AttributeWidget from "@/app/ui/account-creation/AccountSetup/AttributeWidget/AttributeWidget";
+import SetupUI from "@/app/ui/account-creation/account-setup/SetupUI/SetupUI";
 
 export const metadata: Metadata = {
   title: "Account Setup",
@@ -30,9 +29,7 @@ export default async function AccountSetupPage() {
   return (
     <>
       <Intro authUser={user} />
-      <Bounded>
-        <AttributeWidget />
-      </Bounded>
+      <SetupUI />
     </>
   );
 }
