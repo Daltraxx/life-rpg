@@ -18,7 +18,7 @@ export default async function AccountSetupPage() {
     error,
   } = await supabase.auth.getUser();
 
-  if ((error || !user)) {
+  if (error || !user) {
     if (error) {
       console.error("Error fetching authenticated user:", error);
     } else {
