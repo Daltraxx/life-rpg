@@ -19,7 +19,7 @@ export default async function AccountSetupPage() {
 
   if (error || !user) {
     if (error) {
-      console.error("Error fetching authenticated user:", error);
+      console.error("Error fetching authenticated user:", error.message);
     } else {
       console.warn("No authenticated user found.");
     }
