@@ -15,11 +15,11 @@
 
 .removeAttributeButton:hover path,
 .removeAttributeButton:focus path {
-  fill: var(--orange-500, #123e6d);
+  fill: var(--orange-500, #f68309);
 }
 
 .removeAttributeButton:active path {
-  fill: var(--orange-600, #0f3257);
+  fill: var(--orange-600, #cd6d07);
 }
 
 .disciplineAttributeRemoveButton {
