@@ -19,7 +19,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 - **users**: Core user accounts with level and experience tracking
   - `id`: UUID, references auth.users
-  - `username`: Unique username (max 50 chars)
+  - `username`: Username (max 50 chars)
+  - `usertag`: Unique usertag (max 50 chars)
   - `created_at`: Account creation timestamp
   - `last_login`: Last login timestamp
   - `verified`: Account verification status
