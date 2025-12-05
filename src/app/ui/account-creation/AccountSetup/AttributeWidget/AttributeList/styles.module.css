@@ -13,20 +13,21 @@
   fill: var(--blue-700, #091f36);
 }
 
+.removeAttributeButton:hover path,
+.removeAttributeButton:focus path {
+  fill: var(--orange-500, #123e6d);
+}
+
+.removeAttributeButton:active path {
+  fill: var(--orange-600, #0f3257);
+}
+
 .disciplineAttributeRemoveButton {
   height: 2rem;
 }
 
 .disciplineAttributeRemoveButton path {
   fill: var(--gray-600, #66666e);
-}
-
-.removeAttributeButton:hover path {
-  fill: var(--orange-500, #123e6d);
-}
-
-.removeAttributeButton:active path {
-  fill: var(--orange-600, #0f3257);
 }
 
 .removeAttributeIcon {
