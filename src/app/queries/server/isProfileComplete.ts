@@ -28,7 +28,11 @@ export default async function isProfileComplete(
     .eq("id", user.id)
     .single<{ profile_complete: boolean }>();
 
-  if (error) throw error;
+  if (error)
+    throw new Error(
+      `Failed to check profile completion for user ${user.id}: ${error.message}`,
+      { cause: error }
+    );
   if (!data) throw new Error(`User data not found for user ID: ${user.id}`);
 
   return data.profile_complete;
