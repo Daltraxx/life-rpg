@@ -3,9 +3,8 @@
 import Heading from "@/app/ui/JSXWrappers/Heading";
 import { Label } from "../../../../JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
-import { JSX, useEffect, useState } from "react";
+import { type JSX, useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
-import { set } from "zod";
 
 const INITIAL_ATTRIBUTES: string[] = [
   "Discipline",
