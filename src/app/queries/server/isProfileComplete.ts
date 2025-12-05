@@ -4,12 +4,12 @@ import type { User, SupabaseClient } from "@supabase/supabase-js";
  * Checks whether a user's profile is complete by querying the database.
  * A complete profile is determined by the `profile_complete` field in the `users` table.
  * The column holds a boolean value and cannot be null
- * 
+ *
  * @param user - The user object whose profile completion status needs to be checked
  * @param supabase - The Supabase client instance used to query the database
  * @returns A promise that resolves to true if the user's profile is complete, false otherwise
  * @throws Will throw an error if the database query fails
- * 
+ *
  * @example
  * ```typescript
  * const isComplete = await isProfileComplete(currentUser, supabaseClient);
@@ -27,8 +27,9 @@ export default async function isProfileComplete(
     .select("profile_complete")
     .eq("id", user.id)
     .single<{ profile_complete: boolean }>();
-  if (error) {
-    throw error;
-  }
+
+  if (error) throw error;
+  if (!data) throw new Error(`User data not found for user ID: ${user.id}`);
+
   return data.profile_complete;
 }
