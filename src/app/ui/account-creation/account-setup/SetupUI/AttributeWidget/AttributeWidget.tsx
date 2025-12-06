@@ -45,19 +45,19 @@ export default function AttributeWidget(): JSX.Element {
 
   const handleAddAttribute = (attribute: string) => {
     const trimmedAttribute = attribute.trim();
-    const newAttribute =
+    const capitalizedAttribute =
       trimmedAttribute.charAt(0).toUpperCase() + trimmedAttribute.slice(1);
-    if (newAttribute.length === 0) {
+    if (capitalizedAttribute.length === 0) {
       setAddAttributeError("Please enter an attribute.");
       return;
     }
-    if (attributeSet.has(newAttribute)) {
+    if (attributeSet.has(capitalizedAttribute)) {
       setAddAttributeError("Attribute already exists.");
       return;
     }
     setAddAttributeError("");
-    setAttributeSet((prevSet) => new Set(prevSet).add(newAttribute));
-    setAttributes((prevAttributes) => [...prevAttributes, newAttribute]);
+    setAttributeSet((prevSet) => new Set(prevSet).add(capitalizedAttribute));
+    setAttributes((prevAttributes) => [...prevAttributes, capitalizedAttribute]);
     setNewAttribute("");
   };
 
