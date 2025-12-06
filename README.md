@@ -12,6 +12,8 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ### Tables
 
+Full table can be found on the Supabase dashboard.
+
 **strength_levels**: Lookup table for strength rank multipliers (E-S)
 - `level`: strength_rank PRIMARY KEY
   - Strength rank enum (E, D, C, B, A, S)
