@@ -91,7 +91,10 @@ export default function AttributeWidget() {
             type="text"
             id="add-attribute"
             value={newAttribute}
-            onChange={(e) => setNewAttribute(e.target.value)}
+            onChange={(e) => {
+              if (addAttributeError) setAddAttributeError("");
+              setNewAttribute(e.target.value)
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
