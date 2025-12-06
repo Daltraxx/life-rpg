@@ -5,6 +5,7 @@
 Full table can be found on the Supabase dashboard.
 
 **strength_levels**: Lookup table for strength rank multipliers (E-S)
+
 - `level`: strength_rank PRIMARY KEY
   - Strength rank enum (E, D, C, B, A, S)
 - `multiplier`: DECIMAL(4, 2) NOT NULL
@@ -13,6 +14,7 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **users**: Core user accounts with level and experience tracking
+
 - `id`: UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE
   - User identifier linked to authentication
 - `username`: VARCHAR(50) NOT NULL
@@ -35,6 +37,7 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **user_attributes**: Player-defined attributes that level independently
+
 - `id`: SERIAL PRIMARY KEY
   - Unique attribute identifier
 - `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
@@ -51,6 +54,7 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **tasks**: Quests assigned by users with frequency, streak, and strength mechanics
+
 - `id`: SERIAL PRIMARY KEY
   - Unique task identifier
 - `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
@@ -70,7 +74,7 @@ Full table can be found on the Supabase dashboard.
 - `last_rest_date`: DATE
   - Date of last rest day
 - `experience_share`: INT NOT NULL CHECK (experience_share BETWEEN 0 AND 100)
-  - A share of base daily points (0-100) that the user allots to a particular task completion (presumably based on difficulty/importance of the task)
+  - Percentage share (0–100) of daily experience points allocated to this task based on user-defined priority or difficulty
 - `streak`: INT DEFAULT 0
   - Current streak count
 - `strength_points`: INT DEFAULT 0
@@ -83,6 +87,7 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **task_completions**: Records each task completion with streak and experience earned
+
 - `id`: SERIAL PRIMARY KEY
   - Unique completion record identifier
 - `task_id`: INT REFERENCES tasks(id) ON DELETE CASCADE
@@ -97,6 +102,7 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **experience_log**: Audit trail of all experience transactions
+
 - `id`: SERIAL PRIMARY KEY
   - Unique log entry identifier
 - `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
@@ -111,6 +117,7 @@ Full table can be found on the Supabase dashboard.
   - Transaction timestamp
 
 **tasks_attributes**: Junction table linking tasks to attributes with power multipliers
+
 - `id`: SERIAL PRIMARY KEY
   - Unique junction record identifier
 - `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
@@ -127,6 +134,7 @@ Full table can be found on the Supabase dashboard.
   - Ensures each task-attribute pair is unique
 
 ### Indexes Reference
+
 CREATE INDEX idx_user_attributes_user_id ON user_attributes(user_id);
 CREATE INDEX idx_tasks_user_id ON tasks(user_id);
 CREATE INDEX idx_task_completions_task_id ON task_completions(task_id);
@@ -136,16 +144,19 @@ CREATE INDEX idx_task_completions_completed_at ON task_completions(completed_at)
 CREATE INDEX idx_experience_log_task_id ON experience_log(task_id);
 
 ### Triggers Reference
+
 -- Trigger Function
 CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
-RETURNS TRIGGER AS 
+RETURNS TRIGGER AS
+
 $$
-BEGIN 
+BEGIN
   INSERT INTO public.users (id, email, username)
   VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username');
   RETURN NEW;
 END;
 $$
+
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
 
 -- Trigger
