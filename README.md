@@ -10,7 +10,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Database Overview
 
-The database schema consists of several key tables designed to manage users, tasks, attributes, and experience points within the LifeRPG application.
+The database schema uses a relational design to manage users, tasks, attributes, and experience points. Key features include a strength rank system (E–S) for task multipliers, shared experience across player and attribute levels, and flexible habit scheduling via frequency and rest_frequency fields.
 
 An overview of the database schema can be found in [DATABASE.md](DATABASE.md).
 
