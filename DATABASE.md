@@ -21,6 +21,8 @@ Full table can be found on the Supabase dashboard.
   - Username (max 50 chars)
 - `usertag`: VARCHAR(50) UNIQUE NOT NULL
   - Unique usertag for potential social features
+- `email`: VARCHAR(255) UNIQUE NOT NULL
+  - User email address
 - `created_at`: TIMESTAMP DEFAULT NOW()
   - Account creation timestamp
 - `last_login`: TIMESTAMP
