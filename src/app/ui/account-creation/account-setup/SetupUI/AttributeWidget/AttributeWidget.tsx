@@ -41,15 +41,13 @@ const INITIAL_ATTRIBUTE_LOWERCASE_SET: Set<string> = new Set(
  */
 export default function AttributeWidget(): JSX.Element {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
-  const [attributeSet, setAttributeSet] = useState(
-    () => new Set(INITIAL_ATTRIBUTE_LOWERCASE_SET)
-  );
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
 
   const handleAddAttribute = (attribute: string) => {
     const trimmedAttribute = attribute.trim();
     const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
+    const attributeSet = new Set(attributes.map((attr) => attr.toLowerCase()));
 
     if (trimmedAttribute.length === 0) {
       setAddAttributeError("Please enter an attribute.");
@@ -61,12 +59,10 @@ export default function AttributeWidget(): JSX.Element {
     }
 
     setAddAttributeError("");
-    setAttributeSet((prevSet) =>
-      new Set(prevSet).add(trimmedAttributeLowerCase)
-    );
 
     const capitalizedAttribute =
       trimmedAttribute.charAt(0).toUpperCase() + trimmedAttribute.slice(1);
+
     setAttributes((prevAttributes) => [
       ...prevAttributes,
       capitalizedAttribute,
@@ -75,10 +71,9 @@ export default function AttributeWidget(): JSX.Element {
   };
 
   const handleDeleteAttribute = (attribute: string) => {
-    const newAttributeSet = new Set(attributeSet);
-    newAttributeSet.delete(attribute);
-    setAttributeSet(newAttributeSet);
-    setAttributes(Array.from(newAttributeSet));
+    setAttributes((prevAttributes) =>
+      prevAttributes.filter((attr) => attr !== attribute)
+    );
   };
 
   const attributeList = attributes.map((attribute) => (
