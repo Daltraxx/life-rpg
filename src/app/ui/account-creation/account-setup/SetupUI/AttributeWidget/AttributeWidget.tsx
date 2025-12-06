@@ -40,7 +40,8 @@ export default function AttributeWidget() {
   const [addAttributeError, setAddAttributeError] = useState("");
 
   const handleAddAttribute = (attribute: string) => {
-    const trimmedAttributeLowerCase = attribute.trim().toLowerCase();
+    const trimmedAttribute = attribute.trim();
+    const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
     const attributeSet = new Set(attributes.map((attr) => attr.toLowerCase()));
 
     if (trimmedAttributeLowerCase.length === 0) {
@@ -54,7 +55,7 @@ export default function AttributeWidget() {
 
     setAddAttributeError("");
 
-    setAttributes((prevAttributes) => [...prevAttributes, attribute]);
+    setAttributes((prevAttributes) => [...prevAttributes, trimmedAttribute]);
     setNewAttribute("");
   };
 
