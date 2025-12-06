@@ -70,8 +70,8 @@
 
 .currentAttributesHeadingContainer {
   width: fit-content;
-  background-color: var(--blue-700); /* Or any desired background color */
-  transform: skewX(-20deg); /* Adjust the angle for different skew */
+  background-color: var(--blue-700);
+  transform: skewX(-20deg);
   margin-bottom: 0.5rem;
 }
 
