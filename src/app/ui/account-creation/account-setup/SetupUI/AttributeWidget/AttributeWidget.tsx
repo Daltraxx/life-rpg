@@ -41,11 +41,10 @@ export default function AttributeWidget(): JSX.Element {
   const [addAttributeError, setAddAttributeError] = useState("");
 
   const handleAddAttribute = (attribute: string) => {
-    const trimmedAttribute = attribute.trim();
-    const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
+    const trimmedAttributeLowerCase = attribute.trim().toLowerCase();
     const attributeSet = new Set(attributes.map((attr) => attr.toLowerCase()));
 
-    if (trimmedAttribute.length === 0) {
+    if (trimmedAttributeLowerCase.length === 0) {
       setAddAttributeError("Please enter an attribute.");
       return;
     }
@@ -56,12 +55,9 @@ export default function AttributeWidget(): JSX.Element {
 
     setAddAttributeError("");
 
-    const capitalizedAttribute =
-      trimmedAttribute.charAt(0).toUpperCase() + trimmedAttribute.slice(1);
-
     setAttributes((prevAttributes) => [
       ...prevAttributes,
-      capitalizedAttribute,
+      attribute,
     ]);
     setNewAttribute("");
   };
