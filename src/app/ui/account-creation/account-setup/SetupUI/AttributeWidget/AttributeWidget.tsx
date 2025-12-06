@@ -29,7 +29,6 @@ const INITIAL_ATTRIBUTES: string[] = [
  *
  * @remarks
  * - Duplicate checking is performed directly against current state
- * - Automatically capitalizes the first letter of attribute names
  * - Displays validation errors for empty or duplicate entries
  * - Enter key and button click both trigger attribute addition
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
