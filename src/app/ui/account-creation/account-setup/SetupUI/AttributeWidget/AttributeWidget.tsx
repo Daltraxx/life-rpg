@@ -91,6 +91,7 @@ export default function AttributeWidget() {
             type="text"
             id="add-attribute"
             value={newAttribute}
+            className={styles.addAttributeInput}
             onChange={(e) => {
               if (addAttributeError) setAddAttributeError("");
               setNewAttribute(e.target.value);
