@@ -13,6 +13,7 @@
 }
 
 .addAttributeField {
+  /* Width calculation expects a sibling button with width: var(--button-width) */
   --button-width: 3.375rem;
 }
 
