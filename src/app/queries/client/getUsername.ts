@@ -23,6 +23,7 @@ export default async function getUsername(
   authUser: User,
   supabase: SupabaseClient
 ): Promise<string | null> {
+  // TODO: Cache username to reduce database calls
   const { data, error } = await supabase
     .from("users")
     .select("username")
