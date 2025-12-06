@@ -135,6 +135,24 @@ CREATE INDEX idx_tasks_attributes_user_id ON tasks_attributes(user_id);
 CREATE INDEX idx_task_completions_completed_at ON task_completions(completed_at);
 CREATE INDEX idx_experience_log_task_id ON experience_log(task_id);
 
+### Triggers Reference
+-- Trigger Function
+CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
+RETURNS TRIGGER AS 
+$$
+BEGIN 
+  INSERT INTO public.users (id, email, username)
+  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username');
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
+
+-- Trigger
+CREATE TRIGGER after_user_signup_create_user
+AFTER INSERT ON auth.users
+FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
+
 ### Key Features
 
 - Strength rank system (E-S) applies experience multipliers to task rewards
