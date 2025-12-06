@@ -3,7 +3,7 @@ import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";
 import { ListItem } from "@/app/ui/JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
-import { JSX } from "react";
+import { JSX, useCallback } from "react";
 
 interface AttributeListItemProps {
   attribute: string;
@@ -37,6 +37,11 @@ export default function AttributeListItem({
   onDelete,
 }: AttributeListItemProps): JSX.Element {
   const isDiscipline = attribute === REQUIRED_DISCIPLINE_ATTRIBUTE;
+  const handleDelete = useCallback(() => {
+    if (!isDiscipline) {
+      onDelete(attribute);
+    }
+  }, [isDiscipline, attribute, onDelete]);
 
   return (
     <ListItem className={styles.attributeItem} size="24">
@@ -48,7 +53,7 @@ export default function AttributeListItem({
           isDiscipline && styles.disciplineAttributeRemoveButton
         )}
         title={isDiscipline ? "Discipline is a required attribute" : undefined}
-        onClick={isDiscipline ? undefined : () => onDelete(attribute)}
+        onClick={handleDelete}
         disabled={isDiscipline}
       >
         <FontAwesomeIcon
