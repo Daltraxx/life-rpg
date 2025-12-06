@@ -3,7 +3,7 @@
 import Heading from "@/app/ui/JSXWrappers/Heading";
 import { Label } from "../../../../JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
-import { type JSX, useState } from "react";
+import { useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
 
 const INITIAL_ATTRIBUTES: string[] = [
@@ -21,8 +21,7 @@ const INITIAL_ATTRIBUTES: string[] = [
  * single source of truth for validation and rendering.
  *
  * @component
- * @returns {JSX.Element} A section containing an attribute input form and a list
- *                        of current attributes with delete functionality.
+ * @returns A section containing an attribute input form and a list of current attributes with delete functionality.
  *
  * @example
  * // Basic usage in account setup flow
@@ -35,7 +34,7 @@ const INITIAL_ATTRIBUTES: string[] = [
  * - Enter key and button click both trigger attribute addition
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
  */
-export default function AttributeWidget(): JSX.Element {
+export default function AttributeWidget() {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
@@ -55,10 +54,7 @@ export default function AttributeWidget(): JSX.Element {
 
     setAddAttributeError("");
 
-    setAttributes((prevAttributes) => [
-      ...prevAttributes,
-      attribute,
-    ]);
+    setAttributes((prevAttributes) => [...prevAttributes, attribute]);
     setNewAttribute("");
   };
 
