@@ -20,10 +20,11 @@ export default async function AccountSetupPage() {
   if (error || !user) {
     if (error) {
       console.error("Error fetching authenticated user:", error.message);
+      redirect("/error?reason=auth_error");
     } else {
       console.warn("No authenticated user found.");
+      redirect("/error?reason=no_authenticated_user");
     }
-    redirect("/");
   }
 
   return (
