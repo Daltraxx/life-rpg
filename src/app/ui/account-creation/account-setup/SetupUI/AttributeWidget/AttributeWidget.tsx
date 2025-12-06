@@ -13,6 +13,10 @@ const INITIAL_ATTRIBUTES: string[] = [
   "Fitness",
 ];
 
+const INITIAL_ATTRIBUTE_LOWERCASE_SET: Set<string> = new Set(
+  INITIAL_ATTRIBUTES.map((attribute) => attribute.toLowerCase())
+);
+
 /**
  * AttributeWidget component for managing custom attributes in account setup.
  *
@@ -38,26 +42,35 @@ const INITIAL_ATTRIBUTES: string[] = [
 export default function AttributeWidget(): JSX.Element {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
   const [attributeSet, setAttributeSet] = useState(
-    () => new Set(INITIAL_ATTRIBUTES)
+    () => new Set(INITIAL_ATTRIBUTE_LOWERCASE_SET)
   );
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
 
   const handleAddAttribute = (attribute: string) => {
     const trimmedAttribute = attribute.trim();
-    const capitalizedAttribute =
-      trimmedAttribute.charAt(0).toUpperCase() + trimmedAttribute.slice(1);
-    if (capitalizedAttribute.length === 0) {
+    const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
+
+    if (trimmedAttribute.length === 0) {
       setAddAttributeError("Please enter an attribute.");
       return;
     }
-    if (attributeSet.has(capitalizedAttribute)) {
+    if (attributeSet.has(trimmedAttributeLowerCase)) {
       setAddAttributeError("Attribute already exists.");
       return;
     }
+
     setAddAttributeError("");
-    setAttributeSet((prevSet) => new Set(prevSet).add(capitalizedAttribute));
-    setAttributes((prevAttributes) => [...prevAttributes, capitalizedAttribute]);
+    setAttributeSet((prevSet) =>
+      new Set(prevSet).add(trimmedAttributeLowerCase)
+    );
+
+    const capitalizedAttribute =
+      trimmedAttribute.charAt(0).toUpperCase() + trimmedAttribute.slice(1);
+    setAttributes((prevAttributes) => [
+      ...prevAttributes,
+      capitalizedAttribute,
+    ]);
     setNewAttribute("");
   };
 
