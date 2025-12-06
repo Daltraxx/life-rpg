@@ -132,7 +132,7 @@ export async function updateSession(
   }
 
   // Paths accessible to authenticated (email-verified) users
-  const authenticatedUserPaths = ["/account-setup", "/profile", "/error"];
+  const authenticatedUserPaths = ["/account-setup", "/profile", "/error", "/auth"];
   const isAuthenticatedUserPath = authenticatedUserPaths.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`)
   );
