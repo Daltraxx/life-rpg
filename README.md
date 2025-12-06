@@ -78,7 +78,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 - `last_rest_date`: DATE
   - Date of last rest day
 - `experience_share`: INT NOT NULL CHECK (experience_share BETWEEN 0 AND 100)
-  - Base points value (0-100)
+  - A share of base daily points (0-100) that the user allots to a particular task completion (presumably based on difficulty/importance of the task)
 - `streak`: INT DEFAULT 0
   - Current streak count
 - `strength_points`: INT DEFAULT 0
