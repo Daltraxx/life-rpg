@@ -43,7 +43,7 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
  * where the username cannot be fetched or database errors occur by redirecting
  * to corresponding error routes.
  *
- * @param authUser - The currently authenticated user or `null` if none is available.
+ * @param authUser - The currently authenticated user.
  * @returns A bounded layout containing a greeting with the user's name and intro content.
  */
 export default function Intro({ authUser }: { authUser: User }) {
@@ -54,7 +54,7 @@ export default function Intro({ authUser }: { authUser: User }) {
   useEffect(() => {
     let isMounted = true;
     // This should never happen, but just in case
-    if (!authUser?.id) {
+    if (!authUser.id) {
       console.warn("No authenticated user found.");
       router.push("/error?message=no%20authenticated%20user");
       return;
