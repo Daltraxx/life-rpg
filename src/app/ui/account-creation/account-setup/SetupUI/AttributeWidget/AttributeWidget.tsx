@@ -81,7 +81,7 @@ export default function AttributeWidget() {
       <div className={styles.addAttributeContainer}>
         <Label
           htmlFor="add-attribute"
-          size="20"
+          size="24"
           className={styles.addAttributeLabel}
         >
           Attribute Name:
