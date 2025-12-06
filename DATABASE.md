@@ -126,6 +126,15 @@ Full table can be found on the Supabase dashboard.
 - UNIQUE (task_id, attribute_id)
   - Ensures each task-attribute pair is unique
 
+### Indexes Reference
+CREATE INDEX idx_user_attributes_user_id ON user_attributes(user_id);
+CREATE INDEX idx_tasks_user_id ON tasks(user_id);
+CREATE INDEX idx_task_completions_task_id ON task_completions(task_id);
+CREATE INDEX idx_experience_log_user_id ON experience_log(user_id);
+CREATE INDEX idx_tasks_attributes_user_id ON tasks_attributes(user_id);
+CREATE INDEX idx_task_completions_completed_at ON task_completions(completed_at);
+CREATE INDEX idx_experience_log_task_id ON experience_log(task_id);
+
 ### Key Features
 
 - Strength rank system (E-S) applies experience multipliers to task rewards
