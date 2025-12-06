@@ -71,14 +71,15 @@ export default function Intro({ authUser }: { authUser: User | null }) {
           setLoading(false);
         } else {
           console.warn("Username not found for user");
-          setLoading(false);
           router.push("/error?message=user%20not%20found");
+          return;
         }
       } catch (error) {
         if (!isMounted) return;
         console.error("Error fetching user data:", error);
         setLoading(false);
         router.push("/error?message=database%20error");
+        return;
       }
     };
     fetchUsername();
@@ -91,9 +92,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
   return (
     <Bounded innerClassName={styles.contentContainer}>
       <section className={styles.introHeader}>
-        <Span size="48-responsive">
-          Hello {loading ? "..." : userName}!
-        </Span>
+        <Span size="48-responsive">Hello {loading ? "..." : userName}!</Span>
         <Heading as="h1" size="48-responsive">
           {introCopy.heading}
         </Heading>
