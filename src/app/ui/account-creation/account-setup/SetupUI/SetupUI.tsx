@@ -1,10 +1,11 @@
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import AttributeWidget from "./AttributeWidget/AttributeWidget";
 import QuestsWidget from "./QuestsWidget/QuestsWidget";
+import styles from "./styles.module.css";
 
 export default function SetupUI() {
   return (
-    <Bounded>
+    <Bounded innerClassName={styles.uiContainer}>
       <AttributeWidget />
       <QuestsWidget />
     </Bounded>
