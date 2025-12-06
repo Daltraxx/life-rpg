@@ -14,19 +14,19 @@ const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
 
 /**
  * Renders a single attribute list item with a remove button.
- * 
+ *
  * @component
  * @param {AttributeListItemProps} props - The component props
  * @param {string} props.attribute - The name of the attribute to display
  * @param {(attribute: string) => void} props.onDelete - Callback function invoked when the remove button is clicked
  * @returns {JSX.Element} A list item containing the attribute name and a remove button. The Discipline attribute cannot be removed and is visually indicated as required.
- * 
+ *
  * @example
- * <AttributeListItem 
- *   attribute="Strength" 
- *   onDelete={(attr) => console.log(`Removed ${attr}`)} 
+ * <AttributeListItem
+ *   attribute="Strength"
+ *   onDelete={(attr) => console.log(`Removed ${attr}`)}
  * />
- * 
+ *
  * @remarks
  * - The "Discipline" attribute is a required attribute and cannot be removed
  * - The remove button styling differs for the Discipline attribute to indicate its required status
@@ -46,7 +46,11 @@ export default function AttributeListItem({
   return (
     <ListItem className={styles.attributeItem} size="24">
       <button
-        aria-label={`Remove ${attribute}`}
+        aria-label={
+          isDiscipline
+            ? "Discipline is a required attribute and cannot be removed"
+            : `Remove ${attribute}`
+        }
         type="button"
         className={clsx(
           !isDiscipline && styles.removeAttributeButton,
