@@ -77,7 +77,6 @@ export default function Intro({ authUser }: { authUser: User | null }) {
       } catch (error) {
         if (!isMounted) return;
         console.error("Error fetching user data:", error);
-        setLoading(false);
         router.push("/error?message=database%20error");
         return;
       }
