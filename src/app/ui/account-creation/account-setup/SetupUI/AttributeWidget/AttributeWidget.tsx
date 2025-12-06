@@ -62,8 +62,10 @@ export default function AttributeWidget(): JSX.Element {
   };
 
   const handleDeleteAttribute = (attribute: string) => {
-    attributeSet.delete(attribute);
-    setAttributes(Array.from(attributeSet));
+    const newAttributeSet = new Set(attributeSet);
+    newAttributeSet.delete(attribute);
+    setAttributeSet(newAttributeSet);
+    setAttributes(Array.from(newAttributeSet));
   };
 
   const attributeList = attributes.map((attribute) => (
