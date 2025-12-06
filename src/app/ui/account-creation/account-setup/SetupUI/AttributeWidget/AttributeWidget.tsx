@@ -13,16 +13,12 @@ const INITIAL_ATTRIBUTES: string[] = [
   "Fitness",
 ];
 
-const INITIAL_ATTRIBUTE_LOWERCASE_SET: Set<string> = new Set(
-  INITIAL_ATTRIBUTES.map((attribute) => attribute.toLowerCase())
-);
-
 /**
  * AttributeWidget component for managing custom attributes in account setup.
  *
  * Allows users to add and delete custom attributes with validation to prevent
- * empty entries and duplicates. Maintains a set of attributes and displays them
- * in a list format.
+ * empty entries and duplicates. Uses the component's attributes state as the
+ * single source of truth for validation and rendering.
  *
  * @component
  * @returns {JSX.Element} A section containing an attribute input form and a list
@@ -33,7 +29,7 @@ const INITIAL_ATTRIBUTE_LOWERCASE_SET: Set<string> = new Set(
  * <AttributeWidget />
  *
  * @remarks
- * - Uses a Set for efficient duplicate checking
+ * - Duplicate checking is performed directly against current state
  * - Automatically capitalizes the first letter of attribute names
  * - Displays validation errors for empty or duplicate entries
  * - Enter key and button click both trigger attribute addition
