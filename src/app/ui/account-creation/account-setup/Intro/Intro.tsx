@@ -46,7 +46,7 @@ const explainerSections = introCopy.explainers.map((explainer, index) => (
  * @param authUser - The currently authenticated user or `null` if none is available.
  * @returns A bounded layout containing a greeting with the user's name and intro content.
  */
-export default function Intro({ authUser }: { authUser: User | null }) {
+export default function Intro({ authUser }: { authUser: User }) {
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
   const [userName, setUserName] = useState<string>("user");
   const [loading, setLoading] = useState<boolean>(true);
@@ -86,7 +86,7 @@ export default function Intro({ authUser }: { authUser: User | null }) {
     return () => {
       isMounted = false;
     };
-  }, [authUser, supabase, router]);
+  }, [authUser.id, supabase, router]);
 
   return (
     <Bounded innerClassName={styles.contentContainer}>
