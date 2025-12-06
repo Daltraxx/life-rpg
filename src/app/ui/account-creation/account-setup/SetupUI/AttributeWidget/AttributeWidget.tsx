@@ -94,6 +94,7 @@ export default function AttributeWidget() {
             onChange={(e) => setNewAttribute(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
+                e.preventDefault();
                 handleAddAttribute(newAttribute);
               }
             }}
