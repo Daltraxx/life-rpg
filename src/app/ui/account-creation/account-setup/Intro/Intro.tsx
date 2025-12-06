@@ -53,12 +53,6 @@ export default function Intro({ authUser }: { authUser: User }) {
   const router = useRouter();
   useEffect(() => {
     let isMounted = true;
-    // This should never happen, but just in case
-    if (!authUser.id) {
-      console.warn("No authenticated user found.");
-      router.push("/error?message=no%20authenticated%20user");
-      return;
-    }
 
     const fetchUsername = async () => {
       // TODO: use error tracking service for production logging
