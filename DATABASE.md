@@ -64,7 +64,7 @@ Full table can be found on the Supabase dashboard.
 - `is_completed`: BOOLEAN DEFAULT FALSE
   - Completion status
 - `frequency`: INT DEFAULT 1 CHECK (frequency >= 0)
-  - How often task must be completed (daily by default)
+  - Interval in days between required completions (1 = daily, 7 = weekly, etc.)
 - `rest_frequency`: INT DEFAULT 0 CHECK (rest_frequency >= 0)
   - Allowed rest days without streak reset
 - `last_rest_date`: DATE
