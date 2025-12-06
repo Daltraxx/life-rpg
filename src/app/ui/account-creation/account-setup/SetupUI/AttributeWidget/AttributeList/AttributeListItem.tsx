@@ -41,7 +41,7 @@ export default function AttributeListItem({
     if (!isDiscipline) {
       onDelete(attribute);
     }
-  }, [isDiscipline, attribute, onDelete]);
+  }, [attribute, onDelete]);
 
   return (
     <ListItem className={styles.attributeItem} size="24">
