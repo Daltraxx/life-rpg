@@ -54,7 +54,7 @@ const introCopy: IntroCopy = {
           text: "When defining a quest, you select which attributes are strengthened by it. Note that attributes level independently — they do not determine how much that quest is worth. Instead, they are present to give you a gauge of what aspects of yourself you are improving each day and a deserved sense of accomplishment in doing so.",
           nestedPoints: [
             "At a minimum, each quest automatically strengthens your Discipline attribute the standard amount.",
-            "For each attribute, if a task is especially significant in honing that attribute, up to two + symbols can be added to it. These will increase the points that attribute gains when completing that task. Be honest when making these evaluations!",
+            "For each attribute, if a task is especially significant in honing that attribute, up to two plus (+) symbols symbols can be added to it. These will increase the points that attribute gains when completing that task. Be honest when making these evaluations!",
           ],
         },
         {
