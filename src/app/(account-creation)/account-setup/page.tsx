@@ -17,14 +17,13 @@ export default async function AccountSetupPage() {
     error,
   } = await supabase.auth.getUser();
 
-  if (error || !user) {
-    if (error) {
-      console.error("Error fetching authenticated user:", error.message);
-      redirect("/error?reason=auth_error");
-    } else {
-      console.warn("No authenticated user found.");
-      redirect("/error?reason=no_authenticated_user");
-    }
+  if (error) {
+    console.error("Error fetching authenticated user:", error.message);
+    redirect("/error?reason=auth_error");
+  }
+  if (!user) {
+    console.warn("No authenticated user found.");
+    redirect("/error?reason=no_authenticated_user");
   }
 
   return (
