@@ -120,9 +120,11 @@ export default function AttributeWidget() {
       </div>
 
       <div>
-        <Heading as="h4" size="24">
-          Current Attributes
-        </Heading>
+        <div className={styles.currentAttributesHeadingContainer}>
+          <Heading as="h4" size="24" className={styles.currentAttributesHeading}>
+            Current Attributes
+          </Heading>
+        </div>
         <ul>{attributeList}</ul>
       </div>
     </section>

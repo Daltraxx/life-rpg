@@ -5,6 +5,8 @@
   gap: 1rem;
 }
 
+/* ADD ATTRIBUTE WIDGET */
+
 .addAttributeContainer {
   display: flex;
   flex-direction: column;
@@ -27,12 +29,6 @@
   padding-right: 0.5rem;
   width: calc(100% - var(--button-width));
   transition: border-color 0.2s ease;
-}
-
-@media (hover: hover) {
-  .addAttributeInput:hover {
-    border-color: var(--brown-600, #123e6d);
-  }
 }
 
 .addAttributeInput:focus {
@@ -68,6 +64,21 @@
 
 .attributeError {
   color: var(--red-500, #ef2101);
+}
+
+/* CURRENT ATTRIBUTES DISPLAY */
+
+.currentAttributesHeadingContainer {
+  width: fit-content;
+  background-color: var(--blue-700); /* Or any desired background color */
+  transform: skewX(-20deg); /* Adjust the angle for different skew */
+  margin-bottom: 0.5rem;
+}
+
+.currentAttributesHeading {
+  color: var(--background, #d89b00);
+  padding: 0 1rem;
+  transform: skewX(20deg); /* Counter-skew the text */
 }
 
 @media only screen and (min-width: 425px) {
