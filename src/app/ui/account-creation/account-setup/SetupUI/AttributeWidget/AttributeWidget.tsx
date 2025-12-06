@@ -93,7 +93,7 @@ export default function AttributeWidget() {
             value={newAttribute}
             onChange={(e) => {
               if (addAttributeError) setAddAttributeError("");
-              setNewAttribute(e.target.value)
+              setNewAttribute(e.target.value);
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
