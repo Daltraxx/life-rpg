@@ -125,7 +125,7 @@ export async function updateSession(
   }
 
   if (!user && !isUnauthenticatedPath) {
-    // no user and is not public path, potentially respond by redirecting the user to the login page
+    // no user and is not unauthenticated path, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
     url.pathname = "/";
     return NextResponse.redirect(url);
