@@ -16,6 +16,7 @@
 
 .removeAttributeButton path {
   fill: var(--blue-700, #091f36);
+  transition: fill 0.2s ease;
 }
 
 .removeAttributeButton:hover path,
