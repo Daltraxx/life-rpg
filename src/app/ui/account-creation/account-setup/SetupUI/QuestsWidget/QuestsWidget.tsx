@@ -80,6 +80,7 @@ export default function QuestsWidget() {
 
   const handleCreateQuest = () => {
     const trimmedQuestName = newQuestName.trim();
+    const loweredQuestName = trimmedQuestName.toLowerCase();
     // TODO: Add proper error handling and user feedback
     if (trimmedQuestName.length === 0) {
       return;
@@ -87,7 +88,7 @@ export default function QuestsWidget() {
     if (selectedAttributes.length === 0) {
       return;
     }
-    if (quests.some((quest) => quest.name === trimmedQuestName)) {
+    if (quests.some((quest) => quest.name.toLowerCase() === loweredQuestName)) {
       return;
     }
 
