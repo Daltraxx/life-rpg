@@ -197,7 +197,7 @@ export default function QuestsWidget() {
             <tr key={attribute.name} className={styles.affectedAttributeRow}>
               <td className={styles.affectedAttributeName}>{attribute.name}</td>
               <td className={styles.affectedAttributeStrength}>
-                {attribute.strength}
+                {strengthDisplayMap[attribute.strength]}
               </td>
               <td className={styles.deleteAttributeButton}>
                 <ButtonWrapper
