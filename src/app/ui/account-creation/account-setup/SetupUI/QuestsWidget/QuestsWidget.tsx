@@ -25,6 +25,7 @@ const strengthDisplayMap: Record<AttributeStrength, string> = {
 };
 
 const REQUIRED_ATTRIBUTE = "Discipline";
+const NO_AVAILABLE_ATTRIBUTES_TEXT = "No Attributes Available";
 
 // Temporary test quests data
 const TEST_ATTRIBUTES: string[] = [
@@ -41,7 +42,7 @@ export default function QuestsWidget() {
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(TEST_ATTRIBUTES);
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
-    availableAttributes[0] || "No Attributes Available"
+    availableAttributes[0] || NO_AVAILABLE_ATTRIBUTES_TEXT
   );
   const [currentAttributeStrength, setCurrentAttributeStrength] =
     useState<AttributeStrength>("normal");
@@ -60,7 +61,7 @@ export default function QuestsWidget() {
     setCurrentAttributeName(
       availableAttributes.find(
         (attr) => attr !== currentAttributeName
-      ) || "No Attributes Available"
+      ) || NO_AVAILABLE_ATTRIBUTES_TEXT
     );
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
@@ -104,7 +105,7 @@ export default function QuestsWidget() {
     setNewQuestName("");
     setSelectedAttributes([]);
     setAvailableAttributes(TEST_ATTRIBUTES);
-    setCurrentAttributeName(TEST_ATTRIBUTES[0] || "No Attributes Available");
+    setCurrentAttributeName(TEST_ATTRIBUTES[0] || NO_AVAILABLE_ATTRIBUTES_TEXT);
     setCurrentAttributeStrength("normal");
   };
 
