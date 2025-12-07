@@ -25,6 +25,12 @@ class Quest {
   }
 }
 
+const strengthDisplayMap: Record<AttributeStrength, string> = {
+  normal: "normal",
+  plus: "+",
+  plusPlus: "++",
+};
+
 const REQUIRED_ATTRIBUTE = "Discipline";
 
 // Temporary test quests data
@@ -152,7 +158,7 @@ export default function QuestsWidget() {
 
         {/* Amount attribute is affected by quest */}
         <button className={styles.attributeStrengthMenuToggle} type="button">
-          normal
+          {strengthDisplayMap[currentAttributeStrength]}
         </button>
         <div className={styles.attributeStrengthContainer}>
           <Label>
