@@ -6,6 +6,7 @@ import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useEffect, useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import { set } from "zod";
+import clsx from "clsx";
 
 type AttributeStrength = "normal" | "plus" | "plusPlus";
 
@@ -64,6 +65,11 @@ export default function QuestsWidget() {
     AffectedAttribute[]
   >([]);
 
+  const [attributeNameMenuOpen, setAttributeNameMenuOpen] =
+    useState<boolean>(false);
+  const [attributeStrengthMenuOpen, setAttributeStrengthMenuOpen] =
+    useState<boolean>(false);
+
   const handleAddAffectedAttribute = () => {
     // TODO: Add proper error handling and user feedback
     if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
@@ -73,9 +79,8 @@ export default function QuestsWidget() {
       prevAvailable.filter((attr) => attr !== currentAttributeName)
     );
     setCurrentAttributeName(
-      availableAttributes.find(
-        (attr) => attr !== currentAttributeName
-      ) || NO_AVAILABLE_ATTRIBUTES_TEXT
+      availableAttributes.find((attr) => attr !== currentAttributeName) ||
+        NO_AVAILABLE_ATTRIBUTES_TEXT
     );
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
@@ -148,10 +153,19 @@ export default function QuestsWidget() {
         <legend className={styles.label}>Affected Attributes:</legend>
 
         {/* Affected Attribute */}
-        <button className={styles.attributeSelectMenuToggle} type="button">
+        <button
+          className={styles.attributeSelectMenuToggle}
+          type="button"
+          onClick={() => setAttributeNameMenuOpen(!attributeNameMenuOpen)}
+        >
           {currentAttributeName}
         </button>
-        <div className={styles.attributeSelectContainer}>
+        <div
+          className={clsx(
+            styles.menu,
+            attributeNameMenuOpen && styles.open
+          )}
+        >
           {availableAttributes.map((attribute) => (
             <Label key={attribute} className={styles.attributeSelectLabel}>
               <input
@@ -167,10 +181,21 @@ export default function QuestsWidget() {
         </div>
 
         {/* Amount attribute is affected by quest */}
-        <button className={styles.attributeStrengthMenuToggle} type="button">
+        <button
+          className={styles.attributeStrengthMenuToggle}
+          type="button"
+          onClick={() =>
+            setAttributeStrengthMenuOpen(!attributeStrengthMenuOpen)
+          }
+        >
           {strengthDisplayMap[currentAttributeStrength]}
         </button>
-        <div className={styles.attributeStrengthContainer}>
+        <div
+          className={clsx(
+            styles.menu,
+            attributeStrengthMenuOpen && styles.open
+          )}
+        >
           <Label>
             <input
               type="radio"
