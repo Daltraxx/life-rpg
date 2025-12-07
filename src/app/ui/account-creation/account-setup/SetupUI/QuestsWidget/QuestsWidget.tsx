@@ -28,9 +28,6 @@ const TEST_SELECTED_ATTRIBUTES: AffectedAttribute[] = [
 ];
 
 export default function QuestsWidget() {
-  const [affectedAttributes, setAffectedAttributes] = useState<
-    [string, string][]
-  >([["Discipline", "normal"]]);
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(TEST_ATTRIBUTES);
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
