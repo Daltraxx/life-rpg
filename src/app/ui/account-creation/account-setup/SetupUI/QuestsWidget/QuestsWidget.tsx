@@ -134,17 +134,19 @@ export default function QuestsWidget() {
 
       {/* Affected attributes display table */}
       <table className={styles.affectedAttributesTable}>
-        {selectedAttributes.map((attribute) => (
-          <tr key={attribute.name} className={styles.affectedAttributeRow}>
-            <td className={styles.affectedAttributeName}>{attribute.name}</td>
-            <td className={styles.affectedAttributeStrength}>
-              {attribute.strength}
-            </td>
-            <td className={styles.deleteAttributeButton}>
-              <ButtonWrapper type="button">DELETE</ButtonWrapper>
-            </td>
-          </tr>
-        ))}
+        <tbody>
+          {selectedAttributes.map((attribute) => (
+            <tr key={attribute.name} className={styles.affectedAttributeRow}>
+              <td className={styles.affectedAttributeName}>{attribute.name}</td>
+              <td className={styles.affectedAttributeStrength}>
+                {attribute.strength}
+              </td>
+              <td className={styles.deleteAttributeButton}>
+                <ButtonWrapper type="button">DELETE</ButtonWrapper>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
 
       {/* Create quest button */}
