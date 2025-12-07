@@ -130,16 +130,18 @@ export default function QuestsWidget() {
       </Heading>
 
       {/* Input for creating quest name */}
-      <Label size="24" className={styles.label} htmlFor="add-quest">
-        Quest Name:
-      </Label>
-      <input
-        type="text"
-        id="add-quest"
-        className={styles.addQuestInput}
-        value={newQuestName}
-        onChange={(e) => setNewQuestName(e.target.value)}
-      />
+      <div className={styles.addQuestContainer}>
+        <Label size="24" className={styles.label} htmlFor="add-quest">
+          Quest Name:
+        </Label>
+        <input
+          type="text"
+          id="add-quest"
+          className={styles.addQuestInput}
+          value={newQuestName}
+          onChange={(e) => setNewQuestName(e.target.value)}
+        />
+      </div>
 
       {/* UI for adding the quest's affected attributes */}
       <fieldset className={styles.affectedAttributesFieldset}>
