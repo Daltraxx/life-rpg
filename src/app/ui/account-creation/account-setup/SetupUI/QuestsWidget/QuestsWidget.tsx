@@ -145,7 +145,7 @@ export default function QuestsWidget() {
 
       {/* UI for adding the quest's affected attributes */}
       <fieldset className={styles.affectedAttributesFieldset}>
-        <legend className={styles.affectedAttributesLegend}>Affected Attributes:</legend>
+        <legend className={styles.label}>Affected Attributes:</legend>
 
         {/* Affected Attribute */}
         <button className={styles.attributeSelectMenuToggle} type="button">

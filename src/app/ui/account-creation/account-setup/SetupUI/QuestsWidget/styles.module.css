@@ -6,6 +6,12 @@
   /* TODO: Ensure width is equalized with AttributeWidget on small screens */
 }
 
+.label {
+  font-size: 1.5rem;
+  width: 11rem;
+}
+
+/* ADD QUEST */
 .addQuestContainer {
   display: flex;
   flex-direction: column;
@@ -23,8 +29,14 @@
 .addQuestInput:focus {
   outline: none;
 }
+
 .addQuestInput:focus-visible {
   background-color: var(--orange-200);
+}
+
+/* ADD AFFECTED ATTRIBUTE */
+.affectedAttributeFieldset {
+  display: flex;
 }
 
 @media (min-width: 425px) {
