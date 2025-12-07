@@ -94,6 +94,8 @@ export default function QuestsWidget() {
     // Reset UI state
     setNewQuestName("");
     setSelectedAttributes([]);
+    setCurrentAttributeName(availableAttributes[0] || "No Attributes Available");
+    setCurrentAttributeStrength("normal");
   };
 
   return (
