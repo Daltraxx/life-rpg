@@ -51,6 +51,13 @@ export default function QuestsWidget() {
     );
   }, [currentAttributeName, currentAttributeStrength]);
 
+  const handleAddAffectedAttribute = () => {
+    setSelectedAttributes((prevSelected) => [
+      ...prevSelected,
+      currentAttribute,
+    ]);
+  };
+
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36" color="blue-700">
@@ -127,7 +134,11 @@ export default function QuestsWidget() {
         </div>
 
         {/* Add attribute to quest button */}
-        <button className={styles.addAttributeButton} type="button">
+        <button
+          className={styles.addAttributeButton}
+          type="button"
+          onClick={handleAddAffectedAttribute}
+        >
           ADD
         </button>
       </fieldset>
