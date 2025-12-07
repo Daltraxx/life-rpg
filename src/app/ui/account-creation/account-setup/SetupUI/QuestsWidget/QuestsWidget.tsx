@@ -58,6 +58,12 @@ export default function QuestsWidget() {
     ]);
   };
 
+  const handleDeleteAffectedAttribute = (attributeName: string) => {
+    setSelectedAttributes((prevSelected) =>
+      prevSelected.filter((attr) => attr.name !== attributeName)
+    );
+  };
+
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36" color="blue-700">
@@ -155,6 +161,10 @@ export default function QuestsWidget() {
               <td className={styles.deleteAttributeButton}>
                 <ButtonWrapper
                   className={styles.deleteAttributeButton}
+                  data-attribute-name={attribute.name}
+                  onClick={() =>
+                    handleDeleteAffectedAttribute(attribute.name)
+                  }
                   type="button"
                 >
                   DELETE
