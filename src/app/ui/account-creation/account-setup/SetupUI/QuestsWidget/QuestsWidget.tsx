@@ -229,7 +229,6 @@ export default function QuestsWidget() {
               <td className={styles.deleteAttributeButton}>
                 <ButtonWrapper
                   className={styles.deleteAttributeButton}
-                  data-attribute-name={attribute.name}
                   onClick={() => handleDeleteAffectedAttribute(attribute.name)}
                   type="button"
                 >
