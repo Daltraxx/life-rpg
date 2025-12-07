@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./styles.module.css";
-import Heading from "../../../../JSXWrappers/Heading";
+import Heading from "../../../../JSXWrappers/Heading/Heading";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";

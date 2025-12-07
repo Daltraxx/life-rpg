@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
-import Heading from "@/app/ui/JSXWrappers/Heading";
+import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import styles from "./styles.module.css";
 import { JSX } from "react";
 

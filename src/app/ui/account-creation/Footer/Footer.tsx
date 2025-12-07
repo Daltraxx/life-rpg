@@ -1,5 +1,5 @@
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
-import Heading from "@/app/ui/JSXWrappers/Heading";
+import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import styles from "./styles.module.css";
 import { Span } from "@/app/ui/JSXWrappers/TextWrappers";
 import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";

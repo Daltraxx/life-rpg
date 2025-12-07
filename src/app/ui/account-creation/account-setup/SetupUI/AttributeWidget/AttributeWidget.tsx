@@ -1,6 +1,6 @@
 "use client";
 
-import Heading from "@/app/ui/JSXWrappers/Heading";
+import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Label } from "../../../../JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { useState } from "react";
@@ -121,7 +121,11 @@ export default function AttributeWidget() {
 
       <div>
         <div className={styles.currentAttributesHeadingContainer}>
-          <Heading as="h4" size="24" className={styles.currentAttributesHeading}>
+          <Heading
+            as="h4"
+            size="24"
+            className={styles.currentAttributesHeading}
+          >
             Current Attributes
           </Heading>
         </div>

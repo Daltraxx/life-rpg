@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
-import Heading from "@/app/ui/JSXWrappers/Heading";
+import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 

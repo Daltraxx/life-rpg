@@ -3,7 +3,7 @@
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import introCopy from "@/copy/account-creation/account-setup/intro";
 import { ListItem, Span } from "@/app/ui/JSXWrappers/TextWrappers";
-import Heading from "@/app/ui/JSXWrappers/Heading";
+import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import styles from "./styles.module.css";
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import type { User } from "@supabase/supabase-js";

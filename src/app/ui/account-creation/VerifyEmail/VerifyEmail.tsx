@@ -1,5 +1,5 @@
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
-import Heading from "@/app/ui/JSXWrappers/Heading";
+import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 
@@ -22,8 +22,8 @@ export default function VerifyEmail({ email }: { email: string }) {
           Account Created Successfully!
         </Heading>
         <Paragraph size="36-responsive">
-          Please check <strong>{displayEmail}</strong> to verify your account so we can
-          get started.
+          Please check <strong>{displayEmail}</strong> to verify your account so
+          we can get started.
         </Paragraph>
       </section>
     </Bounded>
