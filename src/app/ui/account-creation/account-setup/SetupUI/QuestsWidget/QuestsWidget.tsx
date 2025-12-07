@@ -5,6 +5,7 @@ import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useEffect, useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
+import { set } from "zod";
 
 type AttributeStrength = "normal" | "plus" | "plusPlus";
 
@@ -53,6 +54,14 @@ export default function QuestsWidget() {
     if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
       return;
     }
+    setAvailableAttributes((prevAvailable) =>
+      prevAvailable.filter((attr) => attr !== currentAttributeName)
+    );
+    setCurrentAttributeName(
+      availableAttributes.find(
+        (attr) => attr !== currentAttributeName
+      ) || "No Attributes Available"
+    );
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
       new AffectedAttribute(currentAttributeName, currentAttributeStrength),
@@ -94,7 +103,8 @@ export default function QuestsWidget() {
     // Reset UI state
     setNewQuestName("");
     setSelectedAttributes([]);
-    setCurrentAttributeName(availableAttributes[0] || "No Attributes Available");
+    setAvailableAttributes(TEST_ATTRIBUTES);
+    setCurrentAttributeName(TEST_ATTRIBUTES[0] || "No Attributes Available");
     setCurrentAttributeStrength("normal");
   };
 
