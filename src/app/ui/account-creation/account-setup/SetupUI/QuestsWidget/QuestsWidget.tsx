@@ -18,6 +18,7 @@ export default function QuestsWidget() {
   const [affectedAttributes, setAffectedAttributes] = useState<
     [string, string][]
   >([["Discipline", "normal"]]);
+  const [selectedAttribute, setSelectedAttribute] = useState<string>("Empty");
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36" color="blue-700">
@@ -36,12 +37,18 @@ export default function QuestsWidget() {
 
         {/* Affected Attribute */}
         <button className={styles.attributeSelectMenuToggle} type="button">
-          Select Attributes
+          {selectedAttribute}
         </button>
         <div className={styles.attributeSelectContainer}>
           {TEST_ATTRIBUTES.map((attribute) => (
             <Label key={attribute} className={styles.attributeSelectLabel}>
-              <input type="radio" name="affectedAttribute" value={attribute} />
+              <input
+                type="radio"
+                name="affectedAttribute"
+                value={attribute}
+                checked={selectedAttribute === attribute}
+                onChange={() => setSelectedAttribute(attribute)}
+              />
               {attribute}
             </Label>
           ))}
