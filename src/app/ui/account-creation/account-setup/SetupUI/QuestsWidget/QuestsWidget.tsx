@@ -15,7 +15,9 @@ const TEST_ATTRIBUTES: string[] = [
 ];
 
 export default function QuestsWidget() {
-  const [affectedAttributes, setAffectedAttributes] = useState<[string, string][]>([["Discipline", "normal"]]);
+  const [affectedAttributes, setAffectedAttributes] = useState<
+    [string, string][]
+  >([["Discipline", "normal"]]);
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36">
@@ -33,7 +35,9 @@ export default function QuestsWidget() {
         <legend className={styles.label}>Affected Attributes</legend>
 
         {/* Affected Attribute */}
-        <button className={styles.attributeSelectMenuToggle}>Select Attributes</button>
+        <button className={styles.attributeSelectMenuToggle} type="button">
+          Select Attributes
+        </button>
         <div className={styles.attributeSelectContainer}>
           {TEST_ATTRIBUTES.map((attribute) => (
             <Label key={attribute} className={styles.attributeSelectLabel}>
@@ -42,17 +46,18 @@ export default function QuestsWidget() {
             </Label>
           ))}
         </div>
-        
+
         {/* Amount attribute is affected by quest */}
-        <button className={styles.attributeStrengthMenuToggle}>normal</button>
+        <button className={styles.attributeStrengthMenuToggle} type="button">
+          normal
+        </button>
         <div className={styles.attributeStrengthContainer}>
           <Label>
             <input type="radio" name="attributeStrength" value="normal" />
             normal
           </Label>
           <Label>
-            <input type="radio" name="attributeStrength" value="plus" />
-            +
+            <input type="radio" name="attributeStrength" value="plus" />+
           </Label>
           <Label>
             <input type="radio" name="attributeStrength" value="plusPlus" />
@@ -61,7 +66,9 @@ export default function QuestsWidget() {
         </div>
 
         {/* Add attribute to quest button */}
-        <button className={styles.addAttributeButton}>ADD</button>
+        <button className={styles.addAttributeButton} type="button">
+          ADD
+        </button>
       </fieldset>
 
       {/* Affected attributes display table */}
@@ -70,6 +77,9 @@ export default function QuestsWidget() {
           <tr key={attribute[0]} className={styles.affectedAttributeRow}>
             <td className={styles.affectedAttributeName}>{attribute[0]}</td>
             <td className={styles.affectedAttributeStrength}>{attribute[1]}</td>
+            <td className={styles.deleteAttributeButton}>
+              <ButtonWrapper type="button">DELETE</ButtonWrapper>
+            </td>
           </tr>
         ))}
       </table>
