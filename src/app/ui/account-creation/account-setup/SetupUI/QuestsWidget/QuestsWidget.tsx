@@ -20,7 +20,7 @@ export default function QuestsWidget() {
   >([["Discipline", "normal"]]);
   return (
     <section className={styles.widgetContainer}>
-      <Heading as="h3" size="36">
+      <Heading as="h3" size="36" color="blue-700">
         Add Quests
       </Heading>
 
