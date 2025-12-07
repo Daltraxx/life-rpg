@@ -9,22 +9,14 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 type AttributeStrength = "normal" | "plus" | "plusPlus";
 
 class AffectedAttribute {
-  constructor(public name: string, public strength: AttributeStrength) {
-    this.name = name;
-    this.strength = strength;
-  }
+  constructor(public name: string, public strength: AttributeStrength) {}
 }
-
 class Quest {
   constructor(
     public name: string,
     public affectedAttributes: AffectedAttribute[]
-  ) {
-    this.name = name;
-    this.affectedAttributes = affectedAttributes;
-  }
+  ) {}
 }
-
 const strengthDisplayMap: Record<AttributeStrength, string> = {
   normal: "normal",
   plus: "+",
