@@ -153,7 +153,12 @@ export default function QuestsWidget() {
                 {attribute.strength}
               </td>
               <td className={styles.deleteAttributeButton}>
-                <ButtonWrapper type="button">DELETE</ButtonWrapper>
+                <ButtonWrapper
+                  className={styles.deleteAttributeButton}
+                  type="button"
+                >
+                  DELETE
+                </ButtonWrapper>
               </td>
             </tr>
           ))}
