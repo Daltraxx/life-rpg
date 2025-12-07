@@ -15,6 +15,18 @@ class AffectedAttribute {
   }
 }
 
+class Quest {
+  constructor(
+    public name: string,
+    public affectedAttributes: AffectedAttribute[]
+  ) {
+    this.name = name;
+    this.affectedAttributes = affectedAttributes;
+  }
+}
+
+const REQUIRED_ATTRIBUTE = "Discipline";
+
 // Temporary test quests data
 const TEST_ATTRIBUTES: string[] = [
   "Discipline",
@@ -23,11 +35,10 @@ const TEST_ATTRIBUTES: string[] = [
   "Fitness",
 ];
 
-const TEST_SELECTED_ATTRIBUTES: AffectedAttribute[] = [
-  new AffectedAttribute("Discipline", "normal"),
-];
-
 export default function QuestsWidget() {
+  // TODO: Implement error handling and validation for quest creation
+  const [quests, setQuests] = useState<Quest[]>([]);
+  const [newQuestName, setNewQuestName] = useState<string>("");
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(TEST_ATTRIBUTES);
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
@@ -40,7 +51,7 @@ export default function QuestsWidget() {
   );
   const [selectedAttributes, setSelectedAttributes] = useState<
     AffectedAttribute[]
-  >(TEST_SELECTED_ATTRIBUTES);
+  >([]);
 
   useEffect(() => {
     setCurrentAttribute(
@@ -61,6 +72,37 @@ export default function QuestsWidget() {
     );
   };
 
+  const handleCreateQuest = () => {
+    const trimmedQuestName = newQuestName.trim();
+    // TODO: Add proper error handling and user feedback
+    if (trimmedQuestName.length === 0) {
+      return;
+    }
+    if (selectedAttributes.length === 0) {
+      return;
+    }
+    if (quests.some((quest) => quest.name === trimmedQuestName)) {
+      return;
+    }
+
+    // Add required attribute at base strength if user hasn't specified it
+    const affectedAttributes = selectedAttributes;
+    if (!affectedAttributes.some((attr) => attr.name === REQUIRED_ATTRIBUTE)) {
+      affectedAttributes.push(
+        new AffectedAttribute(REQUIRED_ATTRIBUTE, "normal")
+      );
+    }
+    setQuests((prevQuests) => [
+      ...prevQuests,
+      new Quest(trimmedQuestName, affectedAttributes),
+    ]);
+
+    // Reset UI state
+    setNewQuestName("");
+    setSelectedAttributes([]);
+    console.log("Quest created:", trimmedQuestName, affectedAttributes);
+  };
+
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36" color="blue-700">
@@ -71,7 +113,13 @@ export default function QuestsWidget() {
       <Label size="24" className={styles.label} htmlFor="add-quest">
         Quest Name:
       </Label>
-      <input type="text" id="add-quest" className={styles.addQuestInput} />
+      <input
+        type="text"
+        id="add-quest"
+        className={styles.addQuestInput}
+        value={newQuestName}
+        onChange={(e) => setNewQuestName(e.target.value)}
+      />
 
       {/* UI for adding the quest's affected attributes */}
       <fieldset className={styles.affectedAttributesFieldset}>
@@ -162,9 +210,7 @@ export default function QuestsWidget() {
                 <ButtonWrapper
                   className={styles.deleteAttributeButton}
                   data-attribute-name={attribute.name}
-                  onClick={() =>
-                    handleDeleteAffectedAttribute(attribute.name)
-                  }
+                  onClick={() => handleDeleteAffectedAttribute(attribute.name)}
                   type="button"
                 >
                   DELETE
@@ -176,7 +222,12 @@ export default function QuestsWidget() {
       </table>
 
       {/* Create quest button */}
-      <ButtonWrapper className={styles.createQuestButton} color="blue-700">
+      <ButtonWrapper
+        className={styles.createQuestButton}
+        type="button"
+        color="blue-700"
+        onClick={handleCreateQuest}
+      >
         CREATE QUEST
       </ButtonWrapper>
     </section>
