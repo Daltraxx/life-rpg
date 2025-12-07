@@ -60,6 +60,12 @@ export default function QuestsWidget() {
   }, [currentAttributeName, currentAttributeStrength]);
 
   const handleAddAffectedAttribute = () => {
+    // TODO: Add proper error handling and user feedback
+    if (
+      selectedAttributes.some((attr) => attr.name === currentAttribute.name)
+    ) {
+      return;
+    }
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
       currentAttribute,
@@ -100,7 +106,6 @@ export default function QuestsWidget() {
     // Reset UI state
     setNewQuestName("");
     setSelectedAttributes([]);
-    console.log("Quest created:", trimmedQuestName, affectedAttributes);
   };
 
   return (
