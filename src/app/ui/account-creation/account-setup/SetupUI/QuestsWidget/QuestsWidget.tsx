@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import Heading from "../../../../JSXWrappers/Heading";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useState } from "react";
+import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 
 // Temporary test quests data
 const TEST_ATTRIBUTES: string[] = [
@@ -14,17 +15,20 @@ const TEST_ATTRIBUTES: string[] = [
 ];
 
 export default function QuestsWidget() {
+  const [affectedAttributes, setAffectedAttributes] = useState<[string, string][]>([["Discipline", "normal"]]);
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36">
         Add Quests
       </Heading>
 
+      {/* Input for creating quest name */}
       <Label size="24" className={styles.label} htmlFor="add-quest">
         Quest Name:
       </Label>
       <input type="text" id="add-quest" className={styles.addQuestInput} />
 
+      {/* UI for adding the quest's affected attributes */}
       <fieldset className={styles.affectedAttributesFieldset}>
         <legend className={styles.label}>Affected Attributes</legend>
 
@@ -59,6 +63,21 @@ export default function QuestsWidget() {
         {/* Add attribute to quest button */}
         <button className={styles.addAttributeButton}>ADD</button>
       </fieldset>
+
+      {/* Affected attributes display table */}
+      <table className={styles.affectedAttributesTable}>
+        {affectedAttributes.map((attribute) => (
+          <tr key={attribute[0]} className={styles.affectedAttributeRow}>
+            <td className={styles.affectedAttributeName}>{attribute[0]}</td>
+            <td className={styles.affectedAttributeStrength}>{attribute[1]}</td>
+          </tr>
+        ))}
+      </table>
+
+      {/* Create quest button */}
+      <ButtonWrapper className={styles.createQuestButton} color="blue-700">
+        CREATE QUEST
+      </ButtonWrapper>
     </section>
   );
 }
