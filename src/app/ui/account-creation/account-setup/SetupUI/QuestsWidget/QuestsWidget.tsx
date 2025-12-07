@@ -40,7 +40,7 @@ export default function QuestsWidget() {
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(TEST_ATTRIBUTES);
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
-    availableAttributes[0]
+    availableAttributes[0] || "No Attributes Available"
   );
   const [currentAttributeStrength, setCurrentAttributeStrength] =
     useState<AttributeStrength>("normal");
