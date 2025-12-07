@@ -109,6 +109,7 @@ export default function QuestsWidget() {
               type="radio"
               name="attributeStrength"
               value="normal"
+              checked={currentAttributeStrength === "normal"}
               onChange={(e) =>
                 setCurrentAttributeStrength(e.target.value as AttributeStrength)
               }
@@ -120,6 +121,7 @@ export default function QuestsWidget() {
               type="radio"
               name="attributeStrength"
               value="plus"
+              checked={currentAttributeStrength === "plus"}
               onChange={(e) =>
                 setCurrentAttributeStrength(e.target.value as AttributeStrength)
               }
@@ -131,6 +133,7 @@ export default function QuestsWidget() {
               type="radio"
               name="attributeStrength"
               value="plusPlus"
+              checked={currentAttributeStrength === "plusPlus"}
               onChange={(e) =>
                 setCurrentAttributeStrength(e.target.value as AttributeStrength)
               }
