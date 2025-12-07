@@ -44,29 +44,18 @@ export default function QuestsWidget() {
   );
   const [currentAttributeStrength, setCurrentAttributeStrength] =
     useState<AttributeStrength>("normal");
-  const [currentAttribute, setCurrentAttribute] = useState<AffectedAttribute>(
-    new AffectedAttribute(currentAttributeName, currentAttributeStrength)
-  );
   const [selectedAttributes, setSelectedAttributes] = useState<
     AffectedAttribute[]
   >([]);
 
-  useEffect(() => {
-    setCurrentAttribute(
-      new AffectedAttribute(currentAttributeName, currentAttributeStrength)
-    );
-  }, [currentAttributeName, currentAttributeStrength]);
-
   const handleAddAffectedAttribute = () => {
     // TODO: Add proper error handling and user feedback
-    if (
-      selectedAttributes.some((attr) => attr.name === currentAttribute.name)
-    ) {
+    if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
       return;
     }
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
-      currentAttribute,
+      new AffectedAttribute(currentAttributeName, currentAttributeStrength),
     ]);
   };
 
@@ -131,7 +120,7 @@ export default function QuestsWidget() {
 
         {/* Affected Attribute */}
         <button className={styles.attributeSelectMenuToggle} type="button">
-          {currentAttribute.name}
+          {currentAttributeName}
         </button>
         <div className={styles.attributeSelectContainer}>
           {availableAttributes.map((attribute) => (
@@ -140,7 +129,7 @@ export default function QuestsWidget() {
                 type="radio"
                 name="affectedAttribute"
                 value={attribute}
-                checked={currentAttribute.name === attribute}
+                checked={currentAttributeName === attribute}
                 onChange={() => setCurrentAttributeName(attribute)}
               />
               {attribute}
