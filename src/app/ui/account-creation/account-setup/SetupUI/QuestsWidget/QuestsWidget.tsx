@@ -9,14 +9,28 @@ import { set } from "zod";
 
 type AttributeStrength = "normal" | "plus" | "plusPlus";
 
-class AffectedAttribute {
-  constructor(public name: string, public strength: AttributeStrength) {}
+interface AffectedAttribute {
+  name: string;
+  strength: AttributeStrength;
 }
-class Quest {
-  constructor(
-    public name: string,
-    public affectedAttributes: AffectedAttribute[]
-  ) {}
+
+class AffectedAttribute implements AffectedAttribute {
+  constructor(name: string, strength: AttributeStrength) {
+    this.name = name;
+    this.strength = strength;
+  }
+}
+
+interface Quest {
+  name: string;
+  affectedAttributes: AffectedAttribute[];
+}
+
+class Quest implements Quest {
+  constructor(name: string, affectedAttributes: AffectedAttribute[]) {
+    this.name = name;
+    this.affectedAttributes = affectedAttributes;
+  }
 }
 const strengthDisplayMap: Record<AttributeStrength, string> = {
   normal: "normal",
