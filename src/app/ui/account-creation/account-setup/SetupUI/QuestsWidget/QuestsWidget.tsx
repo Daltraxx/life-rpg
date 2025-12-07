@@ -93,7 +93,7 @@ export default function QuestsWidget() {
     }
 
     // Add required attribute at base strength if user hasn't specified it
-    const affectedAttributes = selectedAttributes;
+    const affectedAttributes = [...selectedAttributes];
     if (!affectedAttributes.some((attr) => attr.name === REQUIRED_ATTRIBUTE)) {
       affectedAttributes.push(
         new AffectedAttribute(REQUIRED_ATTRIBUTE, "normal")
