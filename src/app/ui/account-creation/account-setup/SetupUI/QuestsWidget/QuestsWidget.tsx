@@ -6,6 +6,16 @@ import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 
+class AffectedAttribute {
+  constructor(
+    public name: string,
+    public strength: "normal" | "plus" | "plusPlus"
+  ) {
+    this.name = name;
+    this.strength = strength;
+  }
+}
+
 // Temporary test quests data
 const TEST_ATTRIBUTES: string[] = [
   "Discipline",
@@ -14,11 +24,23 @@ const TEST_ATTRIBUTES: string[] = [
   "Fitness",
 ];
 
+const TEST_SELECTED_ATTRIBUTES: AffectedAttribute[] = [
+  new AffectedAttribute("Discipline", "normal"),
+];
+
 export default function QuestsWidget() {
   const [affectedAttributes, setAffectedAttributes] = useState<
     [string, string][]
   >([["Discipline", "normal"]]);
-  const [selectedAttribute, setSelectedAttribute] = useState<string>("Empty");
+  const [availableAttributes, setAvailableAttributes] =
+    useState<string[]>(TEST_ATTRIBUTES);
+  const [currentAttribute, setCurrentAttribute] = useState<string>(
+    availableAttributes[0]
+  );
+  const [selectedAttributes, setSelectedAttributes] = useState<
+    AffectedAttribute[]
+  >(TEST_SELECTED_ATTRIBUTES);
+
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36" color="blue-700">
@@ -37,7 +59,7 @@ export default function QuestsWidget() {
 
         {/* Affected Attribute */}
         <button className={styles.attributeSelectMenuToggle} type="button">
-          {selectedAttribute}
+          {currentAttribute}
         </button>
         <div className={styles.attributeSelectContainer}>
           {TEST_ATTRIBUTES.map((attribute) => (
@@ -46,8 +68,8 @@ export default function QuestsWidget() {
                 type="radio"
                 name="affectedAttribute"
                 value={attribute}
-                checked={selectedAttribute === attribute}
-                onChange={() => setSelectedAttribute(attribute)}
+                checked={currentAttribute === attribute}
+                onChange={() => setCurrentAttribute(attribute)}
               />
               {attribute}
             </Label>
@@ -80,10 +102,10 @@ export default function QuestsWidget() {
 
       {/* Affected attributes display table */}
       <table className={styles.affectedAttributesTable}>
-        {affectedAttributes.map((attribute) => (
-          <tr key={attribute[0]} className={styles.affectedAttributeRow}>
-            <td className={styles.affectedAttributeName}>{attribute[0]}</td>
-            <td className={styles.affectedAttributeStrength}>{attribute[1]}</td>
+        {selectedAttributes.map((attribute) => (
+          <tr key={attribute.name} className={styles.affectedAttributeRow}>
+            <td className={styles.affectedAttributeName}>{attribute.name}</td>
+            <td className={styles.affectedAttributeStrength}>{attribute.strength}</td>
             <td className={styles.deleteAttributeButton}>
               <ButtonWrapper type="button">DELETE</ButtonWrapper>
             </td>
