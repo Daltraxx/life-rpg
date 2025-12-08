@@ -207,7 +207,10 @@ export default function QuestsWidget() {
                       name="affectedAttribute"
                       value={attribute}
                       checked={currentAttributeName === attribute}
-                      onChange={() => setCurrentAttributeName(attribute)}
+                      onChange={() => {
+                        setCurrentAttributeName(attribute);
+                        setAttributeNameMenuOpen(false);
+                      }}
                     />
                     {attribute}
                   </Label>
