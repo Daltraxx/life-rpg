@@ -9,29 +9,26 @@ import clsx from "clsx";
 
 type AttributeStrength = "normal" | "plus" | "plusPlus";
 
-interface AffectedAttribute {
-  name: string;
-  strength: AttributeStrength;
-}
+class AffectedAttribute {
+  public name: string;
+  public strength: AttributeStrength;
 
-class AffectedAttribute implements AffectedAttribute {
   constructor(name: string, strength: AttributeStrength) {
     this.name = name;
     this.strength = strength;
   }
 }
 
-interface Quest {
-  name: string;
-  affectedAttributes: AffectedAttribute[];
-}
+class Quest {
+  public name: string;
+  public affectedAttributes: AffectedAttribute[];
 
-class Quest implements Quest {
   constructor(name: string, affectedAttributes: AffectedAttribute[]) {
     this.name = name;
     this.affectedAttributes = affectedAttributes;
   }
 }
+
 const strengthDisplayMap: Record<AttributeStrength, string> = {
   normal: "normal",
   plus: "+",
@@ -74,7 +71,7 @@ export default function QuestsWidget() {
     if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
       return;
     }
-    
+
     setAvailableAttributes((prevAvailable) => {
       const updatedAvailableAttributes = prevAvailable.filter(
         (attr) => attr !== currentAttributeName
