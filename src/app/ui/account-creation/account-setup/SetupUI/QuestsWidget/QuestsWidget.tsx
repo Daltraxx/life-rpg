@@ -9,6 +9,10 @@ import clsx from "clsx";
 
 type AttributeStrength = "normal" | "plus" | "plusPlus";
 
+function isAttributeStrength(value: string): value is AttributeStrength {
+  return value === "normal" || value === "plus" || value === "plusPlus";
+}
+
 class AffectedAttribute {
   public name: string;
   public strength: AttributeStrength;
@@ -65,6 +69,13 @@ export default function QuestsWidget() {
     useState<boolean>(false);
   const [attributeStrengthMenuOpen, setAttributeStrengthMenuOpen] =
     useState<boolean>(false);
+
+  const handleSetAttributeStrength = (strength: AttributeStrength) => {
+    if (isAttributeStrength(strength)) {
+      setCurrentAttributeStrength(strength);
+    }
+    setAttributeStrengthMenuOpen(false);
+  };
 
   const handleAddAffectedAttribute = () => {
     // TODO: Add proper error handling and user feedback
@@ -216,7 +227,8 @@ export default function QuestsWidget() {
                 className={clsx(
                   currentAttributeStrength === "plus" ||
                     currentAttributeStrength === "plusPlus"
-                    ? styles.plus : undefined
+                    ? styles.plus
+                    : undefined
                 )}
                 aria-expanded={attributeStrengthMenuOpen}
                 aria-controls="attribute-strength-menu"
@@ -241,11 +253,11 @@ export default function QuestsWidget() {
                     name="attributeStrength"
                     value="normal"
                     checked={currentAttributeStrength === "normal"}
-                    onChange={(e) =>
-                      setCurrentAttributeStrength(
+                    onChange={(e) => {
+                      handleSetAttributeStrength(
                         e.target.value as AttributeStrength
-                      )
-                    }
+                      );
+                    }}
                   />
                   normal
                 </Label>
@@ -255,11 +267,11 @@ export default function QuestsWidget() {
                     name="attributeStrength"
                     value="plus"
                     checked={currentAttributeStrength === "plus"}
-                    onChange={(e) =>
-                      setCurrentAttributeStrength(
+                    onChange={(e) => {
+                      handleSetAttributeStrength(
                         e.target.value as AttributeStrength
-                      )
-                    }
+                      );
+                    }}
                   />
                   +
                 </Label>
@@ -269,11 +281,11 @@ export default function QuestsWidget() {
                     name="attributeStrength"
                     value="plusPlus"
                     checked={currentAttributeStrength === "plusPlus"}
-                    onChange={(e) =>
-                      setCurrentAttributeStrength(
+                    onChange={(e) => {
+                      handleSetAttributeStrength(
                         e.target.value as AttributeStrength
-                      )
-                    }
+                      );
+                    }}
                   />
                   ++
                 </Label>
