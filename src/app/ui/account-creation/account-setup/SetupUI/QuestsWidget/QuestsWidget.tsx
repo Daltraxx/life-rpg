@@ -231,7 +231,7 @@ export default function QuestsWidget() {
                   currentAttributeStrength === "plus" ||
                     currentAttributeStrength === "plusPlus"
                     ? styles.plus
-                    : undefined
+                    : null
                 )}
                 aria-expanded={attributeStrengthMenuOpen}
                 aria-controls="attribute-strength-menu"
