@@ -132,6 +132,9 @@ export default function QuestsWidget() {
     setCurrentAttributeStrength("normal");
   };
 
+  // TODO: Add keyboard accessibility for dropdown menus
+  // Consider using Radix UI or similar library for better accessibility
+
   return (
     <section className={styles.widgetContainer}>
       <Heading as="h3" size="36" color="blue-700">
