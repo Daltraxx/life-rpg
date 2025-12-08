@@ -46,7 +46,7 @@
 }
 
 .addQuestInput:focus-visible {
-  background-color: var(--orange-200);
+  background-color: var(--orange-200, #e8c6a1);
 }
 
 /* ADD AFFECTED ATTRIBUTE */
