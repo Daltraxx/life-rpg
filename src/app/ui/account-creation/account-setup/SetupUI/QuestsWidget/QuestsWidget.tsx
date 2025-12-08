@@ -160,11 +160,16 @@ export default function QuestsWidget() {
         <button
           className={styles.attributeSelectMenuToggle}
           type="button"
+          aria-expanded={attributeNameMenuOpen}
+          aria-controls="attribute-name-menu"
+          aria-haspopup="true"
           onClick={() => setAttributeNameMenuOpen(!attributeNameMenuOpen)}
         >
           {currentAttributeName}
         </button>
         <div
+          id="attribute-name-menu"
+          role="menu"
           className={clsx(styles.menu, attributeNameMenuOpen && styles.open)}
         >
           {availableAttributes.map((attribute) => (
@@ -185,6 +190,9 @@ export default function QuestsWidget() {
         <button
           className={styles.attributeStrengthMenuToggle}
           type="button"
+          aria-expanded={attributeStrengthMenuOpen}
+          aria-controls="attribute-strength-menu"
+          aria-haspopup="true"
           onClick={() =>
             setAttributeStrengthMenuOpen(!attributeStrengthMenuOpen)
           }
@@ -192,6 +200,8 @@ export default function QuestsWidget() {
           {strengthDisplayMap[currentAttributeStrength]}
         </button>
         <div
+          id="attribute-strength-menu"
+          role="menu"
           className={clsx(
             styles.menu,
             attributeStrengthMenuOpen && styles.open
