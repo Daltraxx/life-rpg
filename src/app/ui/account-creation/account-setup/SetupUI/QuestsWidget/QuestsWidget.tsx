@@ -3,9 +3,8 @@
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
-import { set } from "zod";
 import clsx from "clsx";
 
 type AttributeStrength = "normal" | "plus" | "plusPlus";
