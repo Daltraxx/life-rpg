@@ -250,48 +250,20 @@ export default function QuestsWidget() {
                   attributeStrengthMenuOpen && styles.open
                 )}
               >
-                <Label>
-                  <input
-                    type="radio"
-                    name="attributeStrength"
-                    value="normal"
-                    checked={currentAttributeStrength === "normal"}
-                    onChange={(e) => {
-                      handleSetAttributeStrength(
-                        e.target.value as AttributeStrength
-                      );
-                    }}
-                  />
-                  normal
-                </Label>
-                <Label>
-                  <input
-                    type="radio"
-                    name="attributeStrength"
-                    value="plus"
-                    checked={currentAttributeStrength === "plus"}
-                    onChange={(e) => {
-                      handleSetAttributeStrength(
-                        e.target.value as AttributeStrength
-                      );
-                    }}
-                  />
-                  +
-                </Label>
-                <Label>
-                  <input
-                    type="radio"
-                    name="attributeStrength"
-                    value="plusPlus"
-                    checked={currentAttributeStrength === "plusPlus"}
-                    onChange={(e) => {
-                      handleSetAttributeStrength(
-                        e.target.value as AttributeStrength
-                      );
-                    }}
-                  />
-                  ++
-                </Label>
+                {(Object.keys(strengthDisplayMap) as AttributeStrength[]).map(
+                  (strengthKey) => (
+                    <Label key={strengthKey}>
+                      <input
+                        type="radio"
+                        name="attributeStrength"
+                        value={strengthKey}
+                        checked={currentAttributeStrength === strengthKey}
+                        onChange={() => handleSetAttributeStrength(strengthKey)}
+                      />
+                      {strengthDisplayMap[strengthKey]}
+                    </Label>
+                  )
+                )}
               </div>
             </div>
           </div>
