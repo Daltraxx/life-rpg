@@ -103,10 +103,13 @@ export default function QuestsWidget() {
     setSelectedAttributes((prevSelected) =>
       prevSelected.filter((attr) => attr.name !== attributeName)
     );
-    setAvailableAttributes((prevAvailable) => [
-      ...prevAvailable,
-      attributeName,
-    ]);
+    setAvailableAttributes((prevAvailable) => {
+      const updatedAvailableAttributes = [...prevAvailable, attributeName];
+      // Sort available attributes to maintain order
+      return updatedAvailableAttributes.sort(
+        (a, b) => TEST_ATTRIBUTES.indexOf(a) - TEST_ATTRIBUTES.indexOf(b)
+      );
+    });
   };
 
   const handleCreateQuest = () => {
