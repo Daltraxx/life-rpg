@@ -74,13 +74,17 @@ export default function QuestsWidget() {
     if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
       return;
     }
-    setAvailableAttributes((prevAvailable) =>
-      prevAvailable.filter((attr) => attr !== currentAttributeName)
-    );
-    setCurrentAttributeName(
-      availableAttributes.find((attr) => attr !== currentAttributeName) ||
-        NO_AVAILABLE_ATTRIBUTES_TEXT
-    );
+    
+    setAvailableAttributes((prevAvailable) => {
+      const updatedAvailableAttributes = prevAvailable.filter(
+        (attr) => attr !== currentAttributeName
+      );
+      setCurrentAttributeName(
+        updatedAvailableAttributes[0] || NO_AVAILABLE_ATTRIBUTES_TEXT
+      );
+      return updatedAvailableAttributes;
+    });
+
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
       new AffectedAttribute(currentAttributeName, currentAttributeStrength),
@@ -164,10 +168,7 @@ export default function QuestsWidget() {
           {currentAttributeName}
         </button>
         <div
-          className={clsx(
-            styles.menu,
-            attributeNameMenuOpen && styles.open
-          )}
+          className={clsx(styles.menu, attributeNameMenuOpen && styles.open)}
         >
           {availableAttributes.map((attribute) => (
             <Label key={attribute} className={styles.attributeSelectLabel}>
