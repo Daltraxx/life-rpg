@@ -91,6 +91,10 @@ export default function QuestsWidget() {
     setSelectedAttributes((prevSelected) =>
       prevSelected.filter((attr) => attr.name !== attributeName)
     );
+    setAvailableAttributes((prevAvailable) => [
+      ...prevAvailable,
+      attributeName,
+    ]);
   };
 
   const handleCreateQuest = () => {
