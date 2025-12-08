@@ -138,7 +138,7 @@ export default function QuestsWidget() {
         Add Quests
       </Heading>
 
-      {/* Input for creating quest name */}
+      {/* INPUT FOR CREATING QUEST NAME */}
       <div className={styles.addQuestContainer}>
         <Label size="24" className={styles.label} htmlFor="add-quest">
           Quest Name:
@@ -152,11 +152,11 @@ export default function QuestsWidget() {
         />
       </div>
 
-      {/* UI for adding the quest's affected attributes */}
+      {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
       <fieldset className={styles.affectedAttributesFieldset}>
         <legend className={styles.label}>Affected Attributes:</legend>
 
-        {/* Affected Attribute */}
+        {/* AFFECTED ATTRIBUTE */}
         <button
           className={styles.attributeSelectMenuToggle}
           type="button"
@@ -186,7 +186,7 @@ export default function QuestsWidget() {
           ))}
         </div>
 
-        {/* Amount attribute is affected by quest */}
+        {/* AMOUNT ATTRIBUTE IS AFFECTED BY QUEST */}
         <button
           className={styles.attributeStrengthMenuToggle}
           type="button"
@@ -245,7 +245,7 @@ export default function QuestsWidget() {
           </Label>
         </div>
 
-        {/* Add attribute to quest button */}
+        {/* ADD ATTRIBUTE TO QUEST BUTTON */}
         <button
           className={styles.addAttributeButton}
           type="button"
@@ -256,7 +256,7 @@ export default function QuestsWidget() {
         </button>
       </fieldset>
 
-      {/* Affected attributes display table */}
+      {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
       <table className={styles.affectedAttributesTable}>
         <tbody>
           {selectedAttributes.map((attribute) => (
@@ -279,7 +279,7 @@ export default function QuestsWidget() {
         </tbody>
       </table>
 
-      {/* Create quest button */}
+      {/* CREATE QUEST BUTTON */}
       <ButtonWrapper
         className={styles.createQuestButton}
         type="button"
