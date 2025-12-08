@@ -29,7 +29,6 @@ const DEFAULT_SIZE: FontSize = "36";
  * @param props.color - Optional predefined heading color key (e.g., `"blue-700"`). If omitted, no color class is applied.
  * @param props.children - The content to be rendered inside the heading.
  * @param props.className - Additional CSS classes to apply to the heading.
- * @param props - Additional HTML attributes are spread onto the heading element.
  *
  * @returns A rendered heading element with applied styles and content.
  *
