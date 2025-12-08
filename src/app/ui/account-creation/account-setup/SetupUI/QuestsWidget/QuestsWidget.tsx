@@ -250,6 +250,7 @@ export default function QuestsWidget() {
           className={styles.addAttributeButton}
           type="button"
           onClick={handleAddAffectedAttribute}
+          disabled={currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT}
         >
           ADD
         </button>
