@@ -12,7 +12,7 @@ const headingColorMap = {
 type HeadingColor = keyof typeof headingColorMap;
 
 // NOTE: Forwarding refs is no longer necessary in React 19
-export interface HeadingProps extends Omit<ComponentProps<'h2'>, 'as'> {
+export interface HeadingProps extends Omit<ComponentProps<"h2">, "as"> {
   as?: HeadingLevel;
   size?: FontSize;
   color?: HeadingColor;
@@ -52,8 +52,8 @@ export default function Heading({
       className={clsx(
         "font-main",
         fontSizeToTWMap[size],
-        className,
-        color && headingColorMap[color]
+        color && headingColorMap[color],
+        className
       )}
       {...restProps}
     >
