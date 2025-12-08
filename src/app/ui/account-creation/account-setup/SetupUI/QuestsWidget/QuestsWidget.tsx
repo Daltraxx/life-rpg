@@ -138,122 +138,156 @@ export default function QuestsWidget() {
         Add Quests
       </Heading>
 
-      {/* INPUT FOR CREATING QUEST NAME */}
-      <div className={styles.addQuestContainer}>
-        <Label size="24" className={styles.label} htmlFor="add-quest">
-          Quest Name:
-        </Label>
-        <input
-          type="text"
-          id="add-quest"
-          className={styles.addQuestInput}
-          value={newQuestName}
-          onChange={(e) => setNewQuestName(e.target.value)}
-        />
-      </div>
+      <Label
+        size="24"
+        className={clsx(styles.label, styles.addQuestLabel)}
+        htmlFor="add-quest"
+      >
+        Quest Name:
+      </Label>
+      <input
+        type="text"
+        id="add-quest"
+        className={styles.addQuestInput}
+        value={newQuestName}
+        onChange={(e) => setNewQuestName(e.target.value)}
+      />
 
       {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
-      <fieldset className={styles.affectedAttributesFieldset}>
-        <legend className={styles.label}>Affected Attributes:</legend>
+      <fieldset className={styles.addAffectedAttributeFieldset}>
+        <div className={styles.addAffectedAttributeContainer}>
+          <legend className={styles.label}>Affected Attributes:</legend>
 
-        {/* AFFECTED ATTRIBUTE */}
-        <button
-          className={styles.attributeSelectMenuToggle}
-          type="button"
-          aria-expanded={attributeNameMenuOpen}
-          aria-controls="attribute-name-menu"
-          aria-haspopup="true"
-          onClick={() => setAttributeNameMenuOpen(!attributeNameMenuOpen)}
-        >
-          {currentAttributeName}
-        </button>
-        <div
-          id="attribute-name-menu"
-          role="menu"
-          className={clsx(styles.menu, attributeNameMenuOpen && styles.open)}
-        >
-          {availableAttributes.map((attribute) => (
-            <Label key={attribute} className={styles.attributeSelectLabel}>
-              <input
-                type="radio"
-                name="affectedAttribute"
-                value={attribute}
-                checked={currentAttributeName === attribute}
-                onChange={() => setCurrentAttributeName(attribute)}
-              />
-              {attribute}
-            </Label>
-          ))}
+          {/* AFFECTED ATTRIBUTE */}
+          <div className={styles.attributeOptionsContainer}>
+            <div
+              className={clsx(
+                styles.menuContainer,
+                styles.attributeSelectMenuContainer
+              )}
+            >
+              <button
+                type="button"
+                aria-expanded={attributeNameMenuOpen}
+                aria-controls="attribute-name-menu"
+                aria-haspopup="true"
+                onClick={() => setAttributeNameMenuOpen(!attributeNameMenuOpen)}
+              >
+                {currentAttributeName}
+              </button>
+              <div
+                id="attribute-name-menu"
+                role="menu"
+                className={clsx(
+                  styles.menu,
+                  attributeNameMenuOpen && styles.open
+                )}
+              >
+                {availableAttributes.map((attribute) => (
+                  <Label
+                    key={attribute}
+                    className={styles.attributeSelectLabel}
+                  >
+                    <input
+                      type="radio"
+                      name="affectedAttribute"
+                      value={attribute}
+                      checked={currentAttributeName === attribute}
+                      onChange={() => setCurrentAttributeName(attribute)}
+                    />
+                    {attribute}
+                  </Label>
+                ))}
+              </div>
+            </div>
+
+            {/* AMOUNT ATTRIBUTE IS AFFECTED BY QUEST */}
+            <div
+              className={clsx(
+                styles.menuContainer,
+                styles.attributeStrengthMenuContainer
+              )}
+            >
+              <button
+                type="button"
+                className={clsx(
+                  currentAttributeStrength === "plus" ||
+                    currentAttributeStrength === "plusPlus"
+                    ? styles.plus : undefined
+                )}
+                aria-expanded={attributeStrengthMenuOpen}
+                aria-controls="attribute-strength-menu"
+                aria-haspopup="true"
+                onClick={() =>
+                  setAttributeStrengthMenuOpen(!attributeStrengthMenuOpen)
+                }
+              >
+                {strengthDisplayMap[currentAttributeStrength]}
+              </button>
+              <div
+                id="attribute-strength-menu"
+                role="menu"
+                className={clsx(
+                  styles.menu,
+                  attributeStrengthMenuOpen && styles.open
+                )}
+              >
+                <Label>
+                  <input
+                    type="radio"
+                    name="attributeStrength"
+                    value="normal"
+                    checked={currentAttributeStrength === "normal"}
+                    onChange={(e) =>
+                      setCurrentAttributeStrength(
+                        e.target.value as AttributeStrength
+                      )
+                    }
+                  />
+                  normal
+                </Label>
+                <Label>
+                  <input
+                    type="radio"
+                    name="attributeStrength"
+                    value="plus"
+                    checked={currentAttributeStrength === "plus"}
+                    onChange={(e) =>
+                      setCurrentAttributeStrength(
+                        e.target.value as AttributeStrength
+                      )
+                    }
+                  />
+                  +
+                </Label>
+                <Label>
+                  <input
+                    type="radio"
+                    name="attributeStrength"
+                    value="plusPlus"
+                    checked={currentAttributeStrength === "plusPlus"}
+                    onChange={(e) =>
+                      setCurrentAttributeStrength(
+                        e.target.value as AttributeStrength
+                      )
+                    }
+                  />
+                  ++
+                </Label>
+              </div>
+            </div>
+          </div>
+
+          {/* ADD ATTRIBUTE TO QUEST BUTTON */}
+          <button
+            className={styles.addAttributeButton}
+            type="button"
+            onClick={handleAddAffectedAttribute}
+            disabled={currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT}
+          >
+            ADD
+          </button>
         </div>
-
-        {/* AMOUNT ATTRIBUTE IS AFFECTED BY QUEST */}
-        <button
-          className={styles.attributeStrengthMenuToggle}
-          type="button"
-          aria-expanded={attributeStrengthMenuOpen}
-          aria-controls="attribute-strength-menu"
-          aria-haspopup="true"
-          onClick={() =>
-            setAttributeStrengthMenuOpen(!attributeStrengthMenuOpen)
-          }
-        >
-          {strengthDisplayMap[currentAttributeStrength]}
-        </button>
-        <div
-          id="attribute-strength-menu"
-          role="menu"
-          className={clsx(
-            styles.menu,
-            attributeStrengthMenuOpen && styles.open
-          )}
-        >
-          <Label>
-            <input
-              type="radio"
-              name="attributeStrength"
-              value="normal"
-              checked={currentAttributeStrength === "normal"}
-              onChange={(e) =>
-                setCurrentAttributeStrength(e.target.value as AttributeStrength)
-              }
-            />
-            normal
-          </Label>
-          <Label>
-            <input
-              type="radio"
-              name="attributeStrength"
-              value="plus"
-              checked={currentAttributeStrength === "plus"}
-              onChange={(e) =>
-                setCurrentAttributeStrength(e.target.value as AttributeStrength)
-              }
-            />
-            +
-          </Label>
-          <Label>
-            <input
-              type="radio"
-              name="attributeStrength"
-              value="plusPlus"
-              checked={currentAttributeStrength === "plusPlus"}
-              onChange={(e) =>
-                setCurrentAttributeStrength(e.target.value as AttributeStrength)
-              }
-            />
-            ++
-          </Label>
-        </div>
-
-        {/* ADD ATTRIBUTE TO QUEST BUTTON */}
-        <button
-          className={styles.addAttributeButton}
-          type="button"
-          onClick={handleAddAffectedAttribute}
-          disabled={currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT}
-        >
-          ADD
-        </button>
       </fieldset>
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
