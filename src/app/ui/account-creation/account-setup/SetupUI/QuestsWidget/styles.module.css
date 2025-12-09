@@ -115,7 +115,6 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 1.5rem;
-  text-align: center;
 }
 
 .affectedAttributeRow {
@@ -126,6 +125,17 @@
 .affectedAttributeName,
 .affectedAttributeStrength {
   border: 3px solid var(--blue-700, #091f36);
+}
+
+.affectedAttributeCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.affectedAttributeRow:not(:last-child) .affectedAttributeCell,
+.affectedAttributeRow:not(:last-child) .deleteAttributeButton {
+  border-bottom: none;
 }
 
 .affectedAttributeName {

@@ -288,9 +288,17 @@ export default function QuestsWidget() {
         <tbody>
           {selectedAttributes.map((attribute) => (
             <tr key={attribute.name} className={styles.affectedAttributeRow}>
-              <td className={styles.affectedAttributeName}>{attribute.name}</td>
               <td
                 className={clsx(
+                  styles.affectedAttributeCell,
+                  styles.affectedAttributeName
+                )}
+              >
+                {attribute.name}
+              </td>
+              <td
+                className={clsx(
+                  styles.affectedAttributeCell,
                   styles.affectedAttributeStrength,
                   attribute.strength === "plus" ||
                     attribute.strength === "plusPlus"
@@ -300,7 +308,11 @@ export default function QuestsWidget() {
               >
                 {strengthDisplayMap[attribute.strength]}
               </td>
-              <td className={styles.deleteAttributeButtonCell}>
+              <td
+                className={clsx(
+                  styles.deleteAttributeButtonCell
+                )}
+              >
                 <button
                   className={clsx(
                     styles.appendedButton,
