@@ -110,6 +110,9 @@ export default function QuestsWidget() {
         (a, b) => TEST_ATTRIBUTES.indexOf(a) - TEST_ATTRIBUTES.indexOf(b)
       );
     });
+    setCurrentAttributeName((prevCurrent) => 
+      prevCurrent === NO_AVAILABLE_ATTRIBUTES_TEXT ? attributeName : prevCurrent
+    );
   };
 
   const handleCreateQuest = () => {
