@@ -112,8 +112,10 @@
 .addAttributeButton:focus-visible {
   background-color: var(--blue-300, #47a2f5);
 }
-.addAttributeButton:hover {
-  background-color: var(--blue-300, #47a2f5);
+@media (hover: hover) {
+  .addAttributeButton:hover {
+    background-color: var(--blue-300, #47a2f5);
+  }
 }
 .addAttributeButton:active {
   background-color: var(--blue-500, #0f3257);
