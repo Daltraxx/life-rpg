@@ -30,17 +30,17 @@
 /* ADD QUEST */
 .addQuestLabel {
   grid-row: 2;
-  grid-column: 1;
+  grid-column: 1 / span 3;
 }
 
 .addQuestInput {
+  grid-row: 3;
+  grid-column: 1 / span 3;
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   border: 3px solid var(--blue-700, #091f36);
   transition: background-color 0.2s ease;
   font-size: 1.25rem;
-  grid-row: 2;
-  grid-column: 2;
 }
 
 .addQuestInput:focus {
@@ -53,7 +53,7 @@
 
 /* ADD AFFECTED ATTRIBUTE */
 .addAffectedAttributeFieldset {
-  grid-row: 3;
+  grid-row: 4;
   grid-column: 1 / span 3;
 }
 
@@ -62,8 +62,14 @@
   grid-template-columns: 2fr 3fr 1fr;
 }
 
+.addAffectedAttributeContainer legend {
+  grid-row: 1;
+  grid-column: 1 / span 3;
+}
+
 .attributeOptionsContainer {
-  grid-column: 2;
+  grid-row: 2;
+  grid-column: 1 / span 2;
   display: flex;
   justify-content: space-around;
   font-size: 1.5rem;
@@ -96,7 +102,7 @@
 
 .plus {
   font-size: 2rem;
-  line-height: .55;
+  line-height: 0.55;
 }
 
 .addAttributeButton {
@@ -112,5 +118,22 @@
 }
 
 @media (min-width: 425px) {
-  
+  .addQuestLabel {
+    grid-row: 2;
+    grid-column: 1;
+  }
+
+  .addQuestInput {
+    grid-row: 2;
+    grid-column: 2;
+  }
+
+  .addAffectedAttributeContainer legend {
+    grid-column: 1;
+  }
+
+  .attributeOptionsContainer {
+    grid-row: 1;
+    grid-column: 2;
+  }
 }
