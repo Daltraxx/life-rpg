@@ -40,7 +40,7 @@ const strengthDisplayMap: Record<AttributeStrength, string> = {
 };
 
 const REQUIRED_ATTRIBUTE = "Discipline";
-const NO_AVAILABLE_ATTRIBUTES_TEXT = "No Attributes Available";
+const NO_AVAILABLE_ATTRIBUTES_TEXT = "N/A";
 
 // Temporary test quests data
 const TEST_ATTRIBUTES: string[] = [
