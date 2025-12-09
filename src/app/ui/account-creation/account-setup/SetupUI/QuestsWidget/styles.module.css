@@ -109,6 +109,15 @@
 .addAttributeButton {
   background-color: var(--blue-400, #123e6d);
 }
+.addAttributeButton:focus-visible {
+  background-color: var(--blue-300, #47a2f5);
+}
+.addAttributeButton:hover {
+  background-color: var(--blue-300, #47a2f5);
+}
+.addAttributeButton:active {
+  background-color: var(--blue-500, #0f3257);
+}
 
 /* Affected Attributes Display */
 
@@ -156,6 +165,15 @@
 
 .deleteAttributeButton {
   background-color: var(--orange-600, #cd6d07);
+}
+.deleteAttributeButton:focus-visible {
+  background-color: var(--orange-500, #f68309);
+}
+.deleteAttributeButton:hover {
+  background-color: var(--orange-500, #f68309);
+}
+.deleteAttributeButton:active {
+  background-color: var(--orange-650, #c56907);
 }
 
 @media (min-width: 425px) {
