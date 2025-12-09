@@ -273,7 +273,7 @@ export default function QuestsWidget() {
 
           {/* ADD ATTRIBUTE TO QUEST BUTTON */}
           <button
-            className={styles.addAttributeButton}
+            className={clsx(styles.appendedButton, styles.addAttributeButton)}
             type="button"
             onClick={handleAddAffectedAttribute}
             disabled={currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT}
@@ -289,17 +289,28 @@ export default function QuestsWidget() {
           {selectedAttributes.map((attribute) => (
             <tr key={attribute.name} className={styles.affectedAttributeRow}>
               <td className={styles.affectedAttributeName}>{attribute.name}</td>
-              <td className={styles.affectedAttributeStrength}>
+              <td
+                className={clsx(
+                  styles.affectedAttributeStrength,
+                  attribute.strength === "plus" ||
+                    attribute.strength === "plusPlus"
+                    ? styles.plus
+                    : null
+                )}
+              >
                 {strengthDisplayMap[attribute.strength]}
               </td>
-              <td className={styles.deleteAttributeButton}>
-                <ButtonWrapper
-                  className={styles.deleteAttributeButton}
+              <td className={styles.deleteAttributeButtonCell}>
+                <button
+                  className={clsx(
+                    styles.appendedButton,
+                    styles.deleteAttributeButton
+                  )}
                   onClick={() => handleDeleteAffectedAttribute(attribute.name)}
                   type="button"
                 >
                   DELETE
-                </ButtonWrapper>
+                </button>
               </td>
             </tr>
           ))}
