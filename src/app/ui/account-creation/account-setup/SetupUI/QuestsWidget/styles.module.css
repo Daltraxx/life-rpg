@@ -1,12 +1,13 @@
 .widgetContainer {
+  --grid-layout: 2fr 5fr 2fr;
+  --two-column-template: 5fr 4fr;
+  --grid-layout-options-and-button: 5fr 2fr;
   color: var(--blue-700, #091f36);
   display: flex;
   flex-direction: column;
   gap: 1rem;
   width: 100%;
-  --two-column-template: 5fr 4fr;
-  --grid-layout: 2fr 5fr 2fr;
-  --grid-layout-options-and-button: 5fr 2fr;
+  max-width: 36.25rem;
   /* TODO: Ensure width is equalized with AttributeWidget on small screens */
 }
 
@@ -186,13 +187,17 @@
   background-color: var(--orange-650, #c56907);
 }
 
-@media (min-width: 425px) {
+@media (min-width: 768px) {
   .widgetContainer {
+    --grid-layout: 2fr 3fr 1fr;
+    --two-column-template: 3fr 2fr;
+    --grid-layout-options-and-button: 3fr 1fr;
     display: grid;
     grid-template-columns: var(--grid-layout);
     grid-auto-rows: auto;
     row-gap: 1rem;
     column-gap: 0;
+    min-width: 33.5rem;
   }
 
   .heading {
