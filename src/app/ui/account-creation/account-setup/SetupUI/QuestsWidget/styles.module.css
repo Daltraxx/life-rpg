@@ -121,7 +121,7 @@
   background-color: var(--blue-500, #0f3257);
 }
 
-/* Affected Attributes Display */
+/* AFFECTED ATTRIBUTES DISPLAY */
 
 .affectedAttributesTable {
   width: 100%;
@@ -185,6 +185,8 @@
     grid-auto-rows: auto;
     row-gap: 1rem;
   }
+
+  /* ADD QUEST */
   .addQuestLabel {
     grid-row: 2;
     grid-column: 1;
@@ -195,10 +197,12 @@
     grid-column: 2;
   }
 
+  /* ADD AFFECTED ATTRIBUTE */
   .addAffectedAttributeContainer legend {
     grid-column: 1;
   }
 
+  /* AFFECTED ATTRIBUTES DISPLAY */
   .attributeOptionsContainer {
     grid-row: 1;
     grid-column: 2;
