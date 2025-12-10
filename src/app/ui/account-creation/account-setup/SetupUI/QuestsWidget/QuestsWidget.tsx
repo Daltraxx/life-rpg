@@ -71,9 +71,7 @@ export default function QuestsWidget() {
     useState<boolean>(false);
 
   const handleSetAttributeStrength = (strength: AttributeStrength) => {
-    if (isAttributeStrength(strength)) {
-      setCurrentAttributeStrength(strength);
-    }
+    setCurrentAttributeStrength(strength);
     setAttributeStrengthMenuOpen(false);
   };
 
@@ -110,7 +108,7 @@ export default function QuestsWidget() {
         (a, b) => TEST_ATTRIBUTES.indexOf(a) - TEST_ATTRIBUTES.indexOf(b)
       );
     });
-    setCurrentAttributeName((prevCurrent) => 
+    setCurrentAttributeName((prevCurrent) =>
       prevCurrent === NO_AVAILABLE_ATTRIBUTES_TEXT ? attributeName : prevCurrent
     );
   };
@@ -313,11 +311,7 @@ export default function QuestsWidget() {
                   {strengthDisplayMap[attribute.strength]}
                 </td>
               </div>
-              <td
-                className={clsx(
-                  styles.deleteAttributeButtonCell
-                )}
-              >
+              <td className={clsx(styles.deleteAttributeButtonCell)}>
                 <button
                   className={clsx(
                     styles.appendedButton,
