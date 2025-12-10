@@ -229,13 +229,6 @@
     grid-template-columns: 5fr 4fr;
   }
 
-  .attributeOptionsContainer {
-    grid-row: 1;
-    grid-column: 2;
-    display: grid;
-    grid-template-columns: 5fr 4fr;
-  }
-
   .addAffectedAttributeContainer .addAttributeButton {
     grid-row: 1;
     grid-column: 3;
