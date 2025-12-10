@@ -289,7 +289,6 @@ export default function QuestsWidget() {
         <tbody>
           {selectedAttributes.map((attribute) => (
             <tr key={attribute.name} className={styles.affectedAttributeRow}>
-              <div className={styles.affectedAttributeCells}>
                 <td
                   className={clsx(
                     styles.affectedAttributeCell,
@@ -310,7 +309,6 @@ export default function QuestsWidget() {
                 >
                   {strengthDisplayMap[attribute.strength]}
                 </td>
-              </div>
               <td className={clsx(styles.deleteAttributeButtonCell)}>
                 <button
                   className={clsx(

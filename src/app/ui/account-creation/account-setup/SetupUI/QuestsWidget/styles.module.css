@@ -1,7 +1,8 @@
 .widgetContainer {
   --grid-layout: 2fr 5fr 2fr;
-  --two-column-template: 5fr 4fr;
+  --two-column-template: 3fr 2fr;
   --grid-layout-options-and-button: 5fr 2fr;
+  --grid-layout-cells-and-button: 3fr 2fr 2fr;
   color: var(--blue-700, #091f36);
   display: flex;
   flex-direction: column;
@@ -60,7 +61,13 @@
 }
 
 /* ADD AFFECTED ATTRIBUTE */
+.addAffectedAttributeFieldset {
+  display: grid;
+  grid-template-columns: var(--grid-layout-options-and-button);
+}
+
 .addAffectedAttributeContainer {
+  grid-column: 1 / span 2;
   display: grid;
   grid-template-columns: var(--grid-layout-options-and-button);
   grid-template-rows: auto auto;
@@ -127,20 +134,24 @@
 /* AFFECTED ATTRIBUTES DISPLAY */
 
 .affectedAttributesTable {
+  display: grid;
+  grid-template-columns: var(--grid-layout-cells-and-button);
   width: 100%;
   border-collapse: collapse;
   font-size: 1.5rem;
 }
 
-.affectedAttributeRow {
+.affectedAttributesTable tbody {
+  grid-column: 1 / span 3;
   display: grid;
-  grid-template-columns: var(--grid-layout-options-and-button);
+  grid-template-columns: var(--grid-layout-cells-and-button);
+  grid-auto-rows: auto;
 }
 
-.affectedAttributeCells {
-  grid-column: 1;
+.affectedAttributeRow {
+  grid-column: 1 / span 3;
   display: grid;
-  grid-template-columns: var(--two-column-template);
+  grid-template-columns: var(--grid-layout-cells-and-button);
 }
 
 .affectedAttributeName,
@@ -160,15 +171,17 @@
 }
 
 .affectedAttributeName {
+  grid-column: 1;
   border-right-width: 1px;
 }
 
 .affectedAttributeStrength {
+  grid-column: 2;
   border-left-width: 1px;
 }
 
 .deleteAttributeButtonCell {
-  grid-column: 2;
+  grid-column: 3;
   width: 100%;
 }
 
@@ -187,11 +200,13 @@
   background-color: var(--orange-650, #c56907);
 }
 
+/* LARGER SCREENS */
 @media (min-width: 768px) {
   .widgetContainer {
-    --grid-layout: 2fr 3fr 1fr;
+    --grid-layout: 4fr 5fr 2fr;
     --two-column-template: 3fr 2fr;
-    --grid-layout-options-and-button: 3fr 1fr;
+    --grid-layout-options-and-button: 5fr 2fr;
+    --grid-layout-cells-and-button: 3fr 2fr 2fr;
     display: grid;
     grid-template-columns: var(--grid-layout);
     grid-auto-rows: auto;
