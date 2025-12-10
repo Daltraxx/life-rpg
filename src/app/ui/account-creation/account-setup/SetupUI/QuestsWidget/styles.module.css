@@ -192,6 +192,7 @@
     grid-template-columns: var(--grid-layout);
     grid-auto-rows: auto;
     row-gap: 1rem;
+    column-gap: 0;
   }
 
   .heading {
