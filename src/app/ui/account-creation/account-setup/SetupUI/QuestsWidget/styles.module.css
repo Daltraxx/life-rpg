@@ -175,8 +175,10 @@
 .deleteAttributeButton:focus-visible {
   background-color: var(--orange-500, #f68309);
 }
-.deleteAttributeButton:hover {
-  background-color: var(--orange-500, #f68309);
+@media (hover: hover) {
+  .deleteAttributeButton:hover {
+    background-color: var(--orange-500, #f68309);
+  }
 }
 .deleteAttributeButton:active {
   background-color: var(--orange-650, #c56907);
