@@ -4,6 +4,9 @@
   flex-direction: column;
   gap: 1rem;
   width: 100%;
+  --two-column-template: 5fr 4fr;
+  --grid-layout: 2fr 5fr 2fr;
+  --grid-layout-options-and-button: 5fr 2fr;
   /* TODO: Ensure width is equalized with AttributeWidget on small screens */
 }
 
@@ -58,20 +61,20 @@
 /* ADD AFFECTED ATTRIBUTE */
 .addAffectedAttributeContainer {
   display: grid;
-  grid-template-columns: 5fr 4fr 3fr;
+  grid-template-columns: var(--grid-layout-options-and-button);
   grid-template-rows: auto auto;
 }
 
 .addAffectedAttributeContainer .label {
   grid-row: 1;
-  grid-column: 1 / span 3;
+  grid-column: 1 / span 2;
 }
 
 .attributeOptionsContainer {
   grid-row: 2;
-  grid-column: 1 / span 2;
+  grid-column: 1;
   display: grid;
-  grid-template-columns: 5fr 4fr;
+  grid-template-columns: var(--two-column-template);
   font-size: 1.5rem;
 }
 
@@ -130,13 +133,13 @@
 
 .affectedAttributeRow {
   display: grid;
-  grid-template-columns: 5fr 2fr;
+  grid-template-columns: var(--grid-layout-options-and-button);
 }
 
 .affectedAttributeCells {
   grid-column: 1;
   display: grid;
-  grid-template-columns: 5fr 4fr;
+  grid-template-columns: var(--two-column-template);
 }
 
 .affectedAttributeName,
@@ -186,7 +189,7 @@
 @media (min-width: 425px) {
   .widgetContainer {
     display: grid;
-    grid-template-columns: 2fr 5fr 2fr;
+    grid-template-columns: var(--grid-layout);
     grid-auto-rows: auto;
     row-gap: 1rem;
   }
@@ -214,7 +217,7 @@
 
   .addAffectedAttributeContainer {
     display: grid;
-    grid-template-columns: 2fr 5fr 2fr;
+    grid-template-columns: var(--grid-layout);
   }
 
   .addAffectedAttributeContainer legend {
@@ -225,7 +228,7 @@
     grid-row: 1;
     grid-column: 2;
     display: grid;
-    grid-template-columns: 5fr 4fr;
+    grid-template-columns: var(--two-column-template);
   }
 
   .addAffectedAttributeContainer .addAttributeButton {
