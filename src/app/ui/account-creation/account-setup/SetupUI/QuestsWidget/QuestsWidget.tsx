@@ -9,10 +9,6 @@ import clsx from "clsx";
 
 type AttributeStrength = "normal" | "plus" | "plusPlus";
 
-function isAttributeStrength(value: string): value is AttributeStrength {
-  return value === "normal" || value === "plus" || value === "plusPlus";
-}
-
 class AffectedAttribute {
   public name: string;
   public strength: AttributeStrength;
