@@ -131,7 +131,13 @@
 
 .affectedAttributeRow {
   display: grid;
-  grid-template-columns: 5fr 4fr 3fr;
+  grid-template-columns: 5fr 2fr;
+}
+
+.affectedAttributeCells {
+  grid-column: 1;
+  display: grid;
+  grid-template-columns: 5fr 4fr;
 }
 
 .affectedAttributeName,
@@ -151,17 +157,15 @@
 }
 
 .affectedAttributeName {
-  grid-column: 1;
   border-right-width: 1px;
 }
 
 .affectedAttributeStrength {
-  grid-column: 2;
   border-left-width: 1px;
 }
 
 .deleteAttributeButtonCell {
-  grid-column: 3;
+  grid-column: 2;
   width: 100%;
 }
 
@@ -181,9 +185,13 @@
 @media (min-width: 425px) {
   .widgetContainer {
     display: grid;
-    grid-template-columns: 2fr 3fr 1fr;
+    grid-template-columns: 2fr 5fr 2fr;
     grid-auto-rows: auto;
     row-gap: 1rem;
+  }
+
+  .heading {
+    grid-column: 1 / span 3;
   }
 
   /* ADD QUEST */
@@ -198,13 +206,47 @@
   }
 
   /* ADD AFFECTED ATTRIBUTE */
+  .addAffectedAttributeFieldset {
+    grid-row: 3;
+    grid-column: 1 / span 3;
+  }
+
+  .addAffectedAttributeContainer {
+    display: grid;
+    grid-template-columns: 2fr 5fr 2fr;
+  }
+
   .addAffectedAttributeContainer legend {
     grid-column: 1;
   }
 
-  /* AFFECTED ATTRIBUTES DISPLAY */
+  .addAffectedAttributeContainer .attributeOptionsContainer {
+    grid-row: 1;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+  }
+
   .attributeOptionsContainer {
     grid-row: 1;
+    grid-column: 2;
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+  }
+
+  .addAffectedAttributeContainer .addAttributeButton {
+    grid-row: 1;
+    grid-column: 3;
+  }
+
+  /* AFFECTED ATTRIBUTES DISPLAY */
+  .affectedAttributesTable {
+    grid-row: 4;
+    grid-column: 2 / span 2;
+  }
+  /* CREATE QUEST BUTTON */
+  .createQuestButton {
+    grid-row: 5;
     grid-column: 2;
   }
 }

@@ -154,7 +154,7 @@ export default function QuestsWidget() {
 
   return (
     <section className={styles.widgetContainer}>
-      <Heading as="h3" size="36" color="blue-700">
+      <Heading as="h3" size="36" color="blue-700" className={styles.heading}>
         Add Quests
       </Heading>
 
@@ -291,26 +291,28 @@ export default function QuestsWidget() {
         <tbody>
           {selectedAttributes.map((attribute) => (
             <tr key={attribute.name} className={styles.affectedAttributeRow}>
-              <td
-                className={clsx(
-                  styles.affectedAttributeCell,
-                  styles.affectedAttributeName
-                )}
-              >
-                {attribute.name}
-              </td>
-              <td
-                className={clsx(
-                  styles.affectedAttributeCell,
-                  styles.affectedAttributeStrength,
-                  attribute.strength === "plus" ||
-                    attribute.strength === "plusPlus"
-                    ? styles.plus
-                    : null
-                )}
-              >
-                {strengthDisplayMap[attribute.strength]}
-              </td>
+              <div className={styles.affectedAttributeCells}>
+                <td
+                  className={clsx(
+                    styles.affectedAttributeCell,
+                    styles.affectedAttributeName
+                  )}
+                >
+                  {attribute.name}
+                </td>
+                <td
+                  className={clsx(
+                    styles.affectedAttributeCell,
+                    styles.affectedAttributeStrength,
+                    attribute.strength === "plus" ||
+                      attribute.strength === "plusPlus"
+                      ? styles.plus
+                      : null
+                  )}
+                >
+                  {strengthDisplayMap[attribute.strength]}
+                </td>
+              </div>
               <td
                 className={clsx(
                   styles.deleteAttributeButtonCell
