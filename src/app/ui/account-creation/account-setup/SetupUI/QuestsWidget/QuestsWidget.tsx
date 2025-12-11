@@ -153,8 +153,9 @@ export default function QuestsWidget() {
       </Heading>
       <Paragraph className={styles.description}>
         Create a new quest and specify which attributes it benefits. Discipline
-        is automatically affected by all completed quests, but if it is an especially
-        arduous or important task, you may specify a greater strength bonus.
+        is automatically affected by all completed quests, but if it is an
+        especially arduous or important task, you may specify a greater strength
+        bonus.
       </Paragraph>
 
       <Label
@@ -287,6 +288,13 @@ export default function QuestsWidget() {
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
       <table className={styles.affectedAttributesTable}>
+        <thead className={styles.srOnly}>
+          <tr>
+            <th>Attribute</th>
+            <th>Strength</th>
+            <th>Action</th>
+          </tr>
+        </thead>
         <tbody>
           {selectedAttributes.map((attribute) => (
             <tr key={attribute.name} className={styles.affectedAttributeRow}>
