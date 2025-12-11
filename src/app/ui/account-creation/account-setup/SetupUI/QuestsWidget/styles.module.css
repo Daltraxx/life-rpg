@@ -221,30 +221,25 @@
 
   .heading, .description {
     text-align: left;
-  }
-
-  .heading {
     grid-column: 1 / span 3;
   }
 
   /* ADD QUEST */
   .addQuestLabel {
-    grid-row: 2;
     grid-column: 1;
   }
 
   .addQuestInput {
-    grid-row: 2;
     grid-column: 2;
   }
 
   /* ADD AFFECTED ATTRIBUTE */
   .addAffectedAttributeFieldset {
-    grid-row: 3;
     grid-column: 1 / span 3;
   }
 
   .addAffectedAttributeContainer {
+    grid-column: 1 / span 3;
     display: grid;
     grid-template-columns: var(--grid-layout);
   }
@@ -253,26 +248,23 @@
     grid-column: 1;
   }
 
-  .addAffectedAttributeContainer .attributeOptionsContainer {
+  .attributeOptionsContainer {
     grid-row: 1;
     grid-column: 2;
     display: grid;
     grid-template-columns: var(--two-column-template);
   }
 
-  .addAffectedAttributeContainer .addAttributeButton {
-    grid-row: 1;
+  .addAttributeButton {
     grid-column: 3;
   }
 
   /* AFFECTED ATTRIBUTES DISPLAY */
   .affectedAttributesTable {
-    grid-row: 4;
     grid-column: 2 / span 2;
   }
   /* CREATE QUEST BUTTON */
   .createQuestButton {
-    grid-row: 5;
     grid-column: 2;
   }
 }
