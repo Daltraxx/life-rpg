@@ -9,7 +9,7 @@ const headingColorMap = {
   "blue-700": styles.textBlue700,
 } satisfies Record<string, string>;
 
-type HeadingColor = keyof typeof headingColorMap;
+export type HeadingColor = keyof typeof headingColorMap;
 
 // NOTE: Forwarding refs is no longer necessary in React 19
 export interface HeadingProps extends Omit<ComponentProps<"h2">, "as"> {
