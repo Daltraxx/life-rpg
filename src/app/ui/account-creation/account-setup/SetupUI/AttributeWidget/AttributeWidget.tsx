@@ -1,7 +1,7 @@
 "use client";
 
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
+import { Label, Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
@@ -77,6 +77,11 @@ export default function AttributeWidget() {
       <Heading as="h3" size="36" className={styles.heading}>
         Add Attributes
       </Heading>
+      <Paragraph className={styles.description}>
+        Add the attributes you would see improved in yourself. Added attributes
+        can then be applied to quests, and earn experience when those quests are
+        completed.
+      </Paragraph>
 
       <div className={styles.addAttributeContainer}>
         <Label
