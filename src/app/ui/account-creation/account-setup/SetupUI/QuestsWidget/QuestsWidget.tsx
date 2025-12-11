@@ -153,8 +153,8 @@ export default function QuestsWidget() {
       </Heading>
       <Paragraph className={styles.description}>
         Create a new quest and specify which attributes it benefits. Discipline
-        is strengthened by all complete quests, but if it is an especially
-        arduous or important task, you may specify a greater strength if you wish.
+        is automatically affected by all completed quests, but if it is an especially
+        arduous or important task, you may specify a greater strength bonus.
       </Paragraph>
 
       <Label
