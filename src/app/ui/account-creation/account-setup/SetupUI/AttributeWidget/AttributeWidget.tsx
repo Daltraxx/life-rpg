@@ -74,7 +74,7 @@ export default function AttributeWidget() {
 
   return (
     <section className={styles.widgetContainer}>
-      <Heading as="h3" size="36">
+      <Heading as="h3" size="36" className={styles.heading}>
         Add Attributes
       </Heading>
 

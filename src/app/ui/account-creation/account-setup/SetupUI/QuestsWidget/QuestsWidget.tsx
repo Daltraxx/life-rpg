@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
+import { Label, Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import clsx from "clsx";
@@ -151,6 +151,11 @@ export default function QuestsWidget() {
       <Heading as="h3" size="36" color="blue-700" className={styles.heading}>
         Add Quests
       </Heading>
+      <Paragraph className={styles.description}>
+        Create a new quest and specify which attributes it benefits. Discipline
+        is strengthened by all complete quests, but if it is an especially
+        arduous or important task, you may specify a greater strength if you wish.
+      </Paragraph>
 
       <Label
         size="24"
@@ -285,26 +290,26 @@ export default function QuestsWidget() {
         <tbody>
           {selectedAttributes.map((attribute) => (
             <tr key={attribute.name} className={styles.affectedAttributeRow}>
-                <td
-                  className={clsx(
-                    styles.affectedAttributeCell,
-                    styles.affectedAttributeName
-                  )}
-                >
-                  {attribute.name}
-                </td>
-                <td
-                  className={clsx(
-                    styles.affectedAttributeCell,
-                    styles.affectedAttributeStrength,
-                    attribute.strength === "plus" ||
-                      attribute.strength === "plusPlus"
-                      ? styles.plus
-                      : null
-                  )}
-                >
-                  {strengthDisplayMap[attribute.strength]}
-                </td>
+              <td
+                className={clsx(
+                  styles.affectedAttributeCell,
+                  styles.affectedAttributeName
+                )}
+              >
+                {attribute.name}
+              </td>
+              <td
+                className={clsx(
+                  styles.affectedAttributeCell,
+                  styles.affectedAttributeStrength,
+                  attribute.strength === "plus" ||
+                    attribute.strength === "plusPlus"
+                    ? styles.plus
+                    : null
+                )}
+              >
+                {strengthDisplayMap[attribute.strength]}
+              </td>
               <td className={clsx(styles.deleteAttributeButtonCell)}>
                 <button
                   className={clsx(
