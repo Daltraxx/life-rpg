@@ -68,6 +68,7 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   border: 3px solid var(--blue-700, #091f36);
+  border-radius: var(--border-radius-sm);
   transition: background-color 0.2s ease;
   font-size: 1.25rem;
 }
@@ -119,6 +120,7 @@
 
 .attributeSelectMenuContainer {
   border-right-width: 1px;
+  border-radius: var(--border-radius-sm) 0 0 var(--border-radius-sm);
 }
 .attributeStrengthMenuContainer {
   border-left-width: 1px;
@@ -138,6 +140,7 @@
 
 .addAttributeButton {
   background-color: var(--blue-400, #123e6d);
+  border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
 }
 .addAttributeButton:focus-visible {
   background-color: var(--blue-300, #47a2f5);
@@ -172,6 +175,20 @@
   grid-column: 1 / span 3;
   display: grid;
   grid-template-columns: var(--grid-layout-cells-and-button);
+}
+
+/* -- Table border raidii */
+.affectedAttributeRow:first-child .affectedAttributeName {
+  border-radius: var(--border-radius-sm) 0 0 0;
+}
+.affectedAttributeRow:first-child .appendedButton {
+  border-radius: 0 var(--border-radius-sm) 0 0;
+}
+.affectedAttributeRow:last-child .affectedAttributeName {
+  border-radius: 0 0 0 var(--border-radius-sm);
+}
+.affectedAttributeRow:last-child .appendedButton {
+  border-radius: 0 0 var(--border-radius-sm) 0;
 }
 
 .affectedAttributeName,

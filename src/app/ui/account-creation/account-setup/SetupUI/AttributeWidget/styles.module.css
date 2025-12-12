@@ -34,6 +34,7 @@
   padding-right: 0.5rem;
   width: calc(100% - var(--button-width));
   transition: background-color 0.2s ease;
+  border-radius: var(--border-radius-xs) 0 0 var(--border-radius-xs);
 }
 
 .addAttributeInput:focus {
@@ -52,6 +53,7 @@
   transition: background-color 0.2s ease;
   width: var(--button-width);
   border-left: none;
+  border-radius: 0 var(--border-radius-xs) var(--border-radius-xs) 0;
 }
 
 .addAttributeButton:focus-visible {
