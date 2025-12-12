@@ -74,6 +74,9 @@ export default function QuestsWidget({ className }: { className?: string }) {
 
   const handleAddAffectedAttribute = () => {
     // TODO: Add proper error handling and user feedback
+    if (currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT) {
+      return;
+    }
     if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
       return;
     }
