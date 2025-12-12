@@ -5,9 +5,11 @@ import styles from "./styles.module.css";
 
 export default function SetupUI() {
   return (
-    <Bounded innerClassName={styles.uiContainer}>
-      <AttributeWidget className={styles.attributeWidget} />
-      <QuestsWidget />
+    <Bounded>
+      <div className={styles.uiContainer}>
+        <AttributeWidget className={styles.attributeWidget} />
+        <QuestsWidget />
+      </div>
     </Bounded>
   );
 }
