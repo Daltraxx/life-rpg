@@ -48,6 +48,7 @@ const TEST_ATTRIBUTES: string[] = [
 
 export default function QuestsWidget({ className }: { className?: string }) {
   // TODO: Implement error handling and validation for quest creation
+  // TODO: Persist quests to context/state management
   const [quests, setQuests] = useState<Quest[]>([]);
   const [newQuestName, setNewQuestName] = useState<string>("");
   const [availableAttributes, setAvailableAttributes] =
