@@ -158,20 +158,22 @@ export default function QuestsWidget() {
         bonus.
       </Paragraph>
 
-      <Label
-        size="24"
-        className={clsx(styles.label, styles.addQuestLabel)}
-        htmlFor="add-quest"
-      >
-        Quest Name:
-      </Label>
-      <input
-        type="text"
-        id="add-quest"
-        className={styles.addQuestInput}
-        value={newQuestName}
-        onChange={(e) => setNewQuestName(e.target.value)}
-      />
+      <div className={styles.addQuestNameContainer}>
+        <Label
+          size="24"
+          className={clsx(styles.label, styles.addQuestLabel)}
+          htmlFor="add-quest"
+        >
+          Quest Name:
+        </Label>
+        <input
+          type="text"
+          id="add-quest"
+          className={styles.addQuestInput}
+          value={newQuestName}
+          onChange={(e) => setNewQuestName(e.target.value)}
+        />
+      </div>
 
       {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
       <fieldset className={styles.addAffectedAttributeFieldset}>

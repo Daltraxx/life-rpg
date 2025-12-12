@@ -58,6 +58,12 @@
 }
 
 /* ADD QUEST */
+.addQuestNameContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .addQuestInput {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -218,9 +224,18 @@
 @media (min-width: 425px) {
   .heading, .description {
     text-align: left;
-    grid-column: 1 / span 3;
+  }
+
+  .addQuestNameContainer {
+    flex-direction: row;
+  }
+
+  .addQuestInput {
+    flex: 1;
+    max-width: 18.25rem;
   }
 }
+
 @media (min-width: 768px) {
   .widgetContainer {
     --grid-layout: 4fr 5fr 2fr;
@@ -235,7 +250,18 @@
     min-width: 33.5rem;
   }
 
+  .heading, .description {
+    grid-column: 1 / span 3;
+  }
+
   /* ADD QUEST */
+  .addQuestNameContainer {
+    grid-column: 1 / span 3;
+    display: grid;
+    grid-template-columns: var(--grid-layout);
+    gap: 0;
+  }
+
   .addQuestLabel {
     grid-column: 1;
   }
