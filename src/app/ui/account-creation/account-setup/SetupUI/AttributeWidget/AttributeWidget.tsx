@@ -80,7 +80,7 @@ export default function AttributeWidget({ className }: { className?: string }) {
         Add Attributes
       </Heading>
       <Paragraph className={styles.description}>
-        Add the attributes you would see improved in yourself. Added attributes
+        Add the attributes you would improve in yourself. Added attributes
         can then be applied to quests, and earn experience when those quests are
         completed.
       </Paragraph>
