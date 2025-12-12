@@ -8,7 +8,7 @@ export default function SetupUI() {
     <Bounded>
       <div className={styles.uiContainer}>
         <AttributeWidget className={styles.attributeWidget} />
-        <QuestsWidget />
+        <QuestsWidget className={styles.questsWidget} />
       </div>
     </Bounded>
   );
