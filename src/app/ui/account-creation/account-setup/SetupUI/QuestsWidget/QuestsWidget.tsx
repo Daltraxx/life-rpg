@@ -46,7 +46,7 @@ const TEST_ATTRIBUTES: string[] = [
   "Fitness",
 ];
 
-export default function QuestsWidget() {
+export default function QuestsWidget({ className }: { className?: string }) {
   // TODO: Implement error handling and validation for quest creation
   const [quests, setQuests] = useState<Quest[]>([]);
   const [newQuestName, setNewQuestName] = useState<string>("");
@@ -147,7 +147,7 @@ export default function QuestsWidget() {
   // Consider using Radix UI or similar library for better accessibility
 
   return (
-    <section className={styles.widgetContainer}>
+    <section className={clsx(styles.widgetContainer, className)}>
       <Heading as="h3" size="36" color="blue-700" className={styles.heading}>
         Add Quests
       </Heading>
