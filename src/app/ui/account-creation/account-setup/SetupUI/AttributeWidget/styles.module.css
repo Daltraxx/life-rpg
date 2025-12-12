@@ -41,7 +41,7 @@
   outline: none;
 }
 .addAttributeInput:focus-visible {
-  background-color: var(--orange-200);
+  background-color: var(--background-focus-orange);
 }
 
 .addAttributeButton {

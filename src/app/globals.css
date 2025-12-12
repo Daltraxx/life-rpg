@@ -36,6 +36,7 @@
   --create-account-footer-height-large: 7.5rem;
 
   --focus-color: #4a90e2;
+  --background-focus-orange: var(--orange-200);
 
   --border-radius-xs: 2px;
   --border-radius-sm: 4px;
