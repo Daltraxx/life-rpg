@@ -6,7 +6,7 @@ import styles from "./styles.module.css";
 export default function SetupUI() {
   return (
     <Bounded innerClassName={styles.uiContainer}>
-      <AttributeWidget />
+      <AttributeWidget className={styles.attributeWidget} />
       <QuestsWidget />
     </Bounded>
   );

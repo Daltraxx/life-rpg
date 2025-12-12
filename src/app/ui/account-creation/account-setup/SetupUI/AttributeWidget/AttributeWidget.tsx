@@ -5,6 +5,7 @@ import { Label, Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
+import clsx from "clsx";
 
 const INITIAL_ATTRIBUTES: string[] = [
   "Discipline",
@@ -33,7 +34,7 @@ const INITIAL_ATTRIBUTES: string[] = [
  * - Enter key and button click both trigger attribute addition
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
  */
-export default function AttributeWidget() {
+export default function AttributeWidget({ className }: { className?: string }) {
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
@@ -73,7 +74,7 @@ export default function AttributeWidget() {
   ));
 
   return (
-    <section className={styles.widgetContainer}>
+    <section className={clsx(styles.widgetContainer, className)}>
       <Heading as="h3" size="36" className={styles.heading}>
         Add Attributes
       </Heading>
