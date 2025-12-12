@@ -35,6 +35,7 @@ const INITIAL_ATTRIBUTES: string[] = [
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
  */
 export default function AttributeWidget({ className }: { className?: string }) {
+  // TODO: Persist attributes to context/state management
   const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
