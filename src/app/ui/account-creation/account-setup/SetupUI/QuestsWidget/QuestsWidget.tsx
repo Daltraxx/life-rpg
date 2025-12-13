@@ -5,9 +5,10 @@ import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Label, Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
+import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import clsx from "clsx";
 
-type AttributeStrength = "normal" | "plus" | "plusPlus";
+export type AttributeStrength = "normal" | "plus" | "plusPlus";
 
 class AffectedAttribute {
   public name: string;
@@ -29,7 +30,7 @@ class Quest {
   }
 }
 
-const strengthDisplayMap: Record<AttributeStrength, string> = {
+export const strengthDisplayMap: Record<AttributeStrength, string> = {
   normal: "normal",
   plus: "+",
   plusPlus: "++",
@@ -180,117 +181,19 @@ export default function QuestsWidget({ className }: { className?: string }) {
       </div>
 
       {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
-      <fieldset className={styles.addAffectedAttributeFieldset}>
-        <div className={styles.addAffectedAttributeContainer}>
-          <legend className={styles.label}>Affected Attributes:</legend>
-
-          {/* AFFECTED ATTRIBUTE */}
-          <div className={styles.attributeOptionsContainer}>
-            <div
-              className={clsx(
-                styles.menuContainer,
-                styles.attributeSelectMenuContainer
-              )}
-            >
-              <button
-                type="button"
-                aria-expanded={attributeNameMenuOpen}
-                aria-controls="attribute-name-menu"
-                aria-haspopup="true"
-                onClick={() => setAttributeNameMenuOpen(!attributeNameMenuOpen)}
-              >
-                {currentAttributeName}
-              </button>
-              <div
-                id="attribute-name-menu"
-                role="menu"
-                className={clsx(
-                  styles.menu,
-                  attributeNameMenuOpen && styles.open
-                )}
-              >
-                {availableAttributes.map((attribute) => (
-                  <Label
-                    key={attribute}
-                    className={styles.attributeSelectLabel}
-                  >
-                    <input
-                      type="radio"
-                      name="affectedAttribute"
-                      value={attribute}
-                      checked={currentAttributeName === attribute}
-                      onChange={() => {
-                        setCurrentAttributeName(attribute);
-                        setAttributeNameMenuOpen(false);
-                      }}
-                    />
-                    {attribute}
-                  </Label>
-                ))}
-              </div>
-            </div>
-
-            {/* AMOUNT ATTRIBUTE IS AFFECTED BY QUEST */}
-            <div
-              className={clsx(
-                styles.menuContainer,
-                styles.attributeStrengthMenuContainer
-              )}
-            >
-              <button
-                type="button"
-                className={clsx(
-                  currentAttributeStrength === "plus" ||
-                    currentAttributeStrength === "plusPlus"
-                    ? styles.plus
-                    : null
-                )}
-                aria-expanded={attributeStrengthMenuOpen}
-                aria-controls="attribute-strength-menu"
-                aria-haspopup="true"
-                onClick={() =>
-                  setAttributeStrengthMenuOpen(!attributeStrengthMenuOpen)
-                }
-              >
-                {strengthDisplayMap[currentAttributeStrength]}
-              </button>
-              <div
-                id="attribute-strength-menu"
-                role="menu"
-                className={clsx(
-                  styles.menu,
-                  attributeStrengthMenuOpen && styles.open
-                )}
-              >
-                {(Object.keys(strengthDisplayMap) as AttributeStrength[]).map(
-                  (strengthKey) => (
-                    <Label key={strengthKey}>
-                      <input
-                        type="radio"
-                        name="attributeStrength"
-                        value={strengthKey}
-                        checked={currentAttributeStrength === strengthKey}
-                        onChange={() => handleSetAttributeStrength(strengthKey)}
-                      />
-                      {strengthDisplayMap[strengthKey]}
-                    </Label>
-                  )
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* ADD ATTRIBUTE TO QUEST BUTTON */}
-          <button
-            className={clsx(styles.appendedButton, styles.addAttributeButton)}
-            type="button"
-            onClick={handleAddAffectedAttribute}
-            disabled={currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT}
-          >
-            ADD
-          </button>
-        </div>
-      </fieldset>
+      <AddAffectedAttributeUI
+        attributeNameMenuOpen={attributeNameMenuOpen}
+        setAttributeNameMenuOpen={setAttributeNameMenuOpen}
+        attributeStrengthMenuOpen={attributeStrengthMenuOpen}
+        setAttributeStrengthMenuOpen={setAttributeStrengthMenuOpen}
+        currentAttributeName={currentAttributeName}
+        setCurrentAttributeName={setCurrentAttributeName}
+        currentAttributeStrength={currentAttributeStrength}
+        handleSetAttributeStrength={handleSetAttributeStrength}
+        availableAttributes={availableAttributes}
+        NO_AVAILABLE_ATTRIBUTES_TEXT={NO_AVAILABLE_ATTRIBUTES_TEXT}
+        handleAddAffectedAttribute={handleAddAffectedAttribute}
+      />
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
       <table className={styles.affectedAttributesTable}>
