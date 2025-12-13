@@ -1,14 +1,17 @@
 .uiContainer {
+  --widget-spacing: 2rem;
+  --container-max-width: 38rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
-  max-width: 38rem;
+  gap: var(--widget-spacing);
+  max-width: var(--container-max-width);
   margin: 0 auto;
 }
 
 @media (min-width: 1024px) {
   .uiContainer {
+    --widget-desc-height: 5.25rem;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
@@ -17,6 +20,6 @@
 
   .attributeWidget p:first-of-type,
   .questsWidget p:first-of-type {
-    height: 5.25rem; /* Match heights of both widget descriptions to line up inputs */
+    height: var(--widget-desc-height); /* Match heights of both widget descriptions to line up inputs */
   }
 }
