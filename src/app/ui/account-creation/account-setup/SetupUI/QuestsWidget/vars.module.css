@@ -1,0 +1,15 @@
+.gridVars {
+  --grid-layout: 2fr 5fr 2fr;
+  --two-column-template: 3fr 2fr;
+  --grid-layout-options-and-button: 5fr 2fr;
+  --grid-layout-cells-and-button: 3fr 2fr 2fr;
+}
+
+@media (min-width: 768px) {
+  .gridVars {
+    --grid-layout: 4fr 5fr 2fr;
+    --two-column-template: 3fr 2fr;
+    --grid-layout-options-and-button: 5fr 2fr;
+    --grid-layout-cells-and-button: 3fr 2fr 2fr;
+  }
+}

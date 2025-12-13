@@ -1,8 +1,4 @@
 .widgetContainer {
-  --grid-layout: 2fr 5fr 2fr;
-  --two-column-template: 3fr 2fr;
-  --grid-layout-options-and-button: 5fr 2fr;
-  --grid-layout-cells-and-button: 3fr 2fr 2fr;
   color: var(--blue-700, #091f36);
   display: flex;
   flex-direction: column;
@@ -256,10 +252,6 @@
 
 @media (min-width: 768px) {
   .widgetContainer {
-    --grid-layout: 4fr 5fr 2fr;
-    --two-column-template: 3fr 2fr;
-    --grid-layout-options-and-button: 5fr 2fr;
-    --grid-layout-cells-and-button: 3fr 2fr 2fr;
     display: grid;
     grid-template-columns: var(--grid-layout);
     grid-auto-rows: auto;
