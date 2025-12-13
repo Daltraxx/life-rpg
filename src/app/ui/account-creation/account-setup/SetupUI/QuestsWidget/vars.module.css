@@ -1,13 +1,25 @@
-.gridVars {
+.questsWidgetVars {
   --grid-layout: 2fr 5fr 2fr;
   --two-column-template: 3fr 2fr;
   --grid-layout-options-and-button: 5fr 2fr;
   --grid-layout-cells-and-button: 3fr 2fr 2fr;
+  /* label */
   --label-font-size: 1.5rem;
+  /* appendedButton */
+  --appended-button-font-size: 1.25rem;
+  --appended-button-border: 3px solid var(--blue-700, #091f36);
+  --appended-button-padding: 0rem 0.75rem;
+  --appended-button-cursor: pointer;
+  --appended-button-transition: background-color 0.2s ease;
+  --appended-button-border-left: none;
+  --appended-button-width: 100%;
+  --appended-button-height: 100%;
+  --appended-button-color: var(--background, #f5f5f5);
+
 }
 
 @media (min-width: 768px) {
-  .gridVars {
+  .questsWidgetVars {
     --grid-layout: 4fr 5fr 2fr;
     --two-column-template: 3fr 2fr;
     --grid-layout-options-and-button: 5fr 2fr;

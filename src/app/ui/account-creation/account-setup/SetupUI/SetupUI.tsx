@@ -10,7 +10,7 @@ export default function SetupUI() {
     <Bounded>
       <div className={styles.uiContainer}>
         <AttributeWidget className={styles.attributeWidget} />
-        <QuestsWidget className={clsx(styles.questsWidget, cssVars.gridVars)} />
+        <QuestsWidget className={clsx(styles.questsWidget, cssVars.questsWidgetVars)} />
       </div>
     </Bounded>
   );
