@@ -15,7 +15,9 @@
   --appended-button-width: 100%;
   --appended-button-height: 100%;
   --appended-button-color: var(--background, #f5f5f5);
-
+  /* plus */
+  --plus-font-size: 2rem;
+  --plus-line-height: 0.55;
 }
 
 @media (min-width: 768px) {
