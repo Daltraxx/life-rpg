@@ -3,6 +3,7 @@
   --two-column-template: 3fr 2fr;
   --grid-layout-options-and-button: 5fr 2fr;
   --grid-layout-cells-and-button: 3fr 2fr 2fr;
+  --label-font-size: 1.5rem;
 }
 
 @media (min-width: 768px) {
