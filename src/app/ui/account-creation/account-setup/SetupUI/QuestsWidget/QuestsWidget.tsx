@@ -191,7 +191,7 @@ export default function QuestsWidget({ className }: { className?: string }) {
         currentAttributeStrength={currentAttributeStrength}
         handleSetAttributeStrength={handleSetAttributeStrength}
         availableAttributes={availableAttributes}
-        NO_AVAILABLE_ATTRIBUTES_TEXT={NO_AVAILABLE_ATTRIBUTES_TEXT}
+        noAvailableAttributesText={NO_AVAILABLE_ATTRIBUTES_TEXT}
         handleAddAffectedAttribute={handleAddAffectedAttribute}
       />
 

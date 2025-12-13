@@ -13,7 +13,7 @@ interface AddAffectedAttributeUIProps {
   currentAttributeStrength: AttributeStrength;
   handleSetAttributeStrength: (strength: AttributeStrength) => void;
   availableAttributes: string[];
-  NO_AVAILABLE_ATTRIBUTES_TEXT: string;
+  noAvailableAttributesText: string;
   handleAddAffectedAttribute: () => void;
 }
 
@@ -27,7 +27,7 @@ export default function AddAffectedAttributeUI({
   currentAttributeStrength,
   handleSetAttributeStrength,
   availableAttributes,
-  NO_AVAILABLE_ATTRIBUTES_TEXT,
+  noAvailableAttributesText,
   handleAddAffectedAttribute,
 }: AddAffectedAttributeUIProps) { 
   return (
@@ -133,7 +133,7 @@ export default function AddAffectedAttributeUI({
           className={clsx(styles.appendedButton, styles.addAttributeButton)}
           type="button"
           onClick={handleAddAffectedAttribute}
-          disabled={currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT}
+          disabled={currentAttributeName === noAvailableAttributesText}
         >
           ADD
         </button>
