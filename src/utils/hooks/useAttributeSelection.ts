@@ -12,10 +12,54 @@ class AffectedAttribute {
   }
 }
 
+type UseAttributeSelectionReturn = {
+  availableAttributes: string[];
+  currentAttributeName: string;
+  currentAttributeStrength: AttributeStrength;
+  selectedAttributes: AffectedAttribute[];
+  attributeNameMenuOpen: boolean;
+  attributeStrengthMenuOpen: boolean;
+  actions: {
+    setCurrentAttributeName: (name: string) => void;
+    setAttributeStrength: (strength: AttributeStrength) => void;
+    addAffectedAttribute: () => void;
+    deleteAffectedAttribute: (name: string) => void;
+    resetAttributeSelectionUI: () => void;
+    setAttributeNameMenuOpen: (open: boolean) => void;
+    setAttributeStrengthMenuOpen: (open: boolean) => void;
+  };
+}
+
+/**
+ * Hook for managing attribute selection state and operations.
+ * 
+ * Handles the selection, addition, and deletion of attributes with associated strength levels.
+ * Maintains lists of available and selected attributes, manages UI state for dropdown menus,
+ * and provides callbacks for attribute operations.
+ * 
+ * @param initialAttributes - Array of attribute names available for selection
+ * @param noAvailableAttributesText - Text to display when no attributes are available
+ * 
+ * @returns Object containing:
+ * @returns {string[]} availableAttributes - Currently available attributes that can be selected
+ * @returns {string} currentAttributeName - Name of the currently selected attribute
+ * @returns {AttributeStrength} currentAttributeStrength - Strength level of the current attribute ("normal" by default)
+ * @returns {AffectedAttribute[]} selectedAttributes - Array of attributes that have been selected
+ * @returns {boolean} attributeNameMenuOpen - Whether the attribute name dropdown menu is open
+ * @returns {boolean} attributeStrengthMenuOpen - Whether the attribute strength dropdown menu is open
+ * @returns {Object} actions - Object containing callback functions:
+ * @returns {(name: string) => void} actions.setCurrentAttributeName - Sets the currently selected attribute name
+ * @returns {(strength: AttributeStrength) => void} actions.setAttributeStrength - Sets the strength of the current attribute and closes the menu
+ * @returns {() => void} actions.addAffectedAttribute - Adds the current attribute to selected attributes, removes from available
+ * @returns {(name: string) => void} actions.deleteAffectedAttribute - Removes attribute from selected and returns it to available
+ * @returns {() => void} actions.resetAttributeSelectionUI - Resets all state to initial values
+ * @returns {(open: boolean) => void} actions.setAttributeNameMenuOpen - Controls attribute name menu visibility
+ * @returns {(open: boolean) => void} actions.setAttributeStrengthMenuOpen - Controls attribute strength menu visibility
+ */
 const useAttributeSelection = (
   initialAttributes: string[],
   noAvailableAttributesText: string
-) => {
+): UseAttributeSelectionReturn => {
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(initialAttributes);
   
