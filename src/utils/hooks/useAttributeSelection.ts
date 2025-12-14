@@ -87,15 +87,14 @@ const useAttributeSelection = (
       return;
     }
 
-    setAvailableAttributes((prevAvailable) => {
-      const updatedAvailableAttributes = prevAvailable.filter(
-        (attr) => attr !== currentAttributeName
-      );
-      setCurrentAttributeName(
-        updatedAvailableAttributes[0] || noAvailableAttributesText
-      );
-      return updatedAvailableAttributes;
-    });
+    const updatedAvailableAttributes = availableAttributes.filter(
+      (attr) => attr !== currentAttributeName
+    );
+
+    setAvailableAttributes(updatedAvailableAttributes);
+    setCurrentAttributeName(
+      updatedAvailableAttributes[0] || noAvailableAttributesText
+    );
 
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
