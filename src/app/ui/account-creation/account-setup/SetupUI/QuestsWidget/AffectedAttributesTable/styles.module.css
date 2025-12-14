@@ -81,12 +81,12 @@
 
 .affectedAttributeName {
   grid-column: 1;
-  border-right-width: 1px;
+  border-right: 1px solid var(--blue-700, #091f36);
 }
 
 .affectedAttributeStrength {
   grid-column: 2;
-  border-left-width: 1px;
+  border-left: 1px solid var(--blue-700, #091f36);
 }
 
 .deleteAttributeButtonCell {
