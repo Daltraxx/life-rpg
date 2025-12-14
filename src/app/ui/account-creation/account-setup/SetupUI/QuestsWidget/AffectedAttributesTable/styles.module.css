@@ -1,0 +1,117 @@
+.appendedButton {
+  font-size: var(--appended-button-font-size, 1.25rem);
+  border: var(--appended-button-border, 3px solid var(--blue-700, #091f36));
+  padding: var(--appended-button-padding, 0rem 0.75rem);
+  cursor: var(--appended-button-cursor, pointer);
+  transition: var(--appended-button-transition, background-color 0.2s ease);
+  border-left: var(--appended-button-border-left, none);
+  width: var(--appended-button-width, 100%);
+  height: var(--appended-button-height, 100%);
+  color: var(--appended-button-color, var(--background, #f5f5f5));
+}
+
+.plus {
+  font-size: var(--plus-font-size, 2rem);
+  line-height: var(--plus-line-height, 0.55);
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+
+/* AFFECTED ATTRIBUTES DISPLAY */
+
+.affectedAttributesTable {
+  display: grid;
+  grid-template-columns: var(--grid-layout-cells-and-button);
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.5rem;
+}
+
+.affectedAttributesTable tbody {
+  grid-column: 1 / span 3;
+  display: grid;
+  grid-template-columns: var(--grid-layout-cells-and-button);
+  grid-auto-rows: auto;
+}
+
+.affectedAttributeRow {
+  grid-column: 1 / span 3;
+  display: grid;
+  grid-template-columns: var(--grid-layout-cells-and-button);
+}
+
+.affectedAttributeCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* -- Table border raidii */
+.affectedAttributeRow:first-child .affectedAttributeName {
+  border-radius: var(--border-radius-sm, 4px) 0 0 0;
+}
+.affectedAttributeRow:first-child .appendedButton {
+  border-radius: 0 var(--border-radius-sm, 4px) 0 0;
+}
+.affectedAttributeRow:last-child .affectedAttributeName {
+  border-radius: 0 0 0 var(--border-radius-sm, 4px);
+}
+.affectedAttributeRow:last-child .appendedButton {
+  border-radius: 0 0 var(--border-radius-sm, 4px) 0;
+}
+
+.affectedAttributeName,
+.affectedAttributeStrength {
+  border: 3px solid var(--blue-700, #091f36);
+}
+
+.affectedAttributeRow:not(:last-child) .affectedAttributeCell,
+.affectedAttributeRow:not(:last-child) .deleteAttributeButton {
+  border-bottom: none;
+}
+
+.affectedAttributeName {
+  grid-column: 1;
+  border-right-width: 1px;
+}
+
+.affectedAttributeStrength {
+  grid-column: 2;
+  border-left-width: 1px;
+}
+
+.deleteAttributeButtonCell {
+  grid-column: 3;
+  width: 100%;
+}
+
+.deleteAttributeButton {
+  background-color: var(--orange-600, #cd6d07);
+}
+.deleteAttributeButton:focus-visible {
+  background-color: var(--orange-500, #f68309);
+}
+@media (hover: hover) {
+  .deleteAttributeButton:hover {
+    background-color: var(--orange-500, #f68309);
+  }
+}
+.deleteAttributeButton:active {
+  background-color: var(--orange-650, #c56907);
+}
+
+/* LARGER SCREENS */
+@media (min-width: 768px) {
+  .affectedAttributesTable {
+    grid-column: 2 / span 2;
+  }
+}

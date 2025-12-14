@@ -6,6 +6,7 @@ import { Label, Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
 import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
+import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
 import useAttributeSelection from "@/utils/hooks/useAttributeSelection";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
@@ -118,53 +119,10 @@ export default function QuestsWidget({ className }: { className?: string }) {
       />
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
-      <table className={styles.affectedAttributesTable}>
-        <thead className={styles.srOnly}>
-          <tr>
-            <th>Attribute</th>
-            <th>Strength</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {selectedAttributes.map((attribute) => (
-            <tr key={attribute.name} className={styles.affectedAttributeRow}>
-              <td
-                className={clsx(
-                  styles.affectedAttributeCell,
-                  styles.affectedAttributeName
-                )}
-              >
-                {attribute.name}
-              </td>
-              <td
-                className={clsx(
-                  styles.affectedAttributeCell,
-                  styles.affectedAttributeStrength,
-                  attribute.strength === "plus" ||
-                    attribute.strength === "plusPlus"
-                    ? styles.plus
-                    : null
-                )}
-              >
-                {strengthDisplayMap[attribute.strength]}
-              </td>
-              <td className={clsx(styles.deleteAttributeButtonCell)}>
-                <button
-                  className={clsx(
-                    styles.appendedButton,
-                    styles.deleteAttributeButton
-                  )}
-                  onClick={() => deleteAffectedAttribute(attribute.name)}
-                  type="button"
-                >
-                  DELETE
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <AffectedAttributesTable
+        selectedAttributes={selectedAttributes}
+        onDeleteAttribute={deleteAffectedAttribute}
+      />
 
       {/* CREATE QUEST BUTTON */}
       <ButtonWrapper
