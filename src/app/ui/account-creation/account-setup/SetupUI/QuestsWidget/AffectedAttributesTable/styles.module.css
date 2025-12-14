@@ -55,7 +55,7 @@
   justify-content: center;
 }
 
-/* -- Table border raidii */
+/* -- Table border radii */
 .affectedAttributeRow:first-child .affectedAttributeName {
   border-radius: var(--border-radius-sm, 4px) 0 0 0;
 }
