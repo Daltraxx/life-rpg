@@ -81,9 +81,10 @@ export default function getTruncatedString(
 
   // Could optimize with binary search, but expected string lengths are short enough for iterative approach
   let truncated = string;
-  while (stringWidth > maxStringWidth && truncated.length > 0) {
+  let measuredWidth = stringWidth;
+  while (measuredWidth > maxStringWidth && truncated.length > 0) {
     truncated = truncated.slice(0, -1);
-    stringWidth = context.measureText(truncated + "...").width; // NOTE: not a perfect measurement but close enough for now
+    measuredWidth = context.measureText(truncated + "...").width; // NOTE: not a perfect measurement but close enough for now
   }
   return truncated + "...";
 }
