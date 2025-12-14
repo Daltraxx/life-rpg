@@ -8,6 +8,17 @@ export interface AffectedAttribute {
   strength: AttributeStrength;
 }
 
+/**
+ * Creates an affected attribute object with validation.
+ * 
+ * @param name - The name of the attribute. Must not be empty or contain only whitespace.
+ * @param strength - The strength level of the attribute effect.
+ * @returns An object representing the affected attribute.
+ * @throws {Error} If the attribute name is empty or contains only whitespace.
+ * 
+ * @example
+ * const affected = createAffectedAttribute('Health', AttributeStrength.Major);
+ */
 export function createAffectedAttribute(
   name: string,
   strength: AttributeStrength
@@ -26,6 +37,14 @@ export interface Quest {
   affectedAttributes: AffectedAttribute[];
 }
 
+/**
+ * Creates a new quest with the specified name and affected attributes.
+ *
+ * @param name - The name of the quest. It must not be empty or consist only of whitespace.
+ * @param affectedAttributes - An array of attributes that are affected by the quest.
+ * @throws {Error} Throws an error if the quest name is empty or only whitespace.
+ * @returns A Quest object containing the name and affected attributes.
+ */
 export function createQuest(
   name: string,
   affectedAttributes: AffectedAttribute[]
