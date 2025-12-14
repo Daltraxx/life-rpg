@@ -8,18 +8,7 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import clsx from "clsx";
 import useAttributeSelection from "@/utils/hooks/useAttributeSelection";
-
-export type AttributeStrength = "normal" | "plus" | "plusPlus";
-
-class AffectedAttribute {
-  public name: string;
-  public strength: AttributeStrength;
-
-  constructor(name: string, strength: AttributeStrength) {
-    this.name = name;
-    this.strength = strength;
-  }
-}
+import { type AttributeStrength, AffectedAttribute } from "@/utils/hooks/useAttributeSelection";
 
 class Quest {
   public name: string;

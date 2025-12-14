@@ -1,8 +1,9 @@
 import { useState } from "react";
 
-type AttributeStrength = "normal" | "plus" | "plusPlus";
+export type AttributeStrength = "normal" | "plus" | "plusPlus";
 
-class AffectedAttribute {
+// TODO: Move classes to their own files
+export class AffectedAttribute {
   public name: string;
   public strength: AttributeStrength;
 
