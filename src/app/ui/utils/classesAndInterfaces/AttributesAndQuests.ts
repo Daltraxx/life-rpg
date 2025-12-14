@@ -12,6 +12,9 @@ export function createAffectedAttribute(
   name: string,
   strength: AttributeStrength
 ): AffectedAttribute {
+  if (!name?.trim()) {
+    throw new Error("Attribute name cannot be empty");
+  }
   return { name, strength };
 }
 
@@ -27,5 +30,8 @@ export function createQuest(
   name: string,
   affectedAttributes: AffectedAttribute[]
 ): Quest {
+  if (!name?.trim()) { 
+    throw new Error("Quest name cannot be empty");
+  }
   return { name, affectedAttributes };
 }
