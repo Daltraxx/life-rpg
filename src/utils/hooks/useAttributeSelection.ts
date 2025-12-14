@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export type AttributeStrength = "normal" | "plus" | "plusPlus";
 
@@ -86,7 +86,7 @@ const useAttributeSelection = (
       setAttributeStrengthMenuOpen(false);
   };
   
-  const handleAddAffectedAttribute = () => {
+  const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
     if (currentAttributeName === noAvailableAttributesText) {
       return;
@@ -109,9 +109,9 @@ const useAttributeSelection = (
       ...prevSelected,
       new AffectedAttribute(currentAttributeName, currentAttributeStrength),
     ]);
-  };
+  }, [currentAttributeName, currentAttributeStrength, noAvailableAttributesText, selectedAttributes]);
 
-  const handleDeleteAffectedAttribute = (attributeName: string) => {
+  const handleDeleteAffectedAttribute = useCallback((attributeName: string) => {
     setSelectedAttributes((prevSelected) =>
       prevSelected.filter((attr) => attr.name !== attributeName)
     );
@@ -125,16 +125,16 @@ const useAttributeSelection = (
     setCurrentAttributeName((prevCurrent) =>
       prevCurrent === noAvailableAttributesText ? attributeName : prevCurrent
     );
-  };
+  }, [initialAttributes, noAvailableAttributesText]);
 
-  const handleResetAttributeSelectionUI = () => {
+  const handleResetAttributeSelectionUI = useCallback(() => {
     setAvailableAttributes(initialAttributes);
     setSelectedAttributes([]);
     setCurrentAttributeName(initialAttributes[0] || noAvailableAttributesText);
     setCurrentAttributeStrength("normal");
     setAttributeNameMenuOpen(false);
     setAttributeStrengthMenuOpen(false);
-  }
+  }, [initialAttributes, noAvailableAttributesText]);
 
   return {
     availableAttributes,
