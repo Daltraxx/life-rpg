@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import clsx from "clsx";
 import { strengthDisplayMap } from "../QuestsWidget";
-import type { AttributeStrength } from "@/utils/hooks/useAttributeSelection";
+import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import type { UseAttributeSelection } from "@/utils/hooks/useAttributeSelection";
 
 export default function AddAffectedAttributeUI({
