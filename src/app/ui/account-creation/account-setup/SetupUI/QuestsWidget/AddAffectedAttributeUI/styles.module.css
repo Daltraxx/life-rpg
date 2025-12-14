@@ -67,11 +67,11 @@
 }
 
 .attributeSelectMenuContainer {
-  border-right-width: 1px;
+  border-right: 1px solid var(--blue-700, #091f36);
   border-radius: var(--border-radius-sm, 4px) 0 0 var(--border-radius-sm, 4px);
 }
 .attributeStrengthMenuContainer {
-  border-left-width: 1px;
+  border-left: 1px solid var(--blue-700, #091f36);
 }
 
 .menuContainer button {
