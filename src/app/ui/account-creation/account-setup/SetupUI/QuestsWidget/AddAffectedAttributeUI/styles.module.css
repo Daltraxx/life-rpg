@@ -88,7 +88,7 @@
 
 .addAttributeButton {
   background-color: var(--blue-400, #123e6d);
-  border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+  border-radius: 0 var(--border-radius-sm, 4px) var(--border-radius-sm, 4px) 0;
 }
 .addAttributeButton:focus-visible {
   background-color: var(--blue-300, #47a2f5);
