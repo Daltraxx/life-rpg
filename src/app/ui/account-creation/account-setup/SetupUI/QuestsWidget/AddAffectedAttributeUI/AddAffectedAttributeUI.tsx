@@ -11,8 +11,7 @@ export default function AddAffectedAttributeUI({
 }: {
   attributeSelection: UseAttributeSelection;
   noAvailableAttributesText: string;
-  }) {
-  
+}) {
   const {
     availableAttributes,
     currentAttributeName,
