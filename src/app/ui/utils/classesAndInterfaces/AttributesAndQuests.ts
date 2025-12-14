@@ -3,9 +3,6 @@ import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 /**
  * Represents an attribute that can be affected in the game.
  */
-/**
- * Represents an attribute that can be affected in the game.
- */
 export interface AffectedAttribute {
   name: string;
   strength: AttributeStrength;
