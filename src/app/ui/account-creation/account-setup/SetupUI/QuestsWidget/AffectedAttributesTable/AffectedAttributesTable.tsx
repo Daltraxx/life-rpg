@@ -52,8 +52,9 @@ export default function AffectedAttributesTable({
                 )}
                 onClick={() => onDeleteAttribute(attribute.name)}
                 type="button"
+                aria-label={`Remove ${attribute.name} from affected attributes`}
               >
-                DELETE
+                REMOVE
               </button>
             </td>
           </tr>
