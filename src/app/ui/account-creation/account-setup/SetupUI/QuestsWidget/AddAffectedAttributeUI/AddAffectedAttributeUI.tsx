@@ -1,9 +1,12 @@
+"use client";
+
 import styles from "./styles.module.css";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import clsx from "clsx";
 import { strengthDisplayMap } from "@/app/ui/utils/helpers/StrengthDisplayMap";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import type { UseAttributeSelection } from "@/utils/hooks/useAttributeSelection";
+import AttributeMenu from "./SelectMenus/AttributeMenu";
 
 export default function AddAffectedAttributeUI({
   attributeSelection,
@@ -42,39 +45,11 @@ export default function AddAffectedAttributeUI({
               styles.attributeSelectMenuContainer
             )}
           >
-            <button
-              type="button"
-              aria-expanded={attributeNameMenuOpen}
-              aria-controls="attribute-name-menu"
-              aria-haspopup="true"
-              onClick={() => setAttributeNameMenuOpen(!attributeNameMenuOpen)}
-            >
-              {currentAttributeName}
-            </button>
-            <div
-              id="attribute-name-menu"
-              role="menu"
-              className={clsx(
-                styles.menu,
-                attributeNameMenuOpen && styles.open
-              )}
-            >
-              {availableAttributes.map((attribute) => (
-                <Label key={attribute} className={styles.attributeSelectLabel}>
-                  <input
-                    type="radio"
-                    name="affectedAttribute"
-                    value={attribute}
-                    checked={currentAttributeName === attribute}
-                    onChange={() => {
-                      setCurrentAttributeName(attribute);
-                      setAttributeNameMenuOpen(false);
-                    }}
-                  />
-                  {attribute}
-                </Label>
-              ))}
-            </div>
+            <AttributeMenu
+              availableAttributes={availableAttributes}
+              currentAttribute={currentAttributeName}
+              onAttributeSelect={setCurrentAttributeName}
+            />
           </div>
 
           {/* AMOUNT ATTRIBUTE IS AFFECTED BY QUEST */}
