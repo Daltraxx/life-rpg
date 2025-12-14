@@ -95,7 +95,7 @@ interface LinkWrapperProps extends LinkProps {
  *
  * @example
  * ```tsx
- * <LinkWrapper href="/dashboard" color="blue-600" fontSize="16">
+ * <LinkWrapper href="/dashboard" color="blue-700" fontSize="16">
  *   Go to Dashboard
  * </LinkWrapper>
  * ```
