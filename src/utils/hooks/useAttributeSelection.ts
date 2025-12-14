@@ -73,11 +73,13 @@ const useAttributeSelection = (
   const [attributeStrengthMenuOpen, setAttributeStrengthMenuOpen] =
     useState<boolean>(false);
 
-  const handleSetAttributeStrength = (strength: AttributeStrength) => {
-    setCurrentAttributeStrength(strength);
-    setAttributeStrengthMenuOpen(false);
-  };
-
+  const handleSetAttributeStrength = useCallback(
+    (strength: AttributeStrength) => {
+      setCurrentAttributeStrength(strength);
+      setAttributeStrengthMenuOpen(false);
+    },
+    []
+  );
   const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
     if (currentAttributeName === noAvailableAttributesText) {
