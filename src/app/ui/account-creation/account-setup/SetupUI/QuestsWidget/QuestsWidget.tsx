@@ -8,7 +8,10 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import clsx from "clsx";
 import useAttributeSelection from "@/utils/hooks/useAttributeSelection";
-import { type AttributeStrength, AffectedAttribute } from "@/utils/hooks/useAttributeSelection";
+import {
+  type AttributeStrength,
+  AffectedAttribute,
+} from "@/utils/hooks/useAttributeSelection";
 
 class Quest {
   public name: string;
@@ -43,24 +46,19 @@ export default function QuestsWidget({ className }: { className?: string }) {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [newQuestName, setNewQuestName] = useState<string>("");
 
+  const attributeSelection = useAttributeSelection(
+    TEST_ATTRIBUTES,
+    NO_AVAILABLE_ATTRIBUTES_TEXT
+  );
+  
   const {
-    availableAttributes,
-    currentAttributeName,
-    currentAttributeStrength,
     selectedAttributes,
-    attributeNameMenuOpen,
-    attributeStrengthMenuOpen,
     actions: attributeActions,
-  } = useAttributeSelection(TEST_ATTRIBUTES, NO_AVAILABLE_ATTRIBUTES_TEXT);
+  } = attributeSelection;
 
   const {
-    setCurrentAttributeName,
-    setAttributeStrength,
-    addAffectedAttribute,
     deleteAffectedAttribute,
     resetAttributeSelectionUI,
-    setAttributeNameMenuOpen,
-    setAttributeStrengthMenuOpen,
   } = attributeActions;
 
   const handleCreateQuest = () => {
@@ -128,17 +126,8 @@ export default function QuestsWidget({ className }: { className?: string }) {
 
       {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
       <AddAffectedAttributeUI
-        attributeNameMenuOpen={attributeNameMenuOpen}
-        setAttributeNameMenuOpen={setAttributeNameMenuOpen}
-        attributeStrengthMenuOpen={attributeStrengthMenuOpen}
-        setAttributeStrengthMenuOpen={setAttributeStrengthMenuOpen}
-        currentAttributeName={currentAttributeName}
-        setCurrentAttributeName={setCurrentAttributeName}
-        currentAttributeStrength={currentAttributeStrength}
-        handleSetAttributeStrength={setAttributeStrength}
-        availableAttributes={availableAttributes}
+        attributeSelection={attributeSelection}
         noAvailableAttributesText={NO_AVAILABLE_ATTRIBUTES_TEXT}
-        handleAddAffectedAttribute={addAffectedAttribute}
       />
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}

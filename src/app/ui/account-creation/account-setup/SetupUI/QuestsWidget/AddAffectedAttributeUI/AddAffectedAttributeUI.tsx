@@ -3,34 +3,33 @@ import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import clsx from "clsx";
 import { strengthDisplayMap } from "../QuestsWidget";
 import type { AttributeStrength } from "@/utils/hooks/useAttributeSelection";
+import type { UseAttributeSelection } from "@/utils/hooks/useAttributeSelection";
 
-interface AddAffectedAttributeUIProps { 
-  attributeNameMenuOpen: boolean;
-  setAttributeNameMenuOpen: (open: boolean) => void;
-  attributeStrengthMenuOpen: boolean;
-  setAttributeStrengthMenuOpen: (open: boolean) => void;
-  currentAttributeName: string;
-  setCurrentAttributeName: (name: string) => void;
-  currentAttributeStrength: AttributeStrength;
-  handleSetAttributeStrength: (strength: AttributeStrength) => void;
-  availableAttributes: string[];
-  noAvailableAttributesText: string;
-  handleAddAffectedAttribute: () => void;
-}
-
-export default function AddAffectedAttributeUI({ 
-  attributeNameMenuOpen,
-  setAttributeNameMenuOpen,
-  attributeStrengthMenuOpen,
-  setAttributeStrengthMenuOpen,
-  currentAttributeName,
-  setCurrentAttributeName,
-  currentAttributeStrength,
-  handleSetAttributeStrength,
-  availableAttributes,
+export default function AddAffectedAttributeUI({
+  attributeSelection,
   noAvailableAttributesText,
-  handleAddAffectedAttribute,
-}: AddAffectedAttributeUIProps) { 
+}: {
+  attributeSelection: UseAttributeSelection;
+  noAvailableAttributesText: string;
+  }) {
+  
+  const {
+    availableAttributes,
+    currentAttributeName,
+    currentAttributeStrength,
+    attributeNameMenuOpen,
+    attributeStrengthMenuOpen,
+    actions: attributeActions,
+  } = attributeSelection;
+
+  const {
+    setCurrentAttributeName,
+    setAttributeStrength,
+    addAffectedAttribute,
+    setAttributeNameMenuOpen,
+    setAttributeStrengthMenuOpen,
+  } = attributeActions;
+
   return (
     <fieldset className={styles.addAffectedAttributeFieldset}>
       <div className={styles.addAffectedAttributeContainer}>
@@ -119,7 +118,7 @@ export default function AddAffectedAttributeUI({
                       name="attributeStrength"
                       value={strengthKey}
                       checked={currentAttributeStrength === strengthKey}
-                      onChange={() => handleSetAttributeStrength(strengthKey)}
+                      onChange={() => setAttributeStrength(strengthKey)}
                     />
                     {strengthDisplayMap[strengthKey]}
                   </Label>
@@ -133,7 +132,7 @@ export default function AddAffectedAttributeUI({
         <button
           className={clsx(styles.appendedButton, styles.addAttributeButton)}
           type="button"
-          onClick={handleAddAffectedAttribute}
+          onClick={addAffectedAttribute}
           disabled={currentAttributeName === noAvailableAttributesText}
         >
           ADD

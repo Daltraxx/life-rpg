@@ -13,7 +13,7 @@ export class AffectedAttribute {
   }
 }
 
-type UseAttributeSelectionReturn = {
+export type UseAttributeSelection = {
   availableAttributes: string[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
@@ -60,7 +60,7 @@ type UseAttributeSelectionReturn = {
 const useAttributeSelection = (
   initialAttributes: string[],
   noAvailableAttributesText: string
-): UseAttributeSelectionReturn => {
+): UseAttributeSelection => {
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(initialAttributes);
   
