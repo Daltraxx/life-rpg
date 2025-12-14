@@ -3,8 +3,11 @@ import type { LinkProps } from "next/link";
 import Link from "next/link";
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
-import getSecureRel from "../../utils/getSecureRel";
+import {
+  fontSizeToTWMap,
+  FontSize,
+} from "@/app/ui/utils/helpers/fontSizeToTWMap";
+import getSecureRel from "../../utils/helpers/getSecureRel";
 
 /**
  * Color variants for buttons and links with button appearance.

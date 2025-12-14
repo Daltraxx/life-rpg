@@ -29,18 +29,18 @@ export type UseAttributeSelection = {
     setAttributeNameMenuOpen: (open: boolean) => void;
     setAttributeStrengthMenuOpen: (open: boolean) => void;
   };
-}
+};
 
 /**
  * Hook for managing attribute selection state and operations.
- * 
+ *
  * Handles the selection, addition, and deletion of attributes with associated strength levels.
  * Maintains lists of available and selected attributes, manages UI state for dropdown menus,
  * and provides callbacks for attribute operations.
- * 
+ *
  * @param initialAttributes - Array of attribute names available for selection
  * @param noAvailableAttributesText - Text to display when no attributes are available
- * 
+ *
  * @returns Object containing:
  * @returns {string[]} availableAttributes - Currently available attributes that can be selected
  * @returns {string} currentAttributeName - Name of the currently selected attribute
@@ -63,29 +63,29 @@ const useAttributeSelection = (
 ): UseAttributeSelection => {
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(initialAttributes);
-  
+
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
     availableAttributes[0] || noAvailableAttributesText
   );
 
   const [currentAttributeStrength, setCurrentAttributeStrength] =
     useState<AttributeStrength>("normal");
-  
+
   const [selectedAttributes, setSelectedAttributes] = useState<
     AffectedAttribute[]
-    >([]);
-  
+  >([]);
+
   const [attributeNameMenuOpen, setAttributeNameMenuOpen] =
     useState<boolean>(false);
-  
+
   const [attributeStrengthMenuOpen, setAttributeStrengthMenuOpen] =
     useState<boolean>(false);
-  
+
   const handleSetAttributeStrength = (strength: AttributeStrength) => {
-      setCurrentAttributeStrength(strength);
-      setAttributeStrengthMenuOpen(false);
+    setCurrentAttributeStrength(strength);
+    setAttributeStrengthMenuOpen(false);
   };
-  
+
   const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
     if (currentAttributeName === noAvailableAttributesText) {
@@ -109,23 +109,31 @@ const useAttributeSelection = (
       ...prevSelected,
       new AffectedAttribute(currentAttributeName, currentAttributeStrength),
     ]);
-  }, [currentAttributeName, currentAttributeStrength, noAvailableAttributesText, selectedAttributes]);
+  }, [
+    currentAttributeName,
+    currentAttributeStrength,
+    noAvailableAttributesText,
+    selectedAttributes,
+  ]);
 
-  const handleDeleteAffectedAttribute = useCallback((attributeName: string) => {
-    setSelectedAttributes((prevSelected) =>
-      prevSelected.filter((attr) => attr.name !== attributeName)
-    );
-    setAvailableAttributes((prevAvailable) => {
-      const updatedAvailableAttributes = [...prevAvailable, attributeName];
-      // Sort available attributes to maintain order
-      return updatedAvailableAttributes.sort(
-        (a, b) => initialAttributes.indexOf(a) - initialAttributes.indexOf(b)
+  const handleDeleteAffectedAttribute = useCallback(
+    (attributeName: string) => {
+      setSelectedAttributes((prevSelected) =>
+        prevSelected.filter((attr) => attr.name !== attributeName)
       );
-    });
-    setCurrentAttributeName((prevCurrent) =>
-      prevCurrent === noAvailableAttributesText ? attributeName : prevCurrent
-    );
-  }, [initialAttributes, noAvailableAttributesText]);
+      setAvailableAttributes((prevAvailable) => {
+        const updatedAvailableAttributes = [...prevAvailable, attributeName];
+        // Sort available attributes to maintain order
+        return updatedAvailableAttributes.sort(
+          (a, b) => initialAttributes.indexOf(a) - initialAttributes.indexOf(b)
+        );
+      });
+      setCurrentAttributeName((prevCurrent) =>
+        prevCurrent === noAvailableAttributesText ? attributeName : prevCurrent
+      );
+    },
+    [initialAttributes, noAvailableAttributesText]
+  );
 
   const handleResetAttributeSelectionUI = useCallback(() => {
     setAvailableAttributes(initialAttributes);
@@ -150,9 +158,9 @@ const useAttributeSelection = (
       deleteAffectedAttribute: handleDeleteAffectedAttribute,
       resetAttributeSelectionUI: handleResetAttributeSelectionUI,
       setAttributeNameMenuOpen,
-      setAttributeStrengthMenuOpen 
-    }
-  }
+      setAttributeStrengthMenuOpen,
+    },
+  };
 };
 
 export default useAttributeSelection;

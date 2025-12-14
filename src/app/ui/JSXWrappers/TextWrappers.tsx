@@ -1,7 +1,10 @@
 import React from "react";
 import { ComponentProps } from "react";
 import clsx from "clsx";
-import { fontSizeToTWMap, FontSize } from "@/app/ui/utils/fontSizeToTWMap";
+import {
+  fontSizeToTWMap,
+  FontSize,
+} from "@/app/ui/utils/helpers/fontSizeToTWMap";
 
 /**
  * Creates a React component that wraps a specified HTML text element (`p`, `span`, `label`, or `li`)
