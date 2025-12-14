@@ -1,5 +1,5 @@
 .questsWidgetVars {
-  --grid-layout: 2fr 5fr 2fr;
+  --grid-layout: 4fr 5fr 2fr;
   --two-column-template: 3fr 2fr;
   --grid-layout-options-and-button: 5fr 2fr;
   --grid-layout-cells-and-button: 3fr 2fr 2fr;
@@ -18,13 +18,4 @@
   /* plus */
   --plus-font-size: 2rem;
   --plus-line-height: 0.55;
-}
-
-@media (min-width: 768px) {
-  .questsWidgetVars {
-    --grid-layout: 4fr 5fr 2fr;
-    --two-column-template: 3fr 2fr;
-    --grid-layout-options-and-button: 5fr 2fr;
-    --grid-layout-cells-and-button: 3fr 2fr 2fr;
-  }
 }
