@@ -9,18 +9,11 @@ import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttribut
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
 import useAttributeSelection from "@/utils/hooks/useAttributeSelection";
-import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
   createAffectedAttribute,
   Quest,
   createQuest,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-
-export const strengthDisplayMap: Record<AttributeStrength, string> = {
-  normal: "normal",
-  plus: "+",
-  plusPlus: "++",
-};
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 const NO_AVAILABLE_ATTRIBUTES_TEXT = "N/A";
