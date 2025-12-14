@@ -119,12 +119,16 @@ export default function AttributeWidget({ className }: { className?: string }) {
             ADD
           </button>
         </div>
-        {addAttributeError && (
-          <p id="attribute-error" className={styles.attributeError}>
-            {addAttributeError}
-          </p>
-        )}
       </div>
+      {addAttributeError && (
+        <Paragraph
+          id="attribute-error"
+          size="20"
+          className={styles.addAttributeError}
+        >
+          {addAttributeError}
+        </Paragraph>
+      )}
 
       <div>
         <div className={styles.currentAttributesHeadingContainer}>

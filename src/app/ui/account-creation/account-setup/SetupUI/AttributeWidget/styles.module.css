@@ -19,6 +19,10 @@
   font-size: 1.25rem;
 }
 
+.addAttributeLabel {
+  min-width: fit-content;
+}
+
 .addAttributeField {
   /* Width calculation expects a sibling button with width: var(--button-width) */
   --button-width: 3.375rem;
@@ -70,7 +74,7 @@
   background-color: var(--blue-500, #0f3257);
 }
 
-.attributeError {
+.addAttributeError {
   color: var(--red-500, #ef2101);
 }
 
