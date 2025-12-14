@@ -7,6 +7,7 @@ import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import clsx from "clsx";
+import useAttributeSelection from "@/utils/hooks/useAttributeSelection";
 
 export type AttributeStrength = "normal" | "plus" | "plusPlus";
 
@@ -52,67 +53,26 @@ export default function QuestsWidget({ className }: { className?: string }) {
   // TODO: Persist quests to context/state management
   const [quests, setQuests] = useState<Quest[]>([]);
   const [newQuestName, setNewQuestName] = useState<string>("");
-  const [availableAttributes, setAvailableAttributes] =
-    useState<string[]>(TEST_ATTRIBUTES);
-  const [currentAttributeName, setCurrentAttributeName] = useState<string>(
-    availableAttributes[0] || NO_AVAILABLE_ATTRIBUTES_TEXT
-  );
-  const [currentAttributeStrength, setCurrentAttributeStrength] =
-    useState<AttributeStrength>("normal");
-  const [selectedAttributes, setSelectedAttributes] = useState<
-    AffectedAttribute[]
-  >([]);
 
-  const [attributeNameMenuOpen, setAttributeNameMenuOpen] =
-    useState<boolean>(false);
-  const [attributeStrengthMenuOpen, setAttributeStrengthMenuOpen] =
-    useState<boolean>(false);
+  const {
+    availableAttributes,
+    currentAttributeName,
+    currentAttributeStrength,
+    selectedAttributes,
+    attributeNameMenuOpen,
+    attributeStrengthMenuOpen,
+    actions: attributeActions,
+  } = useAttributeSelection(TEST_ATTRIBUTES, NO_AVAILABLE_ATTRIBUTES_TEXT);
 
-  const handleSetAttributeStrength = (strength: AttributeStrength) => {
-    setCurrentAttributeStrength(strength);
-    setAttributeStrengthMenuOpen(false);
-  };
-
-  const handleAddAffectedAttribute = () => {
-    // TODO: Add proper error handling and user feedback
-    if (currentAttributeName === NO_AVAILABLE_ATTRIBUTES_TEXT) {
-      return;
-    }
-    if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
-      return;
-    }
-
-    setAvailableAttributes((prevAvailable) => {
-      const updatedAvailableAttributes = prevAvailable.filter(
-        (attr) => attr !== currentAttributeName
-      );
-      setCurrentAttributeName(
-        updatedAvailableAttributes[0] || NO_AVAILABLE_ATTRIBUTES_TEXT
-      );
-      return updatedAvailableAttributes;
-    });
-
-    setSelectedAttributes((prevSelected) => [
-      ...prevSelected,
-      new AffectedAttribute(currentAttributeName, currentAttributeStrength),
-    ]);
-  };
-
-  const handleDeleteAffectedAttribute = (attributeName: string) => {
-    setSelectedAttributes((prevSelected) =>
-      prevSelected.filter((attr) => attr.name !== attributeName)
-    );
-    setAvailableAttributes((prevAvailable) => {
-      const updatedAvailableAttributes = [...prevAvailable, attributeName];
-      // Sort available attributes to maintain order
-      return updatedAvailableAttributes.sort(
-        (a, b) => TEST_ATTRIBUTES.indexOf(a) - TEST_ATTRIBUTES.indexOf(b)
-      );
-    });
-    setCurrentAttributeName((prevCurrent) =>
-      prevCurrent === NO_AVAILABLE_ATTRIBUTES_TEXT ? attributeName : prevCurrent
-    );
-  };
+  const {
+    setCurrentAttributeName,
+    setAttributeStrength,
+    addAffectedAttribute,
+    deleteAffectedAttribute,
+    resetAttributeSelectionUI,
+    setAttributeNameMenuOpen,
+    setAttributeStrengthMenuOpen,
+  } = attributeActions;
 
   const handleCreateQuest = () => {
     const trimmedQuestName = newQuestName.trim();
@@ -142,10 +102,7 @@ export default function QuestsWidget({ className }: { className?: string }) {
 
     // Reset UI state
     setNewQuestName("");
-    setSelectedAttributes([]);
-    setAvailableAttributes(TEST_ATTRIBUTES);
-    setCurrentAttributeName(TEST_ATTRIBUTES[0] || NO_AVAILABLE_ATTRIBUTES_TEXT);
-    setCurrentAttributeStrength("normal");
+    resetAttributeSelectionUI();
   };
 
   // TODO: Add keyboard accessibility for dropdown menus
@@ -189,10 +146,10 @@ export default function QuestsWidget({ className }: { className?: string }) {
         currentAttributeName={currentAttributeName}
         setCurrentAttributeName={setCurrentAttributeName}
         currentAttributeStrength={currentAttributeStrength}
-        handleSetAttributeStrength={handleSetAttributeStrength}
+        handleSetAttributeStrength={setAttributeStrength}
         availableAttributes={availableAttributes}
         noAvailableAttributesText={NO_AVAILABLE_ATTRIBUTES_TEXT}
-        handleAddAffectedAttribute={handleAddAffectedAttribute}
+        handleAddAffectedAttribute={addAffectedAttribute}
       />
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
@@ -233,7 +190,7 @@ export default function QuestsWidget({ className }: { className?: string }) {
                     styles.appendedButton,
                     styles.deleteAttributeButton
                   )}
-                  onClick={() => handleDeleteAffectedAttribute(attribute.name)}
+                  onClick={() => deleteAffectedAttribute(attribute.name)}
                   type="button"
                 >
                   DELETE
