@@ -1,7 +1,8 @@
 import styles from "./styles.module.css";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import clsx from "clsx";
-import { AttributeStrength, strengthDisplayMap } from "../QuestsWidget";
+import { strengthDisplayMap } from "../QuestsWidget";
+import type { AttributeStrength } from "@/utils/hooks/useAttributeSelection";
 
 interface AddAffectedAttributeUIProps { 
   attributeNameMenuOpen: boolean;
