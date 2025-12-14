@@ -1,17 +1,9 @@
 import { useCallback, useState } from "react";
-
-export type AttributeStrength = "normal" | "plus" | "plusPlus";
-
-// TODO: Move classes to their own files
-export class AffectedAttribute {
-  public name: string;
-  public strength: AttributeStrength;
-
-  constructor(name: string, strength: AttributeStrength) {
-    this.name = name;
-    this.strength = strength;
-  }
-}
+import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
+import {
+  AffectedAttribute,
+  createAffectedAttribute,
+} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
 export type UseAttributeSelection = {
   availableAttributes: string[];
@@ -107,7 +99,7 @@ const useAttributeSelection = (
 
     setSelectedAttributes((prevSelected) => [
       ...prevSelected,
-      new AffectedAttribute(currentAttributeName, currentAttributeStrength),
+      createAffectedAttribute(currentAttributeName, currentAttributeStrength),
     ]);
   }, [
     currentAttributeName,

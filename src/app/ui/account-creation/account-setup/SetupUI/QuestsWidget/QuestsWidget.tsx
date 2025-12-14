@@ -8,20 +8,12 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import clsx from "clsx";
 import useAttributeSelection from "@/utils/hooks/useAttributeSelection";
+import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
-  type AttributeStrength,
-  AffectedAttribute,
-} from "@/utils/hooks/useAttributeSelection";
-
-class Quest {
-  public name: string;
-  public affectedAttributes: AffectedAttribute[];
-
-  constructor(name: string, affectedAttributes: AffectedAttribute[]) {
-    this.name = name;
-    this.affectedAttributes = affectedAttributes;
-  }
-}
+  createAffectedAttribute,
+  Quest,
+  createQuest,
+} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
 export const strengthDisplayMap: Record<AttributeStrength, string> = {
   normal: "normal",
@@ -50,16 +42,11 @@ export default function QuestsWidget({ className }: { className?: string }) {
     TEST_ATTRIBUTES,
     NO_AVAILABLE_ATTRIBUTES_TEXT
   );
-  
-  const {
-    selectedAttributes,
-    actions: attributeActions,
-  } = attributeSelection;
 
-  const {
-    deleteAffectedAttribute,
-    resetAttributeSelectionUI,
-  } = attributeActions;
+  const { selectedAttributes, actions: attributeActions } = attributeSelection;
+
+  const { deleteAffectedAttribute, resetAttributeSelectionUI } =
+    attributeActions;
 
   const handleCreateQuest = () => {
     const trimmedQuestName = newQuestName.trim();
@@ -79,12 +66,12 @@ export default function QuestsWidget({ className }: { className?: string }) {
     const affectedAttributes = [...selectedAttributes];
     if (!affectedAttributes.some((attr) => attr.name === REQUIRED_ATTRIBUTE)) {
       affectedAttributes.push(
-        new AffectedAttribute(REQUIRED_ATTRIBUTE, "normal")
+        createAffectedAttribute(REQUIRED_ATTRIBUTE, "normal")
       );
     }
     setQuests((prevQuests) => [
       ...prevQuests,
-      new Quest(trimmedQuestName, affectedAttributes),
+      createQuest(trimmedQuestName, affectedAttributes),
     ]);
 
     // Reset UI state
