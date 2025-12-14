@@ -57,7 +57,7 @@ const useAttributeSelection = (
     useState<string[]>(initialAttributes);
 
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
-    availableAttributes[0] || noAvailableAttributesText
+    initialAttributes[0] || noAvailableAttributesText
   );
 
   const [currentAttributeStrength, setCurrentAttributeStrength] =
