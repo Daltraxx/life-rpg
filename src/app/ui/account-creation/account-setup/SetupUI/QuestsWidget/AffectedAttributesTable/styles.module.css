@@ -32,7 +32,6 @@
   display: grid;
   grid-template-columns: var(--grid-layout-cells-and-button);
   width: 100%;
-  border-collapse: collapse;
   font-size: 1.5rem;
 }
 
