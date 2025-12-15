@@ -8,7 +8,6 @@ import {
   ChevronDownIcon,
   CheckIcon,
 } from "@radix-ui/react-icons";
-import { useState } from "react";
 
 interface AttributeMenuProps {
   availableAttributes: string[];
