@@ -12,11 +12,38 @@ import {
 } from "@radix-ui/react-icons";
 import { useRef } from "react";
 
-const strengthDisplayValues = Object.values(strengthDisplayMap);
-const strengthDisplayToKeyMap: Record<string, AttributeStrength> =
-  Object.fromEntries(
-    Object.entries(strengthDisplayMap).map(([key, value]) => [value, key])
-  ) as Record<string, AttributeStrength>;
+
+
+interface AttributeOptionProps
+  extends React.ComponentProps<typeof Select.Item> {
+  className?: string;
+}
+
+const AttributeOption = ({
+  children,
+  className,
+  value,
+  ...props
+}: AttributeOptionProps) => {
+  return (
+    <Select.Item
+      className={clsx(styles.item, className)}
+      value={value}
+      {...props}
+    >
+      <Select.ItemText>{children}</Select.ItemText>
+      <Select.ItemIndicator className={styles.itemIndicator}>
+        <CheckIcon />
+      </Select.ItemIndicator>
+    </Select.Item>
+  );
+};
+
+const AttributeOptions = Object.keys(strengthDisplayMap).map((strengthKey) => (
+  <AttributeOption key={strengthKey} value={strengthKey}>
+    {strengthDisplayMap[strengthKey as AttributeStrength]}
+  </AttributeOption>
+));
 
 interface StrengthMenuProps {
   currentStrength: AttributeStrength;
@@ -56,11 +83,12 @@ export default function StrengthMenu({
       triggerRef.current?.blur();
     }, 1);
   };
+
   return (
     <Select.Root
-      value={strengthDisplayMap[currentStrength]}
+      value={currentStrength}
       onValueChange={(value) =>
-        handleValueChange(strengthDisplayToKeyMap[value])
+        handleValueChange(value as AttributeStrength)
       }
     >
       <Select.Trigger
@@ -80,11 +108,7 @@ export default function StrengthMenu({
           </Select.ScrollUpButton>
           <Select.Viewport className={styles.viewport}>
             <Select.Group>
-              {strengthDisplayValues.map((strength) => (
-                <AttributeOption key={strength} value={strength}>
-                  {strength}
-                </AttributeOption>
-              ))}
+              {AttributeOptions}
             </Select.Group>
           </Select.Viewport>
           <Select.ScrollDownButton className={styles.scrollButton}>
@@ -95,27 +119,3 @@ export default function StrengthMenu({
     </Select.Root>
   );
 }
-
-interface AttributeOptionProps extends React.ComponentProps<typeof Select.Item> {
-  className?: string;
-}
-
-const AttributeOption = ({
-  children,
-  className,
-  value,
-  ...props
-}: AttributeOptionProps) => {
-  return (
-    <Select.Item
-      className={clsx(styles.item, className)}
-      value={value}
-      {...props}
-    >
-      <Select.ItemText>{children}</Select.ItemText>
-      <Select.ItemIndicator className={styles.itemIndicator}>
-        <CheckIcon />
-      </Select.ItemIndicator>
-    </Select.Item>
-  );
-};
