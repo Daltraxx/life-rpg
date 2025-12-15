@@ -10,6 +10,7 @@ import {
   ChevronDownIcon,
   CheckIcon,
 } from "@radix-ui/react-icons";
+import { useRef } from "react";
 
 const strengthDisplayValues = Object.values(strengthDisplayMap);
 const strengthDisplayToKeyMap: Record<string, AttributeStrength> =
@@ -48,11 +49,20 @@ export default function StrengthMenu({
   currentStrength,
   onStrengthSelect,
 }: StrengthMenuProps) {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+    const handleValueChange = (value: AttributeStrength) => {
+      onStrengthSelect(value);
+      // Remove focus from trigger after selection
+      setTimeout(() => {
+        triggerRef.current?.blur();
+        console.log("blurred");
+      }, 1);
+    };
   return (
     <Select.Root
       value={strengthDisplayMap[currentStrength]}
       onValueChange={(value) =>
-        onStrengthSelect(strengthDisplayToKeyMap[value])
+        handleValueChange(strengthDisplayToKeyMap[value])
       }
     >
       <Select.Trigger
@@ -61,6 +71,7 @@ export default function StrengthMenu({
           currentStrength.includes("plus") && styles.plus
         )}
         aria-label="Select Attribute Strength"
+        ref={triggerRef}
       >
         <Select.Value>{strengthDisplayMap[currentStrength]}</Select.Value>
       </Select.Trigger>

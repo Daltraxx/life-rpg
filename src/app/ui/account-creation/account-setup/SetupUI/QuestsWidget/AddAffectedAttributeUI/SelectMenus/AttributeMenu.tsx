@@ -8,6 +8,7 @@ import {
   ChevronDownIcon,
   CheckIcon,
 } from "@radix-ui/react-icons";
+import { useRef } from "react";
 
 interface AttributeMenuProps {
   availableAttributes: string[];
@@ -17,15 +18,15 @@ interface AttributeMenuProps {
 
 /**
  * Renders a dropdown menu for selecting an attribute from a list of available attributes.
- * 
+ *
  * @component
  * @param {AttributeMenuProps} props - The component props
  * @param {string[]} props.availableAttributes - Array of attribute names available for selection
  * @param {string} props.currentAttribute - The currently selected attribute value
  * @param {(value: string) => void} props.onAttributeSelect - Callback function invoked when an attribute is selected
- * 
+ *
  * @returns {JSX.Element} A Select component with scrollable attribute options
- * 
+ *
  * @example
  * ```tsx
  * <AttributeMenu
@@ -40,12 +41,25 @@ export default function AttributeMenu({
   currentAttribute,
   onAttributeSelect,
 }: AttributeMenuProps) {
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const handleValueChange = (value: string) => {
+    onAttributeSelect(value);
+    // Remove focus from trigger after selection
+    setTimeout(() => {
+      triggerRef.current?.blur();
+      console.log("blurred");
+    }, 1);
+  };
   return (
     <Select.Root
       value={currentAttribute}
-      onValueChange={(value) => onAttributeSelect(value)}
+      onValueChange={(value) => handleValueChange(value)}
     >
-      <Select.Trigger className={styles.trigger} aria-label="Select Attribute">
+      <Select.Trigger
+        className={styles.trigger}
+        aria-label="Select Attribute"
+        ref={triggerRef}
+      >
         <Select.Value>{currentAttribute}</Select.Value>
       </Select.Trigger>
       <Select.Portal>
@@ -84,7 +98,11 @@ const AttributeOption = ({
   ...props
 }: AttributeOptionProps) => {
   return (
-    <Select.Item className={clsx(styles.item, className)} value={value} {...props}>
+    <Select.Item
+      className={clsx(styles.item, className)}
+      value={value}
+      {...props}
+    >
       <Select.ItemText>{children}</Select.ItemText>
       <Select.ItemIndicator className={styles.itemIndicator}>
         <CheckIcon />
