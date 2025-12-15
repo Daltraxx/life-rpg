@@ -25,18 +25,18 @@ interface StrengthMenuProps {
 
 /**
  * StrengthMenu component for selecting attribute strength levels.
- * 
+ *
  * Renders a dropdown select menu that allows users to choose from predefined
  * strength values for an attribute. The menu includes scroll buttons for
  * navigating through available options.
- * 
+ *
  * @component
  * @param {StrengthMenuProps} props - The component props
  * @param {string} props.currentStrength - The currently selected strength value (key)
  * @param {(strength: string) => void} props.onStrengthSelect - Callback function invoked when a strength option is selected
- * 
+ *
  * @returns {React.ReactElement} A Select component with strength options
- * 
+ *
  * @example
  * ```tsx
  * <StrengthMenu
@@ -50,14 +50,14 @@ export default function StrengthMenu({
   onStrengthSelect,
 }: StrengthMenuProps) {
   const triggerRef = useRef<HTMLButtonElement>(null);
-    const handleValueChange = (value: AttributeStrength) => {
-      onStrengthSelect(value);
-      // Remove focus from trigger after selection
-      setTimeout(() => {
-        triggerRef.current?.blur();
-        console.log("blurred");
-      }, 1);
-    };
+  const handleValueChange = (value: AttributeStrength) => {
+    onStrengthSelect(value);
+    // Remove focus from trigger after selection
+    setTimeout(() => {
+      triggerRef.current?.blur();
+      console.log("blurred");
+    }, 1);
+  };
   return (
     <Select.Root
       value={strengthDisplayMap[currentStrength]}
