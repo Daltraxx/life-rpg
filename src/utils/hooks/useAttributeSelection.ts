@@ -66,7 +66,7 @@ const useAttributeSelection = (
   );
 
   const [currentAttributeStrength, setCurrentAttributeStrength] =
-    useState<AttributeStrength>("normal");
+    useState<AttributeStrength>(DEFAULT_ATTRIBUTE_STRENGTH);
 
   const [selectedAttributes, setSelectedAttributes] = useState<
     AffectedAttribute[]
