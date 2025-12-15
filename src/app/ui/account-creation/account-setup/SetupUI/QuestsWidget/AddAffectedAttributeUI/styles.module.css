@@ -2,21 +2,6 @@
   font-size: var(--label-font-size, 1.5rem);
 }
 
-.menu {
-  display: none;
-  position: absolute;
-  background-color: var(--white, #ffffff);
-  border: 3px solid var(--blue-700, #091f36);
-  max-height: 10rem;
-  overflow-y: auto;
-  z-index: 10;
-}
-
-.menu.open {
-  display: flex;
-  flex-direction: column;
-}
-
 .appendedButton {
   font-size: var(--appended-button-font-size, 1.25rem);
   border: var(--appended-button-border, 3px solid var(--blue-700, #091f36));
@@ -77,11 +62,6 @@
   height: 100%;
   cursor: pointer;
   text-align: center;
-}
-
-.plus {
-  font-size: var(--plus-font-size, 2rem);
-  line-height: var(--plus-line-height, 0.55);
 }
 
 .addAttributeButton {
