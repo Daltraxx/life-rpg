@@ -10,44 +10,48 @@ export type UseAttributeSelection = {
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
   selectedAttributes: AffectedAttribute[];
-  attributeNameMenuOpen: boolean;
-  attributeStrengthMenuOpen: boolean;
   actions: {
     setCurrentAttributeName: (name: string) => void;
     setAttributeStrength: (strength: AttributeStrength) => void;
     addAffectedAttribute: () => void;
     deleteAffectedAttribute: (name: string) => void;
     resetAttributeSelectionUI: () => void;
-    setAttributeNameMenuOpen: (open: boolean) => void;
-    setAttributeStrengthMenuOpen: (open: boolean) => void;
   };
 };
 
+
 /**
- * Hook for managing attribute selection state and operations.
- *
- * Handles the selection, addition, and deletion of attributes with associated strength levels.
- * Maintains lists of available and selected attributes, manages UI state for dropdown menus,
- * and provides callbacks for attribute operations.
- *
- * @param initialAttributes - Array of attribute names available for selection
- * @param noAvailableAttributesText - Text to display when no attributes are available
- *
- * @returns Object containing:
- * @returns {string[]} availableAttributes - Currently available attributes that can be selected
- * @returns {string} currentAttributeName - Name of the currently selected attribute
- * @returns {AttributeStrength} currentAttributeStrength - Strength level of the current attribute ("normal" by default)
- * @returns {AffectedAttribute[]} selectedAttributes - Array of attributes that have been selected
- * @returns {boolean} attributeNameMenuOpen - Whether the attribute name dropdown menu is open
- * @returns {boolean} attributeStrengthMenuOpen - Whether the attribute strength dropdown menu is open
- * @returns {Object} actions - Object containing callback functions:
- * @returns {(name: string) => void} actions.setCurrentAttributeName - Sets the currently selected attribute name
- * @returns {(strength: AttributeStrength) => void} actions.setAttributeStrength - Sets the strength of the current attribute and closes the menu
- * @returns {() => void} actions.addAffectedAttribute - Adds the current attribute to selected attributes, removes from available
- * @returns {(name: string) => void} actions.deleteAffectedAttribute - Removes attribute from selected and returns it to available
- * @returns {() => void} actions.resetAttributeSelectionUI - Resets all state to initial values
- * @returns {(open: boolean) => void} actions.setAttributeNameMenuOpen - Controls attribute name menu visibility
- * @returns {(open: boolean) => void} actions.setAttributeStrengthMenuOpen - Controls attribute strength menu visibility
+ * Custom hook for managing attribute selection UI state and operations.
+ * 
+ * Handles the selection, addition, and removal of attributes with strength levels,
+ * maintaining a list of available and selected attributes.
+ * 
+ * @param {string[]} initialAttributes - Array of all available attributes to choose from
+ * @param {string} noAvailableAttributesText - Text to display when no attributes are available
+ * 
+ * @returns {UseAttributeSelection} Object containing:
+ *   - availableAttributes: Array of attributes not yet selected
+ *   - currentAttributeName: Name of the currently selected attribute
+ *   - currentAttributeStrength: Strength level of the current attribute
+ *   - selectedAttributes: Array of added AffectedAttribute objects
+ *   - actions: Object containing handler functions:
+ *     - setCurrentAttributeName: Update the current attribute selection
+ *     - setAttributeStrength: Update the strength level of current attribute
+ *     - addAffectedAttribute: Add current attribute to selected list
+ *     - deleteAffectedAttribute: Remove attribute from selected list
+ *     - resetAttributeSelectionUI: Reset all state to initial values
+ * 
+ * @example
+ * const {
+ *   availableAttributes,
+ *   currentAttributeName,
+ *   selectedAttributes,
+ *   actions
+ * } = useAttributeSelection(['Strength', 'Dexterity', 'Wisdom'], 'No attributes');
+ * 
+ * actions.addAffectedAttribute();
+ * actions.deleteAffectedAttribute('Strength');
+ * actions.resetAttributeSelectionUI();
  */
 const useAttributeSelection = (
   initialAttributes: string[],
@@ -67,17 +71,10 @@ const useAttributeSelection = (
     AffectedAttribute[]
   >([]);
 
-  const [attributeNameMenuOpen, setAttributeNameMenuOpen] =
-    useState<boolean>(false);
-
-  const [attributeStrengthMenuOpen, setAttributeStrengthMenuOpen] =
-    useState<boolean>(false);
-
   const handleSetAttributeStrength = useCallback(
     (strength: AttributeStrength) => {
       console.log("Setting attribute strength to:", strength);
       setCurrentAttributeStrength(strength);
-      setAttributeStrengthMenuOpen(false);
     },
     []
   );
@@ -134,8 +131,6 @@ const useAttributeSelection = (
     setSelectedAttributes([]);
     setCurrentAttributeName(initialAttributes[0] || noAvailableAttributesText);
     setCurrentAttributeStrength("normal");
-    setAttributeNameMenuOpen(false);
-    setAttributeStrengthMenuOpen(false);
   }, [initialAttributes, noAvailableAttributesText]);
 
   return {
@@ -143,16 +138,12 @@ const useAttributeSelection = (
     currentAttributeName,
     currentAttributeStrength,
     selectedAttributes,
-    attributeNameMenuOpen,
-    attributeStrengthMenuOpen,
     actions: {
       setCurrentAttributeName,
       setAttributeStrength: handleSetAttributeStrength,
       addAffectedAttribute: handleAddAffectedAttribute,
       deleteAffectedAttribute: handleDeleteAffectedAttribute,
       resetAttributeSelectionUI: handleResetAttributeSelectionUI,
-      setAttributeNameMenuOpen,
-      setAttributeStrengthMenuOpen,
     },
   };
 };
