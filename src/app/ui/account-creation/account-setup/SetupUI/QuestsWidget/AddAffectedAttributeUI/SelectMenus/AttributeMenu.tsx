@@ -54,7 +54,7 @@ export default function AttributeMenu({
       <Select.Portal>
         <Select.Content
           className={styles.content}
-          onCloseAutoFocus={() => event?.preventDefault()}
+          onCloseAutoFocus={(e) => e.preventDefault()}
         >
           <Select.ScrollUpButton className={styles.scrollButton}>
             <ChevronUpIcon />
