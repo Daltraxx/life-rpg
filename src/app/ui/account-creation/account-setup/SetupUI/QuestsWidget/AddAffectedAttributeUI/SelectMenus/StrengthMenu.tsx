@@ -22,6 +22,28 @@ interface StrengthMenuProps {
   onStrengthSelect: (strength: AttributeStrength) => void;
 }
 
+/**
+ * StrengthMenu component for selecting attribute strength levels.
+ * 
+ * Renders a dropdown select menu that allows users to choose from predefined
+ * strength values for an attribute. The menu includes scroll buttons for
+ * navigating through available options.
+ * 
+ * @component
+ * @param {StrengthMenuProps} props - The component props
+ * @param {string} props.currentStrength - The currently selected strength value (key)
+ * @param {(strength: string) => void} props.onStrengthSelect - Callback function invoked when a strength option is selected
+ * 
+ * @returns {React.ReactElement} A Select component with strength options
+ * 
+ * @example
+ * ```tsx
+ * <StrengthMenu
+ *   currentStrength="normal"
+ *   onStrengthSelect={(strength) => console.log(strength)}
+ * />
+ * ```
+ */
 export default function StrengthMenu({
   currentStrength,
   onStrengthSelect,
