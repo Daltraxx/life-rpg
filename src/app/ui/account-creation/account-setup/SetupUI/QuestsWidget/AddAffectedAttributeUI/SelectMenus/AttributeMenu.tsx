@@ -15,6 +15,26 @@ interface AttributeMenuProps {
   onAttributeSelect: (attribute: string) => void;
 }
 
+/**
+ * Renders a dropdown menu for selecting an attribute from a list of available attributes.
+ * 
+ * @component
+ * @param {AttributeMenuProps} props - The component props
+ * @param {string[]} props.availableAttributes - Array of attribute names available for selection
+ * @param {string} props.currentAttribute - The currently selected attribute value
+ * @param {(value: string) => void} props.onAttributeSelect - Callback function invoked when an attribute is selected
+ * 
+ * @returns {JSX.Element} A Select component with scrollable attribute options
+ * 
+ * @example
+ * ```tsx
+ * <AttributeMenu
+ *   availableAttributes={['Strength', 'Dexterity', 'Wisdom']}
+ *   currentAttribute="Strength"
+ *   onAttributeSelect={(attribute) => setSelectedAttribute(attribute)}
+ * />
+ * ```
+ */
 export default function AttributeMenu({
   availableAttributes,
   currentAttribute,
