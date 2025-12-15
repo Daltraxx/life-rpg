@@ -107,6 +107,7 @@ const useAttributeSelection = (
     currentAttributeStrength,
     noAvailableAttributesText,
     selectedAttributes,
+    availableAttributes,
   ]);
 
   const handleDeleteAffectedAttribute = useCallback(
