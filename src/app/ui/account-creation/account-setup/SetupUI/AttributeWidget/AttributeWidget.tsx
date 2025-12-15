@@ -126,7 +126,6 @@ export default function AttributeWidget({ className }: { className?: string }) {
           size="20"
           className={styles.addAttributeError}
           role="alert"
-          aria-live="polite"
         >
           {addAttributeError}
         </Paragraph>
