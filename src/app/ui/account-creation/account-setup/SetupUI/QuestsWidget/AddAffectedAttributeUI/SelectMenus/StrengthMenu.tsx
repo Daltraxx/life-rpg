@@ -32,9 +32,8 @@ interface StrengthMenuProps {
  *
  * @component
  * @param {StrengthMenuProps} props - The component props
- * @param {string} props.currentStrength - The currently selected strength value (key)
- * @param {(strength: string) => void} props.onStrengthSelect - Callback function invoked when a strength option is selected
- *
+ * @param {AttributeStrength} props.currentStrength - The currently selected strength value (key)
+ * @param {(strength: AttributeStrength) => void} props.onStrengthSelect - Callback function invoked when a strength option is selected *
  * @returns {React.ReactElement} A Select component with strength options
  *
  * @example
@@ -98,10 +97,8 @@ export default function StrengthMenu({
   );
 }
 
-interface AttributeOptionProps {
-  children: React.ReactNode;
+interface AttributeOptionProps extends React.ComponentProps<typeof Select.Item> {
   className?: string;
-  value: string;
 }
 
 const AttributeOption = ({
