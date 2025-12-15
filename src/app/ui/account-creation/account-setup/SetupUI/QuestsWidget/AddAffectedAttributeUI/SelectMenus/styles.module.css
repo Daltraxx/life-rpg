@@ -10,10 +10,11 @@
   height: 100%;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  &:focus-visible {
+}
+
+.trigger:focus-visible {
     background-color: var(--brown-100);
   }
-}
 
 @media (hover: hover) {
   .trigger:hover {
@@ -50,11 +51,12 @@
   position: relative;
   user-select: none;
   cursor: pointer;
-  &[data-highlighted] {
-    outline: none;
-    background-color: var(--brown-100);
-  }
 }
+
+.item[data-highlighted] {
+   outline: none;
+   background-color: var(--brown-100);
+ }
 
 .plus {
   font-size: var(--plus-font-size, 2rem);
