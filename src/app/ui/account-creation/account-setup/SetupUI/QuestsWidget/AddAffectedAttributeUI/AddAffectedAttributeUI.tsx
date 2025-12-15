@@ -1,10 +1,7 @@
 "use client";
 
 import styles from "./styles.module.css";
-import { Label } from "@/app/ui/JSXWrappers/TextWrappers";
 import clsx from "clsx";
-import { strengthDisplayMap } from "@/app/ui/utils/helpers/StrengthDisplayMap";
-import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import type { UseAttributeSelection } from "@/utils/hooks/useAttributeSelection";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
