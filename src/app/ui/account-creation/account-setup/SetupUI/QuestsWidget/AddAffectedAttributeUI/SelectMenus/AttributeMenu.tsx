@@ -41,28 +41,22 @@ export default function AttributeMenu({
   currentAttribute,
   onAttributeSelect,
 }: AttributeMenuProps) {
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const handleValueChange = (value: string) => {
-    onAttributeSelect(value);
-    // Remove focus from trigger after selection
-    setTimeout(() => {
-      triggerRef.current?.blur();
-    }, 1);
-  };
   return (
     <Select.Root
       value={currentAttribute}
-      onValueChange={(value) => handleValueChange(value)}
+      onValueChange={(value) => onAttributeSelect(value)}
     >
       <Select.Trigger
         className={styles.trigger}
         aria-label="Select Attribute"
-        ref={triggerRef}
       >
         <Select.Value>{currentAttribute}</Select.Value>
       </Select.Trigger>
       <Select.Portal>
-        <Select.Content className={styles.content}>
+        <Select.Content
+          className={styles.content}
+          onCloseAutoFocus={() => event?.preventDefault()}
+        >
           <Select.ScrollUpButton className={styles.scrollButton}>
             <ChevronUpIcon />
           </Select.ScrollUpButton>
@@ -84,7 +78,8 @@ export default function AttributeMenu({
   );
 }
 
-interface AttributeOptionProps extends React.ComponentProps<typeof Select.Item> {
+interface AttributeOptionProps
+  extends React.ComponentProps<typeof Select.Item> {
   className?: string;
 }
 

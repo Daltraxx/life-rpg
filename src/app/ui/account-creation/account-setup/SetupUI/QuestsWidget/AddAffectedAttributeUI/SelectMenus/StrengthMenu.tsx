@@ -12,8 +12,6 @@ import {
 } from "@radix-ui/react-icons";
 import { useRef } from "react";
 
-
-
 interface AttributeOptionProps
   extends React.ComponentProps<typeof Select.Item> {
   className?: string;
@@ -75,22 +73,10 @@ export default function StrengthMenu({
   currentStrength,
   onStrengthSelect,
 }: StrengthMenuProps) {
-  //TODO: blur trigger after clicking anywhere outside of menu or trigger
-  const triggerRef = useRef<HTMLButtonElement>(null);
-  const handleValueChange = (value: AttributeStrength) => {
-    onStrengthSelect(value);
-    // Remove focus from trigger after selection
-    setTimeout(() => {
-      triggerRef.current?.blur();
-    }, 1);
-  };
-
   return (
     <Select.Root
       value={currentStrength}
-      onValueChange={(value) =>
-        handleValueChange(value as AttributeStrength)
-      }
+      onValueChange={(value) => onStrengthSelect(value as AttributeStrength)}
     >
       <Select.Trigger
         className={clsx(
@@ -98,19 +84,19 @@ export default function StrengthMenu({
           currentStrength.includes("plus") && styles.plus
         )}
         aria-label="Select Attribute Strength"
-        ref={triggerRef}
       >
         <Select.Value>{strengthDisplayMap[currentStrength]}</Select.Value>
       </Select.Trigger>
       <Select.Portal>
-        <Select.Content className={styles.content}>
+        <Select.Content
+          className={styles.content}
+          onCloseAutoFocus={() => event?.preventDefault()}
+        >
           <Select.ScrollUpButton className={styles.scrollButton}>
             <ChevronUpIcon />
           </Select.ScrollUpButton>
           <Select.Viewport className={styles.viewport}>
-            <Select.Group>
-              {AttributeOptions}
-            </Select.Group>
+            <Select.Group>{AttributeOptions}</Select.Group>
           </Select.Viewport>
           <Select.ScrollDownButton className={styles.scrollButton}>
             <ChevronDownIcon />
