@@ -19,6 +19,7 @@ export type UseAttributeSelection = {
   };
 };
 
+const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
 
 /**
  * Custom hook for managing attribute selection UI state and operations.
@@ -99,6 +100,8 @@ const useAttributeSelection = (
       ...prevSelected,
       createAffectedAttribute(currentAttributeName, currentAttributeStrength),
     ]);
+
+    setCurrentAttributeStrength(DEFAULT_ATTRIBUTE_STRENGTH);
   }, [
     currentAttributeName,
     currentAttributeStrength,
@@ -129,7 +132,7 @@ const useAttributeSelection = (
     setAvailableAttributes(initialAttributes);
     setSelectedAttributes([]);
     setCurrentAttributeName(initialAttributes[0] || noAvailableAttributesText);
-    setCurrentAttributeStrength("normal");
+    setCurrentAttributeStrength(DEFAULT_ATTRIBUTE_STRENGTH);
   }, [initialAttributes, noAvailableAttributesText]);
 
   return {
