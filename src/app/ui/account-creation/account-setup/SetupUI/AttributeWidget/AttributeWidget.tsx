@@ -76,6 +76,7 @@ export default function AttributeWidget({ className }: { className?: string }) {
 
   return (
     <section className={clsx(styles.widgetContainer, className)}>
+      {/* HEADING AND DESCRIPTION */}
       <Heading as="h3" size="36" className={styles.heading}>
         Add Attributes
       </Heading>
@@ -85,6 +86,7 @@ export default function AttributeWidget({ className }: { className?: string }) {
         completed.
       </Paragraph>
 
+      {/* ADD ATTRIBUTE INPUT AND BUTTON */}
       <div className={styles.addAttributeContainer}>
         <Label
           htmlFor="add-attribute"
@@ -131,6 +133,7 @@ export default function AttributeWidget({ className }: { className?: string }) {
         </Paragraph>
       )}
 
+      {/* CURRENT ATTRIBUTES LIST */}
       <div>
         <div className={styles.currentAttributesHeadingContainer}>
           <Heading
