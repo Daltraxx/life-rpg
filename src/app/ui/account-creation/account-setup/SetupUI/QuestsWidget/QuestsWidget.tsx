@@ -8,7 +8,7 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
-import useAttributeSelection from "@/utils/hooks/useAttributeSelection";
+import useQuestAttributeSelection from "@/utils/hooks/useQuestAttributeSelection";
 import {
   createAffectedAttribute,
   Quest,
@@ -32,7 +32,7 @@ export default function QuestsWidget({ className }: { className?: string }) {
   const [quests, setQuests] = useState<Quest[]>([]);
   const [newQuestName, setNewQuestName] = useState<string>("");
 
-  const attributeSelection = useAttributeSelection(
+  const attributeSelection = useQuestAttributeSelection(
     TEST_ATTRIBUTES,
     NO_AVAILABLE_ATTRIBUTES_TEXT
   );

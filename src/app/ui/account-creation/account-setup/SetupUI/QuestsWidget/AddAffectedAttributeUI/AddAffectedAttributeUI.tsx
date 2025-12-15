@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import type { UseAttributeSelection } from "@/utils/hooks/useAttributeSelection";
+import type { UseAttributeSelection } from "@/utils/hooks/useQuestAttributeSelection";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
 
