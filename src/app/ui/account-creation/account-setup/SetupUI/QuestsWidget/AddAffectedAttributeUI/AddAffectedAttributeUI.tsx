@@ -20,8 +20,6 @@ export default function AddAffectedAttributeUI({
     availableAttributes,
     currentAttributeName,
     currentAttributeStrength,
-    attributeNameMenuOpen,
-    attributeStrengthMenuOpen,
     actions: attributeActions,
   } = attributeSelection;
 
@@ -29,8 +27,6 @@ export default function AddAffectedAttributeUI({
     setCurrentAttributeName,
     setAttributeStrength,
     addAffectedAttribute,
-    setAttributeNameMenuOpen,
-    setAttributeStrengthMenuOpen,
   } = attributeActions;
 
   return (
