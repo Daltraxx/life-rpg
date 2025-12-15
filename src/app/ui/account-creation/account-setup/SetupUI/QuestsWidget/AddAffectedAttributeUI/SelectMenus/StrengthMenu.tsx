@@ -42,6 +42,8 @@ const AttributeOptions = Object.keys(strengthDisplayMap).map((strengthKey) => (
   </AttributeOption>
 ));
 
+const PLUS_STRENGTHS: Set<AttributeStrength> = new Set(["plus", "plusPlus"]);
+
 interface StrengthMenuProps {
   currentStrength: AttributeStrength;
   onStrengthSelect: (strength: AttributeStrength) => void;
@@ -80,7 +82,7 @@ export default function StrengthMenu({
       <Select.Trigger
         className={clsx(
           styles.trigger,
-          currentStrength.includes("plus") && styles.plus
+          PLUS_STRENGTHS.has(currentStrength) && styles.plus
         )}
         aria-label="Select Attribute Strength"
       >
