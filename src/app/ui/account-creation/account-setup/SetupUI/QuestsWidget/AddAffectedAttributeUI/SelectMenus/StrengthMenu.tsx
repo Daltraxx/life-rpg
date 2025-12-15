@@ -75,6 +75,7 @@ export default function StrengthMenu({
   currentStrength,
   onStrengthSelect,
 }: StrengthMenuProps) {
+  //TODO: blur trigger after clicking anywhere outside of menu or trigger
   const triggerRef = useRef<HTMLButtonElement>(null);
   const handleValueChange = (value: AttributeStrength) => {
     onStrengthSelect(value);

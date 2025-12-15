@@ -10,6 +10,8 @@
   --blue-600: hsl(211, 71%, 16%); /* #0c2846 */
   --blue-700: hsl(211, 71%, 12%); /* #091f36 - primary font color against white backgrounds */
 
+  --brown-100: hsl(28, 45%, 73%); /* #d9b89c */
+  --brown-300: hsl(25, 28%, 45%); /* #956e53 */
   --brown-400: hsl(31, 71%, 20%); /* #57340f */
   --brown-500: hsl(31, 71%, 16%); /* #462a0c */
   --brown-600: hsl(31, 71%, 12%); /* #362009 - secondary font color against white backgrounds */
