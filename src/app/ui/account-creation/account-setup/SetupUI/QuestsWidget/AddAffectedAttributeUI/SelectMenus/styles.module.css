@@ -6,6 +6,9 @@
   padding: 0 0.5rem;
   font-size: 1.5rem;
   color: var(--blue-700);
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
   transition: background-color 0.2s ease;
   &:focus-visible {
     background-color: var(--brown-100);

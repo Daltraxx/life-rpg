@@ -57,12 +57,7 @@
   border-left: 1px solid var(--blue-700, #091f36);
 }
 
-.menuContainer button {
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  text-align: center;
-}
+
 
 .addAttributeButton {
   background-color: var(--blue-400, #123e6d);
