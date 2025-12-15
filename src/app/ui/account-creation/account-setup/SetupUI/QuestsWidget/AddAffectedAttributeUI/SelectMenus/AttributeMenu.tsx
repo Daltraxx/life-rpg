@@ -47,7 +47,6 @@ export default function AttributeMenu({
     // Remove focus from trigger after selection
     setTimeout(() => {
       triggerRef.current?.blur();
-      console.log("blurred");
     }, 1);
   };
   return (
