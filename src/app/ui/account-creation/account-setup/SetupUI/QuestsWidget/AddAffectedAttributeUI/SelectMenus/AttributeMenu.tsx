@@ -84,10 +84,8 @@ export default function AttributeMenu({
   );
 }
 
-interface AttributeOptionProps {
-  children: React.ReactNode;
+interface AttributeOptionProps extends React.ComponentProps<typeof Select.Item> {
   className?: string;
-  value: string;
 }
 
 const AttributeOption = ({
