@@ -60,10 +60,11 @@ interface AttributeOptionProps {
 const AttributeOption = ({
   children,
   className,
+  value,
   ...props
 }: AttributeOptionProps) => {
   return (
-    <Select.Item className={clsx(styles.item, className)} {...props}>
+    <Select.Item className={clsx(styles.item, className)} value={value} {...props}>
       <Select.ItemText>{children}</Select.ItemText>
       <Select.ItemIndicator className={styles.itemIndicator}>
         <CheckIcon />
