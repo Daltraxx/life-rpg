@@ -7,6 +7,7 @@ import { strengthDisplayMap } from "@/app/ui/utils/helpers/StrengthDisplayMap";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import type { UseAttributeSelection } from "@/utils/hooks/useAttributeSelection";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
+import StrengthMenu from "./SelectMenus/StrengthMenu";
 
 export default function AddAffectedAttributeUI({
   attributeSelection,
@@ -59,46 +60,10 @@ export default function AddAffectedAttributeUI({
               styles.attributeStrengthMenuContainer
             )}
           >
-            <button
-              type="button"
-              className={clsx(
-                currentAttributeStrength === "plus" ||
-                  currentAttributeStrength === "plusPlus"
-                  ? styles.plus
-                  : null
-              )}
-              aria-expanded={attributeStrengthMenuOpen}
-              aria-controls="attribute-strength-menu"
-              aria-haspopup="true"
-              onClick={() =>
-                setAttributeStrengthMenuOpen(!attributeStrengthMenuOpen)
-              }
-            >
-              {strengthDisplayMap[currentAttributeStrength]}
-            </button>
-            <div
-              id="attribute-strength-menu"
-              role="menu"
-              className={clsx(
-                styles.menu,
-                attributeStrengthMenuOpen && styles.open
-              )}
-            >
-              {(Object.keys(strengthDisplayMap) as AttributeStrength[]).map(
-                (strengthKey) => (
-                  <Label key={strengthKey}>
-                    <input
-                      type="radio"
-                      name="attributeStrength"
-                      value={strengthKey}
-                      checked={currentAttributeStrength === strengthKey}
-                      onChange={() => setAttributeStrength(strengthKey)}
-                    />
-                    {strengthDisplayMap[strengthKey]}
-                  </Label>
-                )
-              )}
-            </div>
+            <StrengthMenu
+              currentStrength={currentAttributeStrength}
+              onStrengthSelect={setAttributeStrength}
+            />
           </div>
         </div>
 

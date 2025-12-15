@@ -75,6 +75,7 @@ const useAttributeSelection = (
 
   const handleSetAttributeStrength = useCallback(
     (strength: AttributeStrength) => {
+      console.log("Setting attribute strength to:", strength);
       setCurrentAttributeStrength(strength);
       setAttributeStrengthMenuOpen(false);
     },

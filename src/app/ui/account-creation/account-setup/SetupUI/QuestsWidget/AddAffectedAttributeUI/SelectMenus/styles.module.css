@@ -53,6 +53,11 @@
   }
 }
 
+.plus {
+  font-size: var(--plus-font-size, 2rem);
+  line-height: var(--plus-line-height, 0.55);
+}
+
 .itemIndicator {
   position: absolute;
   left: 0;
