@@ -10,7 +10,6 @@ import {
   ChevronDownIcon,
   CheckIcon,
 } from "@radix-ui/react-icons";
-import { useRef } from "react";
 
 interface AttributeOptionProps
   extends React.ComponentProps<typeof Select.Item> {
