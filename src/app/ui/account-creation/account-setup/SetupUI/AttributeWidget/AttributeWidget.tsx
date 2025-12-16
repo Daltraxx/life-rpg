@@ -7,12 +7,12 @@ import { useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
 import clsx from "clsx";
 
-const INITIAL_ATTRIBUTES: string[] = [
-  "Discipline",
-  "Vitality",
-  "Intelligence",
-  "Fitness",
-];
+interface AttributeWidgetProps {
+  attributes: string[];
+  addAttribute: (attribute: string) => void;
+  deleteAttribute: (attribute: string) => void;
+  className?: string;
+}
 
 /**
  * AttributeWidget component for managing custom attributes in account setup.
@@ -34,9 +34,13 @@ const INITIAL_ATTRIBUTES: string[] = [
  * - Enter key and button click both trigger attribute addition
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
  */
-export default function AttributeWidget({ className }: { className?: string }) {
+export default function AttributeWidget({
+  attributes,
+  addAttribute,
+  deleteAttribute,
+  className,
+}: AttributeWidgetProps) {
   // TODO: Persist attributes to context/state management
-  const [attributes, setAttributes] = useState<string[]>(INITIAL_ATTRIBUTES);
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
 
@@ -56,14 +60,12 @@ export default function AttributeWidget({ className }: { className?: string }) {
 
     setAddAttributeError("");
 
-    setAttributes((prevAttributes) => [...prevAttributes, trimmedAttribute]);
+    addAttribute(trimmedAttribute);
     setNewAttribute("");
   };
 
   const handleDeleteAttribute = (attribute: string) => {
-    setAttributes((prevAttributes) =>
-      prevAttributes.filter((attr) => attr !== attribute)
-    );
+    deleteAttribute(attribute);
   };
 
   const attributeList = attributes.map((attribute) => (
@@ -81,8 +83,8 @@ export default function AttributeWidget({ className }: { className?: string }) {
         Add Attributes
       </Heading>
       <Paragraph className={styles.description}>
-        Add the attributes you would improve in yourself. Added attributes
-        can then be applied to quests, and earn experience when those quests are
+        Add the attributes you would improve in yourself. Added attributes can
+        then be applied to quests, and earn experience when those quests are
         completed.
       </Paragraph>
 
