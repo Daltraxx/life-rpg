@@ -90,6 +90,7 @@ const useQuestAttributeSelection = (
     []
   );
 
+  // Effect to sync available and selected attributes when user adds/removes attributes
   useEffect(() => {
     // Update available attributes when user adds or removes attributes
     const currentlySelectedAttributeNames = new Set(
