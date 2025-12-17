@@ -73,6 +73,11 @@
   background-color: var(--blue-500, #0f3257);
 }
 
+.addAttributeButton[disabled] {
+  background-color: var(--red-500, #ef2101);
+  cursor: not-allowed;
+}
+
 @media (min-width: 768px) {
   .addAffectedAttributeFieldset {
     grid-column: 1 / span 3;
