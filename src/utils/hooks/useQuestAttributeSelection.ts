@@ -5,7 +5,7 @@ import {
   createAffectedAttribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
-export type useQuestAttributeSelection = {
+export type UseQuestAttributeSelectionReturn = {
   availableAttributes: string[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
@@ -30,7 +30,7 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
  * @param {string[]} attributes - Array of all available attributes to choose from
  * @param {string} noAvailableAttributesText - Text to display when no attributes are available
  *
- * @returns {useQuestAttributeSelection} Object containing:
+ * @returns {UseQuestAttributeSelectionReturn} Object containing:
  *   - availableAttributes: Array of attributes not yet selected
  *   - currentAttributeName: Name of the currently selected attribute
  *   - currentAttributeStrength: Strength level of the current attribute
@@ -57,7 +57,7 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
 const useQuestAttributeSelection = (
   attributes: string[],
   noAvailableAttributesText: string
-): useQuestAttributeSelection => {
+): UseQuestAttributeSelectionReturn => {
   const [availableAttributes, setAvailableAttributes] =
     useState<string[]>(attributes);
 

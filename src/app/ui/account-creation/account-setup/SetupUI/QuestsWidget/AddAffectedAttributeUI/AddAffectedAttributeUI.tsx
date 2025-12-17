@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import type { useQuestAttributeSelection } from "@/utils/hooks/useQuestAttributeSelection";
+import type { UseQuestAttributeSelectionReturn } from "@/utils/hooks/useQuestAttributeSelection";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
 
@@ -10,7 +10,7 @@ export default function AddAffectedAttributeUI({
   attributeSelection,
   noAvailableAttributesText,
 }: {
-  attributeSelection: useQuestAttributeSelection;
+  attributeSelection: UseQuestAttributeSelectionReturn;
   noAvailableAttributesText: string;
 }) {
   const {
