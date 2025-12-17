@@ -3,6 +3,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
   font-size: 1.5rem;
   color: var(--blue-700);
   width: 100%;
