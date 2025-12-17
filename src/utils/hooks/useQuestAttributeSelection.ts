@@ -27,7 +27,7 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
  * Handles the selection, addition, and removal of attributes with strength levels,
  * maintaining a list of available and selected attributes.
  * 
- * @param {string[]} initialAttributes - Array of all available attributes to choose from
+ * @param {string[]} attributes - Array of all available attributes to choose from
  * @param {string} noAvailableAttributesText - Text to display when no attributes are available
  * 
  * @returns {useQuestAttributeSelection} Object containing:
@@ -55,14 +55,14 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
  * actions.resetAttributeSelectionUI();
  */
 const useQuestAttributeSelection = (
-  initialAttributes: string[],
+  attributes: string[],
   noAvailableAttributesText: string
 ): useQuestAttributeSelection => {
   const [availableAttributes, setAvailableAttributes] =
-    useState<string[]>(initialAttributes);
+    useState<string[]>(attributes);
 
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
-    initialAttributes[0] || noAvailableAttributesText
+    attributes[0] || noAvailableAttributesText
   );
 
   const [currentAttributeStrength, setCurrentAttributeStrength] =
@@ -119,22 +119,22 @@ const useQuestAttributeSelection = (
         const updatedAvailableAttributes = [...prevAvailable, attributeName];
         // Sort available attributes to maintain order
         return updatedAvailableAttributes.sort(
-          (a, b) => initialAttributes.indexOf(a) - initialAttributes.indexOf(b)
+          (a, b) => attributes.indexOf(a) - attributes.indexOf(b)
         );
       });
       setCurrentAttributeName((prevCurrent) =>
         prevCurrent === noAvailableAttributesText ? attributeName : prevCurrent
       );
     },
-    [initialAttributes, noAvailableAttributesText]
+    [attributes, noAvailableAttributesText]
   );
 
   const handleResetAttributeSelectionUI = useCallback(() => {
-    setAvailableAttributes(initialAttributes);
+    setAvailableAttributes(attributes);
     setSelectedAttributes([]);
-    setCurrentAttributeName(initialAttributes[0] || noAvailableAttributesText);
+    setCurrentAttributeName(attributes[0] || noAvailableAttributesText);
     setCurrentAttributeStrength(DEFAULT_ATTRIBUTE_STRENGTH);
-  }, [initialAttributes, noAvailableAttributesText]);
+  }, [attributes, noAvailableAttributesText]);
 
   return {
     availableAttributes,
