@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
   AffectedAttribute,
@@ -23,13 +23,13 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
 
 /**
  * Custom hook for managing attribute selection UI state and operations.
- * 
+ *
  * Handles the selection, addition, and removal of attributes with strength levels,
  * maintaining a list of available and selected attributes.
- * 
+ *
  * @param {string[]} attributes - Array of all available attributes to choose from
  * @param {string} noAvailableAttributesText - Text to display when no attributes are available
- * 
+ *
  * @returns {useQuestAttributeSelection} Object containing:
  *   - availableAttributes: Array of attributes not yet selected
  *   - currentAttributeName: Name of the currently selected attribute
@@ -41,7 +41,7 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
  *     - addAffectedAttribute: Add current attribute to selected list
  *     - deleteAffectedAttribute: Remove attribute from selected list
  *     - resetAttributeSelectionUI: Reset all state to initial values
- * 
+ *
  * @example
  * const {
  *   availableAttributes,
@@ -49,7 +49,7 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
  *   selectedAttributes,
  *   actions
  * } = useQuestAttributeSelection(['Strength', 'Dexterity', 'Wisdom'], 'No attributes');
- * 
+ *
  * actions.addAffectedAttribute();
  * actions.deleteAffectedAttribute('Strength');
  * actions.resetAttributeSelectionUI();
@@ -72,6 +72,17 @@ const useQuestAttributeSelection = (
     AffectedAttribute[]
   >([]);
 
+  // Helper to check if current attribute is no longer available
+  const isCurrentAttributeNotAvailable = useCallback(
+    (currentAttribute: string, availableAttributes: string[]) => {
+      return (
+        currentAttribute !== noAvailableAttributesText &&
+        !availableAttributes.includes(currentAttribute)
+      );
+    },
+    [noAvailableAttributesText]
+  );
+
   const handleSetAttributeStrength = useCallback(
     (strength: AttributeStrength) => {
       setCurrentAttributeStrength(strength);
@@ -81,14 +92,30 @@ const useQuestAttributeSelection = (
 
   useEffect(() => {
     // Update available attributes when user adds or removes attributes
-    const currentlySelectedAttributes = new Set(
+    const currentlySelectedAttributeNames = new Set(
       selectedAttributes.map((attr) => attr.name)
     );
     const updatedAvailableAttributes = attributes.filter(
-      (attr) => !currentlySelectedAttributes.has(attr)
+      (attr) => !currentlySelectedAttributeNames.has(attr)
     );
     setAvailableAttributes(updatedAvailableAttributes);
-  }, [attributes, selectedAttributes]);
+
+    // Update selected attributes if any previously selected were removed by user
+    setSelectedAttributes((prevSelected) =>
+      prevSelected.filter((attr) => attributes.includes(attr.name))
+    );
+
+    // Update current attribute name if it's no longer available
+    const replaceCurrentAttributeName = isCurrentAttributeNotAvailable(
+      currentAttributeName,
+      updatedAvailableAttributes
+    );
+    if (replaceCurrentAttributeName) {
+      setCurrentAttributeName(
+        updatedAvailableAttributes[0] || noAvailableAttributesText
+      );
+    }
+  }, [attributes]);
 
   const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
