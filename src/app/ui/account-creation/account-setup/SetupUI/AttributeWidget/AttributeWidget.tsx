@@ -40,7 +40,6 @@ export default function AttributeWidget({
   deleteAttribute,
   className,
 }: AttributeWidgetProps) {
-  // TODO: Persist attributes to context/state management
   const [newAttribute, setNewAttribute] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
 
