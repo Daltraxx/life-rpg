@@ -53,7 +53,9 @@ export default function AttributeWidget({
       return;
     }
     if (trimmedAttribute.length > 24) {
-      setAddAttributeError("Please enter a shorter attribute name (max 24 characters).");
+      setAddAttributeError(
+        "Please enter a shorter attribute name (max 24 characters)."
+      );
       return;
     }
     if (attributeSet.has(trimmedAttributeLowerCase)) {
@@ -86,9 +88,9 @@ export default function AttributeWidget({
         Add Attributes
       </Heading>
       <Paragraph className={styles.description}>
-        Add the attributes you would improve in yourself. Added attributes can
-        then be applied to quests, and earn experience when those quests are
-        completed.
+        Add the attributes you would like to improve in yourself. Added
+        attributes can then be applied to quests, and earn experience when those
+        quests are completed.
       </Paragraph>
 
       {/* ADD ATTRIBUTE INPUT AND BUTTON */}
