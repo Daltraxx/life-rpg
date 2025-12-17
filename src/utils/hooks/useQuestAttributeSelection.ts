@@ -81,8 +81,14 @@ const useQuestAttributeSelection = (
 
   useEffect(() => {
     // Update available attributes when user adds or removes attributes
-    setAvailableAttributes(attributes);
-  }, [attributes]);
+    const currentlySelectedAttributes = new Set(
+      selectedAttributes.map((attr) => attr.name)
+    );
+    const updatedAvailableAttributes = attributes.filter(
+      (attr) => !currentlySelectedAttributes.has(attr)
+    );
+    setAvailableAttributes(updatedAvailableAttributes);
+  }, [attributes, selectedAttributes]);
 
   const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
