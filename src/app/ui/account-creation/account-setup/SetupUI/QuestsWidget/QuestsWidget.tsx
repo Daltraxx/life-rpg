@@ -70,9 +70,6 @@ export default function QuestsWidget({ availableAttributes, className }: QuestsW
     resetAttributeSelectionUI();
   };
 
-  // TODO: Add keyboard accessibility for dropdown menus
-  // Consider using Radix UI or similar library for better accessibility
-
   return (
     <section className={clsx(styles.widgetContainer, className)}>
       <Heading as="h3" size="36" color="blue-700" className={styles.heading}>
