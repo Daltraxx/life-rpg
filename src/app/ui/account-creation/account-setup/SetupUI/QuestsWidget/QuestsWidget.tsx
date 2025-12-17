@@ -18,22 +18,19 @@ import {
 const REQUIRED_ATTRIBUTE = "Discipline";
 const NO_AVAILABLE_ATTRIBUTES_TEXT = "N/A";
 
-// Temporary test quests data
-const TEST_ATTRIBUTES: string[] = [
-  "Discipline",
-  "Vitality",
-  "Intelligence",
-  "Fitness",
-];
+interface QuestsWidgetProps {
+  availableAttributes: string[];
+  className?: string;
+}
 
-export default function QuestsWidget({ className }: { className?: string }) {
+export default function QuestsWidget({ availableAttributes, className }: QuestsWidgetProps) {
   // TODO: Implement error handling and validation for quest creation
   // TODO: Persist quests to context/state management
   const [quests, setQuests] = useState<Quest[]>([]);
   const [newQuestName, setNewQuestName] = useState<string>("");
 
   const attributeSelection = useQuestAttributeSelection(
-    TEST_ATTRIBUTES,
+    availableAttributes,
     NO_AVAILABLE_ATTRIBUTES_TEXT
   );
 

@@ -36,6 +36,7 @@ export default function SetupUI() {
           deleteAttribute={handleDeleteAttribute}
         />
         <QuestsWidget
+          availableAttributes={availableAttributes}
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>

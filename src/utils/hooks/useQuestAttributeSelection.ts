@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
   AffectedAttribute,
@@ -78,6 +78,12 @@ const useQuestAttributeSelection = (
     },
     []
   );
+
+  useEffect(() => {
+    // Update available attributes when user adds or removes attributes
+    setAvailableAttributes(attributes);
+  }, [attributes]);
+
   const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
     if (currentAttributeName === noAvailableAttributesText) {
