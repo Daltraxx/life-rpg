@@ -106,14 +106,20 @@ const useQuestAttributeSelection = (
     );
 
     // Update current attribute name if it's no longer available
-    const replaceCurrentAttributeName = isCurrentAttributeNotAvailable(
-      currentAttributeName,
-      updatedAvailableAttributes
-    );
-    if (replaceCurrentAttributeName) {
+    if (
+      isCurrentAttributeNotAvailable(
+        currentAttributeName,
+        updatedAvailableAttributes
+      )
+    ) {
       setCurrentAttributeName(
         updatedAvailableAttributes[0] || noAvailableAttributesText
       );
+    }
+
+    // If user adds an attribute and current is the no-attributes text, set to first available
+    if (updatedAvailableAttributes.length && currentAttributeName === noAvailableAttributesText) {
+      setCurrentAttributeName(updatedAvailableAttributes[0]);
     }
   }, [attributes]); // Only run when attributes prop changes (user adds/removes attributes)
 
