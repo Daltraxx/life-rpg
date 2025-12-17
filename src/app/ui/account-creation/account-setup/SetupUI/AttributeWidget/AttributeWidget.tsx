@@ -52,6 +52,10 @@ export default function AttributeWidget({
       setAddAttributeError("Please enter an attribute.");
       return;
     }
+    if (trimmedAttribute.length > 24) {
+      setAddAttributeError("Please enter a shorter attribute name (max 24 characters).");
+      return;
+    }
     if (attributeSet.has(trimmedAttributeLowerCase)) {
       setAddAttributeError("Attribute already exists.");
       return;
