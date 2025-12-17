@@ -1,4 +1,4 @@
-import { use, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
   AffectedAttribute,
@@ -115,7 +115,7 @@ const useQuestAttributeSelection = (
         updatedAvailableAttributes[0] || noAvailableAttributesText
       );
     }
-  }, [attributes]);
+  }, [attributes]); // Only run when attributes prop changes (user adds/removes attributes)
 
   const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
