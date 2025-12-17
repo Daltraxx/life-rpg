@@ -20,13 +20,18 @@ const NO_AVAILABLE_ATTRIBUTES_TEXT = "N/A";
 
 interface QuestsWidgetProps {
   availableAttributes: string[];
+  quests: Quest[];
+  addQuest: (quest: Quest) => void;
   className?: string;
 }
 
-export default function QuestsWidget({ availableAttributes, className }: QuestsWidgetProps) {
+export default function QuestsWidget({
+  availableAttributes,
+  quests,
+  addQuest,
+  className,
+}: QuestsWidgetProps) {
   // TODO: Implement error handling and validation for quest creation
-  // TODO: Persist quests to context/state management
-  const [quests, setQuests] = useState<Quest[]>([]);
   const [newQuestName, setNewQuestName] = useState<string>("");
 
   const attributeSelection = useQuestAttributeSelection(
@@ -60,10 +65,8 @@ export default function QuestsWidget({ availableAttributes, className }: QuestsW
         createAffectedAttribute(REQUIRED_ATTRIBUTE, "normal")
       );
     }
-    setQuests((prevQuests) => [
-      ...prevQuests,
-      createQuest(trimmedQuestName, affectedAttributes),
-    ]);
+    
+    addQuest(createQuest(trimmedQuestName, affectedAttributes));
 
     // Reset UI state
     setNewQuestName("");
