@@ -28,8 +28,10 @@ export default function SetupUI() {
 
   // Manage quests state
   const [quests, setQuests] = useState<Quest[]>([]);
+  const [nextQuestOrderNumber, setNextQuestOrderNumber] = useState<number>(0);
   const handleAddQuest = (quest: Quest) => {
     setQuests((prev) => [...prev, quest]);
+    setNextQuestOrderNumber((prev) => prev + 1);
   }
 
   return (
@@ -45,6 +47,7 @@ export default function SetupUI() {
           availableAttributes={availableAttributes}
           quests={quests}
           addQuest={handleAddQuest}
+          nextQuestOrderNumber={nextQuestOrderNumber}
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>

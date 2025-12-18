@@ -35,6 +35,7 @@ export function createAffectedAttribute(
 export interface Quest {
   name: string;
   affectedAttributes: AffectedAttribute[];
+  order: number;
 }
 
 /**
@@ -47,10 +48,11 @@ export interface Quest {
  */
 export function createQuest(
   name: string,
-  affectedAttributes: AffectedAttribute[]
+  affectedAttributes: AffectedAttribute[],
+  order: number
 ): Quest {
   if (!name?.trim()) { 
     throw new Error("Quest name cannot be empty");
   }
-  return { name, affectedAttributes };
+  return { name, affectedAttributes, order };
 }
