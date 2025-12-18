@@ -1,7 +1,31 @@
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 
 /**
- * Represents an attribute that can be affected in the game.
+ * Represents an attribute that a user can possess.
+ */
+export interface Attribute {
+  name: string;
+  order: number;
+}
+
+/**
+ * Creates a new Attribute object with the specified name and order.
+ * 
+ * @param name - The name of the attribute. Must be a non-empty string after trimming whitespace.
+ * @param order - The numeric order/position of the attribute.
+ * @returns A new Attribute object containing the provided name and order.
+ * @throws {Error} Throws an error if the name parameter is empty, null, undefined, or contains only whitespace
+ */
+export function createAttribute(name: string, order: number): Attribute {
+  if (!name?.trim()) {
+    throw new Error("Attribute name cannot be empty");
+  }
+  return { name, order };
+}
+
+
+/**
+ * Represents an attribute as it is affected by a quest.
  */
 export interface AffectedAttribute {
   name: string;
