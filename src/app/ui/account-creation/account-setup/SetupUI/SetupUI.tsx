@@ -50,7 +50,7 @@ export default function SetupUI() {
 
   return (
     <Bounded>
-      <div className={styles.uiContainer}>
+      <div className={styles.widgetContainer}>
         <AttributeWidget
           className={styles.attributeWidget}
           attributes={availableAttributes}
