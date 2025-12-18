@@ -43,6 +43,7 @@ export interface Quest {
  *
  * @param name - The name of the quest. It must not be empty or consist only of whitespace.
  * @param affectedAttributes - An array of attributes that are affected by the quest.
+ * @param order - Number determining where quest appears in a list.
  * @throws {Error} Throws an error if the quest name is empty or only whitespace.
  * @returns A Quest object containing the name and affected attributes.
  */
