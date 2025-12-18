@@ -13,7 +13,7 @@ import StrengthMenu from "./SelectMenus/StrengthMenu";
  * @property {UseQuestAttributeSelectionReturn} attributeSelection - The attribute selection hook return object containing methods and state for managing quest attribute selection.
  * @property {string} noAvailableAttributesText - The text to display when there are no available attributes to select.
  */
-interface AddAffectedAttributeUIProps {
+export interface AddAffectedAttributeUIProps {
   attributeSelection: UseQuestAttributeSelectionReturn;
   noAvailableAttributesText: string;
 }
