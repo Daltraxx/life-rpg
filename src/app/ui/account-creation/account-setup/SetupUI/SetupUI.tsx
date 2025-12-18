@@ -30,12 +30,12 @@ export default function SetupUI() {
     setNextAttributeOrderNumber((prev) => prev + 1);
   };
   const handleDeleteAttribute = (attribute: Attribute) => {
-    const updatedAttributes = availableAttributes;
-    updatedAttributes.splice(attribute.order, 1);
+    const updatedAttributes = availableAttributes.filter(
+      (attr) => attribute.name !== attr.name
+    );
     for (let i = attribute.order; i < updatedAttributes.length; i++) {
       updatedAttributes[i].order -= 1;
     }
-    console.log("Updated Attributes after deletion", updatedAttributes);
     setAvailableAttributes(updatedAttributes);
     setNextAttributeOrderNumber((prev) => prev - 1);
   };
