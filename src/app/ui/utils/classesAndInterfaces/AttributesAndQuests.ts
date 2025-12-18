@@ -1,9 +1,8 @@
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 
-
 /**
  * Represents an attribute with a name and display order.
- * 
+ *
  * @interface Attribute
  * @property {string} name - The name of the attribute.
  * @property {number} order - The display order or priority of the attribute.
@@ -15,7 +14,7 @@ export interface Attribute {
 
 /**
  * Creates a new Attribute object with the specified name and order.
- * 
+ *
  * @param name - The name of the attribute. Must be a non-empty string after trimming whitespace.
  * @param order - The numeric order/position of the attribute.
  * @returns A new Attribute object containing the provided name and order.
@@ -25,14 +24,15 @@ export function createAttribute(name: string, order: number): Attribute {
   if (!name?.trim()) {
     throw new Error("Attribute name cannot be empty");
   }
+  if (Number.isFinite(order)) {
+    throw new Error("Attribute order must be a finite number");
+  }
   return { name, order };
 }
 
-
-
 /**
  * Represents an attribute that is affected by a quest.
- * 
+ *
  * @interface AffectedAttribute
  * @property {string} name - The name of the affected attribute.
  * @property {AttributeStrength} strength - The strength or intensity of the attribute's effect.
@@ -44,12 +44,12 @@ export interface AffectedAttribute {
 
 /**
  * Creates an affected attribute object with validation.
- * 
+ *
  * @param name - The name of the attribute. Must not be empty or contain only whitespace.
  * @param strength - The strength level of the attribute effect.
  * @returns An object representing the affected attribute.
  * @throws {Error} If the attribute name is empty or contains only whitespace.
- * 
+ *
  * @example
  * const affected = createAffectedAttribute('Health', AttributeStrength.Major);
  */
@@ -63,10 +63,9 @@ export function createAffectedAttribute(
   return { name, strength };
 }
 
-
 /**
  * Represents a quest in the Life RPG system.
- * 
+ *
  * @interface Quest
  * @property {string} name - The name or title of the quest.
  * @property {AffectedAttribute[]} affectedAttributes - An array of attributes that are affected by completing this quest.
@@ -92,7 +91,7 @@ export function createQuest(
   affectedAttributes: AffectedAttribute[],
   order: number
 ): Quest {
-  if (!name?.trim()) { 
+  if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
   }
   return { name, affectedAttributes, order };
