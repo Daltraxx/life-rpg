@@ -24,7 +24,7 @@ export function createAttribute(name: string, order: number): Attribute {
   if (!name?.trim()) {
     throw new Error("Attribute name cannot be empty");
   }
-  if (Number.isFinite(order)) {
+  if (!Number.isFinite(order)) {
     throw new Error("Attribute order must be a finite number");
   }
   return { name, order };
