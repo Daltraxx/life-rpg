@@ -11,6 +11,7 @@ import type {
   Quest,
   Attribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import QuestBoard from "./QuestBoard/QuestBoard";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -49,7 +50,7 @@ export default function SetupUI() {
   };
 
   return (
-    <Bounded>
+    <Bounded innerClassName={styles.setupContainer}>
       <div className={styles.widgetContainer}>
         <AttributeWidget
           className={styles.attributeWidget}
@@ -66,6 +67,7 @@ export default function SetupUI() {
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>
+      <QuestBoard />
     </Bounded>
   );
 }
