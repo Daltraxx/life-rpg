@@ -6,11 +6,16 @@ import styles from "./styles.module.css";
 import { useState } from "react";
 import AttributeListItem from "./AttributeList/AttributeListItem";
 import clsx from "clsx";
+import {
+  type Attribute,
+  createAttribute,
+} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
 interface AttributeWidgetProps {
-  attributes: string[];
-  addAttribute: (attribute: string) => void;
-  deleteAttribute: (attribute: string) => void;
+  attributes: Attribute[];
+  nextAttributeOrderNumber: number;
+  addAttribute: (attribute: Attribute) => void;
+  deleteAttribute: (attribute: Attribute) => void;
   className?: string;
 }
 
@@ -36,6 +41,7 @@ interface AttributeWidgetProps {
  */
 export default function AttributeWidget({
   attributes,
+  nextAttributeOrderNumber,
   addAttribute,
   deleteAttribute,
   className,
@@ -46,7 +52,9 @@ export default function AttributeWidget({
   const handleAddAttribute = (attribute: string) => {
     const trimmedAttribute = attribute.trim();
     const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
-    const attributeSet = new Set(attributes.map((attr) => attr.toLowerCase()));
+    const attributeSet = new Set(
+      attributes.map((attr) => attr.name.toLowerCase())
+    );
 
     if (trimmedAttributeLowerCase.length === 0) {
       setAddAttributeError("Please enter an attribute.");
@@ -65,17 +73,21 @@ export default function AttributeWidget({
 
     setAddAttributeError("");
 
-    addAttribute(trimmedAttribute);
+    const newAttribute = createAttribute(
+      trimmedAttribute,
+      nextAttributeOrderNumber
+    );
+    addAttribute(newAttribute);
     setNewAttribute("");
   };
 
-  const handleDeleteAttribute = (attribute: string) => {
+  const handleDeleteAttribute = (attribute: Attribute) => {
     deleteAttribute(attribute);
   };
 
   const attributeList = attributes.map((attribute) => (
     <AttributeListItem
-      key={attribute}
+      key={attribute.name}
       attribute={attribute}
       onDelete={handleDeleteAttribute}
     />

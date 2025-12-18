@@ -4,39 +4,35 @@ import clsx from "clsx";
 import { ListItem } from "@/app/ui/JSXWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { JSX, useCallback } from "react";
+import { type Attribute } from '@/app/ui/utils/classesAndInterfaces/AttributesAndQuests';
 
 interface AttributeListItemProps {
-  attribute: string;
-  onDelete: (attribute: string) => void;
+  attribute: Attribute;
+  onDelete: (attribute: Attribute) => void;
 }
 
 const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
 
+
 /**
- * Renders a single attribute list item with a remove button.
- *
- * @component
- * @param {AttributeListItemProps} props - The component props
- * @param {string} props.attribute - The name of the attribute to display
- * @param {(attribute: string) => void} props.onDelete - Callback function invoked when the remove button is clicked
- * @returns {JSX.Element} A list item containing the attribute name and a remove button. The Discipline attribute cannot be removed and is visually indicated as required.
- *
- * @example
- * <AttributeListItem
- *   attribute="Strength"
- *   onDelete={(attr) => console.log(`Removed ${attr}`)}
- * />
- *
+ * Renders a single attribute item in a list with a remove button.
+ * 
+ * @param props - The component props
+ * @param props.attribute - The attribute object to display
+ * @param props.onDelete - Callback function invoked when the delete button is clicked
+ * 
+ * @returns A list item containing the attribute name and a remove button
+ * 
  * @remarks
- * - The "Discipline" attribute is a required attribute and cannot be removed
- * - The remove button styling differs for the Discipline attribute to indicate its required status
- * - Uses FontAwesome XMark icon for the remove button
+ * The "Discipline" attribute is a required attribute and cannot be deleted.
+ * The delete button will be disabled for the Discipline attribute with an appropriate
+ * aria-label and title explaining why it cannot be removed.
  */
 export default function AttributeListItem({
   attribute,
   onDelete,
 }: AttributeListItemProps): JSX.Element {
-  const isDiscipline = attribute === REQUIRED_DISCIPLINE_ATTRIBUTE;
+  const isDiscipline = attribute.name === REQUIRED_DISCIPLINE_ATTRIBUTE;
   const handleDelete = useCallback(() => {
     if (!isDiscipline) {
       onDelete(attribute);
@@ -66,7 +62,7 @@ export default function AttributeListItem({
           aria-hidden="true"
         />
       </button>
-      {attribute}
+      {attribute.name}
     </ListItem>
   );
 }

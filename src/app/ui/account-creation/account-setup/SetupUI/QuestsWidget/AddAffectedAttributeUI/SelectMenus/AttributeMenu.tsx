@@ -3,6 +3,7 @@
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { Select } from "radix-ui";
+import { type Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -10,28 +11,35 @@ import {
 } from "@radix-ui/react-icons";
 
 interface AttributeMenuProps {
-  availableAttributes: string[];
+  availableAttributes: Attribute[];
   currentAttribute: string;
   onAttributeSelect: (attribute: string) => void;
 }
 
 /**
- * Renders a dropdown menu for selecting an attribute from a list of available attributes.
+ * A dropdown menu component for selecting character attributes.
  *
- * @component
- * @param {AttributeMenuProps} props - The component props
- * @param {string[]} props.availableAttributes - Array of attribute names available for selection
- * @param {string} props.currentAttribute - The currently selected attribute value
- * @param {(value: string) => void} props.onAttributeSelect - Callback function invoked when an attribute is selected
+ * This component renders a select menu using Radix UI's Select primitive,
+ * allowing users to choose from available attributes. It displays the currently
+ * selected attribute and provides a scrollable list of options.
  *
- * @returns {JSX.Element} A Select component with scrollable attribute options
+ * @param props - The component props
+ * @param props.availableAttributes - Array of attribute objects that can be selected
+ * @param props.currentAttribute - The currently selected attribute value
+ * @param props.onAttributeSelect - Callback function invoked when an attribute is selected,
+ *                                   receives the selected attribute value as a parameter
+ *
+ * @returns A controlled select menu component for attribute selection
  *
  * @example
  * ```tsx
  * <AttributeMenu
- *   availableAttributes={['Strength', 'Dexterity', 'Wisdom']}
+ *   availableAttributes={[
+ *     { name: "Strength" },
+ *     { name: "Intelligence" }
+ *   ]}
  *   currentAttribute="Strength"
- *   onAttributeSelect={(attribute) => setSelectedAttribute(attribute)}
+ *   onAttributeSelect={(value) => console.log(value)}
  * />
  * ```
  */
@@ -45,10 +53,7 @@ export default function AttributeMenu({
       value={currentAttribute}
       onValueChange={(value) => onAttributeSelect(value)}
     >
-      <Select.Trigger
-        className={styles.trigger}
-        aria-label="Select Attribute"
-      >
+      <Select.Trigger className={styles.trigger} aria-label="Select Attribute">
         <Select.Value>{currentAttribute}</Select.Value>
       </Select.Trigger>
       <Select.Portal>
@@ -62,8 +67,8 @@ export default function AttributeMenu({
           <Select.Viewport className={styles.viewport}>
             <Select.Group>
               {availableAttributes.map((attribute) => (
-                <AttributeOption key={attribute} value={attribute}>
-                  {attribute}
+                <AttributeOption key={attribute.name} value={attribute.name}>
+                  {attribute.name}
                 </AttributeOption>
               ))}
             </Select.Group>

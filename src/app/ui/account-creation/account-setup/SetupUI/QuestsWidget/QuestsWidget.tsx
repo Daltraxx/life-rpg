@@ -11,7 +11,8 @@ import clsx from "clsx";
 import useQuestAttributeSelection from "@/utils/hooks/useQuestAttributeSelection";
 import {
   createAffectedAttribute,
-  Quest,
+  type Attribute,
+  type Quest,
   createQuest,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
@@ -19,7 +20,7 @@ const REQUIRED_ATTRIBUTE = "Discipline";
 const NO_AVAILABLE_ATTRIBUTES_TEXT = "N/A";
 
 interface QuestsWidgetProps {
-  availableAttributes: string[];
+  availableAttributes: Attribute[];
   quests: Quest[];
   addQuest: (quest: Quest) => void;
   nextQuestOrderNumber: number;

@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
-  AffectedAttribute,
+  type Attribute,
+  type AffectedAttribute,
   createAffectedAttribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
 export type UseQuestAttributeSelectionReturn = {
-  availableAttributes: string[];
+  availableAttributes: Attribute[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
   selectedAttributes: AffectedAttribute[];
@@ -27,7 +28,7 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
  * Handles the selection, addition, and removal of attributes with strength levels,
  * maintaining a list of available and selected attributes.
  *
- * @param {string[]} attributes - Array of all available attributes to choose from
+ * @param {Attribute[]} attributes - Array of all available attributes to choose from
  * @param {string} noAvailableAttributesText - Text to display when no attributes are available
  *
  * @returns {UseQuestAttributeSelectionReturn} Object containing:
@@ -55,14 +56,14 @@ const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
  * actions.resetAttributeSelectionUI();
  */
 const useQuestAttributeSelection = (
-  attributes: string[],
+  attributes: Attribute[],
   noAvailableAttributesText: string
 ): UseQuestAttributeSelectionReturn => {
   const [availableAttributes, setAvailableAttributes] =
-    useState<string[]>(attributes);
+    useState<Attribute[]>(attributes);
 
   const [currentAttributeName, setCurrentAttributeName] = useState<string>(
-    attributes[0] || noAvailableAttributesText
+    attributes[0]?.name || noAvailableAttributesText
   );
 
   const [currentAttributeStrength, setCurrentAttributeStrength] =
@@ -74,10 +75,10 @@ const useQuestAttributeSelection = (
 
   // Helper to check if current attribute is no longer available
   const isCurrentAttributeNotAvailable = useCallback(
-    (currentAttribute: string, availableAttributes: string[]) => {
+    (currentAttribute: string, availableAttributes: Attribute[]) => {
       return (
         currentAttribute !== noAvailableAttributesText &&
-        !availableAttributes.includes(currentAttribute)
+        !availableAttributes.some((attr) => attr.name === currentAttribute)
       );
     },
     [noAvailableAttributesText]
@@ -97,13 +98,15 @@ const useQuestAttributeSelection = (
       selectedAttributes.map((attr) => attr.name)
     );
     const updatedAvailableAttributes = attributes.filter(
-      (attr) => !currentlySelectedAttributeNames.has(attr)
+      (attr) => !currentlySelectedAttributeNames.has(attr.name)
     );
     setAvailableAttributes(updatedAvailableAttributes);
 
     // Update selected attributes if any previously selected were removed by user
     setSelectedAttributes((prevSelected) =>
-      prevSelected.filter((attr) => attributes.includes(attr.name))
+      prevSelected.filter((attr) =>
+        attributes.some((a) => a.name === attr.name)
+      )
     );
 
     // Update current attribute name if it's no longer available
@@ -114,13 +117,16 @@ const useQuestAttributeSelection = (
       )
     ) {
       setCurrentAttributeName(
-        updatedAvailableAttributes[0] || noAvailableAttributesText
+        updatedAvailableAttributes[0]?.name || noAvailableAttributesText
       );
     }
 
     // If user adds an attribute and current is the no-attributes text, set to first available
-    if (updatedAvailableAttributes.length && currentAttributeName === noAvailableAttributesText) {
-      setCurrentAttributeName(updatedAvailableAttributes[0]);
+    if (
+      updatedAvailableAttributes.length &&
+      currentAttributeName === noAvailableAttributesText
+    ) {
+      setCurrentAttributeName(updatedAvailableAttributes[0].name);
     }
   }, [attributes]); // Only run when attributes prop changes (user adds/removes attributes)
 
@@ -134,12 +140,12 @@ const useQuestAttributeSelection = (
     }
 
     const updatedAvailableAttributes = availableAttributes.filter(
-      (attr) => attr !== currentAttributeName
+      (attr) => attr.name !== currentAttributeName
     );
 
     setAvailableAttributes(updatedAvailableAttributes);
     setCurrentAttributeName(
-      updatedAvailableAttributes[0] || noAvailableAttributesText
+      updatedAvailableAttributes[0]?.name || noAvailableAttributesText
     );
 
     setSelectedAttributes((prevSelected) => [
@@ -162,11 +168,12 @@ const useQuestAttributeSelection = (
         prevSelected.filter((attr) => attr.name !== attributeName)
       );
       setAvailableAttributes((prevAvailable) => {
-        const updatedAvailableAttributes = [...prevAvailable, attributeName];
+        const attribute: Attribute = attributes.find(
+          (attr) => attr.name === attributeName
+        )!;
+        const updatedAvailableAttributes = [...prevAvailable, attribute];
         // Sort available attributes to maintain order
-        return updatedAvailableAttributes.sort(
-          (a, b) => attributes.indexOf(a) - attributes.indexOf(b)
-        );
+        return updatedAvailableAttributes.sort((a, b) => a.order - b.order);
       });
       setCurrentAttributeName((prevCurrent) =>
         prevCurrent === noAvailableAttributesText ? attributeName : prevCurrent
@@ -178,7 +185,7 @@ const useQuestAttributeSelection = (
   const handleResetAttributeSelectionUI = useCallback(() => {
     setAvailableAttributes(attributes);
     setSelectedAttributes([]);
-    setCurrentAttributeName(attributes[0] || noAvailableAttributesText);
+    setCurrentAttributeName(attributes[0]?.name || noAvailableAttributesText);
     setCurrentAttributeStrength(DEFAULT_ATTRIBUTE_STRENGTH);
   }, [attributes, noAvailableAttributesText]);
 

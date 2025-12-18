@@ -8,6 +8,28 @@ interface AffectedAttributesTableProps {
   onDeleteAttribute: (name: string) => void;
 }
 
+/**
+ * Displays a table of attributes affected by a quest, showing their strength
+ * and providing a way to remove them.
+ *
+ * @param props - Component props
+ * @param props.selectedAttributes - Array of attributes to display in the table
+ * @param props.onDeleteAttribute - Callback function invoked when the remove button
+ * is clicked, receives the attribute name as a parameter
+ *
+ * @returns A table component with attribute name, strength indicator, and remove button
+ *
+ * @example
+ * ```tsx
+ * <AffectedAttributesTable
+ *   selectedAttributes={[
+ *     { name: "Strength", strength: "plus" },
+ *     { name: "Intelligence", strength: "plusPlus" }
+ *   ]}
+ *   onDeleteAttribute={(name) => console.log(`Removing ${name}`)}
+ * />
+ * ```
+ */
 export default function AffectedAttributesTable({
   selectedAttributes,
   onDeleteAttribute,
