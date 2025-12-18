@@ -1,7 +1,12 @@
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 
+
 /**
- * Represents an attribute that a user can possess.
+ * Represents an attribute with a name and display order.
+ * 
+ * @interface Attribute
+ * @property {string} name - The name of the attribute.
+ * @property {number} order - The display order or priority of the attribute.
  */
 export interface Attribute {
   name: string;
@@ -24,8 +29,13 @@ export function createAttribute(name: string, order: number): Attribute {
 }
 
 
+
 /**
- * Represents an attribute as it is affected by a quest.
+ * Represents an attribute that is affected by a quest.
+ * 
+ * @interface AffectedAttribute
+ * @property {string} name - The name of the affected attribute.
+ * @property {AttributeStrength} strength - The strength or intensity of the attribute's effect.
  */
 export interface AffectedAttribute {
   name: string;
@@ -53,8 +63,14 @@ export function createAffectedAttribute(
   return { name, strength };
 }
 
+
 /**
- * Represents a quest in the game that can affect certain attributes.
+ * Represents a quest in the Life RPG system.
+ * 
+ * @interface Quest
+ * @property {string} name - The name or title of the quest.
+ * @property {AffectedAttribute[]} affectedAttributes - An array of attributes that are affected by completing this quest.
+ * @property {number} order - The sequence or priority order of the quest, used for sorting or determining quest progression.
  */
 export interface Quest {
   name: string;
