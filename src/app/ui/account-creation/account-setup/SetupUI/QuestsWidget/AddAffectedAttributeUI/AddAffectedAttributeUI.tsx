@@ -20,16 +20,7 @@ interface AddAffectedAttributeUIProps {
  *
  * @param props - The component props
  * @param props.attributeSelection - Object containing attribute selection state and actions
- * @param props.attributeSelection.availableAttributes - List of attributes that can be selected
- * @param props.attributeSelection.currentAttributeName - The currently selected attribute name
- * @param props.attributeSelection.currentAttributeStrength - The currently selected strength value
- * @param props.attributeSelection.actions - Actions for managing attribute selection
- * @param props.attributeSelection.actions.setCurrentAttributeName - Function to update the selected attribute
- * @param props.attributeSelection.actions.setAttributeStrength - Function to update the attribute strength
- * @param props.attributeSelection.actions.addAffectedAttribute - Function to add the selected attribute to the quest
  * @param props.noAvailableAttributesText - Text to display when no attributes are available for selection
- *
- * @returns A fieldset containing attribute selection menus and an add button
  */
 export default function AddAffectedAttributeUI({
   attributeSelection,
