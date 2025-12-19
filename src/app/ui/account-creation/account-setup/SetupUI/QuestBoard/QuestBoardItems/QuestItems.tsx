@@ -7,11 +7,13 @@ import {
   AffectedAttribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { StrengthDisplayEnumHideNormal } from "@/app/ui/utils/helpers/StrengthDisplayMap";
+import { sortAffectedAttributes } from "@/app/ui/utils/helpers/sortAffectedAttributes";
 
 const getAttributeString = (attribute: AffectedAttribute) => {
   const { name, strength } = attribute;
   return `${name}${StrengthDisplayEnumHideNormal[strength]}`;
 };
+
 
 interface QuestBoardItemsProps {
   quests: Quest[];
@@ -27,7 +29,7 @@ export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
           </Heading>
           {/* ATTRIBUTES */}
           <Paragraph size="20" color="background">
-            {quest.affectedAttributes
+            {sortAffectedAttributes(quest.affectedAttributes)
               .map((attr) => getAttributeString(attr))
               .join(", ")}
           </Paragraph>
