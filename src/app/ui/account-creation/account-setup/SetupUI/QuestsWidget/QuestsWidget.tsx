@@ -2,7 +2,10 @@
 
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import { Label, Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
+import {
+  Label,
+  Paragraph,
+} from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";

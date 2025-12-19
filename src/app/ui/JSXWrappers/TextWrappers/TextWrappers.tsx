@@ -1,10 +1,24 @@
 import React from "react";
+import styles from "./styles.module.css";
 import { ComponentProps } from "react";
 import clsx from "clsx";
 import {
   fontSizeToTWMap,
   FontSize,
 } from "@/app/ui/utils/helpers/fontSizeToTWMap";
+
+const textColorMap = {
+  custom: "",
+  background: styles.textBackground,
+  "blue-700": styles.textBlue700,
+} satisfies Record<string, string>;
+
+export type TextColor = keyof typeof textColorMap;
+
+interface TextWrapperProps {
+  size?: FontSize;
+  color?: TextColor;
+}
 
 /**
  * Creates a React component that wraps a specified HTML text element (`p`, `span`, `label`, or `li`)
@@ -26,14 +40,20 @@ function createTextWrapper<T extends "p" | "span" | "label" | "li">(
 ) {
   const TextWrapper = function ({
     size = "20",
+    color = "custom",
     children,
     className,
     ...restProps
-  }: ComponentProps<T> & { size?: FontSize }) {
+  }: ComponentProps<T> & TextWrapperProps) {
     return React.createElement(
       element,
       {
-        className: clsx("font-main", fontSizeToTWMap[size], className),
+        className: clsx(
+          "font-main",
+          fontSizeToTWMap[size],
+          textColorMap[color],
+          className
+        ),
         ...restProps,
       },
       children

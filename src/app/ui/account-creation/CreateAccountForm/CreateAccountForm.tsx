@@ -7,7 +7,11 @@ import { SignupState } from "@/utils/validations/signup";
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import { Label, Paragraph, Span } from "@/app/ui/JSXWrappers/TextWrappers";
+import {
+  Label,
+  Paragraph,
+  Span,
+} from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 import styles from "./styles.module.css";
 import useTruncatedString from "@/utils/hooks/useTruncatedString";

@@ -1,6 +1,6 @@
 import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers";
+import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
 
 const PLACEHOLDER_EMAIL = "your email";
