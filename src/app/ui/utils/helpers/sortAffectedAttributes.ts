@@ -1,5 +1,11 @@
 import { AffectedAttribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
+const strengthPriority: Record<string, number> = {
+  plusPlus: 3,
+  plus: 2,
+  normal: 1,
+};
+
 /**
  * Sorts an array of affected attributes by strength and name.
  * 
@@ -26,15 +32,11 @@ import { AffectedAttribute } from "@/app/ui/utils/classesAndInterfaces/Attribute
  */
 export const sortAffectedAttributes = (affectedAttributes: AffectedAttribute[]) => {
   const sortedAttributes = affectedAttributes.toSorted((a, b) => {
-    if (a.strength === b.strength) {
-      return a.name.localeCompare(b.name);
-    } else if (a.strength === "plusPlus") {
-      return -1;
-    } else if (a.strength === "plus" && b.strength === "normal") {
-      return -1;
-    } else {
-      return 1;
+    const strengthDiff = strengthPriority[b.strength] - strengthPriority[a.strength];
+    if (strengthDiff !== 0) {
+      return strengthDiff;
     }
+    return a.name.localeCompare(b.name);
   });
   return sortedAttributes;
 };
