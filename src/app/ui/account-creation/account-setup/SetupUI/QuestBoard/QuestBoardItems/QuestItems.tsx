@@ -2,18 +2,9 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import {
-  Quest,
-  AffectedAttribute,
-} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import { StrengthDisplayEnumHideNormal } from "@/app/ui/utils/helpers/StrengthDisplayMap";
+import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { sortAffectedAttributes } from "@/app/ui/utils/helpers/sortAffectedAttributes";
-
-const getAttributeString = (attribute: AffectedAttribute) => {
-  const { name, strength } = attribute;
-  return `${name}${StrengthDisplayEnumHideNormal[strength]}`;
-};
-
+import { getAttributeDisplayString } from "@/app/ui/utils/helpers/getAttributeDisplayString";
 
 interface QuestBoardItemsProps {
   quests: Quest[];
@@ -30,7 +21,7 @@ export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
           {/* ATTRIBUTES */}
           <Paragraph size="20" color="background">
             {sortAffectedAttributes(quest.affectedAttributes)
-              .map((attr) => getAttributeString(attr))
+              .map((attr) => getAttributeDisplayString(attr))
               .join(", ")}
           </Paragraph>
           {/* STREAK */}
