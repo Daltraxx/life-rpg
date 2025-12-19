@@ -25,19 +25,20 @@ export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
           <Heading as="h4" color="background">
             {quest.name}
           </Heading>
-          <Paragraph size="16" color="background">
+          {/* ATTRIBUTES */}
+          <Paragraph size="20" color="background">
             {quest.affectedAttributes
               .map((attr) => getAttributeString(attr))
               .join(", ")}
           </Paragraph>
-          <Paragraph size="16" color="background">
+          <Paragraph size="20" color="background">
             Streak: 0
           </Paragraph>
-          <Paragraph size="16" color="background">
+          <Paragraph size="20" color="background">
             Strength: 0 — E
           </Paragraph>
           <div className={styles.experienceGainedSection}>
-            <Paragraph size="16" color="background">
+            <Paragraph size="20" color="background">
               Experience Gained: {0}
             </Paragraph>
             <div>{/* Exp toggle buttons */}</div>
