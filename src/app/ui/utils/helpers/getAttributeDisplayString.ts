@@ -13,7 +13,7 @@ import { getStrengthDisplay } from "@/app/ui/utils/helpers/StrengthDisplayMap";
  * @example
  * ```ts
  * const attr = { name: "Stamina", strength: "plusPlus" };
- * getAttributeDisplayString(attr); // Returns "Stamina++" or similar based on StrengthDisplayEnumHideNormal mapping
+ * getAttributeDisplayString(attr); // Returns "Stamina++"
  *
  * const attr2 = { name: "Intelligence", strength: "normal" };
  * getAttributeDisplayString(attr2); // Returns "Intelligence"
