@@ -57,9 +57,6 @@ export default function QuestsWidget({
     if (trimmedQuestName.length === 0) {
       return;
     }
-    if (selectedAttributes.length === 0) {
-      return;
-    }
     if (quests.some((quest) => quest.name.toLowerCase() === loweredQuestName)) {
       return;
     }
