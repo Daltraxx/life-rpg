@@ -67,7 +67,7 @@ export default function SetupUI() {
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>
-      <QuestBoard />
+      <QuestBoard quests={quests} />
     </Bounded>
   );
 }

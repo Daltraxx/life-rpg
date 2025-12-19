@@ -1,7 +1,11 @@
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 
-export default function QuestBoard() {
+export interface QuestBoardProps {
+  quests: Quest[];
+}
+
+export default function QuestBoard({ quests }: QuestBoardProps) {
   return (
     <section>
       <Heading as="h2" color="blue-700" size="36">
