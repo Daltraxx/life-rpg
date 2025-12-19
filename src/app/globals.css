@@ -22,8 +22,8 @@
   --orange-200: hsl(31, 61%, 77%); /* #e8c6a1 */
   --orange-300: hsl(31, 61%, 70%); /* #e1b382 */
   --orange-500: hsl(31, 93%, 50%); /* #f68309 */
-  --orange-600: hsl(31, 93%, 42%) /* #cd6d07 - error message color */;
-  --orange-650: hsl(31, 93%, 40%) /* #c56907 */;
+  --orange-600: hsl(31, 93%, 42%); /* #cd6d07 - error message color */
+  --orange-650: hsl(31, 93%, 40%); /* #c56907 */
 
   --gold-400: hsl(43, 100%, 50%); /* #ffb800 */
   --gold-600: hsl(43, 100%, 42%); /* #d89b00 */
