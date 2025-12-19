@@ -11,8 +11,11 @@ import { StrengthDisplayEnumHideNormal } from "./StrengthDisplayMap";
  * 
  * @example
  * ```ts
- * const attr = { name: "Stamina", strength: StrengthEnum.HIGH };
- * getAttributeString(attr); // Returns "Stamina++" or similar based on StrengthDisplayEnumHideNormal mapping
+ * const attr = { name: "Stamina", strength: "plusPlus" };
+ * getAttributeDisplayString(attr); // Returns "Stamina++" or similar based on StrengthDisplayEnumHideNormal mapping
+ * 
+ * const attr2 = { name: "Intelligence", strength: "normal" };
+ * getAttributeDisplayString(attr2); // Returns "Intelligence"
  * ```
  */
 export const getAttributeDisplayString = (attribute: AffectedAttribute) => {
