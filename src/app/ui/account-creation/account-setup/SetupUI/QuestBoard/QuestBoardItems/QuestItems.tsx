@@ -10,7 +10,7 @@ interface QuestBoardItemsProps {
 
 export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
   return (
-    <>
+    <div>
       {quests.map((quest) => (
         <div key={quest.order}>
           <Heading as="h4" color="background">{quest.name}</Heading>
@@ -30,6 +30,6 @@ export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
           </ButtonWrapper>
         </div>
       ))}
-    </>
+    </div>
   );
 }
