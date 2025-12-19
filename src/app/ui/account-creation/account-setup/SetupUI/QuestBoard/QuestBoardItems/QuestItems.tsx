@@ -25,7 +25,7 @@ export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
             <Paragraph size="16" color="background">Experience Gained: {0}</Paragraph>
             <div>{/* Exp toggle buttons */}</div>
           </div>
-          <ButtonWrapper className={styles.completeQuestButton} color="background">
+          <ButtonWrapper className={styles.deleteQuestButton} color="background">
             DELETE QUEST
           </ButtonWrapper>
         </div>
