@@ -47,6 +47,12 @@
   background-color: var(--background);
   color: var(--brown-600, #362009);
 }
+.buttonBackground:hover {
+  background-color: #f4eae1;
+}
+.buttonBackground:active {
+  background-color: #dec1a8;
+}
 
 .button[disabled] {
   cursor: not-allowed;
