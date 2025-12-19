@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+/* TODO: Add light mode and dark mode support */
 :root {
   --background: #f5f5f5;
   --background-hover: hsl(28, 46%, 92%); /* #f4eae1 */
@@ -58,12 +59,12 @@
   --font-main: var(--font-jersey, arial, sans-serif);
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);
