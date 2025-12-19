@@ -20,37 +20,14 @@ export const strengthDisplayMap: Record<AttributeStrength, string> = {
 };
 
 /**
- * Enum representing different strength display levels for UI rendering. Displays "normal" for base strength.
- * 
- * @remarks
- * This enum is used to display strength modifiers in a normalized format,
- * where different values represent increasing levels of strength.
- * 
- * @enum {string}
- * 
- * @property {string} normal - Represents the base/normal strength level with no modifier
- * @property {string} plus - Represents a single level increase in strength, displayed as "+"
- * @property {string} plusPlus - Represents a double level increase in strength, displayed as "++"
+ * Converts an AttributeStrength value to its display string.
+ * @param strength - The attribute strength to display
+ * @param hideNormal - If true, returns empty string for normal strength
  */
-export enum StrengthDisplayEnumShowNormal {
-  normal = "normal",
-  plus = "+",
-  plusPlus = "++",
-}
-
-/**
- * Enum representing different strength display levels with their corresponding display symbols.
- * The 'normal' level is hidden (empty string) for UI displays 
- * where normal strength is represented as lacking a symbol, 
- * while enhanced levels show plus symbols.
- * 
- * @enum {string}
- * @property {string} normal - Normal strength level, displayed as empty string (hidden)
- * @property {string} plus - Enhanced strength level, displayed as "+"
- * @property {string} plusPlus - Maximum strength level, displayed as "++"
- */
-export enum StrengthDisplayEnumHideNormal {
-  normal = "",
-  plus = "+",
-  plusPlus = "++",
+export function getStrengthDisplay(
+  strength: AttributeStrength,
+  hideNormal: boolean = false
+): string {
+  const display = strengthDisplayMap[strength];
+  return hideNormal && strength === 'normal' ? '' : display;
 }

@@ -1,8 +1,9 @@
 import { AffectedAttribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import { StrengthDisplayEnumHideNormal } from "./StrengthDisplayMap";
+import { getStrengthDisplay } from "@/app/ui/utils/helpers/StrengthDisplayMap";
 
 /**
  * Generates a display string for an attribute by combining its name with a strength indicator.
+ * Attributes with 'normal' strength will not have any additional indicator.
  *
  * @param attribute - The affected attribute object containing name and strength properties
  * @param attribute.name - The name of the attribute to display
@@ -22,5 +23,5 @@ export const getAttributeDisplayString = (
   attribute: AffectedAttribute
 ): string => {
   const { name, strength } = attribute;
-  return `${name}${StrengthDisplayEnumHideNormal[strength]}`;
+  return `${name}${getStrengthDisplay(strength, true)}`;
 };
