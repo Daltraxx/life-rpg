@@ -26,7 +26,7 @@ interface TextWrapperProps {
  *
  * @template T - The HTML element type to wrap ("p", "span", "label", or "li").
  * @param element - The HTML element tag to use for the wrapper.
- * The returned component accepts a `size` prop to control font size, a `className` prop for custom classes,
+ * The returned component accepts a `size` prop to control font size, a `color` prop for text color, a `className` prop for custom classes,
  * and any other valid props for the specified element type. The `children` prop is used to render content inside the element.
  *
  * @example
