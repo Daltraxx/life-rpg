@@ -31,18 +31,22 @@ export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
               .map((attr) => getAttributeString(attr))
               .join(", ")}
           </Paragraph>
+          {/* STREAK */}
           <Paragraph size="20" color="background">
             Streak: 0
           </Paragraph>
+          {/* STRENGTH */}
           <Paragraph size="20" color="background">
             Strength: 0 — E
           </Paragraph>
+          {/* EXPERIENCE */}
           <div className={styles.experienceGainedSection}>
             <Paragraph size="20" color="background">
               Experience Gained: {0}
             </Paragraph>
             <div>{/* Exp toggle buttons */}</div>
           </div>
+          {/* DELETE BUTTON */}
           <ButtonWrapper
             className={styles.deleteQuestButton}
             color="background"
