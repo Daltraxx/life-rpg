@@ -6,3 +6,15 @@ export const strengthDisplayMap: Record<AttributeStrength, string> = {
   plus: "+",
   plusPlus: "++",
 };
+
+export enum StrengthDisplayEnumShowNormal {
+  normal = "normal",
+  plus = "+",
+  plusPlus = "++",
+}
+
+export enum StrengthDisplayEnumHideNormal {
+  normal = "",
+  plus = "+",
+  plusPlus = "++",
+}

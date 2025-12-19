@@ -6,11 +6,11 @@ import {
   Quest,
   AffectedAttribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import { strengthDisplayMap } from "@/app/ui/utils/helpers/StrengthDisplayMap";
+import { StrengthDisplayEnumHideNormal } from "@/app/ui/utils/helpers/StrengthDisplayMap";
 
 const getAttributeString = (attribute: AffectedAttribute) => {
   const { name, strength } = attribute;
-  return `${name}${strength === "normal" ? "" : strengthDisplayMap[strength]}`;
+  return `${name}${StrengthDisplayEnumHideNormal[strength]}`;
 };
 
 interface QuestBoardItemsProps {
