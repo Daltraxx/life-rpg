@@ -5,15 +5,102 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { sortAffectedAttributes } from "@/app/ui/utils/helpers/sortAffectedAttributes";
 import { getAttributeDisplayString } from "@/app/ui/utils/helpers/getAttributeDisplayString";
+import { useState, useRef } from "react";
 import {
   ChevronUpButton,
   ChevronDownButton,
 } from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
+import clsx from "clsx";
 
 interface QuestBoardItemsProps {
   quests: Quest[];
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
+}
+
+interface QuestItemProps {
+  quest: Quest;
+  index: number;
+  totalQuests: number;
+  onDeleteQuest: (quest: Quest) => void;
+  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
+}
+
+function QuestItem({
+  quest,
+  index,
+  totalQuests,
+  onDeleteQuest,
+  onQuestOrderChange,
+}: QuestItemProps) {
+  const [isRemoving, setIsRemoving] = useState(false);
+  const questItemRef = useRef<HTMLDivElement>(null);
+
+  const handleDeleteClick = () => {
+    setIsRemoving(true);
+    // Wait for animation to complete before calling onDeleteQuest
+    setTimeout(() => {
+      onDeleteQuest(quest);
+    }, 300); // Match CSS transition duration
+  };
+
+  return (
+    <div
+      ref={questItemRef}
+      className={clsx(styles.questItem, isRemoving && styles.removing)}
+    >
+      {/* QUEST ORDER TOGGLE BUTTONS */}
+      <div className={styles.questOrderToggleButtons}>
+        {index > 0 && (
+          <ChevronUpButton
+            onClick={() => onQuestOrderChange(quest, "up")}
+            aria-label="Move quest up"
+            size={24}
+          />
+        )}
+        {index < totalQuests - 1 && (
+          <ChevronDownButton
+            onClick={() => onQuestOrderChange(quest, "down")}
+            aria-label="Move quest down"
+            size={24}
+          />
+        )}
+      </div>
+      <Heading as="h4" color="background">
+        {quest.name}
+      </Heading>
+      {/* ATTRIBUTES */}
+      <Paragraph size="20" color="background">
+        {sortAffectedAttributes(quest.affectedAttributes)
+          .map((attr) => getAttributeDisplayString(attr))
+          .join(", ")}
+      </Paragraph>
+      {/* STREAK */}
+      <Paragraph size="20" color="background">
+        Streak: 0
+      </Paragraph>
+      {/* STRENGTH */}
+      <Paragraph size="20" color="background">
+        Strength: 0 — E
+      </Paragraph>
+      {/* EXPERIENCE */}
+      <div className={styles.experienceGainedSection}>
+        <Paragraph size="20" color="background">
+          Experience Gained: {0}
+        </Paragraph>
+        <div>{/* Exp toggle buttons */}</div>
+      </div>
+      {/* DELETE BUTTON */}
+      <ButtonWrapper
+        className={styles.deleteQuestButton}
+        color="background"
+        onClick={handleDeleteClick}
+        disabled={isRemoving}
+      >
+        DELETE QUEST
+      </ButtonWrapper>
+    </div>
+  );
 }
 
 export default function QuestBoardItems({
@@ -24,58 +111,14 @@ export default function QuestBoardItems({
   return (
     <div>
       {quests.map((quest, i) => (
-        <div key={quest.name}>
-          {/* QUEST ORDER TOGGLE BUTTONS */}
-          <div className={styles.questOrderToggleButtons}>
-            {i > 0 && (
-              <ChevronUpButton
-                onClick={() => onQuestOrderChange(quest, "up")}
-                aria-label="Move quest up"
-                size={24}
-              />
-            )}
-            {i < quests.length - 1 && (
-              <ChevronDownButton
-                onClick={() => onQuestOrderChange(quest, "down")}
-                aria-label="Move quest down"
-                size={24}
-              />
-            )}
-          </div>
-          <Heading as="h4" color="background">
-            {quest.name}
-          </Heading>
-          {/* ATTRIBUTES */}
-          <Paragraph size="20" color="background">
-            {sortAffectedAttributes(quest.affectedAttributes)
-              .map((attr) => getAttributeDisplayString(attr))
-              .join(", ")}
-          </Paragraph>
-          {/* STREAK */}
-          <Paragraph size="20" color="background">
-            Streak: 0
-          </Paragraph>
-          {/* STRENGTH */}
-          <Paragraph size="20" color="background">
-            Strength: 0 — E
-          </Paragraph>
-          {/* EXPERIENCE */}
-          <div className={styles.experienceGainedSection}>
-            <Paragraph size="20" color="background">
-              Experience Gained: {0}
-            </Paragraph>
-            <div>{/* Exp toggle buttons */}</div>
-          </div>
-          {/* DELETE BUTTON */}
-          {/* TODO: Make screen shrinkage after deleting quest smoother? */}
-          <ButtonWrapper
-            className={styles.deleteQuestButton}
-            color="background"
-            onClick={() => onDeleteQuest(quest)}
-          >
-            DELETE QUEST
-          </ButtonWrapper>
-        </div>
+        <QuestItem
+          key={quest.name}
+          quest={quest}
+          index={i}
+          totalQuests={quests.length}
+          onDeleteQuest={onDeleteQuest}
+          onQuestOrderChange={onQuestOrderChange}
+        />
       ))}
     </div>
   );
