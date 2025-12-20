@@ -2,24 +2,24 @@ import clsx from "clsx";
 import styles from "./styles.module.css";
 import ChevronUpIcon from "@/app/ui/Icons/ChevronUpIcon";
 import ChevronDownIcon from "@/app/ui/Icons/ChevronDownIcon";
+import { ComponentProps } from "react";
 
-interface ChevronButtonProps {
+interface ChevronButtonProps extends ComponentProps<"button"> {
   className?: string;
 }
 
-export function ChevronUpButton({ className }: ChevronButtonProps) {
+export function ChevronUpButton({ className, ...props }: ChevronButtonProps) {
   return (
-    <button className={clsx(styles.button, className)}>
+    <button className={clsx(styles.button, className)} {...props}>
       <ChevronUpIcon />
     </button>
   );
 }
 
-export function ChevronDownButton({ className }: ChevronButtonProps) {
+export function ChevronDownButton({ className, ...props }: ChevronButtonProps) {
   return (
-    <button className={clsx(styles.button, className)}>
+    <button className={clsx(styles.button, className)} {...props}>
       <ChevronDownIcon />
     </button>
   );
 }
-
