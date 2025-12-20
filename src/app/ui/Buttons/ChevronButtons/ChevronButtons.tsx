@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import styles from "./styles.module.css";
-import ChevronUpIcon from "@/app/ui/Icons/ChevronUpIcon";
-import ChevronDownIcon from "@/app/ui/Icons/ChevronDownIcon";
+import { ChevronUpIcon, ChevronDownIcon } from "@/app/ui/Icons/ChevronIcons";
 import { ComponentProps } from "react";
 
 interface ChevronButtonProps extends ComponentProps<"button"> {
