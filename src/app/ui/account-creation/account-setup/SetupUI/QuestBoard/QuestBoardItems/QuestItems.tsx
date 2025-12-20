@@ -13,17 +13,30 @@ import {
 interface QuestBoardItemsProps {
   quests: Quest[];
   onDeleteQuest: (quest: Quest) => void;
+  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
 }
 
-export default function QuestBoardItems({ quests, onDeleteQuest }: QuestBoardItemsProps) {
+export default function QuestBoardItems({
+  quests,
+  onDeleteQuest,
+  onQuestOrderChange,
+}: QuestBoardItemsProps) {
   return (
     <div>
       {quests.map((quest, i) => (
         <div key={quest.order}>
           {/* QUEST ORDER TOGGLE BUTTONS */}
           <div className={styles.questOrderToggleButtons}>
-            {i > 0 && <ChevronUpButton />}
-            {i < quests.length - 1 && <ChevronDownButton />}
+            {i > 0 && (
+              <ChevronUpButton
+                onClick={() => onQuestOrderChange(quest, "up")}
+              />
+            )}
+            {i < quests.length - 1 && (
+              <ChevronDownButton
+                onClick={() => onQuestOrderChange(quest, "down")}
+              />
+            )}
           </div>
           <Heading as="h4" color="background">
             {quest.name}

@@ -6,9 +6,14 @@ import QuestBoardItems from "./QuestBoardItems/QuestItems";
 export interface QuestBoardProps {
   quests: Quest[];
   onDeleteQuest: (quest: Quest) => void;
+  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
 }
 
-export default function QuestBoard({ quests, onDeleteQuest }: QuestBoardProps) {
+export default function QuestBoard({
+  quests,
+  onDeleteQuest,
+  onQuestOrderChange,
+}: QuestBoardProps) {
   return (
     <section className={styles.container}>
       <Heading as="h2" color="blue-700" size="36">
@@ -18,7 +23,11 @@ export default function QuestBoard({ quests, onDeleteQuest }: QuestBoardProps) {
         <Heading as="h3" color="background" size="36">
           Quests for today:
         </Heading>
-        <QuestBoardItems quests={quests} onDeleteQuest={onDeleteQuest}/>
+        <QuestBoardItems
+          quests={quests}
+          onDeleteQuest={onDeleteQuest}
+          onQuestOrderChange={onQuestOrderChange}
+        />
       </div>
     </section>
   );

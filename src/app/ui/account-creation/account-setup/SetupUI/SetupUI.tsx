@@ -57,6 +57,32 @@ export default function SetupUI() {
     setQuests(updatedQuests);
     setNextQuestOrderNumber((prev) => prev - 1);
   };
+  const handleQuestOrderChange = (quest: Quest, direction: "up" | "down") => {
+    const index = quest.order;
+    const updatedQuests = [...quests];
+    if (direction === "up") {
+      if (index === 0) return; // Already at the top
+      // Swap with the quest above
+      [updatedQuests[index - 1], updatedQuests[index]] = [
+        updatedQuests[index],
+        updatedQuests[index - 1],
+      ];
+      // Update order numbers
+      updatedQuests[index - 1].order = index - 1;
+      updatedQuests[index].order = index;
+    } else {
+      if (index === quests.length - 1) return; // Already at the bottom
+      // Swap with the quest below
+      [updatedQuests[index + 1], updatedQuests[index]] = [
+        updatedQuests[index],
+        updatedQuests[index + 1],
+      ];
+      // Update order numbers
+      updatedQuests[index + 1].order = index + 1;
+      updatedQuests[index].order = index;
+    }
+    setQuests(updatedQuests);
+  };
 
   return (
     <Bounded innerClassName={styles.setupContainer}>
@@ -76,7 +102,11 @@ export default function SetupUI() {
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>
-      <QuestBoard quests={quests} onDeleteQuest={handleDeleteQuest}/>
+      <QuestBoard
+        quests={quests}
+        onDeleteQuest={handleDeleteQuest}
+        onQuestOrderChange={handleQuestOrderChange}
+      />
     </Bounded>
   );
 }
