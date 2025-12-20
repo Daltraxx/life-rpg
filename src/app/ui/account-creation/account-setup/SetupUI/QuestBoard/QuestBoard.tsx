@@ -20,7 +20,7 @@ export default function QuestBoard({
         Current Quest Board:
       </Heading>
       <div className={styles.questBoard}>
-        <Heading as="h3" color="background" size="36">
+        <Heading as="h3" color="background" size="30">
           Quests for today:
         </Heading>
         <QuestBoardItems
