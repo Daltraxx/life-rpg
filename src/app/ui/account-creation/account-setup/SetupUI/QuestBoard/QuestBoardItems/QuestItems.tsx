@@ -31,12 +31,14 @@ export default function QuestBoardItems({
               <ChevronUpButton
                 onClick={() => onQuestOrderChange(quest, "up")}
                 aria-label="Move quest up"
+                size={24}
               />
             )}
             {i < quests.length - 1 && (
               <ChevronDownButton
                 onClick={() => onQuestOrderChange(quest, "down")}
                 aria-label="Move quest down"
+                size={24}
               />
             )}
           </div>
