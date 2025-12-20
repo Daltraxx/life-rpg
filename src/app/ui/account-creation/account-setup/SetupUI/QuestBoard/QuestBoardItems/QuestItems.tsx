@@ -24,7 +24,7 @@ export default function QuestBoardItems({
   return (
     <div>
       {quests.map((quest, i) => (
-        <div key={quest.order}>
+        <div key={quest.name}>
           {/* QUEST ORDER TOGGLE BUTTONS */}
           <div className={styles.questOrderToggleButtons}>
             {i > 0 && (
