@@ -48,6 +48,15 @@ export default function SetupUI() {
     setQuests((prev) => [...prev, quest]);
     setNextQuestOrderNumber((prev) => prev + 1);
   };
+  const handleDeleteQuest = (quest: Quest) => {
+    const updatedQuests = quests.filter((q) => quest.name !== q.name);
+    const deletedQuestOrder = quest.order;
+    for (let i = deletedQuestOrder; i < updatedQuests.length; i++) {
+      updatedQuests[i].order -= 1;
+    }
+    setQuests(updatedQuests);
+    setNextQuestOrderNumber((prev) => prev - 1);
+  };
 
   return (
     <Bounded innerClassName={styles.setupContainer}>
@@ -67,7 +76,7 @@ export default function SetupUI() {
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>
-      <QuestBoard quests={quests} />
+      <QuestBoard quests={quests} onDeleteQuest={handleDeleteQuest}/>
     </Bounded>
   );
 }

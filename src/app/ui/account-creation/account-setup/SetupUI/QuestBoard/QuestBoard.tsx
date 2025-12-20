@@ -5,9 +5,10 @@ import QuestBoardItems from "./QuestBoardItems/QuestItems";
 
 export interface QuestBoardProps {
   quests: Quest[];
+  onDeleteQuest: (quest: Quest) => void;
 }
 
-export default function QuestBoard({ quests }: QuestBoardProps) {
+export default function QuestBoard({ quests, onDeleteQuest }: QuestBoardProps) {
   return (
     <section className={styles.container}>
       <Heading as="h2" color="blue-700" size="36">
