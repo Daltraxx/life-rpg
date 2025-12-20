@@ -1,6 +1,5 @@
-import React from "react";
+import React, { ComponentProps } from "react";
 import styles from "./styles.module.css";
-import { ComponentProps } from "react";
 import clsx from "clsx";
 import {
   fontSizeToTWMap,
