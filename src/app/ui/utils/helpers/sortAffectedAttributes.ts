@@ -9,17 +9,17 @@ const strengthPriority: Record<AttributeStrength, number> = {
 
 /**
  * Sorts an array of affected attributes by strength and name.
- * 
+ *
  * The sorting order prioritizes attributes by their strength in descending order:
  * 1. "plusPlus" - highest priority
  * 2. "plus" - medium priority
  * 3. "normal" - lowest priority
- * 
+ *
  * When two attributes have the same strength, they are sorted alphabetically by name.
- * 
+ *
  * @param affectedAttributes - The array of affected attributes to sort
  * @returns A new sorted array of affected attributes (does not modify the original array)
- * 
+ *
  * @example
  * ```typescript
  * const attributes = [
@@ -31,9 +31,12 @@ const strengthPriority: Record<AttributeStrength, number> = {
  * // Returns: [Agility (plusPlus), Intelligence (plus), Strength (normal)]
  * ```
  */
-export const sortAffectedAttributes = (affectedAttributes: AffectedAttribute[]) => {
+export const sortAffectedAttributes = (
+  affectedAttributes: AffectedAttribute[]
+): AffectedAttribute[] => {
   const sortedAttributes = affectedAttributes.toSorted((a, b) => {
-    const strengthDiff = strengthPriority[b.strength] - strengthPriority[a.strength];
+    const strengthDiff =
+      strengthPriority[b.strength] - strengthPriority[a.strength];
     if (strengthDiff !== 0) {
       return strengthDiff;
     }
