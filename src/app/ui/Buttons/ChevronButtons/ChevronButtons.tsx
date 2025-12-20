@@ -6,11 +6,12 @@ import { ComponentProps } from "react";
 
 interface ChevronButtonProps extends ComponentProps<"button"> {
   className?: string;
+  "aria-label": string;
 }
 
 export function ChevronUpButton({ className, ...props }: ChevronButtonProps) {
   return (
-    <button className={clsx(styles.button, className)} {...props}>
+    <button type="button" className={clsx(styles.button, className)} {...props}>
       <ChevronUpIcon />
     </button>
   );
@@ -18,7 +19,7 @@ export function ChevronUpButton({ className, ...props }: ChevronButtonProps) {
 
 export function ChevronDownButton({ className, ...props }: ChevronButtonProps) {
   return (
-    <button className={clsx(styles.button, className)} {...props}>
+    <button type="button" className={clsx(styles.button, className)} {...props}>
       <ChevronDownIcon />
     </button>
   );
