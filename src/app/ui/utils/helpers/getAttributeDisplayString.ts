@@ -23,5 +23,6 @@ export const getAttributeDisplayString = (
   attribute: AffectedAttribute
 ): string => {
   const { name, strength } = attribute;
+  // true = hide "normal" strength indicator
   return `${name}${getStrengthDisplay(strength, true)}`;
 };
