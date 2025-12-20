@@ -1,8 +1,12 @@
-export const ChevronUpIcon = () => (
+interface ChevronIconProps {
+  size?: number;
+}
+
+export const ChevronUpIcon = ({ size }: ChevronIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="15"
-    height="15"
+    width={size ?? 15}
+    height={size ?? 15}
     fill="none"
     viewBox="0 0 15 15"
     role="img"
@@ -17,11 +21,11 @@ export const ChevronUpIcon = () => (
   </svg>
 );
 
-export const ChevronDownIcon = () => (
+export const ChevronDownIcon = ({ size }: ChevronIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="15"
-    height="15"
+    width={size ?? 15}
+    height={size ?? 15}
     fill="none"
     viewBox="0 0 15 15"
     role="img"
