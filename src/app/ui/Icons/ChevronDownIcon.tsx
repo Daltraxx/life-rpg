@@ -5,6 +5,8 @@ const ChevronDownIcon = () => (
     height="15"
     fill="none"
     viewBox="0 0 15 15"
+    role="img"
+    aria-label="Chevron down"
   >
     <path
       fill="currentColor"
