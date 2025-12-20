@@ -1,6 +1,7 @@
 import { AffectedAttribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 
-const strengthPriority: Record<string, number> = {
+const strengthPriority: Record<AttributeStrength, number> = {
   plusPlus: 3,
   plus: 2,
   normal: 1,
