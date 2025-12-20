@@ -5,7 +5,6 @@ import ChevronDownIcon from "@/app/ui/Icons/ChevronDownIcon";
 import { ComponentProps } from "react";
 
 interface ChevronButtonProps extends ComponentProps<"button"> {
-  className?: string;
   "aria-label": string;
 }
 
