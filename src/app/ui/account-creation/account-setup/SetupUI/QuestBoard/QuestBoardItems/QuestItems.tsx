@@ -5,6 +5,10 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { sortAffectedAttributes } from "@/app/ui/utils/helpers/sortAffectedAttributes";
 import { getAttributeDisplayString } from "@/app/ui/utils/helpers/getAttributeDisplayString";
+import {
+  ChevronUpButton,
+  ChevronDownButton,
+} from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
 
 interface QuestBoardItemsProps {
   quests: Quest[];
@@ -13,8 +17,13 @@ interface QuestBoardItemsProps {
 export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
   return (
     <div>
-      {quests.map((quest) => (
+      {quests.map((quest, i) => (
         <div key={quest.order}>
+          {/* QUEST ORDER TOGGLE BUTTONS */}
+          <div>
+            {i > 0 && <ChevronUpButton />}
+            {i < quests.length - 1 && <ChevronDownButton />}
+          </div>
           <Heading as="h4" color="background">
             {quest.name}
           </Heading>
