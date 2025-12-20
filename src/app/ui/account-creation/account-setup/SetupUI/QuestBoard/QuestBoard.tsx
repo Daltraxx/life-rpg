@@ -18,7 +18,7 @@ export default function QuestBoard({ quests, onDeleteQuest }: QuestBoardProps) {
         <Heading as="h3" color="background" size="36">
           Quests for today:
         </Heading>
-        <QuestBoardItems quests={quests} />
+        <QuestBoardItems quests={quests} onDeleteQuest={onDeleteQuest}/>
       </div>
     </section>
   );

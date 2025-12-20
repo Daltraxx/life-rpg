@@ -12,9 +12,10 @@ import {
 
 interface QuestBoardItemsProps {
   quests: Quest[];
+  onDeleteQuest: (quest: Quest) => void;
 }
 
-export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
+export default function QuestBoardItems({ quests, onDeleteQuest }: QuestBoardItemsProps) {
   return (
     <div>
       {quests.map((quest, i) => (
@@ -49,9 +50,11 @@ export default function QuestBoardItems({ quests }: QuestBoardItemsProps) {
             <div>{/* Exp toggle buttons */}</div>
           </div>
           {/* DELETE BUTTON */}
+          {/* TODO: Make screen shrinkage after deleting quest smoother? */}
           <ButtonWrapper
             className={styles.deleteQuestButton}
             color="background"
+            onClick={() => onDeleteQuest(quest)}
           >
             DELETE QUEST
           </ButtonWrapper>
