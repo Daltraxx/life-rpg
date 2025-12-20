@@ -9,10 +9,10 @@
 }
 
 .button:hover {
-  background-color: var(--gold-400, #66666e);
+  background-color: var(--gold-400, #ffb800);
 }
 .button:active {
-  background-color: var(--gold-600, #57340f);
+  background-color: var(--gold-600, #d89b00);
 }
 
 .button path {
