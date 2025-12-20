@@ -10,6 +10,13 @@
   border-radius: var(--border-radius-sm, 4px);
 }
 
+.button:hover {
+  background-color: var(--gold-400, #66666e);
+}
+.button:active {
+  background-color: var(--gold-600, #57340f);
+}
+
 .button svg {
   height: 100%;
   width: 100%;
