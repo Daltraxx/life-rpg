@@ -5,7 +5,7 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { sortAffectedAttributes } from "@/app/ui/utils/helpers/sortAffectedAttributes";
 import { getAttributeDisplayString } from "@/app/ui/utils/helpers/getAttributeDisplayString";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   ChevronUpButton,
   ChevronDownButton,
@@ -34,21 +34,26 @@ function QuestItem({
   onQuestOrderChange,
 }: QuestItemProps) {
   const [isRemoving, setIsRemoving] = useState(false);
-  const questItemRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleDeleteClick = () => {
     setIsRemoving(true);
     // Wait for animation to complete before calling onDeleteQuest
-    setTimeout(() => {
+    timeoutRef.current = setTimeout(() => {
       onDeleteQuest(quest);
     }, 300); // Match CSS transition duration
   };
 
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
-    <div
-      ref={questItemRef}
-      className={clsx(styles.questItem, isRemoving && styles.removing)}
-    >
+    <div className={clsx(styles.questItem, isRemoving && styles.removing)}>
       {/* QUEST ORDER TOGGLE BUTTONS */}
       <div className={styles.questOrderToggleButtons}>
         {index > 0 && (
