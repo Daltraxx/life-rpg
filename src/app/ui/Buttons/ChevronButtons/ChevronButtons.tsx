@@ -20,7 +20,7 @@ interface ChevronButtonProps extends ComponentProps<"button"> {
  * 
  * @example
  * ```tsx
- * <ChevronUpButton size={32} onClick={handleClick} />
+ * <ChevronUpButton size={32} onClick={handleClick} aria-label="Scroll up" />
  * ```
  */
 export function ChevronUpButton({
@@ -52,7 +52,7 @@ export function ChevronUpButton({
  * 
  * @example
  * ```tsx
- * <ChevronDownButton size={32} onClick={handleClick} />
+ * <ChevronDownButton size={32} onClick={handleClick} aria-label="Scroll down" />
  * ```
  */
 export function ChevronDownButton({
