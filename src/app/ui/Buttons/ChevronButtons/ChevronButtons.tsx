@@ -11,25 +11,31 @@ interface ChevronButtonProps extends ComponentProps<"button"> {
 }
 
 /**
- * A button component that displays an upward-pointing chevron icon.
+ * A button component that renders with a chevron icon.
  *
  * @param props - The button properties
- * @param props.className - Additional CSS class names to apply to the button
- * @param props.size - The width and height dimensions for the button and icon (icon will be 90% of button size)
- * @param props....props - Additional HTML button attributes
+ * @param props.className - Optional CSS class name to apply to the button
+ * @param props.size - Optional size in pixels for both width and height of the button
+ * @param props.icon - A React functional component that accepts a size prop and renders an icon
+ * @param props....props - Additional HTML button attributes from ChevronButtonProps
  *
- * @returns A button element containing a ChevronUpIcon
+ * @returns A styled button element containing the specified icon, scaled proportionally to the button size
  *
  * @example
  * ```tsx
- * <ChevronUpButton size={32} onClick={handleClick} aria-label="Scroll up" />
+ * <ChevronButton
+ *   icon={ChevronLeftIcon}
+ *   size={48}
+ *   onClick={handleClick}
+ * />
  * ```
  */
-export function ChevronUpButton({
+function ChevronButton({
   className,
   size,
+  icon: Icon,
   ...props
-}: ChevronButtonProps) {
+}: ChevronButtonProps & { icon: React.FC<{ size?: number }> }) {
   return (
     <button
       type="button"
@@ -37,39 +43,51 @@ export function ChevronUpButton({
       style={{ width: size, height: size }}
       {...props}
     >
-      <ChevronUpIcon size={size ? size * ICON_SIZE_RATIO : undefined} />
+      <Icon size={size ? size * ICON_SIZE_RATIO : undefined} />
     </button>
   );
 }
 
 /**
- * A button component that displays a downward-pointing chevron icon.
+ * A button component that displays an upward-pointing chevron icon.
  *
- * @param props - The button properties
- * @param props.className - Optional CSS class name(s) to apply to the button
- * @param props.size - Optional size (in pixels) for both width and height of the button. The chevron icon will be 90% of this size
+ * @param props - The chevron button properties
+ * @param props.size - Optional size in pixels for both width and height of the button. Icon scales proportionally.
+ * @param props["aria-label"] - Accessible label for screen readers (required)
  * @param props....props - Additional HTML button attributes
- *
- * @returns A button element containing a chevron down icon
+ * @returns A ChevronButton component configured with an upward chevron icon
  *
  * @example
  * ```tsx
- * <ChevronDownButton size={32} onClick={handleClick} aria-label="Scroll down" />
+ * <ChevronUpButton
+ *   aria-label="Scroll up"
+ *   size={48}
+ *   onClick={() => console.log('Up clicked')}
+ * />
  * ```
  */
-export function ChevronDownButton({
-  className,
-  size,
-  ...props
-}: ChevronButtonProps) {
-  return (
-    <button
-      type="button"
-      className={clsx(styles.button, className)}
-      style={{ width: size, height: size }}
-      {...props}
-    >
-      <ChevronDownIcon size={size ? size * ICON_SIZE_RATIO : undefined} />
-    </button>
-  );
+export function ChevronUpButton(props: ChevronButtonProps) {
+  return <ChevronButton icon={ChevronUpIcon} {...props} />;
+}
+
+/**
+ * A button component that displays an downward-pointing chevron icon.
+ *
+ * @param props - The chevron button properties
+ * @param props.size - Optional size in pixels for both width and height of the button. Icon scales proportionally.
+ * @param props["aria-label"] - Accessible label for screen readers (required)
+ * @param props....props - Additional HTML button attributes
+ * @returns A ChevronButton component configured with a downward chevron icon
+ *
+ * @example
+ * ```tsx
+ * <ChevronDownButton
+ *   aria-label="Scroll down"
+ *   size={48}
+ *   onClick={() => console.log('Down clicked')}
+ * />
+ * ```
+ */
+export function ChevronDownButton(props: ChevronButtonProps) {
+  return <ChevronButton icon={ChevronDownIcon} {...props} />;
 }
