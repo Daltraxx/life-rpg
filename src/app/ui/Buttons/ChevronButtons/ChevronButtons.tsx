@@ -24,7 +24,7 @@ interface ChevronButtonProps extends ComponentProps<"button"> {
  * @example
  * ```tsx
  * <ChevronButton
- *   icon={ChevronLeftIcon}
+ *   icon={ChevronUpIcon}
  *   size={48}
  *   onClick={handleClick}
  * />
