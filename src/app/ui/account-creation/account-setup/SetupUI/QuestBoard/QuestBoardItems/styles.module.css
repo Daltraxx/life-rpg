@@ -1,11 +1,10 @@
-
 /* DELETE TRANSITION STYLES */
 .questItem {
   overflow: hidden;
-  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out,
-    margin 0.3s ease-in-out, padding 0.3s ease-in-out;
-  max-height: var(--item-height); /* Adjust based on content height, perhaps set with JS */
+  max-height: var(--item-height);
   opacity: 1;
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out,
+    padding 0.3s ease-in-out;
 }
 
 .questItem.removing {
