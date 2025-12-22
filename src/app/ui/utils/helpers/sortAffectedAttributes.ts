@@ -34,7 +34,7 @@ const strengthPriority: Record<AttributeStrength, number> = {
 export const sortAffectedAttributes = (
   affectedAttributes: AffectedAttribute[]
 ): AffectedAttribute[] => {
-  const sortedAttributes = affectedAttributes.toSorted((a, b) => {
+  return affectedAttributes.toSorted((a, b) => {
     const strengthDiff =
       strengthPriority[b.strength] - strengthPriority[a.strength];
     if (strengthDiff !== 0) {
@@ -42,5 +42,4 @@ export const sortAffectedAttributes = (
     }
     return a.name.localeCompare(b.name);
   });
-  return sortedAttributes;
 };
