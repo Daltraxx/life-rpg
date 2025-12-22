@@ -24,6 +24,7 @@ const NORMAL_STRENGTH: AttributeStrength = "normal";
  * Converts an AttributeStrength value to its display string.
  * @param strength - The attribute strength to display
  * @param hideNormal - If true, returns empty string for normal strength
+ * @returns The display string for the given strength, or empty string if hideNormal is true and strength is normal
  */
 export function getStrengthDisplay(
   strength: AttributeStrength,
