@@ -14,10 +14,9 @@ import { useCallback } from "react";
  *
  * @example
  * const setHeight = useSetElementHeight(10);
- * const ref = useRef<HTMLDivElement>(null);
- * useEffect(() => {
- *   setHeight(ref.current);
- * }, [ref]);
+ * return (
+ * <div ref={setHeight}>Content</div>
+ * );
  */
 export default function useSetElementHeight(adjustmentAllowance = 0) {
   return useCallback((element: HTMLElement | null) => {
