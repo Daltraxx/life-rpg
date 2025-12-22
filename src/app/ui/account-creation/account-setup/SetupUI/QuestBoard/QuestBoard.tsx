@@ -1,7 +1,7 @@
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import QuestBoardItems from "./QuestBoardItems/QuestItems";
+import QuestBoardItems from "./QuestBoardItems/QuestBoardItems";
 
 export interface QuestBoardProps {
   quests: Quest[];
