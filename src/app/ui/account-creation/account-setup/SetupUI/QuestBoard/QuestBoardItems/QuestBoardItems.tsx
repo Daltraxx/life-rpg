@@ -123,6 +123,11 @@ export default function QuestBoardItems({
 }: QuestBoardItemsProps) {
   return (
     <div>
+      {quests.length === 0 && (
+        <Paragraph size="30" color="background">
+          Time to add some quests!
+        </Paragraph>
+      )}
       {quests.map((quest, i) => (
         <QuestItem
           key={quest.name}
