@@ -13,8 +13,8 @@ import {
 import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 
-// Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
-const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50;
+const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50; // Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
+const DELETE_ANIMATION_DURATION_MS = 300; // Match CSS transition duration
 
 interface QuestItemProps {
   quest: Quest;
@@ -39,7 +39,7 @@ function QuestItem({
     // Wait for animation to complete before calling onDeleteQuest
     timeoutRef.current = setTimeout(() => {
       onDeleteQuest(quest);
-    }, 300); // Match CSS transition duration
+    }, DELETE_ANIMATION_DURATION_MS);
   };
 
   useEffect(() => {
