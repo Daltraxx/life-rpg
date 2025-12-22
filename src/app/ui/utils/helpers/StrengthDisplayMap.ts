@@ -1,13 +1,12 @@
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 
-
 /**
  * Maps attribute strength values to their display string representations.
- * 
+ *
  * @remarks
  * This map provides a convenient way to convert AttributeStrength enum values
  * into user-friendly display strings for the UI.
- * 
+ *
  * @example
  * ```ts
  * const displayText = strengthDisplayMap['plus']; // Returns "+"
@@ -19,6 +18,8 @@ export const strengthDisplayMap: Record<AttributeStrength, string> = {
   plusPlus: "++",
 };
 
+const NORMAL_STRENGTH: AttributeStrength = "normal";
+
 /**
  * Converts an AttributeStrength value to its display string.
  * @param strength - The attribute strength to display
@@ -29,5 +30,5 @@ export function getStrengthDisplay(
   hideNormal: boolean = false
 ): string {
   const display = strengthDisplayMap[strength];
-  return hideNormal && strength === 'normal' ? '' : display;
+  return hideNormal && strength === NORMAL_STRENGTH ? "" : display;
 }
