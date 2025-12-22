@@ -59,7 +59,7 @@ function QuestItem({
       ref={setItemHeight}
     >
       {/* QUEST ORDER TOGGLE BUTTONS */}
-      <div className={styles.questOrderToggleButtons}>
+      <div className={clsx(styles.questOrderToggleButtons, totalQuests <= 1 && styles.hidden)}>
         {index > 0 && (
           <ChevronUpButton
             onClick={() => onQuestOrderChange(quest, "up")}

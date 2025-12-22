@@ -1,3 +1,7 @@
+.hidden {
+  display: none;
+}
+
 /* DELETE TRANSITION STYLES */
 .questItem {
   overflow: hidden;
