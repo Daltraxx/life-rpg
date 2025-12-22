@@ -11,9 +11,7 @@
 .questItem.removing {
   max-height: 0;
   opacity: 0;
-  margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+  padding: 0;
 }
 
 .deleteQuestButton:disabled {
