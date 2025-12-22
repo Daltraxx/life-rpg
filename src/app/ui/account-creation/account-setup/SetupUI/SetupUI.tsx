@@ -49,7 +49,9 @@ export default function SetupUI() {
     setNextQuestOrderNumber((prev) => prev + 1);
   };
   const handleDeleteQuest = (quest: Quest) => {
-    const updatedQuests = quests.filter((q) => quest.name !== q.name);
+    const updatedQuests = structuredClone(quests).filter(
+      (q) => quest.name !== q.name
+    );
     const deletedQuestOrder = quest.order;
     for (let i = deletedQuestOrder; i < updatedQuests.length; i++) {
       updatedQuests[i].order -= 1;
