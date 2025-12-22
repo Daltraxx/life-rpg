@@ -14,7 +14,7 @@ import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 
 const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50; // Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
-const DELETE_ANIMATION_DURATION_MS = 300; // Match CSS transition duration
+const DELETE_ANIMATION_DURATION_MS = 500; // Match CSS transition duration
 
 interface QuestItemProps {
   quest: Quest;
