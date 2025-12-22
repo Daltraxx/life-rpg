@@ -13,11 +13,8 @@ import {
 import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 
-interface QuestBoardItemsProps {
-  quests: Quest[];
-  onDeleteQuest: (quest: Quest) => void;
-  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
-}
+// Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
+const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50;
 
 interface QuestItemProps {
   quest: Quest;
@@ -54,7 +51,7 @@ function QuestItem({
   }, []);
 
   // Set CSS variable for item height for animation purposes on deletion
-  const setItemHeight = useSetElementHeight();
+  const setItemHeight = useSetElementHeight(ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE);
 
   return (
     <div
@@ -113,6 +110,12 @@ function QuestItem({
       </ButtonWrapper>
     </div>
   );
+}
+
+interface QuestBoardItemsProps {
+  quests: Quest[];
+  onDeleteQuest: (quest: Quest) => void;
+  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
 }
 
 export default function QuestBoardItems({
