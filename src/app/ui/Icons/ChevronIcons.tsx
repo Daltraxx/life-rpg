@@ -1,4 +1,4 @@
-interface ChevronIconProps {
+export interface ChevronIconProps {
   size?: number;
 }
 
