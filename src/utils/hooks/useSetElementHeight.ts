@@ -14,15 +14,16 @@ import { useCallback } from "react";
  *
  * @example
  * const setHeight = useSetElementHeight(10);
- * return (
- * <div ref={setHeight}>Content</div>
- * );
+ * const ref = useRef<HTMLDivElement>(null);
+ * useEffect(() => {
+ *   setHeight(ref.current);
+ * }, [ref]);
  */
 export default function useSetElementHeight(adjustmentAllowance = 0) {
   return useCallback((element: HTMLElement | null) => {
     if (element) {
       const height = element.offsetHeight;
       element.style.setProperty("--item-height", `${height + adjustmentAllowance}px`);
-    }
+  }, [adjustmentAllowance]);
   }, []);
 }
