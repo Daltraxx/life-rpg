@@ -61,7 +61,7 @@ export default function SetupUI() {
   };
   const handleQuestOrderChange = (quest: Quest, direction: "up" | "down") => {
     const index = quest.order;
-    const updatedQuests = [...quests];
+    const updatedQuests = structuredClone(quests);
     if (direction === "up") {
       if (index === 0) return; // Already at the top
       // Swap with the quest above
