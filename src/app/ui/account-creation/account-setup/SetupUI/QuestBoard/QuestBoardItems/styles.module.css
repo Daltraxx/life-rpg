@@ -2,9 +2,9 @@
 /* DELETE TRANSITION STYLES */
 .questItem {
   overflow: hidden;
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out,
-    margin 0.3s ease-out, padding 0.3s ease-out;
-  max-height: 1000px; /* Adjust based on content height, perhaps set with JS */
+  transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out,
+    margin 0.3s ease-in-out, padding 0.3s ease-in-out;
+  max-height: var(--item-height); /* Adjust based on content height, perhaps set with JS */
   opacity: 1;
   margin-bottom: 1rem;
 }

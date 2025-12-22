@@ -35,6 +35,7 @@ function QuestItem({
 }: QuestItemProps) {
   const [isRemoving, setIsRemoving] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const itemRef = useRef<HTMLDivElement>(null);
 
   const handleDeleteClick = () => {
     setIsRemoving(true);
@@ -52,8 +53,19 @@ function QuestItem({
     };
   }, []);
 
+  // Set CSS variable for item height for animation purposes on deletion
+  useEffect(() => {
+    if (itemRef.current) {
+      const height = itemRef.current.offsetHeight;
+      itemRef.current.style.setProperty("--item-height", `${height}px`);
+    }
+  }, [itemRef.current]);
+
   return (
-    <div className={clsx(styles.questItem, isRemoving && styles.removing)}>
+    <div
+      className={clsx(styles.questItem, isRemoving && styles.removing)}
+      ref={itemRef}
+    >
       {/* QUEST ORDER TOGGLE BUTTONS */}
       <div className={styles.questOrderToggleButtons}>
         {index > 0 && (
