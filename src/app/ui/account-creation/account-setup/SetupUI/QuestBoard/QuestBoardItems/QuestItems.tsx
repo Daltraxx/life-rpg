@@ -11,6 +11,7 @@ import {
   ChevronDownButton,
 } from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
 import clsx from "clsx";
+import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 
 interface QuestBoardItemsProps {
   quests: Quest[];
@@ -54,12 +55,7 @@ function QuestItem({
   }, []);
 
   // Set CSS variable for item height for animation purposes on deletion
-  useEffect(() => {
-    if (itemRef.current) {
-      const height = itemRef.current.offsetHeight;
-      itemRef.current.style.setProperty("--item-height", `${height}px`);
-    }
-  }, [itemRef.current]);
+  useSetElementHeight(itemRef);
 
   return (
     <div
