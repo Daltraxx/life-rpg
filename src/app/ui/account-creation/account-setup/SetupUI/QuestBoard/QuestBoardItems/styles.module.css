@@ -6,7 +6,6 @@
     margin 0.3s ease-in-out, padding 0.3s ease-in-out;
   max-height: var(--item-height); /* Adjust based on content height, perhaps set with JS */
   opacity: 1;
-  margin-bottom: 1rem;
 }
 
 .questItem.removing {
