@@ -71,7 +71,7 @@ export function ChevronUpButton(props: ChevronButtonProps) {
 }
 
 /**
- * A button component that displays an downward-pointing chevron icon.
+ * A button component that displays a downward-pointing chevron icon.
  *
  * @param props - The chevron button properties
  * @param props.size - Optional size in pixels for both width and height of the button. Icon scales proportionally.
