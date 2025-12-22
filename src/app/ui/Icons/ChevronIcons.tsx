@@ -4,21 +4,21 @@ export interface ChevronIconProps {
 
 /**
  * ChevronUpIcon component renders an upward-pointing chevron SVG icon.
- * 
+ *
  * @param props - The component props
  * @param props.size - Optional size for the icon's width and height. Defaults to 15 if not provided.
  * @returns A TSX element containing an SVG chevron pointing upward
- * 
+ *
  * @example
  * ```tsx
  * <ChevronUpIcon size={20} />
  * ```
  */
-export const ChevronUpIcon = ({ size }: ChevronIconProps) => (
+export const ChevronUpIcon = ({ size = 15 }: ChevronIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={size ?? 15}
-    height={size ?? 15}
+    width={size}
+    height={size}
     fill="none"
     viewBox="0 0 15 15"
     role="img"
@@ -35,12 +35,12 @@ export const ChevronUpIcon = ({ size }: ChevronIconProps) => (
 
 /**
  * A chevron down icon component.
- * 
+ *
  * @param props - The component props
  * @param props.size - Optional size for the icon's width and height. Defaults to 15 if not provided.
- * 
+ *
  * @returns A React SVG element representing a downward-pointing chevron icon
- * 
+ *
  * @example
  * ```tsx
  * <ChevronDownIcon size={20} />
