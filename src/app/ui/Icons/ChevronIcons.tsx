@@ -46,11 +46,11 @@ export const ChevronUpIcon = ({ size = 15 }: ChevronIconProps) => (
  * <ChevronDownIcon size={20} />
  * ```
  */
-export const ChevronDownIcon = ({ size }: ChevronIconProps) => (
+export const ChevronDownIcon = ({ size = 15 }: ChevronIconProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={size ?? 15}
-    height={size ?? 15}
+    width={size}
+    height={size}
     fill="none"
     viewBox="0 0 15 15"
     role="img"
