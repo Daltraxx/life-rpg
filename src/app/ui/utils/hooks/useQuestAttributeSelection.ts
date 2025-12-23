@@ -84,13 +84,6 @@ const useQuestAttributeSelection = (
     [noAvailableAttributesText]
   );
 
-  const handleSetAttributeStrength = useCallback(
-    (strength: AttributeStrength) => {
-      setCurrentAttributeStrength(strength);
-    },
-    []
-  );
-
   // Effect to sync available and selected attributes when user adds/removes attributes
   useEffect(() => {
     // Update available attributes when user adds or removes attributes
@@ -202,7 +195,7 @@ const useQuestAttributeSelection = (
     selectedAttributes,
     actions: {
       setCurrentAttributeName,
-      setAttributeStrength: handleSetAttributeStrength,
+      setAttributeStrength: setCurrentAttributeStrength,
       addAffectedAttribute: handleAddAffectedAttribute,
       deleteAffectedAttribute: handleDeleteAffectedAttribute,
       resetAttributeSelectionUI: handleResetAttributeSelectionUI,
