@@ -120,9 +120,12 @@ export default function QuestItem({
         <Paragraph size="20" color="background">
           Experience Gained: {0}
         </Paragraph>
-        <div>{/* Exp toggle buttons */}</div>
+        <div>
+          <ChevronUpButton aria-label="Increase experience" size={20} />
+          <ChevronDownButton aria-label="Decrease experience" size={20} />
+        </div>
       </div>
-      
+
       {/* DELETE BUTTON */}
       <ButtonWrapper
         className={styles.deleteQuestButton}
