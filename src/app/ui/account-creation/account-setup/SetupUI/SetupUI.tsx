@@ -86,7 +86,7 @@ export default function SetupUI() {
     setQuests(updatedQuests);
   };
 
-  const handleExperiencePointsChange = (
+  const handleExperiencePointValueChange = (
     quest: Quest,
     direction: "up" | "down"
   ) => {
