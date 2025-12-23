@@ -98,5 +98,11 @@ export function createQuest(
   if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
   }
+  if (!Number.isFinite(experiencePointValue)) {
+    throw new Error("Experience point value must be a finite number");
+  }
+  if (experiencePointValue < 0) {
+    throw new Error("Experience point value cannot be negative");
+  }
   return { name, affectedAttributes, experiencePointValue, order };
 }
