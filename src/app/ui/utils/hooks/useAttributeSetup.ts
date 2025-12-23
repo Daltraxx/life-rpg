@@ -22,7 +22,7 @@ interface UseAttributeSetupReturn {
 
 /**
  * Hook for managing attribute setup state and operations.
- * 
+ *
  * @param initialAttributes - The initial array of attributes to set up
  * @returns {UseAttributeSetupReturn}An object containing:
  *   - availableAttributes: The current list of available attributes
@@ -30,7 +30,7 @@ interface UseAttributeSetupReturn {
  *   - actions: An object with methods to manipulate attributes:
  *     - addAttribute: Adds a new attribute to the available attributes list
  *     - deleteAttribute: Removes an attribute and reorders remaining attributes
- * 
+ *
  * @example
  * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeSetup(initialAttrs);
  * actions.addAttribute(newAttribute);
@@ -50,13 +50,15 @@ export default function useAttributeSetup(
   };
 
   const handleDeleteAttribute = (attribute: Attribute) => {
-    const updatedAttributes = availableAttributes.filter(
-      (attr) => attribute.name !== attr.name
-    );
-    for (let i = attribute.order; i < updatedAttributes.length; i++) {
-      updatedAttributes[i].order -= 1;
-    }
-    setAvailableAttributes(updatedAttributes);
+    setAvailableAttributes((prev) => {
+      const updatedAttributes = prev.filter(
+        (attr) => attribute.name !== attr.name
+      );
+      for (let i = attribute.order; i < updatedAttributes.length; i++) {
+        updatedAttributes[i].order -= 1;
+      }
+      return updatedAttributes;
+    });
     setNextAttributeOrderNumber((prev) => prev - 1);
   };
 
