@@ -70,6 +70,7 @@ export default function QuestItem({
     }
   }, [setItemHeight, setCSSProperty]);
 
+  // TODO: Allow user to hold down experience buttons for continuous increment/decrement
   return (
     <div
       className={clsx(styles.questItem, isRemoving && styles.removing)}
