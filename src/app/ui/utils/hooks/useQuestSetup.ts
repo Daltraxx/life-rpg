@@ -63,9 +63,7 @@ export default function useQuestSetup(): UseQuestSetupReturn {
   };
   const handleDeleteQuest = (quest: Quest) => {
     setQuests((prev) => {
-      const updatedQuests = prev.filter(
-        (q) => quest.name !== q.name
-      );
+      const updatedQuests = prev.filter((q) => quest.name !== q.name);
       const deletedQuestOrder = quest.order;
       for (let i = deletedQuestOrder; i < updatedQuests.length; i++) {
         updatedQuests[i].order -= 1;
@@ -77,29 +75,27 @@ export default function useQuestSetup(): UseQuestSetupReturn {
 
   const handleQuestOrderChange = (quest: Quest, direction: "up" | "down") => {
     const index = quest.order;
-    const updatedQuests = structuredClone(quests);
     if (direction === "up") {
       if (index === 0) return; // Already at the top
-      // Swap with the quest above
-      [updatedQuests[index - 1], updatedQuests[index]] = [
-        updatedQuests[index],
-        updatedQuests[index - 1],
-      ];
-      // Update order numbers
-      updatedQuests[index - 1].order = index - 1;
-      updatedQuests[index].order = index;
+      setQuests((prev) => {
+        // Swap with the quest above
+        [prev[index - 1], prev[index]] = [prev[index], prev[index - 1]];
+        // Update order numbers
+        prev[index - 1].order = index - 1;
+        prev[index].order = index;
+        return prev;
+      });
     } else {
       if (index === quests.length - 1) return; // Already at the bottom
-      // Swap with the quest below
-      [updatedQuests[index + 1], updatedQuests[index]] = [
-        updatedQuests[index],
-        updatedQuests[index + 1],
-      ];
-      // Update order numbers
-      updatedQuests[index + 1].order = index + 1;
-      updatedQuests[index].order = index;
+      setQuests((prev) => {
+        // Swap with the quest below
+        [prev[index + 1], prev[index]] = [prev[index], prev[index + 1]];
+        // Update order numbers
+        prev[index + 1].order = index + 1;
+        prev[index].order = index;
+        return prev;
+      });
     }
-    setQuests(updatedQuests);
   };
 
   const handleExperiencePointValueChange = (
