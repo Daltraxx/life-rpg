@@ -10,7 +10,7 @@ import { useCallback } from "react";
  * // As a ref callback (recommended):
  * const setMyColor = useSetCSSProperty('--my-color', '#ff0000');
  * return <div ref={setMyColor}>Content</div>;
- * 
+ *
  * // With useEffect:
  * const setMyColor = useSetCSSProperty('--my-color', '#ff0000');
  * useEffect(() => {
@@ -18,10 +18,16 @@ import { useCallback } from "react";
  * }, [setMyColor]);
  * ```
  */
-export default function useSetCSSProperty(propertyName: string, value: string) {
-  return useCallback((element: HTMLElement | null) => {
-    if (element) {
-      element.style.setProperty(propertyName, value);
-    }
-  }, [propertyName, value]);
+export default function useSetCSSProperty(
+  propertyName: string,
+  value: string
+): (element: HTMLElement | null) => void {
+  return useCallback(
+    (element: HTMLElement | null) => {
+      if (element) {
+        element.style.setProperty(propertyName, value);
+      }
+    },
+    [propertyName, value]
+  );
 }
