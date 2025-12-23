@@ -17,6 +17,9 @@ import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50; // Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
 const DELETE_ANIMATION_DURATION_MS = 500; // Match CSS transition duration
 
+const MIN_EXPERIENCE_POINTS = 0;
+const MAX_EXPERIENCE_POINTS = 100;
+
 interface QuestItemProps {
   quest: Quest;
   index: number;
@@ -131,13 +134,13 @@ export default function QuestItem({
             aria-label="Increase experience"
             size={20}
             onClick={() => onExperiencePointValueChange(quest, "up")}
-            disabled={quest.experiencePointValue === 100}
+            disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
           />
           <ChevronDownButton
             aria-label="Decrease experience"
             size={20}
             onClick={() => onExperiencePointValueChange(quest, "down")}
-            disabled={quest.experiencePointValue === 0}
+            disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
           />
         </div>
       </div>
