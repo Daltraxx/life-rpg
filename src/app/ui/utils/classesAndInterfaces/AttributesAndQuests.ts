@@ -75,7 +75,7 @@ export function createAffectedAttribute(
 export interface Quest {
   name: string;
   affectedAttributes: AffectedAttribute[];
-  experiencePoints: number;
+  experiencePointValue: number;
   order: number;
 }
 
@@ -84,7 +84,7 @@ export interface Quest {
  *
  * @param name - The name of the quest. It must not be empty or consist only of whitespace.
  * @param affectedAttributes - An array of attributes that are affected by the quest.
- * @param experiencePoints - The experience points awarded for completing the quest. Defaults to 0.
+ * @param experiencePointValue - The experience points awarded for completing the quest. Defaults to 0.
  * @param order - Number determining where quest appears in a list.
  * @throws {Error} Throws an error if the quest name is empty or only whitespace.
  * @returns A Quest object containing the name and affected attributes.
@@ -92,11 +92,11 @@ export interface Quest {
 export function createQuest(
   name: string,
   affectedAttributes: AffectedAttribute[],
-  experiencePoints: number = 0,
+  experiencePointValue: number = 0,
   order: number
 ): Quest {
   if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
   }
-  return { name, affectedAttributes, experiencePoints, order };
+  return { name, affectedAttributes, experiencePointValue, order };
 }
