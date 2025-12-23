@@ -70,7 +70,7 @@ export function createAffectedAttribute(
  * @property {string} name - The name or title of the quest.
  * @property {AffectedAttribute[]} affectedAttributes - An array of attributes that are affected by completing this quest.
  * @property {number} order - The sequence or priority order of the quest, used for sorting or determining quest progression.
- * @property {number} experiencePoints - The amount of experience points awarded for completing the quest.
+ * @property {number} experiencePointValue - The amount of experience points awarded for completing the quest.
  */
 export interface Quest {
   name: string;
