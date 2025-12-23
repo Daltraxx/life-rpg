@@ -2,13 +2,13 @@
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import type { UseQuestAttributeSelectionReturn } from "@/utils/hooks/useQuestAttributeSelection";
+import type { UseQuestAttributeSelectionReturn } from "@/app/ui/utils/hooks/useQuestAttributeSelection";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
 
 /**
  * Props for the AddAffectedAttributeUI component.
- * 
+ *
  * @interface AddAffectedAttributeUIProps
  * @property {UseQuestAttributeSelectionReturn} attributeSelection - The attribute selection hook return object containing methods and state for managing quest attribute selection.
  * @property {string} noAvailableAttributesText - The text to display when there are no available attributes to select.
@@ -20,15 +20,15 @@ export interface AddAffectedAttributeUIProps {
 
 /**
  * A component that provides UI for adding affected attributes to a quest.
- * 
+ *
  * Displays a fieldset containing dropdown menus for selecting an attribute and its strength,
  * along with an "ADD" button to add the selected attribute to the quest. The button is disabled
  * when no attributes are available for selection.
- * 
+ *
  * @param props - The component props
  * @param props.attributeSelection - Object containing available attributes, current selections, and actions
  * @param props.noAvailableAttributesText - Text displayed when no attributes are available for selection
- * 
+ *
  * @returns A fieldset component with attribute selection UI
  */
 export default function AddAffectedAttributeUI({

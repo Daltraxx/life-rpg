@@ -9,8 +9,8 @@ import {
   ChevronDownButton,
 } from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
 import clsx from "clsx";
-import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
-import useSetCSSProperty from "@/utils/hooks/useSetCSSProperty";
+import useSetElementHeight from "@/app/ui/utils/hooks/useSetElementHeight";
+import useSetCSSProperty from "@/app/ui/utils/hooks/useSetCSSProperty";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
