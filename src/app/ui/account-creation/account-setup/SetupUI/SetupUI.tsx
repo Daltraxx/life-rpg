@@ -44,6 +44,7 @@ export default function SetupUI() {
   // Manage quests state
   const [quests, setQuests] = useState<Quest[]>([]);
   const [nextQuestOrderNumber, setNextQuestOrderNumber] = useState<number>(0);
+  const [pointsRemaining, setPointsRemaining] = useState<number>(100);
   const handleAddQuest = (quest: Quest) => {
     setQuests((prev) => [...prev, quest]);
     setNextQuestOrderNumber((prev) => prev + 1);
@@ -95,18 +96,21 @@ export default function SetupUI() {
     const questToUpdate = updatedQuests[quest.order];
     if (direction === "up") {
       // Max experience points is 100
-      questToUpdate.experiencePointValue = Math.min(
-        100,
-        questToUpdate.experiencePointValue + 1
-      );
+      if (pointsRemaining <= 0 || questToUpdate.experiencePointValue >= 100)
+        return;
+      questToUpdate.experiencePointValue =
+        questToUpdate.experiencePointValue + 1;
+      setPointsRemaining((prev) => prev - 1);
     } else {
       // Min experience points is 0
-      questToUpdate.experiencePointValue = Math.max(
-        0,
-        questToUpdate.experiencePointValue - 1
-      );
+      if (pointsRemaining >= 100 || questToUpdate.experiencePointValue <= 0)
+        return;
+      questToUpdate.experiencePointValue =
+        questToUpdate.experiencePointValue - 1;
+      setPointsRemaining((prev) => prev + 1);
     }
 
+    console.log("Points remaining:", pointsRemaining);
     setQuests(updatedQuests);
   };
 
