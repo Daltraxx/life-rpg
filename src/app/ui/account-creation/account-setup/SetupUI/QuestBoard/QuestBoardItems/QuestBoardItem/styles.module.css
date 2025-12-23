@@ -2,6 +2,8 @@
   display: none;
 }
 
+/* TODO: add disabled styles */
+
 /* DELETE TRANSITION STYLES */
 .questItem {
   overflow: hidden;
