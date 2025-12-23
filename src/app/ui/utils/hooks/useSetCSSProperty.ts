@@ -7,6 +7,11 @@ import { useCallback } from "react";
  * @returns A memoized callback function that accepts an HTMLElement and sets the specified CSS property to the given value
  * @example
  * ```typescript
+ * // As a ref callback (recommended):
+ * const setMyColor = useSetCSSProperty('--my-color', '#ff0000');
+ * return <div ref={setMyColor}>Content</div>;
+ * 
+ * // With useEffect:
  * const setMyColor = useSetCSSProperty('--my-color', '#ff0000');
  * useEffect(() => {
  *   setMyColor(elementRef.current);
