@@ -98,6 +98,7 @@ export default function useQuestSetup(): UseQuestSetupReturn {
     }
   };
 
+  // TODO: Refactor to useReducer for better state management?
   const handleExperiencePointValueChange = (
     quest: Quest,
     direction: "up" | "down"
