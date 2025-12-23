@@ -21,19 +21,19 @@ export type ValidationErrorMessages = {
  * This custom React hook performs:
  * - Debounced client-side validation (~500 ms) against a schema.
  * - Error reporting only for fields the user has interacted with.
- * - An asynchronous username-availability check with:
- *   - Result caching per username value.
+ * - An asynchronous usertag-availability check with:
+ *   - Result caching per usertag value.
  *   - Request de-duping and out-of-order (stale) response protection.
  *   - A querying flag while the availability check is in-flight.
- *   - Uses AbortController to cancel in-flight username requests on unmount or dependency change.
- *   - Passes the AbortController signal to `checkIfUsernameExists` for proper cancellation.
+ *   - Uses AbortController to cancel in-flight usertag requests on unmount or dependency change.
+ *   - Passes the AbortController signal to `checkIfUsertagExists` for proper cancellation.
  *
- * The username availability check only runs when:
- * - The username passes local (schema) validation,
- * - The user has interacted with the username field, and
- * - The value differs from the last successfully checked username.
+ * The usertag availability check only runs when:
+ * - The usertag passes local (schema) validation,
+ * - The user has interacted with the usertag field, and
+ * - The value differs from the last successfully checked usertag.
  *
- * The debounce timer is cleared and any in-flight username check is aborted on dependency changes and unmount to avoid
+ * The debounce timer is cleared and any in-flight usertag check is aborted on dependency changes and unmount to avoid
  * leaking work or updating state after unmount. Stale async results are ignored to prevent overwriting newer state.
  *
  * @param SignupFormData - The current values for the sign-up form fields.
@@ -41,20 +41,20 @@ export type ValidationErrorMessages = {
  *
  * @returns An object containing:
  * - errors: A map of field names to arrays of validation messages for fields that are invalid and have been interacted with.
- * - allFieldsValid: True when all fields pass client-side validation and the username (if applicable) is available.
- * - querying: True while the asynchronous username availability check is in progress.
+ * - allFieldsValid: True when all fields pass client-side validation and the usertag (if applicable) is available.
+ * - querying: True while the asynchronous usertag availability check is in progress.
  *
  * @example
  * const { errors, allFieldsValid, querying } = useSignupValidation(formData, interacted);
- * // Disable submit while invalid or while username availability is being checked
+ * // Disable submit while invalid or while usertag availability is being checked
  * <button disabled={!allFieldsValid || querying}>Create account</button>
- * {errors.username && <p role="alert">{errors.username[0]}</p>}
+ * {errors.usertag && <p role="alert">{errors.usertag[0]}</p>}
  *
  * @remarks
  * - Errors are cleared when all fields pass schema validation.
- * - If the username is already taken, an error is added and `allFieldsValid` is set to false.
- * - Cached username checks are reused to reduce unnecessary network requests.
- * - Username availability requests are properly aborted on unmount or when dependencies change.
+ * - If the usertag is already taken, an error is added and `allFieldsValid` is set to false.
+ * - Cached usertag checks are reused to reduce unnecessary network requests.
+ * - usertag availability requests are properly aborted on unmount or when dependencies change.
  */
 export default function useSignupValidation(
   formData: SignupFormData,
