@@ -92,8 +92,8 @@ export interface Quest {
 export function createQuest(
   name: string,
   affectedAttributes: AffectedAttribute[],
-  experiencePointValue: number = 0,
-  order: number
+  order: number,
+  experiencePointValue: number = 0
 ): Quest {
   if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
