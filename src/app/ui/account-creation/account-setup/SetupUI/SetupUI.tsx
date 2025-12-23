@@ -12,6 +12,7 @@ import type {
   Attribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import QuestBoard from "./QuestBoard/QuestBoard";
+import useQuestSetup from "@/app/ui/utils/hooks/useQuestSetup";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -42,77 +43,8 @@ export default function SetupUI() {
   };
 
   // Manage quests state
-  const [quests, setQuests] = useState<Quest[]>([]);
-  const [nextQuestOrderNumber, setNextQuestOrderNumber] = useState<number>(0);
-  const [pointsRemaining, setPointsRemaining] = useState<number>(100);
-  const handleAddQuest = (quest: Quest) => {
-    setQuests((prev) => [...prev, quest]);
-    setNextQuestOrderNumber((prev) => prev + 1);
-  };
-  const handleDeleteQuest = (quest: Quest) => {
-    const updatedQuests = structuredClone(quests).filter(
-      (q) => quest.name !== q.name
-    );
-    const deletedQuestOrder = quest.order;
-    for (let i = deletedQuestOrder; i < updatedQuests.length; i++) {
-      updatedQuests[i].order -= 1;
-    }
-    setQuests(updatedQuests);
-    setNextQuestOrderNumber((prev) => prev - 1);
-  };
-  const handleQuestOrderChange = (quest: Quest, direction: "up" | "down") => {
-    const index = quest.order;
-    const updatedQuests = structuredClone(quests);
-    if (direction === "up") {
-      if (index === 0) return; // Already at the top
-      // Swap with the quest above
-      [updatedQuests[index - 1], updatedQuests[index]] = [
-        updatedQuests[index],
-        updatedQuests[index - 1],
-      ];
-      // Update order numbers
-      updatedQuests[index - 1].order = index - 1;
-      updatedQuests[index].order = index;
-    } else {
-      if (index === quests.length - 1) return; // Already at the bottom
-      // Swap with the quest below
-      [updatedQuests[index + 1], updatedQuests[index]] = [
-        updatedQuests[index],
-        updatedQuests[index + 1],
-      ];
-      // Update order numbers
-      updatedQuests[index + 1].order = index + 1;
-      updatedQuests[index].order = index;
-    }
-    setQuests(updatedQuests);
-  };
-
-  // TODO: Define interface/type for this handler
-  const handleExperiencePointValueChange = (
-    quest: Quest,
-    direction: "up" | "down"
-  ) => {
-    const updatedQuests = structuredClone(quests);
-    const questToUpdate = updatedQuests[quest.order];
-    if (direction === "up") {
-      // Max experience points is 100
-      if (pointsRemaining <= 0 || questToUpdate.experiencePointValue >= 100)
-        return;
-      questToUpdate.experiencePointValue =
-        questToUpdate.experiencePointValue + 1;
-      setPointsRemaining((prev) => prev - 1);
-    } else {
-      // Min experience points is 0
-      if (pointsRemaining >= 100 || questToUpdate.experiencePointValue <= 0)
-        return;
-      questToUpdate.experiencePointValue =
-        questToUpdate.experiencePointValue - 1;
-      setPointsRemaining((prev) => prev + 1);
-    }
-
-    console.log("Points remaining:", pointsRemaining);
-    setQuests(updatedQuests);
-  };
+  const questManagement = useQuestSetup();
+  const { quests, nextQuestOrderNumber, actions } = questManagement;
 
   return (
     <Bounded innerClassName={styles.setupContainer}>
@@ -127,16 +59,16 @@ export default function SetupUI() {
         <QuestsWidget
           availableAttributes={availableAttributes}
           quests={quests}
-          addQuest={handleAddQuest}
+          addQuest={actions.addQuest}
           nextQuestOrderNumber={nextQuestOrderNumber}
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>
       <QuestBoard
         quests={quests}
-        onDeleteQuest={handleDeleteQuest}
-        onQuestOrderChange={handleQuestOrderChange}
-        onExperiencePointValueChange={handleExperiencePointValueChange}
+        onDeleteQuest={actions.deleteQuest}
+        onQuestOrderChange={actions.questOrderChange}
+        onExperiencePointValueChange={actions.experiencePointValueChange}
       />
     </Bounded>
   );
