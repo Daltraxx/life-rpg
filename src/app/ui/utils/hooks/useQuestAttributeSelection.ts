@@ -168,9 +168,15 @@ const useQuestAttributeSelection = (
         prevSelected.filter((attr) => attr.name !== attributeName)
       );
       setAvailableAttributes((prevAvailable) => {
-        const attribute: Attribute = attributes.find(
+        const attribute = attributes.find(
           (attr) => attr.name === attributeName
-        )!;
+        );
+        if (!attribute) {
+          console.error(
+            `Attribute "${attributeName}" not found in affected attributes list.`
+          );
+          return prevAvailable;
+        }
         const updatedAvailableAttributes = [...prevAvailable, attribute];
         // Sort available attributes to maintain order
         return updatedAvailableAttributes.sort((a, b) => a.order - b.order);
