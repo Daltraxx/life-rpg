@@ -130,11 +130,13 @@ export default function QuestItem({
             aria-label="Increase experience"
             size={20}
             onClick={() => onExperiencePointValueChange(quest, "up")}
+            disabled={quest.experiencePointValue === 100}
           />
           <ChevronDownButton
             aria-label="Decrease experience"
             size={20}
             onClick={() => onExperiencePointValueChange(quest, "down")}
+            disabled={quest.experiencePointValue === 0}
           />
         </div>
       </div>
