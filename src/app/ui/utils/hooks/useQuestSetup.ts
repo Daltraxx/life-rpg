@@ -102,26 +102,15 @@ export default function useQuestSetup(): UseQuestSetupReturn {
     quest: Quest,
     direction: "up" | "down"
   ) => {
-    const updatedQuests = structuredClone(quests);
-    const questToUpdate = updatedQuests[quest.order];
-
-    if (direction === "up") {
-      // Max experience points is 100
-      if (questToUpdate.experiencePointValue >= 100 || pointsRemaining <= 0)
-        return;
-      questToUpdate.experiencePointValue =
-        questToUpdate.experiencePointValue + 1;
-      setPointsRemaining((prev) => prev - 1);
-    } else {
-      // Min experience points is 0
-      if (questToUpdate.experiencePointValue <= 0)
-        return;
-      questToUpdate.experiencePointValue =
-        questToUpdate.experiencePointValue - 1;
-      setPointsRemaining((prev) => prev + 1);
-    }
-
-    setQuests(updatedQuests);
+    if (direction === "up" && pointsRemaining <= 0) return;
+    if (direction === "down" && quest.experiencePointValue <= 0) return;
+    setQuests((prev) => {
+      const updatedQuests = structuredClone(prev);
+      const questToUpdate = updatedQuests[quest.order];
+      questToUpdate.experiencePointValue += direction === "up" ? 1 : -1;
+      return updatedQuests;
+    });
+    setPointsRemaining((prev) => prev + (direction === "up" ? -1 : 1));
   };
 
   return {
