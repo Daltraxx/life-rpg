@@ -18,7 +18,7 @@ import { useCallback } from "react";
  * <div ref={setHeight}>Content</div>
  * );
  */
-export default function useSetElementHeight(adjustmentAllowance = 0) {
+export default function useSetElementHeight(adjustmentAllowance: number = 0) {
   return useCallback((element: HTMLElement | null) => {
     if (element) {
       const height = element.offsetHeight;
