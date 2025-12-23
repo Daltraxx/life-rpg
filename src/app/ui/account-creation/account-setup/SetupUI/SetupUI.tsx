@@ -86,6 +86,28 @@ export default function SetupUI() {
     setQuests(updatedQuests);
   };
 
+  const handleExperiencePointsChange = (
+    quest: Quest,
+    direction: "up" | "down"
+  ) => {
+    const updatedQuests = structuredClone(quests);
+    const questToUpdate = updatedQuests[quest.order];
+    if (direction === "up") {
+      // Max experience points is 100
+      questToUpdate.experiencePointValue = Math.min(
+        100,
+        questToUpdate.experiencePointValue + 1
+      );
+    } else {
+      // Min experience points is 0
+      questToUpdate.experiencePointValue = Math.max(
+        0,
+        questToUpdate.experiencePointValue - 1
+      );
+    }
+    setQuests(updatedQuests);
+  };
+
   return (
     <Bounded innerClassName={styles.setupContainer}>
       <div className={styles.widgetContainer}>
