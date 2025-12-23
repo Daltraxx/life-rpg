@@ -86,6 +86,7 @@ export default function SetupUI() {
     setQuests(updatedQuests);
   };
 
+  // TODO: Define interface/type for this handler
   const handleExperiencePointValueChange = (
     quest: Quest,
     direction: "up" | "down"
@@ -105,6 +106,7 @@ export default function SetupUI() {
         questToUpdate.experiencePointValue - 1
       );
     }
+
     setQuests(updatedQuests);
   };
 
@@ -130,6 +132,7 @@ export default function SetupUI() {
         quests={quests}
         onDeleteQuest={handleDeleteQuest}
         onQuestOrderChange={handleQuestOrderChange}
+        onExperiencePointValueChange={handleExperiencePointValueChange}
       />
     </Bounded>
   );

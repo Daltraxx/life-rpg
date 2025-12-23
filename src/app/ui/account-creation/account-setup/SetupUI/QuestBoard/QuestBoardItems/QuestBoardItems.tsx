@@ -6,12 +6,17 @@ interface QuestBoardItemsProps {
   quests: Quest[];
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
+  onExperiencePointValueChange: (
+    quest: Quest,
+    direction: "up" | "down"
+  ) => void;
 }
 
 export default function QuestBoardItems({
   quests,
   onDeleteQuest,
   onQuestOrderChange,
+  onExperiencePointValueChange,
 }: QuestBoardItemsProps) {
   return (
     <div>
@@ -28,6 +33,7 @@ export default function QuestBoardItems({
           totalQuests={quests.length}
           onDeleteQuest={onDeleteQuest}
           onQuestOrderChange={onQuestOrderChange}
+          onExperiencePointValueChange={onExperiencePointValueChange}
         />
       ))}
     </div>

@@ -23,6 +23,10 @@ interface QuestItemProps {
   totalQuests: number;
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
+  onExperiencePointValueChange: (
+    quest: Quest,
+    direction: "up" | "down"
+  ) => void;
 }
 
 export default function QuestItem({
@@ -31,6 +35,7 @@ export default function QuestItem({
   totalQuests,
   onDeleteQuest,
   onQuestOrderChange,
+  onExperiencePointValueChange,
 }: QuestItemProps) {
   const [isRemoving, setIsRemoving] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
@@ -118,11 +123,19 @@ export default function QuestItem({
       {/* EXPERIENCE */}
       <div className={styles.experienceGainedSection}>
         <Paragraph size="20" color="background">
-          Experience Gained: {0}
+          Experience Gained: {quest.experiencePointValue} XP
         </Paragraph>
         <div>
-          <ChevronUpButton aria-label="Increase experience" size={20} />
-          <ChevronDownButton aria-label="Decrease experience" size={20} />
+          <ChevronUpButton
+            aria-label="Increase experience"
+            size={20}
+            onClick={() => onExperiencePointValueChange(quest, "up")}
+          />
+          <ChevronDownButton
+            aria-label="Decrease experience"
+            size={20}
+            onClick={() => onExperiencePointValueChange(quest, "down")}
+          />
         </div>
       </div>
 
