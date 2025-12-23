@@ -12,6 +12,7 @@ import {
 } from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
 import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
+import useSetCSSProperty from "@/utils/hooks/useSetCSSProperty";
 
 const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50; // Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
 const DELETE_ANIMATION_DURATION_MS = 500; // Match CSS transition duration
@@ -33,6 +34,7 @@ function QuestItem({
 }: QuestItemProps) {
   const [isRemoving, setIsRemoving] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const itemElementRef = useRef<HTMLDivElement | null>(null);
 
   const handleDeleteClick = () => {
     setIsRemoving(true);
@@ -52,14 +54,29 @@ function QuestItem({
 
   // Set CSS variable for item height for animation purposes on deletion
   const setItemHeight = useSetElementHeight(ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE);
+  const setCSSProperty = useSetCSSProperty(
+    "transition-duration",
+    `${DELETE_ANIMATION_DURATION_MS}ms`
+  );
+  useEffect(() => {
+    if (itemElementRef.current) {
+      setItemHeight(itemElementRef.current);
+      setCSSProperty(itemElementRef.current);
+    }
+  }, [setItemHeight, setCSSProperty]);
 
   return (
     <div
       className={clsx(styles.questItem, isRemoving && styles.removing)}
-      ref={setItemHeight}
+      ref={itemElementRef}
     >
       {/* QUEST ORDER TOGGLE BUTTONS */}
-      <div className={clsx(styles.questOrderToggleButtons, totalQuests <= 1 && styles.hidden)}>
+      <div
+        className={clsx(
+          styles.questOrderToggleButtons,
+          totalQuests <= 1 && styles.hidden
+        )}
+      >
         {index > 0 && (
           <ChevronUpButton
             onClick={() => onQuestOrderChange(quest, "up")}
