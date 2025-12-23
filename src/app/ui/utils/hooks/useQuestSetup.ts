@@ -114,7 +114,7 @@ export default function useQuestSetup(): UseQuestSetupReturn {
       setPointsRemaining((prev) => prev - 1);
     } else {
       // Min experience points is 0
-      if (questToUpdate.experiencePointValue <= 0 || pointsRemaining >= 100)
+      if (questToUpdate.experiencePointValue <= 0)
         return;
       questToUpdate.experiencePointValue =
         questToUpdate.experiencePointValue - 1;
