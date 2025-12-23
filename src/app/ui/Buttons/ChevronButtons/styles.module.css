@@ -13,8 +13,10 @@
   outline-offset: 2px;
 }
 
-.button:hover {
-  background-color: var(--gold-400, #ffb800);
+@media (hover: hover) {
+  .button:hover {
+    background-color: var(--gold-400, #ffb800);
+  }
 }
 .button:active {
   background-color: var(--gold-600, #d89b00);
