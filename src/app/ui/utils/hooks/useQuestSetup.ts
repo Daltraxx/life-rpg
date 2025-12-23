@@ -21,31 +21,34 @@ interface UseQuestSetupReturn {
     addQuest: (quest: Quest) => void;
     deleteQuest: (quest: Quest) => void;
     questOrderChange: (quest: Quest, direction: "up" | "down") => void;
-    experiencePointValueChange: (quest: Quest, direction: "up" | "down") => void;
+    experiencePointValueChange: (
+      quest: Quest,
+      direction: "up" | "down"
+    ) => void;
   };
 }
 
 /**
  * Hook for managing quest setup state and operations.
- * 
+ *
  * Provides state management for quests including adding, deleting, reordering quests,
  * and adjusting experience point distribution across quests with a fixed point pool.
- * 
+ *
  * @returns {UseQuestSetupReturn} An object containing:
  *   - quests: Array of current quests
  *   - nextQuestOrderNumber: The order number for the next quest to be added
  *   - pointsRemaining: Remaining experience points available to distribute
  *   - actions: Object containing handler functions for quest operations
- * 
+ *
  * @example
  * const { quests, pointsRemaining, actions } = useQuestSetup();
- * 
+ *
  * // Add a new quest
  * actions.addQuest(newQuest);
- * 
+ *
  * // Reorder a quest
  * actions.questOrderChange(quest, 'up');
- * 
+ *
  * // Adjust experience points
  * actions.experiencePointValueChange(quest, 'up');
  */
@@ -59,14 +62,16 @@ export default function useQuestSetup(): UseQuestSetupReturn {
     setNextQuestOrderNumber((prev) => prev + 1);
   };
   const handleDeleteQuest = (quest: Quest) => {
-    const updatedQuests = structuredClone(quests).filter(
-      (q) => quest.name !== q.name
-    );
-    const deletedQuestOrder = quest.order;
-    for (let i = deletedQuestOrder; i < updatedQuests.length; i++) {
-      updatedQuests[i].order -= 1;
-    }
-    setQuests(updatedQuests);
+    setQuests((prev) => {
+      const updatedQuests = prev.filter(
+        (q) => quest.name !== q.name
+      );
+      const deletedQuestOrder = quest.order;
+      for (let i = deletedQuestOrder; i < updatedQuests.length; i++) {
+        updatedQuests[i].order -= 1;
+      }
+      return updatedQuests;
+    });
     setNextQuestOrderNumber((prev) => prev - 1);
   };
 
@@ -96,7 +101,7 @@ export default function useQuestSetup(): UseQuestSetupReturn {
     }
     setQuests(updatedQuests);
   };
-  
+
   const handleExperiencePointValueChange = (
     quest: Quest,
     direction: "up" | "down"
@@ -132,6 +137,6 @@ export default function useQuestSetup(): UseQuestSetupReturn {
       deleteQuest: handleDeleteQuest,
       questOrderChange: handleQuestOrderChange,
       experiencePointValueChange: handleExperiencePointValueChange,
-    }
+    },
   };
 }
