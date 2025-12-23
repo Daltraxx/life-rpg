@@ -41,7 +41,7 @@ export default function QuestItem({
   onExperiencePointValueChange,
 }: QuestItemProps) {
   const [isRemoving, setIsRemoving] = useState(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const itemElementRef = useRef<HTMLDivElement | null>(null);
 
   const handleDeleteClick = () => {
