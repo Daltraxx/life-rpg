@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /**
  * Returns the current browser window width in pixels and updates on resize.
@@ -20,22 +20,22 @@ import { useState, useEffect } from "react";
  */
 export default function useWindowWidth(): number {
   const [windowWidth, setWindowWidth] = useState(0);
+  const frameRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     setWindowWidth(window.innerWidth);
-    let frame: number | null = null;
     const handleResize = () => {
-      if (frame !== null) cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      frameRef.current = requestAnimationFrame(() => {
         setWindowWidth(window.innerWidth);
       });
     };
     window.addEventListener("resize", handleResize, { passive: true });
     return () => {
       window.removeEventListener("resize", handleResize);
-      if (frame !== null) cancelAnimationFrame(frame);
+      if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
     };
   }, []);
   return windowWidth;
