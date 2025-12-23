@@ -6,13 +6,10 @@ import QuestsWidget from "./QuestsWidget/QuestsWidget";
 import styles from "./styles.module.css";
 import cssVars from "./QuestsWidget/vars.module.css";
 import clsx from "clsx";
-import { useState } from "react";
-import type {
-  Quest,
-  Attribute,
-} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import QuestBoard from "./QuestBoard/QuestBoard";
 import useQuestSetup from "@/app/ui/utils/hooks/useQuestSetup";
+import useAttributeSetup from "@/app/ui/utils/hooks/useAttributeSetup";
+import { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -23,28 +20,20 @@ const INITIAL_ATTRIBUTES: Attribute[] = [
 
 export default function SetupUI() {
   // Manage available attributes state
-  const [availableAttributes, setAvailableAttributes] =
-    useState<Attribute[]>(INITIAL_ATTRIBUTES);
-  const [nextAttributeOrderNumber, setNextAttributeOrderNumber] =
-    useState<number>(INITIAL_ATTRIBUTES.length);
-  const handleAddAttribute = (attribute: Attribute) => {
-    setAvailableAttributes((prev) => [...prev, attribute]);
-    setNextAttributeOrderNumber((prev) => prev + 1);
-  };
-  const handleDeleteAttribute = (attribute: Attribute) => {
-    const updatedAttributes = availableAttributes.filter(
-      (attr) => attribute.name !== attr.name
-    );
-    for (let i = attribute.order; i < updatedAttributes.length; i++) {
-      updatedAttributes[i].order -= 1;
-    }
-    setAvailableAttributes(updatedAttributes);
-    setNextAttributeOrderNumber((prev) => prev - 1);
-  };
+  const attributeManagement = useAttributeSetup(INITIAL_ATTRIBUTES);
+  const {
+    availableAttributes,
+    nextAttributeOrderNumber,
+    actions: attributeActions,
+  } = attributeManagement;
 
   // Manage quests state
   const questManagement = useQuestSetup();
-  const { quests, nextQuestOrderNumber, actions } = questManagement;
+  const {
+    quests,
+    nextQuestOrderNumber,
+    actions: questActions,
+  } = questManagement;
 
   return (
     <Bounded innerClassName={styles.setupContainer}>
@@ -53,22 +42,22 @@ export default function SetupUI() {
           className={styles.attributeWidget}
           attributes={availableAttributes}
           nextAttributeOrderNumber={nextAttributeOrderNumber}
-          addAttribute={handleAddAttribute}
-          deleteAttribute={handleDeleteAttribute}
+          addAttribute={attributeActions.addAttribute}
+          deleteAttribute={attributeActions.deleteAttribute}
         />
         <QuestsWidget
           availableAttributes={availableAttributes}
           quests={quests}
-          addQuest={actions.addQuest}
+          addQuest={questActions.addQuest}
           nextQuestOrderNumber={nextQuestOrderNumber}
           className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
         />
       </div>
       <QuestBoard
         quests={quests}
-        onDeleteQuest={actions.deleteQuest}
-        onQuestOrderChange={actions.questOrderChange}
-        onExperiencePointValueChange={actions.experiencePointValueChange}
+        onDeleteQuest={questActions.deleteQuest}
+        onQuestOrderChange={questActions.questOrderChange}
+        onExperiencePointValueChange={questActions.experiencePointValueChange}
       />
     </Bounded>
   );
