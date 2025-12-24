@@ -15,9 +15,9 @@ import { Quest } from "../classesAndInterfaces/AttributesAndQuests";
  * @property {Quest} CHANGE_QUEST_ORDER.payload.quest - The quest to be reordered
  * @property {"up" | "down"} CHANGE_QUEST_ORDER.payload.direction - The direction to move the quest
  *
- * @property {Object} ADJUST_QUEST_EXPERIENCE - Modifies the experience value of a quest
- * @property {Quest} ADJUST_QUEST_EXPERIENCE.payload.quest - The quest to adjust
- * @property {"up" | "down"} ADJUST_QUEST_EXPERIENCE.payload.direction - The direction to adjust experience (increase or decrease)
+ * @property {Object} CHANGE_QUEST_EXPERIENCE - Modifies the experience value of a quest
+ * @property {Quest} CHANGE_QUEST_EXPERIENCE.payload.quest - The quest to adjust
+ * @property {"up" | "down"} CHANGE_QUEST_EXPERIENCE.payload.direction - The direction to adjust experience (increase or decrease)
  */
 type QuestAction =
   | { type: "ADD_QUEST"; payload: Quest }
@@ -27,7 +27,7 @@ type QuestAction =
       payload: { quest: Quest; direction: "up" | "down" };
     }
   | {
-      type: "ADJUST_QUEST_EXPERIENCE";
+      type: "CHANGE_QUEST_EXPERIENCE";
       payload: { quest: Quest; direction: "up" | "down" };
     };
 
@@ -50,7 +50,7 @@ interface QuestState {
  *
  * @param state - The current quest state containing quests array and metadata
  * @param action - The action object describing the state mutation to perform
- * @param action.type - The type of action: "ADD_QUEST" | "DELETE_QUEST" | "CHANGE_QUEST_ORDER" | "ADJUST_QUEST_EXPERIENCE"
+ * @param action.type - The type of action: "ADD_QUEST" | "DELETE_QUEST" | "CHANGE_QUEST_ORDER" | "CHANGE_QUEST_EXPERIENCE"
  * @param action.payload - The payload data specific to the action type
  *
  * @returns {QuestState} The updated quest state after applying the action
@@ -126,7 +126,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         quests: updatedQuests,
       };
     }
-    case "ADJUST_QUEST_EXPERIENCE": {
+    case "CHANGE_QUEST_EXPERIENCE": {
       const { quest, direction } = action.payload;
       if (direction === "up" && state.pointsRemaining <= 0) return state;
       if (direction === "down" && quest.experiencePointValue <= 0) return state;
@@ -214,7 +214,7 @@ export default function useQuestSetup(): UseQuestSetupReturn {
       },
       experiencePointValueChange: (quest: Quest, direction: "up" | "down") => {
         dispatch({
-          type: "ADJUST_QUEST_EXPERIENCE",
+          type: "CHANGE_QUEST_EXPERIENCE",
           payload: { quest, direction },
         });
       },
