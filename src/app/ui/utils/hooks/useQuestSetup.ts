@@ -80,7 +80,10 @@ export default function useQuestSetup(): UseQuestSetupReturn {
       setQuests((prev) => {
         const updatedQuests = [...prev];
         // Swap with the quest above
-        [updatedQuests[index - 1], updatedQuests[index]] = [updatedQuests[index], updatedQuests[index - 1]];
+        [updatedQuests[index - 1], updatedQuests[index]] = [
+          updatedQuests[index],
+          updatedQuests[index - 1],
+        ];
         // Update order numbers
         updatedQuests[index - 1].order = index - 1;
         updatedQuests[index].order = index;
@@ -91,7 +94,10 @@ export default function useQuestSetup(): UseQuestSetupReturn {
       setQuests((prev) => {
         const updatedQuests = [...prev];
         // Swap with the quest below
-        [updatedQuests[index + 1], updatedQuests[index]] = [updatedQuests[index], updatedQuests[index + 1]];
+        [updatedQuests[index + 1], updatedQuests[index]] = [
+          updatedQuests[index],
+          updatedQuests[index + 1],
+        ];
         // Update order numbers
         updatedQuests[index + 1].order = index + 1;
         updatedQuests[index].order = index;
