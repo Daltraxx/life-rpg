@@ -78,22 +78,24 @@ export default function useQuestSetup(): UseQuestSetupReturn {
     if (direction === "up") {
       if (index === 0) return; // Already at the top
       setQuests((prev) => {
+        const updatedQuests = [...prev];
         // Swap with the quest above
-        [prev[index - 1], prev[index]] = [prev[index], prev[index - 1]];
+        [updatedQuests[index - 1], updatedQuests[index]] = [updatedQuests[index], updatedQuests[index - 1]];
         // Update order numbers
-        prev[index - 1].order = index - 1;
-        prev[index].order = index;
-        return prev;
+        updatedQuests[index - 1].order = index - 1;
+        updatedQuests[index].order = index;
+        return updatedQuests;
       });
     } else {
       if (index === quests.length - 1) return; // Already at the bottom
       setQuests((prev) => {
+        const updatedQuests = [...prev];
         // Swap with the quest below
-        [prev[index + 1], prev[index]] = [prev[index], prev[index + 1]];
+        [updatedQuests[index + 1], updatedQuests[index]] = [updatedQuests[index], updatedQuests[index + 1]];
         // Update order numbers
-        prev[index + 1].order = index + 1;
-        prev[index].order = index;
-        return prev;
+        updatedQuests[index + 1].order = index + 1;
+        updatedQuests[index].order = index;
+        return updatedQuests;
       });
     }
   };
