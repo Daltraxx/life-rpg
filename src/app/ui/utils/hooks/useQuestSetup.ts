@@ -74,6 +74,7 @@ interface QuestState {
 function questReducer(state: QuestState, action: QuestAction): QuestState {
   switch (action.type) {
     case "ADD_QUEST": {
+      // TODO: Consider handling quest order here, or keep in Quest Widget?
       const newQuest = action.payload;
       return {
         ...state,
