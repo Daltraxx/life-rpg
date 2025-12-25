@@ -100,7 +100,22 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_ORDER": {
       const { quest, direction } = action.payload;
-      const index = quest.order;
+      let index = quest.order;
+      if (
+        index < 0 ||
+        index >= state.quests.length ||
+        state.quests[index].name !== quest.name
+      ) {
+        // Fallback in case the order index is out of sync. Should not happen.
+        console.warn(
+          "Quest order index out of sync. Searching by name as fallback."
+        );
+        index = state.quests.findIndex((q) => q.name === quest.name);
+        if (index === -1) {
+          throw new Error("Quest not found in state during order change");
+        }
+      }
+
       const updatedQuests = structuredClone(state.quests);
       if (direction === "up" && index > 0) {
         // Swap with the quest above
