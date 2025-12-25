@@ -131,7 +131,18 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       if (direction === "up" && state.pointsRemaining <= 0) return state;
       if (direction === "down" && quest.experiencePointValue <= 0) return state;
       const updatedQuests = structuredClone(state.quests);
-      const questToUpdate = updatedQuests[quest.order];
+      let questToUpdate = updatedQuests[quest.order];
+      // Fallback in case the order index is out of sync. Should not happen.
+      if (!questToUpdate || questToUpdate.name !== quest.name) {
+        console.warn(
+          "Quest order index out of sync. Searching by name as fallback."
+        );
+        questToUpdate = updatedQuests.find(
+          (q) => q.name === quest.name
+        ) as Quest;
+        if (!questToUpdate)
+          throw new Error("Quest not found in state during experience update");
+      }
       questToUpdate.experiencePointValue += direction === "up" ? 1 : -1;
       return {
         ...state,
