@@ -3,7 +3,7 @@
 
 
 .hidden {
-  display: none;
+  visibility: hidden;
 }
 
 /* TODO: add disabled styles for order and experience buttons */
