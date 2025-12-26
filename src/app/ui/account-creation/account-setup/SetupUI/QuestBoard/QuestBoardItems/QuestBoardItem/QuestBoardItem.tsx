@@ -104,7 +104,7 @@ export default function QuestItem({
 
       {/* QUEST NAME */}
       <div className={styles.questDetails}>
-        <Heading as="h4" color="background">
+        <Heading as="h4" color="background" className={styles.questName}>
           {quest.name}
         </Heading>
   
@@ -126,11 +126,11 @@ export default function QuestItem({
         </Paragraph>
   
         {/* EXPERIENCE */}
-        <div className={styles.experienceGainedSection}>
+        <div className={styles.experienceSection}>
           <Paragraph size="20" color="background">
-            Experience Gained: {quest.experiencePointValue} XP
+            Exp. Gained: {quest.experiencePointValue}
           </Paragraph>
-          <div>
+          <div className={styles.experienceButtons}>
             <ChevronUpButton
               aria-label="Increase experience"
               size={20}
