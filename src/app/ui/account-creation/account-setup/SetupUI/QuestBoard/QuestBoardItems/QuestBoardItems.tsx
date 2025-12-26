@@ -1,6 +1,7 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import QuestItem from "./QuestBoardItem/QuestBoardItem";
+import styles from "./styles.module.css";
 
 interface QuestBoardItemsProps {
   quests: Quest[];
@@ -19,7 +20,7 @@ export default function QuestBoardItems({
   onExperiencePointValueChange,
 }: QuestBoardItemsProps) {
   return (
-    <div>
+    <div className={styles.container}>
       {quests.length === 0 && (
         <Paragraph size="30" color="background">
           Time to add some quests!
