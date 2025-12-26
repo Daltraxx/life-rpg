@@ -103,57 +103,59 @@ export default function QuestItem({
       </div>
 
       {/* QUEST NAME */}
-      <Heading as="h4" color="background">
-        {quest.name}
-      </Heading>
-
-      {/* ATTRIBUTES */}
-      <Paragraph size="20" color="background">
-        {sortAffectedAttributes(quest.affectedAttributes)
-          .map((attr) => getAttributeDisplayString(attr))
-          .join(", ")}
-      </Paragraph>
-
-      {/* STREAK */}
-      <Paragraph size="20" color="background">
-        Streak: 0
-      </Paragraph>
-
-      {/* STRENGTH */}
-      <Paragraph size="20" color="background">
-        Strength: 0 — E
-      </Paragraph>
-
-      {/* EXPERIENCE */}
-      <div className={styles.experienceGainedSection}>
+      <div className={styles.questDetails}>
+        <Heading as="h4" color="background">
+          {quest.name}
+        </Heading>
+  
+        {/* ATTRIBUTES */}
         <Paragraph size="20" color="background">
-          Experience Gained: {quest.experiencePointValue} XP
+          {sortAffectedAttributes(quest.affectedAttributes)
+            .map((attr) => getAttributeDisplayString(attr))
+            .join(", ")}
         </Paragraph>
-        <div>
-          <ChevronUpButton
-            aria-label="Increase experience"
-            size={20}
-            onClick={() => onExperiencePointValueChange(quest, "up")}
-            disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
-          />
-          <ChevronDownButton
-            aria-label="Decrease experience"
-            size={20}
-            onClick={() => onExperiencePointValueChange(quest, "down")}
-            disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
-          />
+  
+        {/* STREAK */}
+        <Paragraph size="20" color="background">
+          Streak: 0
+        </Paragraph>
+  
+        {/* STRENGTH */}
+        <Paragraph size="20" color="background">
+          Strength: 0 — E
+        </Paragraph>
+  
+        {/* EXPERIENCE */}
+        <div className={styles.experienceGainedSection}>
+          <Paragraph size="20" color="background">
+            Experience Gained: {quest.experiencePointValue} XP
+          </Paragraph>
+          <div>
+            <ChevronUpButton
+              aria-label="Increase experience"
+              size={20}
+              onClick={() => onExperiencePointValueChange(quest, "up")}
+              disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
+            />
+            <ChevronDownButton
+              aria-label="Decrease experience"
+              size={20}
+              onClick={() => onExperiencePointValueChange(quest, "down")}
+              disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
+            />
+          </div>
         </div>
+  
+        {/* DELETE BUTTON */}
+        <ButtonWrapper
+          className={styles.deleteQuestButton}
+          color="background"
+          onClick={handleDeleteClick}
+          disabled={isRemoving}
+        >
+          DELETE QUEST
+        </ButtonWrapper>
       </div>
-
-      {/* DELETE BUTTON */}
-      <ButtonWrapper
-        className={styles.deleteQuestButton}
-        color="background"
-        onClick={handleDeleteClick}
-        disabled={isRemoving}
-      >
-        DELETE QUEST
-      </ButtonWrapper>
     </div>
   );
 }

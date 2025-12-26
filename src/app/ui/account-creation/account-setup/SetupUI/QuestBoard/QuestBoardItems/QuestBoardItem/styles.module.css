@@ -1,6 +1,8 @@
-
-
-
+.questItem {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr auto 2fr;
+}
 
 .hidden {
   visibility: hidden;
