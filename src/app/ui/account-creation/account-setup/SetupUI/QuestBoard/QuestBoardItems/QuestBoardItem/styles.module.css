@@ -23,6 +23,7 @@
 .experienceSection {
   display: flex;
   gap: 0.5rem;
+  min-width: 10rem;
 }
 
 .experienceButtons {
