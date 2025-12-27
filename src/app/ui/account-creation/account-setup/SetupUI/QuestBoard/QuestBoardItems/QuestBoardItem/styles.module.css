@@ -39,7 +39,8 @@
   gap: 0.75rem;
 }
 
-.questDetails p, .questName {
+.questDetails p,
+.questName {
   line-height: 1.5rem;
 }
 
@@ -95,7 +96,9 @@
 
   /* QUEST ORDER TOGGLE BUTTONS */
   .questOrderToggleButtons {
-    grid-column: 1;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
   }
 
   /* QUEST DETAILS */
