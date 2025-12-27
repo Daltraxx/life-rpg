@@ -156,6 +156,7 @@ export default function QuestBoardItem({
         </div>
 
         {/* DELETE BUTTON */}
+        {/* small screens */}
         <ButtonWrapper
           className={clsx(styles.deleteQuestButton, styles.smallScreenOnly)}
           color="background"
@@ -164,6 +165,7 @@ export default function QuestBoardItem({
         >
           DELETE QUEST
         </ButtonWrapper>
+        {/* larger screens */}
         <button
           onClick={handleDeleteClick}
           className={clsx(styles.deleteQuestButton, styles.largerScreenOnly)}
