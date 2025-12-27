@@ -1,6 +1,6 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import QuestItem from "./QuestBoardItem/QuestBoardItem";
+import QuestBoardItem from "./QuestBoardItem/QuestBoardItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
 
@@ -47,7 +47,7 @@ export default function QuestBoardItems({
         </Paragraph>
       )}
       {quests.map((quest, i) => (
-        <QuestItem
+        <QuestBoardItem
           key={quest.name}
           quest={quest}
           index={i}

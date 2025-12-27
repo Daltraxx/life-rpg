@@ -32,7 +32,7 @@ interface QuestItemProps {
   ) => void;
 }
 
-export default function QuestItem({
+export default function QuestBoardItem({
   quest,
   index,
   totalQuests,
