@@ -1,5 +1,6 @@
 /* Grid structure: 7 columns total (1fr gutter + 5×5fr content + 1fr gutter)
-   Header row and general quest details use the middle 5 content columns only
+   Header row uses the middle 5 content columns only
+   Quest details use columns 2-7 (the 5 content columns + right gutter)
    The outside columns are for order toggles and delete buttons */
 .gridVars {
   --grid-template-columns-headers: 5fr 5fr 5fr 5fr 5fr;
