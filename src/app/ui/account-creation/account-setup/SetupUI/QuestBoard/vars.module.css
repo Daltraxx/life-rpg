@@ -4,7 +4,7 @@
    The outside columns are for order toggles and delete buttons */
 .gridVars {
   --grid-template-columns-headers: 5fr 5fr 5fr 5fr 5fr;
-  --grid-template-columns-quest-details: var(--grid-template-columns-headers) 1fr;
-  --full-grid-template-columns: 1fr var(--grid-template-columns-quest-details);
+  --grid-template-columns-quest-details: var(--grid-template-columns-headers) 2fr;
+  --full-grid-template-columns: 2fr var(--grid-template-columns-quest-details);
   --column-gap: 1rem;
 }
