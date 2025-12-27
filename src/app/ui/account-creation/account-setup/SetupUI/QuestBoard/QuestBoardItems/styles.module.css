@@ -30,7 +30,7 @@
     grid-row: 1;
     grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: var(--full-grid-template-columns);
+    grid-template-columns: subgrid;
     column-gap: var(--column-gap);
   }
 
