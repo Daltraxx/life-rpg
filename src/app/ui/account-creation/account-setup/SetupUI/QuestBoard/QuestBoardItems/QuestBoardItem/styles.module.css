@@ -3,6 +3,17 @@
   display: grid;
   grid-template-columns: 1fr 8fr 1fr;
   column-gap: 1rem;
+  /* DELETE TRANSITION STYLES */
+  overflow: hidden;
+  max-height: var(--item-height);
+  opacity: 1;
+  transition: max-height var(--transition-duration) ease-in-out,
+    opacity var(--transition-duration) ease-in-out;
+}
+
+.questItem.removing {
+  max-height: 0;
+  opacity: 0;
 }
 
 .hidden {
@@ -44,21 +55,7 @@
 
 /* TODO: add disabled styles for order and experience buttons */
 
-/* DELETE TRANSITION STYLES */
-.questItem {
-  overflow: hidden;
-  max-height: var(--item-height);
-  opacity: 1;
-  transition: max-height var(--transition-duration) ease-in-out,
-    opacity var(--transition-duration) ease-in-out;
-}
-
-.questItem.removing {
-  max-height: 0;
-  opacity: 0;
-}
-
-/* Potential future implementation */
+/* Potential future implementation for transition */
 /* .questItem {
   overflow: hidden;
   display: grid;

@@ -26,6 +26,9 @@ export default function QuestBoardItems({
           Time to add some quests!
         </Paragraph>
       )}
+      <div className={styles.headers}>
+        
+      </div>
       {quests.map((quest, i) => (
         <QuestItem
           key={quest.name}
