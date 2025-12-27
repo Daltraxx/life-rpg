@@ -125,18 +125,19 @@ export default function QuestBoardItem({
 
         {/* STREAK */}
         <Paragraph size="20" color="background">
-          Streak: 0
+          <span className={styles.smallScreenOnly}>Streak: </span>0
         </Paragraph>
 
         {/* STRENGTH */}
         <Paragraph size="20" color="background">
-          Strength: 0 — E
+          <span className={styles.smallScreenOnly}>Strength: </span>0 — E
         </Paragraph>
 
         {/* EXPERIENCE */}
         <div className={styles.experienceSection}>
           <Paragraph size="20" color="background">
-            Exp. Gained: {quest.experiencePointValue}
+            <span className={styles.smallScreenOnly}>Exp. Gained: </span>
+            {quest.experiencePointValue}
           </Paragraph>
           <div className={styles.experienceButtons}>
             <ChevronUpButton
@@ -165,10 +166,7 @@ export default function QuestBoardItem({
         </ButtonWrapper>
         <button
           onClick={handleDeleteClick}
-          className={clsx(
-            styles.deleteQuestButton,
-            styles.largerScreenOnly
-          )}
+          className={clsx(styles.deleteQuestButton, styles.largerScreenOnly)}
           aria-label={`Delete quest ${quest.name}`}
           disabled={isRemoving}
         >
