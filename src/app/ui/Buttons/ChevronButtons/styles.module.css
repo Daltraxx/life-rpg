@@ -22,6 +22,14 @@
   background-color: var(--gold-600, #d89b00);
 }
 
+.button:disabled,
+.button:disabled:hover,
+.button:disabled:active {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--gray-200, #d9d9d9);
+}
+
 .button path {
   fill: var(--brown-600, #362009);
 }
