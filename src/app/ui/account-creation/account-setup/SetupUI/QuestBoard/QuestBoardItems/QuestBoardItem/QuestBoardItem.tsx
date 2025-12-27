@@ -30,6 +30,7 @@ interface QuestItemProps {
     quest: Quest,
     direction: "up" | "down"
   ) => void;
+  className?: string;
 }
 
 export default function QuestBoardItem({
@@ -39,6 +40,7 @@ export default function QuestBoardItem({
   onDeleteQuest,
   onQuestOrderChange,
   onExperiencePointValueChange,
+  className,
 }: QuestItemProps) {
   const [isRemoving, setIsRemoving] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -76,7 +78,7 @@ export default function QuestBoardItem({
   // TODO: Allow user to hold down experience buttons for continuous increment/decrement
   return (
     <div
-      className={clsx(styles.questItem, isRemoving && styles.removing)}
+      className={clsx(styles.questItem, isRemoving && styles.removing, className)}
       ref={itemElementRef}
     >
       {/* QUEST ORDER TOGGLE BUTTONS */}

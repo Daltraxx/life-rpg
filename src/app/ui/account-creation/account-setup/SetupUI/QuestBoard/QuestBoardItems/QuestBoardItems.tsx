@@ -25,21 +25,23 @@ export default function QuestBoardItems({
   return (
     <div className={clsx(styles.container, className)}>
       <div className={clsx(styles.headerRow, styles.largerScreenOnly)}>
-        <Paragraph size="24" color="background">
-          Quest
-        </Paragraph>
-        <Paragraph size="24" color="background">
-          Attributes
-        </Paragraph>
-        <Paragraph size="24" color="background">
-          Streak
-        </Paragraph>
-        <Paragraph size="24" color="background">
-          Strength
-        </Paragraph>
-        <Paragraph size="24" color="background">
-          Experience
-        </Paragraph>
+        <div className={styles.headerGrid}>
+          <Paragraph size="24" color="background">
+            Quest
+          </Paragraph>
+          <Paragraph size="24" color="background">
+            Attributes
+          </Paragraph>
+          <Paragraph size="24" color="background">
+            Streak
+          </Paragraph>
+          <Paragraph size="24" color="background">
+            Strength
+          </Paragraph>
+          <Paragraph size="24" color="background">
+            Experience
+          </Paragraph>
+        </div>
       </div>
       {quests.length === 0 && (
         <Paragraph size="30" color="background" className={styles.noQuestsMessage}>
@@ -55,6 +57,7 @@ export default function QuestBoardItems({
           onDeleteQuest={onDeleteQuest}
           onQuestOrderChange={onQuestOrderChange}
           onExperiencePointValueChange={onExperiencePointValueChange}
+          className={styles.questItem}
         />
       ))}
     </div>

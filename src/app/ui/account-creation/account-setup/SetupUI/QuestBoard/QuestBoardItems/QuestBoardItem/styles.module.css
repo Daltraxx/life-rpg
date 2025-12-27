@@ -72,3 +72,22 @@
 .deleteQuestButton:disabled {
   opacity: 0.5;
 }
+
+@media (min-width: 900px) {
+  .questItem {
+    display: grid;
+    grid-template-columns: var(--full-grid-template-columns);
+    column-gap: var(--column-gap);
+  }
+
+  .questOrderToggleButtons {
+    grid-column: 1;
+  }
+
+  .questDetails {
+    grid-column: 2 / -1;
+    display: grid;
+    grid-template-columns: var(--grid-template-columns-quest-details);
+    column-gap: var(--column-gap);
+  }
+}

@@ -28,9 +28,16 @@
 
   .headerRow {
     grid-row: 1;
-    grid-column: 2 / 7;
+    grid-column: 1 / -1;
     display: grid;
-    grid-template-columns: var(--content-grid-template-columns);
+    grid-template-columns: var(--full-grid-template-columns);
+    column-gap: var(--column-gap);
+  }
+
+  .headerGrid {
+    grid-column: 2 / -2;
+    display: grid;
+    grid-template-columns: var(--grid-template-columns-headers);
     column-gap: var(--column-gap);
   }
 
@@ -39,4 +46,7 @@
     margin: 0 auto;
   }
 
+  .questItem {
+    grid-column: 1 / -1;
+  }
 }
