@@ -2,7 +2,7 @@
    Header row and general quest details use the middle 5 content columns only
    The outside columns are for order toggles and delete buttons */
 .gridVars {
-  --full-grid-template-columns: 1fr 5fr 5fr 5fr 5fr 5fr 1fr;
-  --header-row-grid-template-columns: 5fr 5fr 5fr 5fr 5fr;
+  --content-grid-template-columns: 5fr 5fr 5fr 5fr 5fr;
+  --full-grid-template-columns: 1fr var(--content-grid-template-columns) 1fr;
   --column-gap: 1rem;
 }

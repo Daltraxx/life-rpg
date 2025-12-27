@@ -30,7 +30,7 @@
     grid-row: 1;
     grid-column: 2 / 7;
     display: grid;
-    grid-template-columns: var(--header-row-grid-template-columns);
+    grid-template-columns: var(--content-grid-template-columns);
     column-gap: var(--column-gap);
   }
 
