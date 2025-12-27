@@ -84,7 +84,7 @@
   }
 
   .largerScreenOnly {
-    display: revert;
+    display: block;
   }
 
   .questItem {
