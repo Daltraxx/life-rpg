@@ -117,25 +117,25 @@ export default function QuestBoardItem({
         </Heading>
 
         {/* ATTRIBUTES */}
-        <Paragraph size="20" color="background">
+        <Paragraph size="24-responsive" color="background">
           {sortAffectedAttributes(quest.affectedAttributes)
             .map((attr) => getAttributeDisplayString(attr))
             .join(", ")}
         </Paragraph>
 
         {/* STREAK */}
-        <Paragraph size="20" color="background">
+        <Paragraph size="24-responsive" color="background">
           <span className={styles.smallScreenOnly}>Streak: </span>0
         </Paragraph>
 
         {/* STRENGTH */}
-        <Paragraph size="20" color="background">
+        <Paragraph size="24-responsive" color="background">
           <span className={styles.smallScreenOnly}>Strength: </span>0 — E
         </Paragraph>
 
         {/* EXPERIENCE */}
         <div className={styles.experienceSection}>
-          <Paragraph size="20" color="background">
+          <Paragraph size="24-responsive" color="background">
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
             {quest.experiencePointValue}
           </Paragraph>
