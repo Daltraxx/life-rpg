@@ -120,7 +120,7 @@
   }
 
   .experienceValue {
-    width: 1.75rem;
+    width: 1.75rem; /* Prevents shifts when changing experience points */
   }
 
   /* DELETE QUEST BUTTON */
