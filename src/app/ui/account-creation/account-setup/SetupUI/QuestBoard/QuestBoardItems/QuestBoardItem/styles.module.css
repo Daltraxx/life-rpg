@@ -115,6 +115,13 @@
   }
 
   /* EXPERIENCE SECTION */
+  .experienceSection {
+    justify-content: flex-start;
+  }
+
+  .experienceValue {
+    width: 1.75rem;
+  }
 
   /* DELETE QUEST BUTTON */
   .deleteQuestButton {

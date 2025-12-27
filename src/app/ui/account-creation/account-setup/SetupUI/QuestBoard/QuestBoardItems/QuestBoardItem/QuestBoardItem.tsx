@@ -135,7 +135,7 @@ export default function QuestBoardItem({
 
         {/* EXPERIENCE */}
         <div className={styles.experienceSection}>
-          <Paragraph size="24-responsive" color="background">
+          <Paragraph size="24-responsive" color="background" className={styles.experienceValue}>
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
             {quest.experiencePointValue}
           </Paragraph>
