@@ -9,6 +9,15 @@
   visibility: hidden;
 }
 
+/* QUEST ORDER TOGGLE BUTTONS */
+.questOrderToggleButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+
+/* QUEST DETAILS */
 .questDetails {
   display: flex;
   flex-direction: column;

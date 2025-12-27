@@ -107,24 +107,24 @@ export default function QuestItem({
         <Heading as="h4" color="background" className={styles.questName}>
           {quest.name}
         </Heading>
-  
+
         {/* ATTRIBUTES */}
         <Paragraph size="20" color="background">
           {sortAffectedAttributes(quest.affectedAttributes)
             .map((attr) => getAttributeDisplayString(attr))
             .join(", ")}
         </Paragraph>
-  
+
         {/* STREAK */}
         <Paragraph size="20" color="background">
           Streak: 0
         </Paragraph>
-  
+
         {/* STRENGTH */}
         <Paragraph size="20" color="background">
           Strength: 0 — E
         </Paragraph>
-  
+
         {/* EXPERIENCE */}
         <div className={styles.experienceSection}>
           <Paragraph size="20" color="background">
@@ -145,7 +145,7 @@ export default function QuestItem({
             />
           </div>
         </div>
-  
+
         {/* DELETE BUTTON */}
         <ButtonWrapper
           className={styles.deleteQuestButton}
