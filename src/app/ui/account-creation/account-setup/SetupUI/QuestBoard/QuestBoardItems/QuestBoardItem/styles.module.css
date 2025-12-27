@@ -107,6 +107,10 @@
     align-items: center;
   }
 
+  .questName {
+    font-size: 1.75rem;
+  }
+
   /* EXPERIENCE SECTION */
 
   /* DELETE QUEST BUTTON */
