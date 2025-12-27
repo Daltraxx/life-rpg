@@ -2,10 +2,10 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import QuestItem from "./QuestBoardItem/QuestBoardItem";
 import styles from "./styles.module.css";
-import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { clsx } from "clsx";
 
 interface QuestBoardItemsProps {
+  className?: string;
   quests: Quest[];
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
@@ -16,13 +16,14 @@ interface QuestBoardItemsProps {
 }
 
 export default function QuestBoardItems({
+  className,
   quests,
   onDeleteQuest,
   onQuestOrderChange,
   onExperiencePointValueChange,
 }: QuestBoardItemsProps) {
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, className)}>
       <div className={clsx(styles.headerRow, styles.largerScreenOnly)}>
         <Paragraph size="24" color="background">
           Quest

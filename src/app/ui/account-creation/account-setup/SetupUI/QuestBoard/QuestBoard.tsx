@@ -1,5 +1,6 @@
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import styles from "./styles.module.css";
+import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import QuestBoardItems from "./QuestBoardItems/QuestBoardItems";
 
@@ -33,6 +34,7 @@ export default function QuestBoard({
           onDeleteQuest={onDeleteQuest}
           onQuestOrderChange={onQuestOrderChange}
           onExperiencePointValueChange={onExperiencePointValueChange}
+          className={gridVars.gridVars}
         />
       </div>
     </section>
