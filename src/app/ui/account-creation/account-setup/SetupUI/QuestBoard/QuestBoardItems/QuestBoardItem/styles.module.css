@@ -20,6 +20,10 @@
   visibility: hidden;
 }
 
+.largerScreenOnly {
+  display: none;
+}
+
 /* QUEST ORDER TOGGLE BUTTONS */
 .questOrderToggleButtons {
   display: flex;
@@ -74,19 +78,55 @@
 }
 
 @media (min-width: 900px) {
-  .questItem {
-    grid-template-columns: var(--full-grid-template-columns);
-    column-gap: var(--column-gap);
+  .smallScreenOnly {
+    display: none;
   }
 
+  .largerScreenOnly {
+    display: block;
+  }
+
+  .questItem {
+    min-height: 2rem;
+    grid-template-columns: var(--full-grid-template-columns);
+    column-gap: var(--column-gap);
+    align-items: center;
+  }
+
+  /* QUEST ORDER TOGGLE BUTTONS */
   .questOrderToggleButtons {
     grid-column: 1;
   }
 
+  /* QUEST DETAILS */
   .questDetails {
     grid-column: 2 / -1;
     display: grid;
     grid-template-columns: var(--grid-template-columns-quest-details);
     column-gap: var(--column-gap);
+    align-items: center;
+  }
+
+  /* EXPERIENCE SECTION */
+
+  /* DELETE QUEST BUTTON */
+  .deleteQuestButton {
+    height: 1.75rem;
+    aspect-ratio: 1.5 / 1;
+    cursor: pointer;
+  }
+  .deleteQuestButton path {
+    fill: var(--background, #fafafa);
+  }
+  .deleteQuestButton:focus-visible {
+    outline: 2px solid var(--gold-400, #ffb800);
+    outline-offset: -2px;
+  }
+  .deleteQuestButton:hover:not(:disabled) path {
+    fill: var(--gold-400, #ffb800);
+  }
+  .deleteQuestIcon {
+    height: 100%;
+    width: 100%;
   }
 }

@@ -13,6 +13,8 @@ import useSetElementHeight from "@/app/ui/utils/hooks/useSetElementHeight";
 import useSetCSSProperty from "@/app/ui/utils/hooks/useSetCSSProperty";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 
 const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50; // Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
 const DELETE_ANIMATION_DURATION_MS = 500; // Match CSS transition duration
@@ -78,7 +80,11 @@ export default function QuestBoardItem({
   // TODO: Allow user to hold down experience buttons for continuous increment/decrement
   return (
     <div
-      className={clsx(styles.questItem, isRemoving && styles.removing, className)}
+      className={clsx(
+        styles.questItem,
+        isRemoving && styles.removing,
+        className
+      )}
       ref={itemElementRef}
     >
       {/* QUEST ORDER TOGGLE BUTTONS */}
@@ -150,13 +156,28 @@ export default function QuestBoardItem({
 
         {/* DELETE BUTTON */}
         <ButtonWrapper
-          className={styles.deleteQuestButton}
+          className={clsx(styles.deleteQuestButton, styles.smallScreenOnly)}
           color="background"
           onClick={handleDeleteClick}
           disabled={isRemoving}
         >
           DELETE QUEST
         </ButtonWrapper>
+        <button
+          onClick={handleDeleteClick}
+          className={clsx(
+            styles.deleteQuestButton,
+            styles.largerScreenOnly
+          )}
+          aria-label={`Delete quest ${quest.name}`}
+          disabled={isRemoving}
+        >
+          <FontAwesomeIcon
+            icon={faRectangleXmark}
+            className={styles.deleteQuestIcon}
+            aria-hidden="true"
+          />
+        </button>
       </div>
     </div>
   );
