@@ -15,6 +15,7 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
+import useWindowWidth from "@/app/ui/utils/hooks/useWindowWidth";
 
 const DELETE_ANIMATION_DURATION_MS = 500; // Match CSS transition duration
 
@@ -76,6 +77,16 @@ export default function QuestBoardItem({
       setCSSProperty(itemElementRef.current);
     }
   }, [setItemHeight, setCSSProperty]);
+
+  // Reset height CSS variable on window width change to accommodate responsive layout
+  const windowWidth = useWindowWidth();
+  useEffect(() => {
+    if (itemElementRef.current) {
+      // Allow element to resize naturally before measuring height
+      setItemHeight(itemElementRef.current, true);
+      setItemHeight(itemElementRef.current);
+    }
+  }, [windowWidth, setItemHeight]);
 
   // TODO: Allow user to hold down experience buttons for continuous increment/decrement
   return (
