@@ -16,7 +16,6 @@ import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 
-const ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE = 50; // Adjustment allowance to account potential untracked height changes (e.g., addition of order buttons)
 const DELETE_ANIMATION_DURATION_MS = 500; // Match CSS transition duration
 
 const MIN_EXPERIENCE_POINTS = 0;
