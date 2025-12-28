@@ -64,8 +64,9 @@ export default function QuestBoardItem({
     };
   }, []);
 
+
   // Set CSS variable for item height for animation purposes on deletion
-  const setItemHeight = useSetElementHeight(ITEM_HEIGHT_ADJUSTMENT_ALLOWANCE);
+  const setItemHeight = useSetElementHeight();
   const setCSSProperty = useSetCSSProperty(
     "transition-duration",
     `${DELETE_ANIMATION_DURATION_MS}ms`
