@@ -187,6 +187,7 @@ export default function QuestBoardItem({
         </ButtonWrapper>
         {/* larger screens */}
         <button
+          type="button"
           onClick={handleDeleteClick}
           className={clsx(styles.deleteQuestButton, styles.largerScreenOnly)}
           aria-label={`Delete quest ${quest.name}`}
