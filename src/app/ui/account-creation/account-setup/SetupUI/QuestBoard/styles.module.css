@@ -4,24 +4,26 @@
   align-items: center;
   width: 100%;
 }
+
+.questBoard,
+.questBoardContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .questBoard {
   background-color: var(--brown-600, #362009);
   border-radius: var(--border-radius-xs, 2px);
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   padding: 1rem;
   gap: 0.5rem;
 }
+
 .questBoardContent {
   min-height: 4.5rem;
   width: 100%;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   gap: 1rem;
 }
 
