@@ -1,4 +1,4 @@
-/* Grid structure: 7 columns total (1fr gutter + 5×5fr content + 2fr gutter)
+/* Grid structure: 7 columns total (2fr gutter + 5×5fr content + 2fr gutter)
    Header row uses the middle 5 content columns only
    Quest details use columns 2-7 (the 5 content columns + right gutter)
    The outside columns are for order toggles and delete buttons */
