@@ -64,7 +64,6 @@ export default function QuestBoardItem({
     };
   }, []);
 
-
   // Set CSS variable for item height for animation purposes on deletion
   const setItemHeight = useSetElementHeight();
   const setCSSProperty = useSetCSSProperty(
@@ -84,7 +83,11 @@ export default function QuestBoardItem({
     if (itemElementRef.current) {
       // Allow element to resize naturally before measuring height
       setItemHeight(itemElementRef.current, true);
-      setItemHeight(itemElementRef.current);
+      requestAnimationFrame(() => {
+        if (itemElementRef.current) {
+          setItemHeight(itemElementRef.current);
+        }
+      });
     }
   }, [windowWidth, setItemHeight]);
 
@@ -146,7 +149,11 @@ export default function QuestBoardItem({
 
         {/* EXPERIENCE */}
         <div className={styles.experienceSection}>
-          <Paragraph size="24-responsive" color="background" className={styles.experienceValue}>
+          <Paragraph
+            size="24-responsive"
+            color="background"
+            className={styles.experienceValue}
+          >
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
             {quest.experiencePointValue}
           </Paragraph>
