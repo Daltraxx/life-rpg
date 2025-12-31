@@ -12,7 +12,7 @@
   transition: max-height var(--transition-duration) ease-in-out,
     opacity var(--transition-duration) ease-in-out;
 }
-
+/* TODO: smooth out transition finish, slight jump at end */
 .questItem.removing {
   min-height: 0;
   max-height: 0;
