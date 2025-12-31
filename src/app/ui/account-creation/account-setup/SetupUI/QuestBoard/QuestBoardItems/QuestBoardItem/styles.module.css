@@ -61,20 +61,6 @@
   gap: 0.5rem;
 }
 
-/* Potential future implementation for transition */
-/* .questItem {
-  overflow: hidden;
-  display: grid;
-  grid-template-rows: 1fr;
-  transition: grid-template-rows var(--animation-duration) ease-in-out,
-    opacity var(--animation-duration) ease-in-out;
-}
-
-.questItem.removing {
-  grid-template-rows: 0fr;
-  opacity: 0;
-} */
-
 @media (min-width: 900px) {
   .smallScreenOnly {
     display: none;
