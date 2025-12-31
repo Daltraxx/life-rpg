@@ -24,21 +24,21 @@ export default function QuestBoardItems({
 }: QuestBoardItemsProps) {
   return (
     <div className={clsx(styles.container, className)}>
-      <div className={clsx(styles.headerRow, styles.largerScreenOnly)}>
+      <div className={clsx(styles.headerRow, styles.largerScreenOnly)} role="row">
         <div className={styles.headerGrid}>
-          <Paragraph size="30" color="background">
+          <Paragraph size="30" color="background" role="columnheader">
             Quest
           </Paragraph>
-          <Paragraph size="30" color="background">
+          <Paragraph size="30" color="background" role="columnheader">
             Attributes
           </Paragraph>
-          <Paragraph size="30" color="background">
+          <Paragraph size="30" color="background" role="columnheader">
             Streak
           </Paragraph>
-          <Paragraph size="30" color="background">
+          <Paragraph size="30" color="background" role="columnheader">
             Strength
           </Paragraph>
-          <Paragraph size="30" color="background">
+          <Paragraph size="30" color="background" role="columnheader">
             Experience
           </Paragraph>
         </div>
