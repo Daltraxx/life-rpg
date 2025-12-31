@@ -5,27 +5,18 @@
   width: 100%;
 }
 
-.questBoard,
-.questBoardContent {
+.questBoard {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-}
-
-.questBoard {
+  min-height: 7.5rem;
   background-color: var(--brown-600, #362009);
   border-radius: var(--border-radius-xs, 2px);
   width: 100%;
-  padding: 1rem;
+  padding: 1.5rem;
   gap: 0.5rem;
 }
 
-.questBoardContent {
-  min-height: 4.5rem;
-  width: 100%;
-  gap: 1rem;
-}
 
 .noQuestsMessage {
   text-align: center;

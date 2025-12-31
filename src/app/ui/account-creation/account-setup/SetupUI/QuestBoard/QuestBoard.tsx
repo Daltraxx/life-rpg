@@ -27,28 +27,23 @@ export default function QuestBoard({
         Current Quest Board:
       </Heading>
       <div className={styles.questBoard}>
-        <Heading as="h3" color="background" size="30">
-          Quests for today:
-        </Heading>
-        <div className={styles.questBoardContent}>
-          {quests.length > 0 ? (
-            <QuestBoardItems
-              quests={quests}
-              onDeleteQuest={onDeleteQuest}
-              onQuestOrderChange={onQuestOrderChange}
-              onExperiencePointValueChange={onExperiencePointValueChange}
-              className={gridVars.gridVars}
-            />
-          ) : (
-            <Paragraph
-              size="30"
-              color="background"
-              className={styles.noQuestsMessage}
-            >
-              Time to add some quests!
-            </Paragraph>
-          )}
-        </div>
+        {quests.length > 0 ? (
+          <QuestBoardItems
+            quests={quests}
+            onDeleteQuest={onDeleteQuest}
+            onQuestOrderChange={onQuestOrderChange}
+            onExperiencePointValueChange={onExperiencePointValueChange}
+            className={gridVars.gridVars}
+          />
+        ) : (
+          <Paragraph
+            size="30"
+            color="background"
+            className={styles.noQuestsMessage}
+          >
+            Time to add some quests!
+          </Paragraph>
+        )}
       </div>
     </section>
   );
