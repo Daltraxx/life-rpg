@@ -43,11 +43,7 @@ export default function QuestBoardItems({
           </Paragraph>
         </div>
       </div>
-      {quests.length === 0 && (
-        <Paragraph size="30" color="background" className={styles.noQuestsMessage}>
-          Time to add some quests!
-        </Paragraph>
-      )}
+
       {quests.map((quest, i) => (
         <QuestBoardItem
           key={quest.name}

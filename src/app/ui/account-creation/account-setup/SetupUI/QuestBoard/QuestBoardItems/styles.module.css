@@ -11,10 +11,6 @@
   display: none;
 }
 
-.noQuestsMessage {
-  text-align: center;
-}
-
 @media (min-width: 900px) {
   .container {
     display: grid;
@@ -39,10 +35,6 @@
     display: grid;
     grid-template-columns: var(--grid-template-columns-headers);
     column-gap: var(--column-gap);
-  }
-
-  .noQuestsMessage {
-    grid-column: 1 / -1;
   }
 
   .questItem {

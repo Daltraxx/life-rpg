@@ -3,6 +3,7 @@ import styles from "./styles.module.css";
 import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import QuestBoardItems from "./QuestBoardItems/QuestBoardItems";
+import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 
 export interface QuestBoardProps {
   quests: Quest[];
@@ -36,6 +37,15 @@ export default function QuestBoard({
           onExperiencePointValueChange={onExperiencePointValueChange}
           className={gridVars.gridVars}
         />
+        {quests.length === 0 && (
+          <Paragraph
+            size="30"
+            color="background"
+            className={styles.noQuestsMessage}
+          >
+            Time to add some quests!
+          </Paragraph>
+        )}
       </div>
     </section>
   );
