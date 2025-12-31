@@ -9,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 7.5rem;
+  min-height: 8.25rem;
   background-color: var(--brown-600, #362009);
   border-radius: var(--border-radius-xs, 2px);
   width: 100%;
