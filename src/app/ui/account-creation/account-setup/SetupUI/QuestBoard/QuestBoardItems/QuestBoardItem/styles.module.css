@@ -1,5 +1,6 @@
 .questItem {
   width: 100%;
+  max-width: 23rem;
   display: grid;
   grid-template-columns: 1fr 8fr 1fr;
   column-gap: 1rem;
@@ -72,6 +73,7 @@
 
   .questItem {
     min-height: 2rem;
+    max-width: none;
     grid-template-columns: var(--full-grid-template-columns);
     column-gap: var(--column-gap);
     align-items: center;
