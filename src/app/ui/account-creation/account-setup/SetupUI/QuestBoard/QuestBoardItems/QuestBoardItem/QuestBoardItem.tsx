@@ -92,6 +92,7 @@ export default function QuestBoardItem({
   }, [windowWidth, setItemHeight]);
 
   // TODO: Allow user to hold down experience buttons for continuous increment/decrement
+  // TODO: Consider rendering table on larger screens for better accessibility
   return (
     <div
       className={clsx(
