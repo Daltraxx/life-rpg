@@ -14,6 +14,7 @@
   padding: 1rem;
   gap: 0.5rem;
   /* Prevent layout shift when all quests are removed and the "Time to add some quests!" message is displayed */
+  min-height: 9.25rem;
 }
 
 .noQuestsMessage {
