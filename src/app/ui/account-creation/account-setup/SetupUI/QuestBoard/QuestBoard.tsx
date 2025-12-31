@@ -31,7 +31,7 @@ export default function QuestBoard({
           Quests for today:
         </Heading>
         <div className={styles.questBoardContent}>
-          {quests.length > 0 && (
+          {quests.length > 0 ? (
             <QuestBoardItems
               quests={quests}
               onDeleteQuest={onDeleteQuest}
@@ -39,8 +39,7 @@ export default function QuestBoard({
               onExperiencePointValueChange={onExperiencePointValueChange}
               className={gridVars.gridVars}
             />
-          )}
-          {quests.length === 0 && (
+          ) : (
             <Paragraph
               size="30"
               color="background"
