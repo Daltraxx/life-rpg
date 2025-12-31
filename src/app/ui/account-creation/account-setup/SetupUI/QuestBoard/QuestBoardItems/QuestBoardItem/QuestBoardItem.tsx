@@ -17,7 +17,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/app/ui/utils/hooks/useWindowWidth";
 
-const DELETE_ANIMATION_DURATION_MS = 500; // Match CSS transition duration
+const DELETE_ANIMATION_DURATION_MS = 500;
 
 const MIN_EXPERIENCE_POINTS = 0;
 const MAX_EXPERIENCE_POINTS = 100;
