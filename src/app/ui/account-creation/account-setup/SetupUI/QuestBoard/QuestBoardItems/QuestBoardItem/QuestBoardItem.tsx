@@ -127,24 +127,24 @@ export default function QuestBoardItem({
 
       {/* QUEST NAME */}
       <div className={styles.questDetails}>
-        <Heading as="h4" color="background" className={styles.questName}>
+        <Heading as="h4" color="background" className={styles.questName} aria-label="Quest name">
           {quest.name}
         </Heading>
 
         {/* ATTRIBUTES */}
-        <Paragraph size="24-responsive" color="background">
+        <Paragraph size="24-responsive" color="background" aria-label="Affected attributes">
           {sortAffectedAttributes(quest.affectedAttributes)
             .map((attr) => getAttributeDisplayString(attr))
             .join(", ")}
         </Paragraph>
 
         {/* STREAK */}
-        <Paragraph size="24-responsive" color="background">
+        <Paragraph size="24-responsive" color="background" aria-label="Quest streak">
           <span className={styles.smallScreenOnly}>Streak: </span>0
         </Paragraph>
 
         {/* STRENGTH */}
-        <Paragraph size="24-responsive" color="background">
+        <Paragraph size="24-responsive" color="background" aria-label="Quest strength">
           <span className={styles.smallScreenOnly}>Strength: </span>0 — E
         </Paragraph>
 
@@ -154,6 +154,7 @@ export default function QuestBoardItem({
             size="24-responsive"
             color="background"
             className={styles.experienceValue}
+            aria-label="Experience points gained"
           >
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
             {quest.experiencePointValue}
