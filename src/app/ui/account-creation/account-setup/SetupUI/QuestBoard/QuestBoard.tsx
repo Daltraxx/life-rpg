@@ -4,6 +4,7 @@ import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import QuestBoardItems from "./QuestBoardItems/QuestBoardItems";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import { ButtonWrapper } from '../../../../JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers';
 
 export interface QuestBoardProps {
   quests: Quest[];
@@ -45,6 +46,9 @@ export default function QuestBoard({
           </Paragraph>
         )}
       </div>
+      <ButtonWrapper color="blue-700">
+        CONFIRM QUEST BOARD
+      </ButtonWrapper>
     </section>
   );
 }
