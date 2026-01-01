@@ -152,7 +152,17 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     case "CHANGE_QUEST_EXPERIENCE": {
       const { quest, direction } = action.payload;
       if (direction === "up" && state.pointsRemaining <= 0) return state;
-      if (direction === "down" && quest.experiencePointValue <= 0) return state;
+      // Double conditional check on "down" to prevent going below 0 when button is held
+      if (
+        (direction === "down" && quest.experiencePointValue <= 0) ||
+        (direction === "down" && state.pointsRemaining >= 100)
+      ) {
+        console.log("Cannot decrease experience points further");
+        console.log(
+          `Quest current experience: ${quest.experiencePointValue}, Points remaining: ${state.pointsRemaining}`
+        );
+        return state;
+      }
       const updatedQuests = structuredClone(state.quests);
       let questToUpdate = updatedQuests[quest.order];
       // Fallback in case the order index is out of sync. Should not happen.
