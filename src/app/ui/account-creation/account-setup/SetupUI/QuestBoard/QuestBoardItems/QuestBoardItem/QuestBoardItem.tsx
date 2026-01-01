@@ -23,6 +23,9 @@ const DELETE_ANIMATION_DURATION_MS = 500;
 const MIN_EXPERIENCE_POINTS = 0;
 const MAX_EXPERIENCE_POINTS = 100;
 
+const HOLD_INITIAL_DELAY_MS = 300;
+const HOLD_INTERVAL_MS = 100;
+
 interface QuestItemProps {
   quest: Quest;
   index: number;
@@ -69,15 +72,21 @@ export default function QuestBoardItem({
   const {
     handleMouseDown: startIncreasingPoints,
     handleMouseUpOrLeave: stopIncreasingPoints,
-  } = useMouseHold(300, () => {
-    onExperiencePointValueChange(quest, "up");
+  } = useMouseHold(HOLD_INITIAL_DELAY_MS, {
+    onHold: () => {
+      onExperiencePointValueChange(quest, "up");
+    },
+    holdInterval: HOLD_INTERVAL_MS,
   });
 
   const {
     handleMouseDown: startDecreasingPoints,
     handleMouseUpOrLeave: stopDecreasingPoints,
-  } = useMouseHold(300, () => {
-    onExperiencePointValueChange(quest, "down");
+  } = useMouseHold(HOLD_INITIAL_DELAY_MS, {
+    onHold: () => {
+      onExperiencePointValueChange(quest, "down");
+    },
+    holdInterval: HOLD_INTERVAL_MS,
   });
 
   // Set CSS variable for item height for animation purposes on deletion

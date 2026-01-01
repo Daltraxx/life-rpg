@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export default function useMouseHold(holdDelayMs: number, onHold?: () => void) {
+interface UseMouseHoldOptions {
+  onHold?: () => void;
+  holdInterval?: number;
+}
+
+export default function useMouseHold(
+  holdDelayMs: number,
+  { onHold, holdInterval = 100 }: UseMouseHoldOptions = {}
+) {
   const [isHolding, setIsHolding] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -11,10 +19,10 @@ export default function useMouseHold(holdDelayMs: number, onHold?: () => void) {
       setIsHolding(true);
       if (onHold) {
         onHold();
-        intervalRef.current = setInterval(onHold, 100);
+        intervalRef.current = setInterval(onHold, holdInterval);
       }
     }, holdDelayMs);
-  }, [holdDelayMs, onHold]);
+  }, [holdDelayMs, onHold, holdInterval]);
 
   const handleMouseUpOrLeave = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
