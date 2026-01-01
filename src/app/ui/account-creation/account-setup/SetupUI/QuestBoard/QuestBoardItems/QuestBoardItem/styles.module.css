@@ -6,7 +6,6 @@
   column-gap: 1rem;
   /* TRANSITION STYLES FOR ITEM DELETION */
   overflow: hidden;
-  min-height: fit-content;
   max-height: var(--item-height);
   opacity: 1;
   transition: max-height var(--transition-duration) ease-in-out,
