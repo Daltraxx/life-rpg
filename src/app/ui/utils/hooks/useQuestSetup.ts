@@ -1,6 +1,8 @@
 import { useReducer } from "react";
 import { Quest } from "../classesAndInterfaces/AttributesAndQuests";
 
+const TOTAL_EXPERIENCE_POINTS = 100;
+
 /**
  * Represents the possible actions that can be performed on quests.
  *
@@ -155,7 +157,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       // Double conditional check on "down" to prevent going below 0 when button is held
       if (
         (direction === "down" && quest.experiencePointValue <= 0) ||
-        (direction === "down" && state.pointsRemaining >= 100)
+        (direction === "down" && state.pointsRemaining >= TOTAL_EXPERIENCE_POINTS)
       ) {
         console.log("Cannot decrease experience points further");
         console.log(
@@ -241,7 +243,7 @@ export default function useQuestSetup(): UseQuestSetupReturn {
   const [state, dispatch] = useReducer(questReducer, {
     quests: [],
     nextQuestOrderNumber: 0,
-    pointsRemaining: 100,
+    pointsRemaining: TOTAL_EXPERIENCE_POINTS,
   });
 
   return {
