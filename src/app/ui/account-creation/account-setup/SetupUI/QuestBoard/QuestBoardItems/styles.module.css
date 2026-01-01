@@ -12,6 +12,7 @@
 }
 
 @media (min-width: 900px) {
+  /* Main container becomes a grid at larger screens */
   .container {
     display: grid;
     grid-template-columns: var(--full-grid-template-columns);
@@ -22,6 +23,7 @@
     display: block;
   }
 
+  /* Header row spans full width and inherits parent grid for alignment */
   .headerRow {
     grid-row: 1;
     grid-column: 1 / -1;
@@ -30,6 +32,7 @@
     column-gap: var(--column-gap);
   }
 
+  /* Header content excludes first and last columns with its own grid template */
   .headerGrid {
     grid-column: 2 / -2;
     display: grid;
@@ -37,6 +40,7 @@
     column-gap: var(--column-gap);
   }
 
+  /* Quest items span the full width of the container */
   .questItem {
     grid-column: 1 / -1;
   }
