@@ -3,8 +3,11 @@ import styles from "./styles.module.css";
 import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import QuestBoardItems from "./QuestBoardItems/QuestBoardItems";
-import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { ButtonWrapper } from '../../../../JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers';
+import {
+  Paragraph,
+  Span,
+} from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 
 export interface QuestBoardProps {
   quests: Quest[];
@@ -31,13 +34,25 @@ export default function QuestBoard({
       </Heading>
       <div className={styles.questBoard}>
         {quests.length > 0 ? (
-          <QuestBoardItems
-            quests={quests}
-            onDeleteQuest={onDeleteQuest}
-            onQuestOrderChange={onQuestOrderChange}
-            onExperiencePointValueChange={onExperiencePointValueChange}
-            className={gridVars.gridVars}
-          />
+          <>
+            <QuestBoardItems
+              quests={quests}
+              onDeleteQuest={onDeleteQuest}
+              onQuestOrderChange={onQuestOrderChange}
+              onExperiencePointValueChange={onExperiencePointValueChange}
+              className={gridVars.gridVars}
+            />
+            <Span
+              className={styles.pointsRemaining}
+              color="background"
+              size="30-responsive"
+            >
+              Experience Points Remaining:{" "}
+              <span className={styles.pointsRemainingValue}>
+                {pointsRemaining}
+              </span>
+            </Span>
+          </>
         ) : (
           <Paragraph
             size="30"
@@ -48,9 +63,7 @@ export default function QuestBoard({
           </Paragraph>
         )}
       </div>
-      <ButtonWrapper color="blue-700">
-        CONFIRM QUEST BOARD
-      </ButtonWrapper>
+      <ButtonWrapper color="blue-700">CONFIRM QUEST BOARD</ButtonWrapper>
     </section>
   );
 }
