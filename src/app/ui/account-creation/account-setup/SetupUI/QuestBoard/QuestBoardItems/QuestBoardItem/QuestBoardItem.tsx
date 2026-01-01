@@ -65,6 +65,21 @@ export default function QuestBoardItem({
     };
   }, []);
 
+  // Handle mouse hold for increasing/decreasing experience points
+  const {
+    handleMouseDown: startIncreasingPoints,
+    handleMouseUpOrLeave: stopIncreasingPoints,
+  } = useMouseHold(300, () => {
+    onExperiencePointValueChange(quest, "up");
+  });
+
+  const {
+    handleMouseDown: startDecreasingPoints,
+    handleMouseUpOrLeave: stopDecreasingPoints,
+  } = useMouseHold(300, () => {
+    onExperiencePointValueChange(quest, "down");
+  });
+
   // Set CSS variable for item height for animation purposes on deletion
   const setItemHeight = useSetElementHeight();
   const setCSSProperty = useSetCSSProperty(
@@ -95,7 +110,7 @@ export default function QuestBoardItem({
   const attributesString = sortAffectedAttributes(quest.affectedAttributes)
     .map((attr) => getAttributeDisplayString(attr))
     .join(", ");
-  
+
   // TODO: Consider rendering table on larger screens for better accessibility
   return (
     <div
@@ -183,12 +198,18 @@ export default function QuestBoardItem({
               aria-label="Increase experience"
               size={20}
               onClick={() => onExperiencePointValueChange(quest, "up")}
+              onMouseDown={startIncreasingPoints}
+              onMouseUp={stopIncreasingPoints}
+              onMouseLeave={stopIncreasingPoints}
               disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
             />
             <ChevronDownButton
               aria-label="Decrease experience"
               size={20}
               onClick={() => onExperiencePointValueChange(quest, "down")}
+              onMouseDown={startDecreasingPoints}
+              onMouseUp={stopDecreasingPoints}
+              onMouseLeave={stopDecreasingPoints}
               disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
             />
           </div>
