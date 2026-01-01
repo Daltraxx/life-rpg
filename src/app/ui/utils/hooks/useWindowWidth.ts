@@ -18,15 +18,25 @@ import { useState, useEffect, useRef } from "react";
  * const width = useWindowWidth();
  * const isNarrow = width < 768;
  */
-export default function useWindowWidth(): number {
+export default function useWindowWidth(debounceMs: number = 0): number {
   const [windowWidth, setWindowWidth] = useState(0);
   const frameRef = useRef<number | null>(null);
+  const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     setWindowWidth(window.innerWidth);
     const handleResize = () => {
+      if (debounceMs > 0) {
+        if (timeoutRef.current !== null)
+          window.clearTimeout(timeoutRef.current);
+        timeoutRef.current = window.setTimeout(() => {
+          setWindowWidth(window.innerWidth);
+          timeoutRef.current = null;
+        }, debounceMs);
+        return;
+      }
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
       frameRef.current = requestAnimationFrame(() => {
         setWindowWidth(window.innerWidth);
