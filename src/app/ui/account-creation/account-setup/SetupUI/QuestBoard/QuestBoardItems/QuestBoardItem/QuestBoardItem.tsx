@@ -91,6 +91,10 @@ export default function QuestBoardItem({
     }
   }, [windowWidth, setItemHeight]);
 
+  const attributesString = sortAffectedAttributes(quest.affectedAttributes)
+    .map((attr) => getAttributeDisplayString(attr))
+    .join(", ");
+
   // TODO: Allow user to hold down experience buttons for continuous increment/decrement
   // TODO: Consider rendering table on larger screens for better accessibility
   return (
@@ -127,24 +131,39 @@ export default function QuestBoardItem({
 
       {/* QUEST NAME */}
       <div className={styles.questDetails}>
-        <Heading as="h4" color="background" className={styles.questName} aria-label="Quest name">
+        <Heading
+          as="h4"
+          color="background"
+          className={styles.questName}
+          aria-label={`Quest name: ${quest.name}`}
+        >
           {quest.name}
         </Heading>
 
         {/* ATTRIBUTES */}
-        <Paragraph size="24-responsive" color="background" aria-label="Affected attributes">
-          {sortAffectedAttributes(quest.affectedAttributes)
-            .map((attr) => getAttributeDisplayString(attr))
-            .join(", ")}
+        <Paragraph
+          size="24-responsive"
+          color="background"
+          aria-label={`Affected attributes: ${attributesString}`}
+        >
+          {attributesString}
         </Paragraph>
 
         {/* STREAK */}
-        <Paragraph size="24-responsive" color="background" aria-label="Quest streak">
+        <Paragraph
+          size="24-responsive"
+          color="background"
+          aria-label="Quest streak: 0"
+        >
           <span className={styles.smallScreenOnly}>Streak: </span>0
         </Paragraph>
 
         {/* STRENGTH */}
-        <Paragraph size="24-responsive" color="background" aria-label="Quest strength">
+        <Paragraph
+          size="24-responsive"
+          color="background"
+          aria-label="Quest strength: 0 — E"
+        >
           <span className={styles.smallScreenOnly}>Strength: </span>0 — E
         </Paragraph>
 
@@ -154,7 +173,7 @@ export default function QuestBoardItem({
             size="24-responsive"
             color="background"
             className={styles.experienceValue}
-            aria-label="Experience points gained"
+            aria-label={`Experience points: ${quest.experiencePointValue}`}
           >
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
             {quest.experiencePointValue}
