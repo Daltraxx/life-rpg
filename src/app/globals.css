@@ -35,6 +35,8 @@
 
   --white: #ffffff;
 
+  --shadow-md: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
   /* For use in calculating viewport height in create-account page */
   --create-account-header-height: 6.5rem;
   --create-account-footer-height-mobile: 10.75rem;
