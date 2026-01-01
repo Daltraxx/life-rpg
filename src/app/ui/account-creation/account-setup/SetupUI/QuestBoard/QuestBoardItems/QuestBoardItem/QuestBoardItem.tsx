@@ -16,6 +16,7 @@ import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/app/ui/utils/hooks/useWindowWidth";
+import useMouseHold from "@/app/ui/utils/hooks/useMouseHold";
 
 const DELETE_ANIMATION_DURATION_MS = 500;
 
@@ -63,6 +64,20 @@ export default function QuestBoardItem({
       }
     };
   }, []);
+
+  const {
+    handleMouseDown: increasePoints,
+    handleMouseUpOrLeave: stopIncreasingPoints,
+  } = useMouseHold(200, () => {
+    console.log("Increase experience point value hold triggered");
+  });
+
+  const {
+    handleMouseDown: decreasePoints,
+    handleMouseUpOrLeave: stopDecreasingPoints,
+  } = useMouseHold(200, () => {
+    console.log("Decrease experience point value hold triggered");
+  });
 
   // Set CSS variable for item height for animation purposes on deletion
   const setItemHeight = useSetElementHeight();
@@ -183,12 +198,18 @@ export default function QuestBoardItem({
               aria-label="Increase experience"
               size={20}
               onClick={() => onExperiencePointValueChange(quest, "up")}
+              onMouseDown={increasePoints}
+              onMouseUp={stopIncreasingPoints}
+              onMouseLeave={stopIncreasingPoints}
               disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
             />
             <ChevronDownButton
               aria-label="Decrease experience"
               size={20}
               onClick={() => onExperiencePointValueChange(quest, "down")}
+              onMouseDown={decreasePoints}
+              onMouseUp={stopDecreasingPoints}
+              onMouseLeave={stopDecreasingPoints}
               disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
             />
           </div>
