@@ -1,15 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 export default function useMouseHold(
-  holdDelayMs: number,
-  onHold: () => void,
-  onCancel?: () => void
+  holdDelayMs: number
 ) {
   const [isHolding, setIsHolding] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleMouseDown = useCallback(() => {
-    console.log("Mouse down - starting hold timer");
     timeoutRef.current = setTimeout(() => {
       setIsHolding(true);
     }, holdDelayMs);
@@ -21,16 +18,7 @@ export default function useMouseHold(
       timeoutRef.current = null;
     }
     setIsHolding(false);
-    if (onCancel) onCancel();
   }, []);
-
-  // Trigger onHold callback when isHolding changes to true
-  useEffect(() => {
-    if (isHolding) {
-      console.log("Held down - executing onHold callback");
-      onHold();
-    }
-  }, [isHolding, onHold]);
 
   // Cleanup timeout on unmount
   useEffect(() => {
@@ -42,6 +30,7 @@ export default function useMouseHold(
   }, []);
 
   return {
+    isHolding,
     handleMouseDown,
     handleMouseUpOrLeave,
   };
