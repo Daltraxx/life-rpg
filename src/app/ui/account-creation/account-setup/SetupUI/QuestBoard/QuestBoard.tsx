@@ -48,6 +48,7 @@ export default function QuestBoard({
               size="30-responsive"
             >
               Experience Points Remaining:{" "}
+              {/* TODO: consider adding visual feedback when pointsRemaining reaches zero */}
               <span className={styles.pointsRemainingValue}>
                 {pointsRemaining}
               </span>
