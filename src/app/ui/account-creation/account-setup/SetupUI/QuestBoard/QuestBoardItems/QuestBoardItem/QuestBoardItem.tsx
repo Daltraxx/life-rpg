@@ -201,6 +201,7 @@ export default function QuestBoardItem({
           color="background"
           onClick={handleDeleteClick}
           disabled={isRemoving}
+          aria-label={`Delete quest ${quest.name}`}
         >
           DELETE QUEST
         </ButtonWrapper>
