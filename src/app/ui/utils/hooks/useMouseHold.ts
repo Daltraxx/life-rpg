@@ -5,6 +5,37 @@ interface UseMouseHoldOptions {
   holdInterval?: number;
 }
 
+/**
+ * Custom hook for handling mouse hold interactions with customizable delay and repeat intervals.
+ * 
+ * @param holdDelayMs - The delay in milliseconds before the hold action is triggered
+ * @param options - Configuration options for the hook
+ * @param options.onHold - Callback function to execute when the mouse is held down
+ * @param options.holdInterval - The interval in milliseconds between repeated `onHold` calls (default: 100ms)
+ * 
+ * @returns An object containing:
+ * @returns {boolean} isHolding - Whether the mouse is currently being held
+ * @returns {() => void} handleMouseDown - Event handler for mouse down events
+ * @returns {() => void} handleMouseUpOrLeave - Event handler for mouse up and mouse leave events
+ * 
+ * @example
+ * ```tsx
+ * const { isHolding, handleMouseDown, handleMouseUpOrLeave } = useMouseHold(500, {
+ *   onHold: () => console.log('Holding!'),
+ *   holdInterval: 200
+ * });
+ * 
+ * return (
+ *   <button
+ *     onMouseDown={handleMouseDown}
+ *     onMouseUp={handleMouseUpOrLeave}
+ *     onMouseLeave={handleMouseUpOrLeave}
+ *   >
+ *     {isHolding ? 'Holding...' : 'Press and hold'}
+ *   </button>
+ * );
+ * ```
+ */
 export default function useMouseHold(
   holdDelayMs: number,
   { onHold, holdInterval = 100 }: UseMouseHoldOptions = {}
