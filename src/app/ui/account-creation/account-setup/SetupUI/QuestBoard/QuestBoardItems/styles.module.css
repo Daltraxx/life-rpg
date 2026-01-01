@@ -16,6 +16,7 @@
   .container {
     display: grid;
     grid-template-columns: var(--full-grid-template-columns);
+    row-gap: 1rem;
     column-gap: var(--column-gap);
   }
 
