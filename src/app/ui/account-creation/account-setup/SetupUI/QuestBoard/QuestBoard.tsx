@@ -8,6 +8,7 @@ import { ButtonWrapper } from '../../../../JSXWrappers/ButtonLikeWrappers/Button
 
 export interface QuestBoardProps {
   quests: Quest[];
+  pointsRemaining: number;
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperiencePointValueChange: (
@@ -18,6 +19,7 @@ export interface QuestBoardProps {
 
 export default function QuestBoard({
   quests,
+  pointsRemaining,
   onDeleteQuest,
   onQuestOrderChange,
   onExperiencePointValueChange,

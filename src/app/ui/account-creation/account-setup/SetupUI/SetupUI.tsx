@@ -32,6 +32,7 @@ export default function SetupUI() {
   const {
     quests,
     nextQuestOrderNumber,
+    pointsRemaining,
     actions: questActions,
   } = questManagement;
 
@@ -55,6 +56,7 @@ export default function SetupUI() {
       </div>
       <QuestBoard
         quests={quests}
+        pointsRemaining={pointsRemaining}
         onDeleteQuest={questActions.deleteQuest}
         onQuestOrderChange={questActions.questOrderChange}
         onExperiencePointValueChange={questActions.experiencePointValueChange}
