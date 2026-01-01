@@ -1,37 +1,8 @@
 import { useReducer } from "react";
 import { Quest } from "../classesAndInterfaces/AttributesAndQuests";
 
+// Total experience points available for allocation across all quests
 const TOTAL_EXPERIENCE_POINTS = 100;
-
-/**
- * Represents the possible actions that can be performed on quests.
- *
- * @typedef {Object} QuestAction
- * @property {Object} ADD_QUEST - Adds a new quest to the collection
- * @property {Quest} ADD_QUEST.payload - The quest to be added
- *
- * @property {Object} DELETE_QUEST - Removes a quest from the collection
- * @property {Quest} DELETE_QUEST.payload - The quest to be deleted
- *
- * @property {Object} CHANGE_QUEST_ORDER - Reorders a quest in the collection
- * @property {Quest} CHANGE_QUEST_ORDER.payload.quest - The quest to be reordered
- * @property {"up" | "down"} CHANGE_QUEST_ORDER.payload.direction - The direction to move the quest
- *
- * @property {Object} CHANGE_QUEST_EXPERIENCE - Modifies the experience value of a quest
- * @property {Quest} CHANGE_QUEST_EXPERIENCE.payload.quest - The quest to adjust
- * @property {"up" | "down"} CHANGE_QUEST_EXPERIENCE.payload.direction - The direction to adjust experience (increase or decrease)
- */
-type QuestAction =
-  | { type: "ADD_QUEST"; payload: Quest }
-  | { type: "DELETE_QUEST"; payload: Quest }
-  | {
-      type: "CHANGE_QUEST_ORDER";
-      payload: { quest: Quest; direction: "up" | "down" };
-    }
-  | {
-      type: "CHANGE_QUEST_EXPERIENCE";
-      payload: { quest: Quest; direction: "up" | "down" };
-    };
 
 /**
  * Represents the state of quests in the application.
@@ -45,6 +16,21 @@ interface QuestState {
   nextQuestOrderNumber: number;
   pointsRemaining: number;
 }
+
+/**
+ * Represents the possible actions that can be performed on QuestState.
+ */
+type QuestAction =
+  | { type: "ADD_QUEST"; payload: Quest }
+  | { type: "DELETE_QUEST"; payload: Quest }
+  | {
+      type: "CHANGE_QUEST_ORDER";
+      payload: { quest: Quest; direction: "up" | "down" };
+    }
+  | {
+      type: "CHANGE_QUEST_EXPERIENCE";
+      payload: { quest: Quest; direction: "up" | "down" };
+    };
 
 /**
  * Reducer function for managing quest state transitions.
