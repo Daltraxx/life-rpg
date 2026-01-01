@@ -7,6 +7,7 @@ export default function useMouseHold(
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleMouseDown = useCallback(() => {
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
     timeoutRef.current = setTimeout(() => {
       setIsHolding(true);
     }, holdDelayMs);
