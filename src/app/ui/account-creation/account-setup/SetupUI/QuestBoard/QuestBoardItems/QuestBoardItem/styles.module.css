@@ -121,7 +121,7 @@
     outline: 2px solid var(--gold-400, #ffb800);
     outline-offset: -2px;
   }
-  .deleteQuestButton:hover:not(:disabled) path {
+  .deleteQuestButton:hover path {
     fill: var(--gold-400, #ffb800);
   }
   .deleteQuestIcon {
