@@ -65,6 +65,6 @@ export default function useWindowWidth(debounceMs: number = 0): number {
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
       if (timeoutRef.current !== null) window.clearTimeout(timeoutRef.current);
     };
-  }, []);
+  }, [debounceMs]);
   return windowWidth;
 }
