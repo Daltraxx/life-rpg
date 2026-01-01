@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 
-
 /**
  * React hook that provides the current window width (in pixels) and updates on resize.
  *
@@ -38,23 +37,28 @@ export default function useWindowWidth(debounceMs: number = 0): number {
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     setWindowWidth(window.innerWidth);
+
     const handleResize = () => {
+      // Debounced resize handling
       if (debounceMs > 0) {
         if (timeoutRef.current !== null)
           window.clearTimeout(timeoutRef.current);
+
         timeoutRef.current = window.setTimeout(() => {
           setWindowWidth(window.innerWidth);
           timeoutRef.current = null;
         }, debounceMs);
+
         return;
       }
+      // requestAnimationFrame-based resize handling
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
       frameRef.current = requestAnimationFrame(() => {
         setWindowWidth(window.innerWidth);
       });
     };
+
     window.addEventListener("resize", handleResize, { passive: true });
     return () => {
       window.removeEventListener("resize", handleResize);
