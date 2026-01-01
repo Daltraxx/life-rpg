@@ -1,22 +1,35 @@
 import { useState, useEffect, useRef } from "react";
 
+
 /**
- * Returns the current browser window width in pixels and updates on resize.
+ * React hook that provides the current window width (in pixels) and updates on resize.
  *
- * On mount, it reads `window.innerWidth` and subscribes to the `resize` event.
- * Resize updates are coalesced to the next animation frame via `requestAnimationFrame`
- * to reduce render frequency and avoid layout thrashing. The event listener and any
- * pending animation frame are cleaned up on unmount.
+ * The hook sets the initial width on mount (if running in a browser) and subscribes to the
+ * window "resize" event to keep the value up-to-date. By default updates are scheduled
+ * via requestAnimationFrame to avoid layout thrashing; optionally, a debounce delay (in ms)
+ * can be provided to batch rapid resize events using setTimeout.
  *
- * Remarks:
- * - The initial value is `0` until the effect runs on the client.
- * - This hook relies on the `window` object and should be used in a browser environment.
+ * The hook is safe for server-side rendering: it returns 0 on the server and only reads
+ * window.innerWidth when executed in a browser environment.
  *
- * @returns The current window width in CSS pixels.
+ * Cleanup: the resize listener is removed on unmount, and any pending animation frame
+ * or timeout is cancelled.
+ *
+ * @param debounceMs - Optional debounce delay in milliseconds. If > 0, resize updates are
+ *                     debounced by this delay. If 0 (default), updates are scheduled with
+ *                     requestAnimationFrame for smoother, non-blocking updates.
+ * @returns The current window width in pixels. On the server (or before mount) this will be 0.
  *
  * @example
+ * ```tsx
+ * // Example usage inside a component
  * const width = useWindowWidth();
- * const isNarrow = width < 768;
+ * const isMobile = width < 768;
+ * ```
+ *
+ * @remarks
+ * - Uses a passive resize event listener for better scrolling performance where supported.
+ * - Cancels any pending animation frame or timeout when the component unmounts.
  */
 export default function useWindowWidth(debounceMs: number = 0): number {
   const [windowWidth, setWindowWidth] = useState(0);
@@ -46,6 +59,7 @@ export default function useWindowWidth(debounceMs: number = 0): number {
     return () => {
       window.removeEventListener("resize", handleResize);
       if (frameRef.current !== null) cancelAnimationFrame(frameRef.current);
+      if (timeoutRef.current !== null) window.clearTimeout(timeoutRef.current);
     };
   }, []);
   return windowWidth;
