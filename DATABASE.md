@@ -52,6 +52,7 @@ Full table can be found on the Supabase dashboard.
   - Attribute experience points
 - `position`: INT NOT NULL
   - Display order for attribute list (unique per user)
+  - Position is zero-indexed and handled before insertion
 - `created_at`: TIMESTAMP DEFAULT NOW()
   - Creation timestamp
 - `updated_at`: TIMESTAMP DEFAULT NOW()
