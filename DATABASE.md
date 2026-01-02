@@ -44,16 +44,22 @@ Full table can be found on the Supabase dashboard.
   - Unique attribute identifier
 - `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
   - Owner of the attribute
-- `name`: VARCHAR(50) NOT NULL, UNIQUE (user_id, name)
+- `name`: VARCHAR(50) NOT NULL
   - Attribute name (max 50 chars, unique per user)
 - `level`: INT DEFAULT 1
   - Current attribute level
 - `experience`: DECIMAL(10, 2) DEFAULT 0
   - Attribute experience points
+- `position`: INT NOT NULL
+  - Display order for attribute list (unique per user)
 - `created_at`: TIMESTAMP DEFAULT NOW()
   - Creation timestamp
 - `updated_at`: TIMESTAMP DEFAULT NOW()
   - Timestamp of last update
+- UNIQUE (user_id, name)
+  - Ensures attribute names are unique per user
+- UNIQUE (user_id, position)
+  - Ensures each user has unique attribute ordering
 
 **tasks**: Quests assigned by users with frequency, streak, and strength mechanics
 
