@@ -3,8 +3,4 @@
  */
 export type AttributeStrength = "normal" | "plus" | "plusPlus";
 
-export enum AttributeStrengthEnum {
-  Normal = "normal",
-  Plus = "plus",
-  PlusPlus = "plusPlus",
-}
+export const AttributeStrengthValues = ["normal", "plus", "plusPlus"] as const;
