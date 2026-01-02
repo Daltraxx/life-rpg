@@ -5,13 +5,33 @@ import type {
   AffectedAttribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import {
+  ProfileCreationSchema,
+  ProfileCreationState,
+} from "@/utils/validations/profileCreation/profileCreation";
+import { z } from "zod";
+import { redirect } from "next/navigation";
 
 export default async function createProfile(
   userId: string,
   quests: Quest[],
   attributes: Attribute[]
-): Promise<void> {
+): Promise<ProfileCreationState> {
   const supabase = await createSupabaseServerClient();
+
+  // Validate input data
+  const validatedInput = ProfileCreationSchema.safeParse({
+    userId,
+    quests,
+    attributes,
+  });
+
+  if (!validatedInput.success) {
+    return {
+      errors: z.flattenError(validatedInput.error).fieldErrors,
+      message: "Fields not valid. Failed to create profile.",
+    };
+  }
 
   //TODO: consider breaking this up into smaller functions for readability and testability
   //TODO: return errors to caller instead of just logging them
@@ -30,10 +50,14 @@ export default async function createProfile(
 
   if (attributesError) {
     console.error("Error inserting attributes:", attributesError);
-    return;
+    return {
+      message: "Error inserting attributes. Failed to create profile.",
+    };
   } else if (!insertedAttributes) {
     console.error("No attributes were inserted.");
-    return;
+    return {
+      message: "No attributes were inserted. Failed to create profile.",
+    };
   }
   console.log("Inserted attributes:", insertedAttributes);
 
@@ -51,10 +75,14 @@ export default async function createProfile(
     .select("name, id"); // select inserted rows to get their IDs
   if (questsError) {
     console.error("Error inserting quests:", questsError);
-    return;
+    return {
+      message: "Error inserting quests. Profile completion incomplete.",
+    };
   } else if (!insertedQuests) {
     console.error("No quests were inserted.");
-    return;
+    return {
+      message: "No quests were inserted. Profile completion incomplete.",
+    };
   }
   console.log("Inserted quests:", insertedQuests);
 
@@ -75,14 +103,18 @@ export default async function createProfile(
     const questId = questNameToIdMap.get(quest.name);
     if (!questId) {
       console.error(`No quest ID found for quest "${quest.name}".`);
-      return;
+      return {
+        message: `No quest ID found for quest "${quest.name}. Profile completion incomplete.`,
+      };
     }
     const affectedAttributes: AffectedAttribute[] = quest.affectedAttributes;
     for (const { name, strength } of affectedAttributes) {
       const attributeId = attributeToIdMap.get(name);
       if (!attributeId) {
         console.error(`No attribute ID found for attribute "${name}".`);
-        return;
+        return {
+          message: `No attribute ID found for attribute "${name}". Profile completion incomplete.`,
+        };
       }
       tasksAttributesInserts.push({
         user_id: userId,
@@ -99,6 +131,12 @@ export default async function createProfile(
     .insert(tasksAttributesInserts);
   if (taskAttributesError) {
     console.error("Error inserting task-attribute links:", taskAttributesError);
-    return;
+    return {
+      message:
+        "Error inserting task-attribute links. Profile completion incomplete.",
+    };
   }
+
+  // Redirect to dashboard upon successful profile creation
+  redirect("/dashboard"); // TODO: Create page
 }
