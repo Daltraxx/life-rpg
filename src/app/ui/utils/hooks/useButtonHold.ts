@@ -83,7 +83,7 @@ export default function useButtonHold(
         handleMouseDown();
       }
     },
-    [handleMouseDown]
+    [handleMouseDown, onHold]
   );
 
   const handleKeyUp = useCallback(
