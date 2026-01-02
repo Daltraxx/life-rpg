@@ -29,7 +29,7 @@ export default async function AccountSetupPage() {
   return (
     <>
       <Intro authUser={user} />
-      <SetupUI />
+      <SetupUI authUser={user} />
     </>
   );
 }

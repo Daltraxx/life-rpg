@@ -9,7 +9,8 @@ import clsx from "clsx";
 import QuestBoard from "./QuestBoard/QuestBoard";
 import useQuestSetup from "@/app/ui/utils/hooks/useQuestSetup";
 import useAttributeSetup from "@/app/ui/utils/hooks/useAttributeSetup";
-import { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import type { User } from "@supabase/supabase-js";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -18,7 +19,7 @@ const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Fitness", order: 3 },
 ];
 
-export default function SetupUI() {
+export default function SetupUI({ authUser }: { authUser: User }) {
   // Manage available attributes state
   const attributeManagement = useAttributeSetup(INITIAL_ATTRIBUTES);
   const {
