@@ -147,10 +147,6 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         (direction === "down" && quest.experiencePointValue <= 0) ||
         (direction === "down" && state.pointsRemaining >= TOTAL_EXPERIENCE_POINTS)
       ) {
-        console.log("Cannot decrease experience points further");
-        console.log(
-          `Quest current experience: ${quest.experiencePointValue}, Points remaining: ${state.pointsRemaining}`
-        );
         return state;
       }
       const updatedQuests = structuredClone(state.quests);
