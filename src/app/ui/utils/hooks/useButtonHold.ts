@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import type { KeyboardEvent } from "react";
 
 interface UseButtonHoldOptions {
   onHold?: () => void;
@@ -7,24 +8,24 @@ interface UseButtonHoldOptions {
 
 /**
  * Custom hook for handling mouse hold interactions with customizable delay and repeat intervals.
- * 
+ *
  * @param holdDelayMs - The delay in milliseconds before the hold action is triggered
  * @param options - Configuration options for the hook
  * @param options.onHold - Callback function to execute when the mouse is held down
  * @param options.holdInterval - The interval in milliseconds between repeated `onHold` calls (default: 100ms)
- * 
+ *
  * @returns An object containing:
  * @returns {boolean} isHolding - Whether the mouse is currently being held
  * @returns {() => void} handleMouseDown - Event handler for mouse down events
  * @returns {() => void} handleMouseUpOrLeave - Event handler for mouse up and mouse leave events
- * 
+ *
  * @example
  * ```tsx
  * const { isHolding, handleMouseDown, handleMouseUpOrLeave } = useMouseHold(500, {
  *   onHold: () => console.log('Holding!'),
  *   holdInterval: 200
  * });
- * 
+ *
  * return (
  *   <button
  *     onMouseDown={handleMouseDown}
@@ -65,20 +66,27 @@ export default function useButtonHold(
   }, []);
 
   // "Enter" and "Space" key logic
-  const handleKeyDown = useCallback((event: KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleMouseDown();
-    }
-  }, [handleMouseDown]);
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        // Call onHold if present due to default behavior being prevented
+        if (onHold) onHold();
+        handleMouseDown();
+      }
+    },
+    [handleMouseDown]
+  );
 
-  const handleKeyUp = useCallback((event: KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleMouseUpOrLeave();
-    }
-  }, [handleMouseUpOrLeave]);
-
+  const handleKeyUp = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        handleMouseUpOrLeave();
+      }
+    },
+    [handleMouseUpOrLeave]
+  );
 
   // Cleanup timeout on unmount
   useEffect(() => {

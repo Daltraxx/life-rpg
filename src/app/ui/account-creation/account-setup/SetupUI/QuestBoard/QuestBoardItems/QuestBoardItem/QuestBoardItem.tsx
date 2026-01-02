@@ -70,8 +70,10 @@ export default function QuestBoardItem({
 
   // Handle mouse hold for increasing/decreasing experience points
   const {
-    handleMouseDown: startIncreasingPoints,
-    handleMouseUpOrLeave: stopIncreasingPoints,
+    handleMouseDown: startIncreasingPointsOnMouseHold,
+    handleMouseUpOrLeave: stopIncreasingPointsOnMouseHold,
+    handleKeyDown: startIncreasingPointsOnKeyHold,
+    handleKeyUp: stopIncreasingPointsOnKeyHold,
   } = useButtonHold(HOLD_INITIAL_DELAY_MS, {
     onHold: () => {
       onExperiencePointValueChange(quest, "up");
@@ -80,8 +82,10 @@ export default function QuestBoardItem({
   });
 
   const {
-    handleMouseDown: startDecreasingPoints,
-    handleMouseUpOrLeave: stopDecreasingPoints,
+    handleMouseDown: startDecreasingPointsOnMouseHold,
+    handleMouseUpOrLeave: stopDecreasingPointsOnMouseHold,
+    handleKeyDown: startDecreasingPointsOnKeyHold,
+    handleKeyUp: stopDecreasingPointsOnKeyHold,
   } = useButtonHold(HOLD_INITIAL_DELAY_MS, {
     onHold: () => {
       onExperiencePointValueChange(quest, "down");
@@ -207,18 +211,22 @@ export default function QuestBoardItem({
               aria-label="Increase experience"
               size={20}
               onClick={() => onExperiencePointValueChange(quest, "up")}
-              onMouseDown={startIncreasingPoints}
-              onMouseUp={stopIncreasingPoints}
-              onMouseLeave={stopIncreasingPoints}
+              onMouseDown={startIncreasingPointsOnMouseHold}
+              onMouseUp={stopIncreasingPointsOnMouseHold}
+              onMouseLeave={stopIncreasingPointsOnMouseHold}
+              onKeyDown={(event) => startIncreasingPointsOnKeyHold(event)}
+              onKeyUp={(event) => stopIncreasingPointsOnKeyHold(event)}
               disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
             />
             <ChevronDownButton
               aria-label="Decrease experience"
               size={20}
               onClick={() => onExperiencePointValueChange(quest, "down")}
-              onMouseDown={startDecreasingPoints}
-              onMouseUp={stopDecreasingPoints}
-              onMouseLeave={stopDecreasingPoints}
+              onMouseDown={startDecreasingPointsOnMouseHold}
+              onMouseUp={stopDecreasingPointsOnMouseHold}
+              onMouseLeave={stopDecreasingPointsOnMouseHold}
+              onKeyDown={(event) => startDecreasingPointsOnKeyHold(event)}
+              onKeyUp={(event) => stopDecreasingPointsOnKeyHold(event)}
               disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
             />
           </div>
