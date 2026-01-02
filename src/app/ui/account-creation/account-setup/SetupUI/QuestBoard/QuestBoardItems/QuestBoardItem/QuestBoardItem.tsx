@@ -225,8 +225,8 @@ export default function QuestBoardItem({
               onMouseDown={startDecreasingPointsOnMouseHold}
               onMouseUp={stopDecreasingPointsOnMouseHold}
               onMouseLeave={stopDecreasingPointsOnMouseHold}
-              onKeyDown={(event) => startDecreasingPointsOnKeyHold(event)}
-              onKeyUp={(event) => stopDecreasingPointsOnKeyHold(event)}
+              onKeyDown={startDecreasingPointsOnKeyHold}
+              onKeyUp={stopDecreasingPointsOnKeyHold}
               disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
             />
           </div>
