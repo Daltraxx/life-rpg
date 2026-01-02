@@ -16,7 +16,7 @@ export default async function createProfile(
   userId: string,
   quests: Quest[],
   attributes: Attribute[]
-): Promise<ProfileCreationState> {
+): Promise<ProfileCreationState | void> {
   const supabase = await createSupabaseServerClient();
 
   // Validate input data
