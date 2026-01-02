@@ -85,8 +85,12 @@ Full table can be found on the Supabase dashboard.
   - Current strength rank (E-S)
 - `last_completed_date`: DATE
   - Date of last completion
+- `position`: INT NOT NULL
+  - Display order for task list (unique per user)
 - `updated_at`: TIMESTAMP DEFAULT NOW()
   - Timestamp of last update
+- UNIQUE (user_id, position)
+  - Ensures each user has unique task ordering
 
 **task_completions**: Records each task completion with streak and experience earned
 
