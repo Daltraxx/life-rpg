@@ -12,7 +12,7 @@ interface UseButtonHoldOptions {
  *
  * @param holdDelayMs - The delay in milliseconds before the hold action is triggered
  * @param options - Configuration options for the hook
- * @param options.onHold - Callback function to execute when the button is held down
+ * @param options.onHold - Callback function to execute when the button is held down. Must be memoized or stable.
  * @param options.holdInterval - The interval in milliseconds between repeated `onHold` calls (default: 100ms)
  *
  * @returns An object containing:
@@ -21,6 +21,11 @@ interface UseButtonHoldOptions {
  * @returns {() => void} handleMouseUpOrLeave - Event handler for mouse up and mouse leave events
  * @returns {(event: KeyboardEvent) => void} handleKeyDown - Event handler for keyboard down events (Enter/Space)
  * @returns {(event: KeyboardEvent) => void} handleKeyUp - Event handler for keyboard up events (Enter/Space)
+ * 
+ * @remarks
+ * - The hook manages timeouts and intervals to trigger the `onHold` callback after the specified delay
+ * - It cleans up timers on unmount to prevent memory leaks
+ * - onHold must be memoized or stable to avoid unintended behavior
  *
  * @example
  * ```tsx
