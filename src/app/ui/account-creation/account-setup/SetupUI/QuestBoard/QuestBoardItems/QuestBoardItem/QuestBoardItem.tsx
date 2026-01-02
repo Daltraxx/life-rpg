@@ -16,7 +16,7 @@ import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/app/ui/utils/hooks/useWindowWidth";
-import useMouseHold from "@/app/ui/utils/hooks/useButtonHold";
+import useButtonHold from "@/app/ui/utils/hooks/useButtonHold";
 
 const DELETE_ANIMATION_DURATION_MS = 500;
 
@@ -72,7 +72,7 @@ export default function QuestBoardItem({
   const {
     handleMouseDown: startIncreasingPoints,
     handleMouseUpOrLeave: stopIncreasingPoints,
-  } = useMouseHold(HOLD_INITIAL_DELAY_MS, {
+  } = useButtonHold(HOLD_INITIAL_DELAY_MS, {
     onHold: () => {
       onExperiencePointValueChange(quest, "up");
     },
@@ -82,7 +82,7 @@ export default function QuestBoardItem({
   const {
     handleMouseDown: startDecreasingPoints,
     handleMouseUpOrLeave: stopDecreasingPoints,
-  } = useMouseHold(HOLD_INITIAL_DELAY_MS, {
+  } = useButtonHold(HOLD_INITIAL_DELAY_MS, {
     onHold: () => {
       onExperiencePointValueChange(quest, "down");
     },
