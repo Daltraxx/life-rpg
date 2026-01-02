@@ -214,8 +214,8 @@ export default function QuestBoardItem({
               onMouseDown={startIncreasingPointsOnMouseHold}
               onMouseUp={stopIncreasingPointsOnMouseHold}
               onMouseLeave={stopIncreasingPointsOnMouseHold}
-              onKeyDown={(event) => startIncreasingPointsOnKeyHold(event)}
-              onKeyUp={(event) => stopIncreasingPointsOnKeyHold(event)}
+              onKeyDown={startIncreasingPointsOnKeyHold}
+              onKeyUp={stopIncreasingPointsOnKeyHold}
               disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
             />
             <ChevronDownButton
