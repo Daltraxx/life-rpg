@@ -74,8 +74,17 @@ export default async function createProfile(
     const questId = questNameToIdMap.get(quest.name);
     const affectedAttributes: AffectedAttribute[] = quest.affectedAttributes;
 
-    affectedAttributes.forEach(async ({ name, strength }) => {
+    for (const { name, strength } of affectedAttributes) {
+      if (!questId) {
+        console.error(`No quest ID found for quest "${quest.name}". Skipping linking to attribute "${name}".`);
+        continue;
+      }
+
       const attributeId = attributeToIdMap.get(name);
+      if (!attributeId) {
+        console.error(`No attribute ID found for attribute "${name}". Skipping linking to quest "${quest.name}".`);
+        continue;
+      }
 
       const { error: taskAttrError } = await supabase
         .from("task_attributes")
@@ -85,13 +94,13 @@ export default async function createProfile(
           attribute_id: attributeId,
           attribute_power: strength,
         });
+
       if (taskAttrError) {
         console.error(
           `Error linking quest "${quest.name}" to attribute "${name}":`,
           taskAttrError
         );
-        return;
       }
-    });
+    }
   }
 }
