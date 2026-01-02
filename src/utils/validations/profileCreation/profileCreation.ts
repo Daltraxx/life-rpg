@@ -10,3 +10,12 @@ export const ProfileCreationSchema = z.object({
     .array(AttributeSchema)
     .min(1, "At least one attribute is required"),
 });
+
+export type ProfileCreationState = {
+  errors?: {
+    userId?: string[];
+    quests?: string[];
+    attributes?: string[];
+  };
+  message?: string | null;
+};
