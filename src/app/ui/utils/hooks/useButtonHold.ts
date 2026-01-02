@@ -48,6 +48,7 @@ export default function useButtonHold(
 
   const handleMouseDown = useCallback(() => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (intervalRef.current) clearInterval(intervalRef.current);
     timeoutRef.current = setTimeout(() => {
       setIsHoldingButton(true);
       if (onHold) {
@@ -70,6 +71,8 @@ export default function useButtonHold(
     (event: KeyboardEvent) => {
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
+        // Only process the initial keydown, not auto-repeated events
+        if (event.repeat) return;
         // Call onHold if present due to default behavior being prevented
         if (onHold) onHold();
         handleMouseDown();
