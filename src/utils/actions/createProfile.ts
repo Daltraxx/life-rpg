@@ -72,7 +72,7 @@ export default async function createProfile(
   // Link inserted quests to inserted attributes in "task_attributes" table
   for (const quest of quests) {
     const questId = questNameToIdMap.get(quest.name);
-    const affectedAttributes = quest.affectedAttributes;
+    const affectedAttributes: AffectedAttribute[] = quest.affectedAttributes;
 
     affectedAttributes.forEach(async ({ name, strength }) => {
       const attributeId = attributeToIdMap.get(name);
