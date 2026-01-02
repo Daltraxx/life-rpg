@@ -98,6 +98,7 @@ export default async function createProfile(
   });
 
   // Prepare data for inserting into "task_attributes" table
+  // TODO: consider typing tasksAttributesInserts
   const tasksAttributesInserts = [];
   for (const quest of quests) {
     const questId = questNameToIdMap.get(quest.name);
