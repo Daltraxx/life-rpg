@@ -1,6 +1,8 @@
 import { useReducer } from "react";
 import { Quest } from "../classesAndInterfaces/AttributesAndQuests";
 
+// TODO: add structured logging
+
 // Total experience points available for allocation across all quests
 const TOTAL_EXPERIENCE_POINTS = 100;
 
