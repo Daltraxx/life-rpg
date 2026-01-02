@@ -40,42 +40,59 @@ export default function useButtonHold(
   holdDelayMs: number,
   { onHold, holdInterval = 100 }: UseButtonHoldOptions = {}
 ) {
-  const [isHoldingMouse, setIsHoldingMouse] = useState(false);
-  const mouseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const mouseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  // Mouse logic
+  const [isHoldingButton, setIsHoldingButton] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const handleMouseDown = useCallback(() => {
-    if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
-    mouseTimeoutRef.current = setTimeout(() => {
-      setIsHoldingMouse(true);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      setIsHoldingButton(true);
       if (onHold) {
         onHold();
-        mouseIntervalRef.current = setInterval(onHold, holdInterval);
+        intervalRef.current = setInterval(onHold, holdInterval);
       }
     }, holdDelayMs);
   }, [holdDelayMs, onHold, holdInterval]);
 
   const handleMouseUpOrLeave = useCallback(() => {
-    if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
-    if (mouseIntervalRef.current) clearInterval(mouseIntervalRef.current);
-    mouseTimeoutRef.current = null;
-    mouseIntervalRef.current = null;
-    setIsHoldingMouse(false);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    if (intervalRef.current) clearInterval(intervalRef.current);
+    timeoutRef.current = null;
+    intervalRef.current = null;
+    setIsHoldingButton(false);
   }, []);
 
+  // "Enter" and "Space" key logic
+  const handleKeyDown = useCallback((event: KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleMouseDown();
+    }
+  }, [handleMouseDown]);
+
+  const handleKeyUp = useCallback((event: KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleMouseUpOrLeave();
+    }
+  }, [handleMouseUpOrLeave]);
 
 
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
-      if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
-      if (mouseIntervalRef.current) clearInterval(mouseIntervalRef.current);
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+      if (intervalRef.current) clearInterval(intervalRef.current);
     };
   }, []);
 
   return {
-    isHoldingMouse,
+    isHoldingButton,
     handleMouseDown,
     handleMouseUpOrLeave,
+    handleKeyDown,
+    handleKeyUp,
   };
 }
