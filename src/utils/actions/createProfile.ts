@@ -69,38 +69,36 @@ export default async function createProfile(
     questNameToIdMap.set(quest.name, quest.id);
   });
 
-  // Link inserted quests to inserted attributes in "task_attributes" table
+  // Prepare data for inserting into "task_attributes" table
+  const tasksAttributesInserts = [];
   for (const quest of quests) {
     const questId = questNameToIdMap.get(quest.name);
+    if (!questId) {
+      console.error(`No quest ID found for quest "${quest.name}".`);
+      return;
+    }
     const affectedAttributes: AffectedAttribute[] = quest.affectedAttributes;
-
     for (const { name, strength } of affectedAttributes) {
-      if (!questId) {
-        console.error(`No quest ID found for quest "${quest.name}". Skipping linking to attribute "${name}".`);
-        continue;
-      }
-
       const attributeId = attributeToIdMap.get(name);
       if (!attributeId) {
-        console.error(`No attribute ID found for attribute "${name}". Skipping linking to quest "${quest.name}".`);
-        continue;
+        console.error(`No attribute ID found for attribute "${name}".`);
+        return;
       }
-
-      const { error: taskAttrError } = await supabase
-        .from("task_attributes")
-        .insert({
-          user_id: userId,
-          task_id: questId,
-          attribute_id: attributeId,
-          attribute_power: strength,
-        });
-
-      if (taskAttrError) {
-        console.error(
-          `Error linking quest "${quest.name}" to attribute "${name}":`,
-          taskAttrError
-        );
-      }
+      tasksAttributesInserts.push({
+        user_id: userId,
+        task_id: questId,
+        attribute_id: attributeId,
+        attribute_power: strength,
+      });
     }
+  }
+
+  // Link inserted quests to inserted attributes in "task_attributes" table
+  const { error: taskAttributesError } = await supabase
+    .from("task_attributes")
+    .insert(tasksAttributesInserts);
+  if (taskAttributesError) {
+    console.error("Error inserting task-attribute links:", taskAttributesError);
+    return;
   }
 }
