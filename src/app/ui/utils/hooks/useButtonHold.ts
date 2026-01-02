@@ -40,39 +40,41 @@ export default function useButtonHold(
   holdDelayMs: number,
   { onHold, holdInterval = 100 }: UseButtonHoldOptions = {}
 ) {
-  const [isHolding, setIsHolding] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [isHoldingMouse, setIsHoldingMouse] = useState(false);
+  const mouseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mouseIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const handleMouseDown = useCallback(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      setIsHolding(true);
+    if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
+    mouseTimeoutRef.current = setTimeout(() => {
+      setIsHoldingMouse(true);
       if (onHold) {
         onHold();
-        intervalRef.current = setInterval(onHold, holdInterval);
+        mouseIntervalRef.current = setInterval(onHold, holdInterval);
       }
     }, holdDelayMs);
   }, [holdDelayMs, onHold, holdInterval]);
 
   const handleMouseUpOrLeave = useCallback(() => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    timeoutRef.current = null;
-    intervalRef.current = null;
-    setIsHolding(false);
+    if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
+    if (mouseIntervalRef.current) clearInterval(mouseIntervalRef.current);
+    mouseTimeoutRef.current = null;
+    mouseIntervalRef.current = null;
+    setIsHoldingMouse(false);
   }, []);
+
+
 
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (mouseTimeoutRef.current) clearTimeout(mouseTimeoutRef.current);
+      if (mouseIntervalRef.current) clearInterval(mouseIntervalRef.current);
     };
   }, []);
 
   return {
-    isHolding,
+    isHoldingMouse,
     handleMouseDown,
     handleMouseUpOrLeave,
   };
