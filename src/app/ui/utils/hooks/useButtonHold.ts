@@ -7,21 +7,24 @@ interface UseButtonHoldOptions {
 }
 
 /**
- * Custom hook for handling mouse hold interactions with customizable delay and repeat intervals.
+ * Custom hook for handling button hold interactions with customizable delay and repeat intervals.
+ * Supports mouse and keyboard (Enter/Space) interactions.
  *
  * @param holdDelayMs - The delay in milliseconds before the hold action is triggered
  * @param options - Configuration options for the hook
- * @param options.onHold - Callback function to execute when the mouse is held down
+ * @param options.onHold - Callback function to execute when the button is held down
  * @param options.holdInterval - The interval in milliseconds between repeated `onHold` calls (default: 100ms)
  *
  * @returns An object containing:
- * @returns {boolean} isHolding - Whether the mouse is currently being held
+ * @returns {boolean} isHoldingButton - Whether the button is currently being held
  * @returns {() => void} handleMouseDown - Event handler for mouse down events
  * @returns {() => void} handleMouseUpOrLeave - Event handler for mouse up and mouse leave events
+ * @returns {(event: KeyboardEvent) => void} handleKeyDown - Event handler for keyboard down events (Enter/Space)
+ * @returns {(event: KeyboardEvent) => void} handleKeyUp - Event handler for keyboard up events (Enter/Space)
  *
  * @example
  * ```tsx
- * const { isHolding, handleMouseDown, handleMouseUpOrLeave } = useMouseHold(500, {
+ * const { isHoldingButton, handleMouseDown, handleMouseUpOrLeave, handleKeyDown, handleKeyUp } = useButtonHold(500, {
  *   onHold: () => console.log('Holding!'),
  *   holdInterval: 200
  * });
@@ -31,8 +34,10 @@ interface UseButtonHoldOptions {
  *     onMouseDown={handleMouseDown}
  *     onMouseUp={handleMouseUpOrLeave}
  *     onMouseLeave={handleMouseUpOrLeave}
+ *     onKeyDown={handleKeyDown}
+ *     onKeyUp={handleKeyUp}
  *   >
- *     {isHolding ? 'Holding...' : 'Press and hold'}
+ *     {isHoldingButton ? 'Holding...' : 'Press and hold'}
  *   </button>
  * );
  * ```
