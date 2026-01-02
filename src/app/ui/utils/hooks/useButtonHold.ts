@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
-interface UseMouseHoldOptions {
+interface UseButtonHoldOptions {
   onHold?: () => void;
   holdInterval?: number;
 }
@@ -36,9 +36,9 @@ interface UseMouseHoldOptions {
  * );
  * ```
  */
-export default function useMouseHold(
+export default function useButtonHold(
   holdDelayMs: number,
-  { onHold, holdInterval = 100 }: UseMouseHoldOptions = {}
+  { onHold, holdInterval = 100 }: UseButtonHoldOptions = {}
 ) {
   const [isHolding, setIsHolding] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);

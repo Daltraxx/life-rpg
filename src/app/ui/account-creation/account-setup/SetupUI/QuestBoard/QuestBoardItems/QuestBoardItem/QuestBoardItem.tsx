@@ -16,7 +16,7 @@ import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/app/ui/utils/hooks/useWindowWidth";
-import useMouseHold from "@/app/ui/utils/hooks/useMouseHold";
+import useMouseHold from "@/app/ui/utils/hooks/useButtonHold";
 
 const DELETE_ANIMATION_DURATION_MS = 500;
 
