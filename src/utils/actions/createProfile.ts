@@ -104,7 +104,7 @@ export default async function createProfile(
     if (!questId) {
       console.error(`No quest ID found for quest "${quest.name}".`);
       return {
-        message: `No quest ID found for quest "${quest.name}. Profile completion incomplete.`,
+        message: `No quest ID found for quest "${quest.name}". Profile completion incomplete.`,
       };
     }
     const affectedAttributes: AffectedAttribute[] = quest.affectedAttributes;
