@@ -147,6 +147,15 @@ Full table can be found on the Supabase dashboard.
 - UNIQUE (quest_id, attribute_id)
   - Ensures each quest-attribute pair is unique
 
+### Key Features
+
+- Strength rank system (E-S) applies experience multipliers to quest rewards
+- Frequency and rest_frequency fields support flexible habit scheduling
+- Experience shared across user level, individual attributes, and quest streaks
+- Cascading deletes maintain referential integrity when users or quests are removed
+- Trigger upon insertion to Supabase auth.users that inserts user to project users table
+- Function to create user profile with attributes and quests in single atomic transaction
+
 ### Indexes Reference
 
 CREATE INDEX idx_user_attributes_user_id ON user_attributes(user_id);
@@ -157,31 +166,98 @@ CREATE INDEX idx_tasks_attributes_user_id ON quest_attributes(user_id);
 CREATE INDEX idx_task_completions_completed_at ON quest_completions(completed_at);
 CREATE INDEX idx_experience_log_task_id ON experience_log(quest_id);
 
-### Triggers Reference
+### Functions and Triggers Reference
+- Handle New User Signup
+  -- Trigger Function
+  CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
+  RETURNS TRIGGER AS
 
--- Trigger Function
-CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
-RETURNS TRIGGER AS
+  $$
+  BEGIN
+    INSERT INTO public.users (id, email, username)
+    VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username');
+    RETURN NEW;
+  END;
+  $$
 
-$$
-BEGIN
-  INSERT INTO public.users (id, email, username)
-  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username');
-  RETURN NEW;
-END;
-$$
+  LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
 
-LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
+  -- Trigger
+  CREATE TRIGGER after_user_signup_create_user
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
 
--- Trigger
-CREATE TRIGGER after_user_signup_create_user
-AFTER INSERT ON auth.users
-FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
+- Atomic Profile Creation Function
+  -- Define function that takes user_id, array of attribute objects, 
+  -- array of quest objects, and array of quests_attributes 
+  -- for insertion into respective tables in single atomic transaction.
+  -- Duplicate handling and handling existing records should be an issue,
+  -- but is handled just in case.
+  CREATE OR REPLACE FUNCTION create_profile_transaction(
+    p_user_id UUID,
+    p_attributes JSONB,
+    p_quests JSONB,
+    p_quest_attributes JSONB
+  )
+  RETURNS jsonb AS $$
+  DECLARE
+    v_result jsonb;
+  BEGIN
+    WITH 
+    -- Parse and deduplicate attribute inputs
+    attr_input AS (
+      SELECT DISTINCT name, position 
+      FROM jsonb_to_recordset(p_attributes) AS x(name text, position int)
+    ),
 
-### Key Features
+    -- Insert attributes and handle existing ones
+    inserted_attrs AS (
+      INSERT INTO attributes (user_id, name, position)
+      SELECT p_user_id, name, position FROM attr_input
+      ON CONFLICT (user_id, name) DO UPDATE SET position = EXCLUDED.position
+      RETURNING id, name
+    ),
 
-- Strength rank system (E-S) applies experience multipliers to quest rewards
-- Frequency and rest_frequency fields support flexible habit scheduling
-- Experience shared across user level, individual attributes, and quest streaks
-- Cascading deletes maintain referential integrity when users or quests are removed
-- Trigger upon insertion to Supabase auth.users that inserts user to project users table
+    -- Parse and deduplicate quest inputs
+    quest_input AS (
+      SELECT DISTINCT name, experience_share, position 
+      FROM jsonb_to_recordset(p_quests) AS x(name text, experience_share int, position int)
+    ),
+
+    -- Insert quests and handle existing ones
+    inserted_quests AS (
+      INSERT INTO quests (user_id, name, experience_share, position)
+      SELECT p_user_id, name, experience_share, position FROM quest_input
+      ON CONFLICT (user_id, name) DO UPDATE SET position = EXCLUDED.position
+      RETURNING id, name
+    ),
+
+    -- Final insert into junction table using results from above CTEs
+    final_insert AS (
+      INSERT INTO quests_attributes (user_id, quest_id, attribute_id, attribute_power)
+      SELECT 
+        p_user_id, 
+        iq.id, 
+        ia.id, 
+        qa.attribute_power
+      FROM jsonb_to_recordset(p_quest_attributes) AS qa(quest_name text, attribute_name text, attribute_power int)
+      JOIN inserted_quests iq ON qa.quest_name = iq.name
+      JOIN inserted_attrs ia ON qa.attribute_name = ia.name
+      ON CONFLICT (quest_id, attribute_id) DO UPDATE SET attribute_power = EXCLUDED.attribute_power
+    )
+
+    -- Build the response with the newly created IDs
+    SELECT jsonb_build_object(
+      'success', true,
+      'attribute_ids', (SELECT jsonb_agg(id) FROM inserted_attrs),
+      'quest_ids', (SELECT jsonb_agg(id) FROM inserted_quests)
+    ) INTO v_result;
+
+    RETURN v_result;
+
+  EXCEPTION 
+    WHEN OTHERS THEN
+      -- Re-raise with a custom message while preserving the internal SQLSTATE
+      RAISE EXCEPTION 'Transaction failed: % (SQLSTATE: %)', SQLERRM, SQLSTATE;
+  END;
+  $$ LANGUAGE plpgsql;
