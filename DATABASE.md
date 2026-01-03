@@ -150,12 +150,12 @@ Full table can be found on the Supabase dashboard.
 ### Indexes Reference
 
 CREATE INDEX idx_user_attributes_user_id ON user_attributes(user_id);
-CREATE INDEX idx_tasks_user_id ON tasks(user_id);
-CREATE INDEX idx_task_completions_task_id ON task_completions(task_id);
+CREATE INDEX idx_tasks_user_id ON quests(user_id);
+CREATE INDEX idx_task_completions_task_id ON quest_completions(quest_id);
 CREATE INDEX idx_experience_log_user_id ON experience_log(user_id);
-CREATE INDEX idx_tasks_attributes_user_id ON tasks_attributes(user_id);
-CREATE INDEX idx_task_completions_completed_at ON task_completions(completed_at);
-CREATE INDEX idx_experience_log_task_id ON experience_log(task_id);
+CREATE INDEX idx_tasks_attributes_user_id ON quest_attributes(user_id);
+CREATE INDEX idx_task_completions_completed_at ON quest_completions(completed_at);
+CREATE INDEX idx_experience_log_task_id ON experience_log(quest_id);
 
 ### Triggers Reference
 
@@ -180,8 +180,8 @@ FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
 
 ### Key Features
 
-- Strength rank system (E-S) applies experience multipliers to task rewards
+- Strength rank system (E-S) applies experience multipliers to quest rewards
 - Frequency and rest_frequency fields support flexible habit scheduling
-- Experience shared across user level, individual attributes, and task streaks
-- Cascading deletes maintain referential integrity when users or tasks are removed
+- Experience shared across user level, individual attributes, and quest streaks
+- Cascading deletes maintain referential integrity when users or quests are removed
 - Trigger upon insertion to Supabase auth.users that inserts user to project users table
