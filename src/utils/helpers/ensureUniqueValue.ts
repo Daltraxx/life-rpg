@@ -17,7 +17,7 @@
  * ];
  * ensureUniqueValue(duplicates, 'id'); // false
  */
-export default function ensureUniqueValue<T extends Record<string, any>>(
+export default function ensureUniqueValue<T extends Record<string, unknown>>(
   array: T[],
   key: keyof T
 ): boolean {
