@@ -94,6 +94,7 @@ Full table can be found on the Supabase dashboard.
   - Date of last completion
 - `position`: INT NOT NULL
   - Display order for task list (unique per user)
+  - Position is zero-indexed and handled before insertion
 - `updated_at`: TIMESTAMP DEFAULT NOW()
   - Timestamp of last update
 - UNIQUE (user_id, position)
