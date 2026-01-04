@@ -6,3 +6,5 @@ export const AffectedAttributeSchema = z.object({
   name: z.string().trim().min(1, "Attribute name cannot be empty"),
   strength: z.enum(AttributeStrengthValues),
 });
+
+export type AffectedAttribute = z.infer<typeof AffectedAttributeSchema>;
