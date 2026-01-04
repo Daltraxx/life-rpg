@@ -42,7 +42,10 @@ export default async function createProfile(
 ): Promise<ProfileCreationState | void> {
   const supabase = await createSupabaseServerClient();
   // Verify the userId matches the authenticated user
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
   if (authError || !user || user.id !== userId) {
     return {
       message: "Unauthorized action. Cannot create profile for another user.",
@@ -64,12 +67,11 @@ export default async function createProfile(
   }
 
   // Prepare data for insertion into "attributes", "quests", and "quests_attributes" tables
-  const attributesData: CreateProfileTransactionAttributes[] = attributes.map(
-    (attribute) => ({
+  const attributesData: CreateProfileTransactionAttributes[] =
+    validatedInput.data.attributes.map((attribute) => ({
       name: attribute.name,
       position: attribute.order,
-    })
-  );
+    }));
 
   const questsData: CreateProfileTransactionQuests[] = [];
   const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
