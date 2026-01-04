@@ -2,7 +2,7 @@ import { z } from "zod";
 import { AffectedAttributeSchema } from "@/utils/validations/profileCreation/affectedAttribute";
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
 
-// TODO: Further refine schema
+// TODO: Further refine schema (e.g., restrict names to certain characters)
 export const QuestSchema = z.object({
   name: z
     .string()
