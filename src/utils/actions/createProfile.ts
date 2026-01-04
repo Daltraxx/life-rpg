@@ -81,13 +81,13 @@ export default async function createProfile(
 
   const questsData: CreateProfileTransactionQuests[] = [];
   const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
-  validatedQuests.forEach((quest) => {
+  for (const quest of validatedQuests) {
     questsData.push({
       name: quest.name,
       experience_share: quest.experiencePointValue,
       position: quest.order,
     });
-    quest.affectedAttributes.forEach((affectedAttribute: AffectedAttribute) => {
+    for (const affectedAttribute of quest.affectedAttributes) {
       const attributePower = strengthToIntMap[affectedAttribute.strength];
       if (attributePower === undefined) {
         return {
@@ -99,8 +99,8 @@ export default async function createProfile(
         attribute_name: affectedAttribute.name,
         attribute_power: attributePower,
       });
-    });
-  });
+    }
+  }
 
   // Insert data into the database within a transaction
   const { error } = await supabase.rpc("create_profile_transaction", {
