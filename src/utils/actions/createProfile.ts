@@ -85,10 +85,14 @@ export default async function createProfile(
       position: quest.order,
     });
     quest.affectedAttributes.forEach((affectedAttribute: AffectedAttribute) => {
+      const attributePower = strengthToIntMap[affectedAttribute.strength];
+      if (attributePower === undefined) {
+        throw new Error(`Invalid strength value: ${affectedAttribute.strength}`);
+      }
       questsAttributesData.push({
         quest_name: quest.name,
         attribute_name: affectedAttribute.name,
-        attribute_power: strengthToIntMap[affectedAttribute.strength],
+        attribute_power: attributePower,
       });
     });
   });
