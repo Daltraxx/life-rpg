@@ -9,3 +9,5 @@ export const AttributeSchema = z.object({
     .max(30, "Attribute name cannot exceed 30 characters"),
   order: z.int().nonnegative("Order must be a non-negative integer"),
 });
+
+export type Attribute = z.infer<typeof AttributeSchema>;
