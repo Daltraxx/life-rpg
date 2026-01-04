@@ -162,7 +162,7 @@ CREATE INDEX idx_user_attributes_user_id ON user_attributes(user_id);
 CREATE INDEX idx_tasks_user_id ON quests(user_id);
 CREATE INDEX idx_task_completions_task_id ON quest_completions(quest_id);
 CREATE INDEX idx_experience_log_user_id ON experience_log(user_id);
-CREATE INDEX idx_tasks_attributes_user_id ON quest_attributes(user_id);
+CREATE INDEX idx_tasks_attributes_user_id ON quests_attributes(user_id);
 CREATE INDEX idx_task_completions_completed_at ON quest_completions(completed_at);
 CREATE INDEX idx_experience_log_task_id ON experience_log(quest_id);
 
@@ -197,7 +197,7 @@ CREATE INDEX idx_experience_log_task_id ON experience_log(quest_id);
     p_user_id UUID,
     p_attributes JSONB,
     p_quests JSONB,
-    p_quest_attributes JSONB
+    p_quests_attributes JSONB
   )
   RETURNS jsonb AS $$
   DECLARE
@@ -240,7 +240,7 @@ CREATE INDEX idx_experience_log_task_id ON experience_log(quest_id);
         iq.id, 
         ia.id, 
         qa.attribute_power
-      FROM jsonb_to_recordset(p_quest_attributes) AS qa(quest_name text, attribute_name text, attribute_power int)
+      FROM jsonb_to_recordset(p_quests_attributes) AS qa(quest_name text, attribute_name text, attribute_power int)
       JOIN inserted_quests iq ON qa.quest_name = iq.name
       JOIN inserted_attrs ia ON qa.attribute_name = ia.name
       ON CONFLICT (quest_id, attribute_id) DO UPDATE SET attribute_power = EXCLUDED.attribute_power
