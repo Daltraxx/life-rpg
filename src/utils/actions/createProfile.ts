@@ -90,9 +90,9 @@ export default async function createProfile(
     quest.affectedAttributes.forEach((affectedAttribute: AffectedAttribute) => {
       const attributePower = strengthToIntMap[affectedAttribute.strength];
       if (attributePower === undefined) {
-        throw new Error(
-          `Invalid strength value: ${affectedAttribute.strength}`
-        );
+        return {
+          message: `Invalid strength value: ${affectedAttribute.strength}`,
+        };
       }
       questsAttributesData.push({
         quest_name: quest.name,
