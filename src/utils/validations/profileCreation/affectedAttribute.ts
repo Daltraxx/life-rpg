@@ -3,7 +3,11 @@ import { AttributeStrengthValues } from "@/app/ui/utils/types/AttributeStrength"
 
 // TODO: Further refine schema
 export const AffectedAttributeSchema = z.object({
-  name: z.string().trim().min(1, "Attribute name cannot be empty"),
+  name: z
+    .string()
+    .trim()
+    .min(1, "Attribute name cannot be empty")
+    .max(30, "Attribute name cannot exceed 30 characters"),
   strength: z.enum(AttributeStrengthValues, {
     message: "Please select a valid attribute strength",
   }),
