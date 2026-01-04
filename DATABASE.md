@@ -138,7 +138,7 @@ Full table can be found on the Supabase dashboard.
   - Owner of the quest-attribute relationship
 - `quest_id`: INT REFERENCES quests(id) ON DELETE CASCADE
   - Reference to quest
-- `attribute_id`: INT REFERENCES user_attributes(id) ON DELETE CASCADE
+- `attribute_id`: INT REFERENCES attributes(id) ON DELETE CASCADE
   - Reference to attribute
 - `attribute_power`: INT DEFAULT 1
   - Power multiplier for this attribute
