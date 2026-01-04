@@ -27,5 +27,5 @@ export type ProfileCreationState = {
     quests?: string[];
     attributes?: string[];
   };
-  message?: string | null;
+  message?: string;
 };
