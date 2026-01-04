@@ -16,7 +16,8 @@ export interface CreateProfileTransactionQuests {
   position: number;
 }
 
-/** Represents quest-attribute relationship data necessary for a profile transaction rpc call.
+/** 
+ * Represents quest-attribute relationship data necessary for a profile transaction rpc call.
  */
 export interface CreateProfileTransactionQuestsAttributes {
   quest_name: string;
