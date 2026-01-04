@@ -9,8 +9,8 @@ import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
  * - `plus` maps to `2`
  * - `plusPlus` maps to `3`
  */
-export const strengthToIntMap: Record<AttributeStrength, number> = {
+export const strengthToIntMap = {
   normal: 1,
   plus: 2,
   plusPlus: 3,
-};
+} as const satisfies Record<AttributeStrength, number>;
