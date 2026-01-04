@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-// TODO: Further refine schema
+// TODO: Further refine schema (e.g., restrict names to certain characters)
 export const AttributeSchema = z.object({
   name: z
     .string()
