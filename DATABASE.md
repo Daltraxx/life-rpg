@@ -191,7 +191,7 @@ CREATE INDEX idx_experience_log_task_id ON experience_log(quest_id);
   -- Define function that takes user_id, array of attribute objects, 
   -- array of quest objects, and array of quests_attributes 
   -- for insertion into respective tables in single atomic transaction.
-  -- Duplicate handling and handling existing records should be an issue,
+  -- Duplicate handling and handling existing records should not be an issue,
   -- but is handled just in case.
   CREATE OR REPLACE FUNCTION create_profile_transaction(
     p_user_id UUID,
