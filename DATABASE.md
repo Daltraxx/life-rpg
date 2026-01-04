@@ -158,7 +158,7 @@ Full table can be found on the Supabase dashboard.
 
 ### Indexes Reference
 
-CREATE INDEX idx_user_attributes_user_id ON user_attributes(user_id);
+CREATE INDEX idx_attributes_user_id ON attributes(user_id);
 CREATE INDEX idx_tasks_user_id ON quests(user_id);
 CREATE INDEX idx_task_completions_task_id ON quest_completions(quest_id);
 CREATE INDEX idx_experience_log_user_id ON experience_log(user_id);
