@@ -12,6 +12,7 @@ export const QuestSchema = z.object({
   affectedAttributes: z
     .array(AffectedAttributeSchema)
     .min(1, "At least one affected attribute is required")
+    .max(50, "A maximum of 50 affected attributes are allowed")
     .refine(
       (attributes) => {
         return hasUniqueValues(attributes, "name");
