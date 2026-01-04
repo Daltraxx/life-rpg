@@ -4,6 +4,7 @@
  * @param array - The array of objects to check for uniqueness
  * @param key - The key of the property to check for uniqueness
  * @returns True if all values for the specified key are unique, false otherwise
+ * @note For object values, comparison is by reference, not by deep equality
  * @example
  * const users = [
  *   { id: 1, name: 'Alice' },
