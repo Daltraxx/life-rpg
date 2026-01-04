@@ -18,6 +18,23 @@ import type {
 } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 
+/**
+ * Creates a new user profile by validating input data and inserting attributes, quests,
+ * and their relationships into the database using a transactional RPC call.
+ *
+ * @param userId - The unique identifier of the user for whom the profile is being created.
+ * @param quests - An array of Quest objects representing the quests to associate with the profile.
+ * @param attributes - An array of Attribute objects representing the attributes to associate with the profile.
+ * @returns A promise that resolves to a ProfileCreationState object containing errors or a message if validation or database insertion fails,
+ *          or void if the profile is created successfully and the user is redirected.
+ *
+ * @remarks
+ * - Validates the input using `ProfileCreationSchema`.
+ * - Prepares and maps the input data for insertion into the "attributes", "quests", and "quests_attributes" tables.
+ * - Executes a transactional RPC call to insert the data.
+ * - Handles and logs errors, returning appropriate messages.
+ * - Redirects to the dashboard upon successful profile creation.
+ */
 export default async function createProfile(
   userId: string,
   quests: Quest[],
