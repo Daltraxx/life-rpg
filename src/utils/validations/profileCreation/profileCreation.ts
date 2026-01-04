@@ -3,7 +3,6 @@ import { QuestSchema } from "@/utils/validations/profileCreation/quest";
 import { AttributeSchema } from "@/utils/validations/profileCreation/attribute";
 import hasUniqueValues from '@/utils/helpers/hasUniqueValues';
 
-// TODO: Further refine schema
 export const ProfileCreationSchema = z.object({
   userId: z.uuid("Invalid user ID"),
   quests: z
