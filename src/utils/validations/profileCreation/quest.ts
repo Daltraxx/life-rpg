@@ -25,3 +25,5 @@ export const QuestSchema = z.object({
     .nonnegative("Experience point value must be a non-negative integer")
     .max(100, "Experience point value must be at most 100"),
 });
+
+export type Quest = z.infer<typeof QuestSchema>;
