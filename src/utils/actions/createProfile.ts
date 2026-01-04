@@ -41,6 +41,13 @@ export default async function createProfile(
   attributes: Attribute[]
 ): Promise<ProfileCreationState | void> {
   const supabase = await createSupabaseServerClient();
+  // Verify the userId matches the authenticated user
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user || user.id !== userId) {
+    return {
+      message: "Unauthorized action. Cannot create profile for another user.",
+    };
+  }
 
   // Validate input data
   const validatedInput = ProfileCreationSchema.safeParse({
