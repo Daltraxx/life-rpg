@@ -18,9 +18,8 @@ export const QuestSchema = z.object({
       },
       { message: "Affected attribute names must be unique" }
     ),
-  order: z.number().int().nonnegative("Order must be a non-negative integer"),
+  order: z.int().nonnegative("Order must be a non-negative integer"),
   experiencePointValue: z
-    .number()
     .int()
     .nonnegative("Experience point value must be a non-negative integer")
     .max(100, "Experience point value must be at most 100"),
