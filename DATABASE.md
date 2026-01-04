@@ -38,7 +38,7 @@ Full table can be found on the Supabase dashboard.
 - `updated_at`: TIMESTAMP DEFAULT NOW()
   - Timestamp of last update
 
-**user_attributes**: Player-defined attributes that level independently
+**attributes**: Player-defined attributes that level independently
 
 - `id`: SERIAL PRIMARY KEY
   - Unique attribute identifier
