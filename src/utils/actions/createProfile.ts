@@ -67,8 +67,11 @@ export default async function createProfile(
   }
 
   // Prepare data for insertion into "attributes", "quests", and "quests_attributes" tables
-  const { quests: validatedQuests, attributes: validatedAttributes } =
-    validatedInput.data;
+  const {
+    userId: validatedUserId,
+    quests: validatedQuests,
+    attributes: validatedAttributes,
+  } = validatedInput.data;
 
   const attributesData: CreateProfileTransactionAttributes[] =
     validatedAttributes.map((attribute) => ({
@@ -87,7 +90,9 @@ export default async function createProfile(
     quest.affectedAttributes.forEach((affectedAttribute: AffectedAttribute) => {
       const attributePower = strengthToIntMap[affectedAttribute.strength];
       if (attributePower === undefined) {
-        throw new Error(`Invalid strength value: ${affectedAttribute.strength}`);
+        throw new Error(
+          `Invalid strength value: ${affectedAttribute.strength}`
+        );
       }
       questsAttributesData.push({
         quest_name: quest.name,
@@ -99,7 +104,7 @@ export default async function createProfile(
 
   // Insert data into the database within a transaction
   const { error } = await supabase.rpc("create_profile_transaction", {
-    p_user_id: userId,
+    p_user_id: validatedUserId,
     p_attributes: attributesData,
     p_quests: questsData,
     p_quests_attributes: questsAttributesData,
