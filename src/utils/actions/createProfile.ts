@@ -16,6 +16,7 @@ import type {
   CreateProfileTransactionQuests,
   CreateProfileTransactionQuestsAttributes,
 } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
+import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 
 export default async function createProfile(
   userId: string,
@@ -58,7 +59,7 @@ export default async function createProfile(
       questsAttributesData.push({
         quest_name: quest.name,
         attribute_name: affectedAttribute.name,
-        attribute_power: affectedAttribute.strength,
+        attribute_power: strengthToIntMap[affectedAttribute.strength],
       });
     });
   });
