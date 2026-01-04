@@ -11,6 +11,11 @@ import {
 } from "@/utils/validations/profileCreation/profileCreation";
 import { z } from "zod";
 import { redirect } from "next/navigation";
+import type {
+  CreateProfileTransactionAttributes,
+  CreateProfileTransactionQuests,
+  CreateProfileTransactionQuestsAttributes,
+} from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 
 export default async function createProfile(
   userId: string,
@@ -33,108 +38,43 @@ export default async function createProfile(
     };
   }
 
-  //TODO: consider breaking this up into smaller functions for readability and testability
-  //TODO: return errors to caller instead of just logging them
+  // Prepare data for insertion into "attributes", "quests", and "quests_attributes" tables
+  const attributesData: CreateProfileTransactionAttributes[] = attributes.map(
+    (attribute) => ({
+      name: attribute.name,
+      position: attribute.order,
+    })
+  );
 
-  // Insert attributes into "attributes" table
-  const { data: insertedAttributes, error: attributesError } = await supabase
-    .from("attributes")
-    .insert(
-      attributes.map((attribute) => ({
-        user_id: userId,
-        name: attribute.name,
-        position: attribute.order,
-      }))
-    )
-    .select("name, id"); // select inserted rows to get their IDs
-
-  if (attributesError) {
-    console.error("Error inserting attributes:", attributesError);
-    return {
-      message: "Error inserting attributes. Failed to create profile.",
-    };
-  } else if (!insertedAttributes) {
-    console.error("No attributes were inserted.");
-    return {
-      message: "No attributes were inserted. Failed to create profile.",
-    };
-  }
-  console.log("Inserted attributes:", insertedAttributes);
-
-  // Insert quests into "tasks" table
-  const { data: insertedQuests, error: questsError } = await supabase
-    .from("tasks")
-    .insert(
-      quests.map((quest) => ({
-        user_id: userId,
-        name: quest.name,
-        experience_share: quest.experiencePointValue,
-        position: quest.order,
-      }))
-    )
-    .select("name, id"); // select inserted rows to get their IDs
-  if (questsError) {
-    console.error("Error inserting quests:", questsError);
-    return {
-      message: "Error inserting quests. Profile completion incomplete.",
-    };
-  } else if (!insertedQuests) {
-    console.error("No quests were inserted.");
-    return {
-      message: "No quests were inserted. Profile completion incomplete.",
-    };
-  }
-  console.log("Inserted quests:", insertedQuests);
-
-  // Create maps from names to IDs for inserted attributes and quests
-  const attributeToIdMap: Map<string, number> = new Map();
-  insertedAttributes.forEach((attr) => {
-    attributeToIdMap.set(attr.name, attr.id);
-  });
-
-  const questNameToIdMap: Map<string, number> = new Map();
-  insertedQuests.forEach((quest) => {
-    questNameToIdMap.set(quest.name, quest.id);
-  });
-
-  // Prepare data for inserting into "task_attributes" table
-  // TODO: consider typing tasksAttributesInserts
-  const tasksAttributesInserts = [];
-  for (const quest of quests) {
-    const questId = questNameToIdMap.get(quest.name);
-    if (!questId) {
-      console.error(`No quest ID found for quest "${quest.name}".`);
-      return {
-        message: `No quest ID found for quest "${quest.name}". Profile completion incomplete.`,
-      };
-    }
-    const affectedAttributes: AffectedAttribute[] = quest.affectedAttributes;
-    for (const { name, strength } of affectedAttributes) {
-      const attributeId = attributeToIdMap.get(name);
-      if (!attributeId) {
-        console.error(`No attribute ID found for attribute "${name}".`);
-        return {
-          message: `No attribute ID found for attribute "${name}". Profile completion incomplete.`,
-        };
-      }
-      tasksAttributesInserts.push({
-        user_id: userId,
-        task_id: questId,
-        attribute_id: attributeId,
-        attribute_power: strength,
+  const questsData: CreateProfileTransactionQuests[] = [];
+  const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
+  quests.forEach((quest) => {
+    questsData.push({
+      name: quest.name,
+      experience_share: quest.experiencePointValue,
+      position: quest.order,
+    });
+    quest.affectedAttributes.forEach((affectedAttribute: AffectedAttribute) => {
+      questsAttributesData.push({
+        quest_name: quest.name,
+        attribute_name: affectedAttribute.name,
+        attribute_power: affectedAttribute.strength,
       });
-    }
-  }
+    });
+  });
 
-  // Link inserted quests to inserted attributes in "task_attributes" table
-  const { error: taskAttributesError } = await supabase
-    .from("task_attributes")
-    .insert(tasksAttributesInserts);
-  if (taskAttributesError) {
-    console.error("Error inserting task-attribute links:", taskAttributesError);
+  // Insert data into the database within a transaction
+  const { error } = await supabase.rpc("create_profile_transaction", {
+    p_user_id: userId,
+    p_attributes: attributesData,
+    p_quests: questsData,
+    p_quests_attributes: questsAttributesData,
+  });
+
+  if (error) {
+    console.error("Error in profile creation transaction:", error);
     return {
-      message:
-        "Error inserting task-attribute links. Profile completion incomplete.",
+      message: "Failed to create profile. Please try again.",
     };
   }
 
