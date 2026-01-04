@@ -67,15 +67,18 @@ export default async function createProfile(
   }
 
   // Prepare data for insertion into "attributes", "quests", and "quests_attributes" tables
+  const { quests: validatedQuests, attributes: validatedAttributes } =
+    validatedInput.data;
+
   const attributesData: CreateProfileTransactionAttributes[] =
-    validatedInput.data.attributes.map((attribute) => ({
+    validatedAttributes.map((attribute) => ({
       name: attribute.name,
       position: attribute.order,
     }));
 
   const questsData: CreateProfileTransactionQuests[] = [];
   const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
-  quests.forEach((quest) => {
+  validatedQuests.forEach((quest) => {
     questsData.push({
       name: quest.name,
       experience_share: quest.experiencePointValue,
