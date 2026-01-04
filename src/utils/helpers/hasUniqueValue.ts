@@ -9,15 +9,15 @@
  *   { id: 1, name: 'Alice' },
  *   { id: 2, name: 'Bob' }
  * ];
- * ensureUniqueValue(users, 'id'); // true
+ * hasUniqueValues(users, 'id'); // true
  * 
  * const duplicates = [
  *   { id: 1, name: 'Alice' },
  *   { id: 1, name: 'Bob' }
  * ];
- * ensureUniqueValue(duplicates, 'id'); // false
+ * hasUniqueValues(duplicates, 'id'); // false
  */
-export default function ensureUniqueValue<T extends Record<string, unknown>>(
+export default function hasUniqueValues<T extends Record<string, unknown>>(
   array: T[],
   key: keyof T
 ): boolean {
