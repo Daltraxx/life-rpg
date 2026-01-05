@@ -159,12 +159,12 @@ Full table can be found on the Supabase dashboard.
 ### Indexes Reference
 
 CREATE INDEX idx_attributes_user_id ON attributes(user_id);
-CREATE INDEX idx_tasks_user_id ON quests(user_id);
-CREATE INDEX idx_task_completions_task_id ON quest_completions(quest_id);
+CREATE INDEX idx_quests_user_id ON quests(user_id);
+CREATE INDEX idx_quest_completions_quest_id ON quest_completions(quest_id);
 CREATE INDEX idx_experience_log_user_id ON experience_log(user_id);
-CREATE INDEX idx_tasks_attributes_user_id ON quests_attributes(user_id);
-CREATE INDEX idx_task_completions_completed_at ON quest_completions(completed_at);
-CREATE INDEX idx_experience_log_task_id ON experience_log(quest_id);
+CREATE INDEX idx_quests_attributes_user_id ON quests_attributes(user_id);
+CREATE INDEX idx_quest_completions_completed_at ON quest_completions(completed_at);
+CREATE INDEX idx_experience_log_quest_id ON experience_log(quest_id);
 
 ### Functions and Triggers Reference
 - Handle New User Signup
