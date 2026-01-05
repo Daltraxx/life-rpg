@@ -12,6 +12,9 @@ import useAttributeSetup from "@/app/ui/utils/hooks/useAttributeSetup";
 import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import type { User } from "@supabase/supabase-js";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
+import createProfile from "@/utils/actions/createProfile";
+import { useActionState } from "react";
+import { createSimpleInitialFormActionState } from "@/utils/helpers/createInitialFormActionState";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -19,6 +22,7 @@ const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Intelligence", order: 2 },
   { name: "Fitness", order: 3 },
 ];
+const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 
 export default function SetupUI({ authUser }: { authUser: User }) {
   // Manage available attributes state
@@ -43,6 +47,13 @@ export default function SetupUI({ authUser }: { authUser: User }) {
     createProfile,
     INITIAL_PROFILE_CREATION_STATE
   );
+
+  const determineDisabledState = (): boolean => {
+    if (quests.length === 0) return true;
+    if (pointsRemaining > 0) return true;
+    if (availableAttributes.length === 0) return true;
+    return false;
+  };
 
   const handleSubmit = async () => {
     formAction({
@@ -82,6 +93,7 @@ export default function SetupUI({ authUser }: { authUser: User }) {
           className={styles.submitButton}
           color="blue-700"
           type="submit"
+          disabled={isPending || determineDisabledState()}
         >
           CONFIRM QUEST BOARD
         </ButtonWrapper>
