@@ -16,6 +16,11 @@
   margin: 0 auto;
 }
 
+.errorMessage {
+  color: var(--red-500, #ef2101);
+  text-align: center;
+}
+
 @media (min-width: 1024px) {
   .widgetContainer {
     --widget-desc-height: 5.25rem;

@@ -15,6 +15,7 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
 import { createSimpleInitialFormActionState } from "@/utils/helpers/createInitialFormActionState";
+import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -90,6 +91,11 @@ export default function SetupUI({ authUser }: { authUser: User }) {
           onQuestOrderChange={questActions.questOrderChange}
           onExperiencePointValueChange={questActions.experiencePointValueChange}
         />
+        {errorState?.message && (
+          <Paragraph className={styles.errorMessage} role="alert" size="20">
+            {errorState.message}
+          </Paragraph>
+        )}
         <ButtonWrapper
           className={styles.submitButton}
           color="blue-700"
