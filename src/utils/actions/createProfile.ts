@@ -7,6 +7,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 import {
   ProfileCreationSchema,
   ProfileCreationState,
+  ProfileCreationFormData,
 } from "@/utils/validations/profileCreation/profileCreation";
 import { z } from "zod";
 import { redirect } from "next/navigation";
@@ -17,28 +18,40 @@ import type {
 } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 
+
 /**
- * Creates a new user profile by validating input data and inserting attributes, quests,
- * and their relationships into the database using a transactional RPC call.
- *
- * @param userId - The unique identifier of the user for whom the profile is being created.
- * @param quests - An array of Quest objects representing the quests to associate with the profile.
- * @param attributes - An array of Attribute objects representing the attributes to associate with the profile.
- * @returns A promise that resolves to a ProfileCreationState object containing errors or a message if validation or database insertion fails,
- *          or void if the profile is created successfully and the user is redirected.
- *
- * @remarks
- * - Validates the input using `ProfileCreationSchema`.
- * - Prepares and maps the input data for insertion into the "attributes", "quests", and "quests_attributes" tables.
- * - Executes a transactional RPC call to insert the data.
- * - Handles and logs errors, returning appropriate messages.
- * - Redirects to the dashboard upon successful profile creation.
+ * Creates a user profile with associated quests and attributes.
+ * 
+ * This server action handles the complete profile creation flow including:
+ * - Authentication verification
+ * - Input validation against the ProfileCreationSchema
+ * - Data transformation for database insertion
+ * - Atomic transaction execution via Supabase RPC
+ * 
+ * @param prevState - The previous state from the form action (unused but required by Next.js server actions)
+ * @param formData - The form data containing userId, quests, and attributes
+ * @param formData.userId - The ID of the user creating the profile (must match authenticated user)
+ * @param formData.quests - Array of quest objects with name, experiencePointValue, order, and affectedAttributes
+ * @param formData.attributes - Array of attribute objects with name and order
+ * 
+ * @returns A Promise resolving to either:
+ * - void on successful profile creation (redirects to /dashboard)
+ * - ProfileCreationState object with error message or field errors on failure
+ * 
+ * @throws Redirects to /dashboard on successful creation
+ * 
+ * @example
+ * const result = await createProfile(null, {
+ *   userId: "user-123",
+ *   quests: [{ name: "Learn TypeScript", experiencePointValue: 100, order: 1, affectedAttributes: [...] }],
+ *   attributes: [{ name: "Programming", order: 1 }]
+ * });
  */
 export default async function createProfile(
-  userId: string,
-  quests: Quest[],
-  attributes: Attribute[]
+  prevState: ProfileCreationState | void,
+  formData: ProfileCreationFormData
 ): Promise<ProfileCreationState | void> {
+  const { userId, quests, attributes } = formData;
   const supabase = await createSupabaseServerClient();
   // Verify the userId matches the authenticated user
   const {
