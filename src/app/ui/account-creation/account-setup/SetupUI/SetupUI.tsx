@@ -56,7 +56,7 @@ export default function SetupUI({ authUser }: { authUser: User }) {
     return false;
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     formAction({
       userId: authUser.id,
