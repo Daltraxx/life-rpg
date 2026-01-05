@@ -38,8 +38,22 @@ export default function SetupUI({ authUser }: { authUser: User }) {
     actions: questActions,
   } = questManagement;
 
+  // Handle form submission state
+  const [errorState, formAction, isPending] = useActionState(
+    createProfile,
+    INITIAL_PROFILE_CREATION_STATE
+  );
+
+  const handleSubmit = async () => {
+    formAction({
+      userId: authUser.id,
+      quests: quests,
+      attributes: availableAttributes,
+    });
+  };
+
   return (
-    <form>
+    <form onSubmit={handleSubmit}>
       <Bounded innerClassName={styles.setupContainer}>
         <div className={styles.widgetContainer}>
           <AttributeWidget
