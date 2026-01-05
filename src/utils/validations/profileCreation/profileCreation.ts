@@ -21,6 +21,8 @@ export const ProfileCreationSchema = z.object({
     }),
 });
 
+export type ProfileCreationFormData = z.infer<typeof ProfileCreationSchema>;
+
 export type ProfileCreationState = {
   errors?: {
     userId?: string[];
