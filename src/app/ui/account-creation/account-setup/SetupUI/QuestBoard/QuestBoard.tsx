@@ -7,7 +7,6 @@ import {
   Paragraph,
   Span,
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 
 export interface QuestBoardProps {
   quests: Quest[];
@@ -64,7 +63,6 @@ export default function QuestBoard({
           </Paragraph>
         )}
       </div>
-      <ButtonWrapper color="blue-700">CONFIRM QUEST BOARD</ButtonWrapper>
     </section>
   );
 }

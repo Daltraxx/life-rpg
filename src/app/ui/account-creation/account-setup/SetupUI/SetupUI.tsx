@@ -11,6 +11,7 @@ import useQuestSetup from "@/app/ui/utils/hooks/useQuestSetup";
 import useAttributeSetup from "@/app/ui/utils/hooks/useAttributeSetup";
 import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import type { User } from "@supabase/supabase-js";
+import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -38,30 +39,33 @@ export default function SetupUI({ authUser }: { authUser: User }) {
   } = questManagement;
 
   return (
-    <Bounded innerClassName={styles.setupContainer}>
-      <div className={styles.widgetContainer}>
-        <AttributeWidget
-          className={styles.attributeWidget}
-          attributes={availableAttributes}
-          nextAttributeOrderNumber={nextAttributeOrderNumber}
-          addAttribute={attributeActions.addAttribute}
-          deleteAttribute={attributeActions.deleteAttribute}
-        />
-        <QuestsWidget
-          availableAttributes={availableAttributes}
+    <form>
+      <Bounded innerClassName={styles.setupContainer}>
+        <div className={styles.widgetContainer}>
+          <AttributeWidget
+            className={styles.attributeWidget}
+            attributes={availableAttributes}
+            nextAttributeOrderNumber={nextAttributeOrderNumber}
+            addAttribute={attributeActions.addAttribute}
+            deleteAttribute={attributeActions.deleteAttribute}
+          />
+          <QuestsWidget
+            availableAttributes={availableAttributes}
+            quests={quests}
+            addQuest={questActions.addQuest}
+            nextQuestOrderNumber={nextQuestOrderNumber}
+            className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
+          />
+        </div>
+        <QuestBoard
           quests={quests}
-          addQuest={questActions.addQuest}
-          nextQuestOrderNumber={nextQuestOrderNumber}
-          className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
+          pointsRemaining={pointsRemaining}
+          onDeleteQuest={questActions.deleteQuest}
+          onQuestOrderChange={questActions.questOrderChange}
+          onExperiencePointValueChange={questActions.experiencePointValueChange}
         />
-      </div>
-      <QuestBoard
-        quests={quests}
-        pointsRemaining={pointsRemaining}
-        onDeleteQuest={questActions.deleteQuest}
-        onQuestOrderChange={questActions.questOrderChange}
-        onExperiencePointValueChange={questActions.experiencePointValueChange}
-      />
-    </Bounded>
+        <ButtonWrapper color="blue-700">CONFIRM QUEST BOARD</ButtonWrapper>
+      </Bounded>
+    </form>
   );
 }
