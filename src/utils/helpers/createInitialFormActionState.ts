@@ -5,7 +5,7 @@ import type { SimpleFormActionState } from "@/utils/types/formActionState";
  *
  * @returns {Object} An object containing:
  * - `errors`: An empty object for storing form field errors
- * - `message`: A undefined value for status messages
+ * - `message`: An undefined value for status messages
  *
  * @example
  * const initialState = createSimpleInitialFormActionState();
