@@ -7,7 +7,7 @@ export const AttributeSchema = z.object({
     .trim()
     .min(1, "Attribute name cannot be empty")
     .max(30, "Attribute name cannot exceed 30 characters"),
-  order: z.int().nonnegative("Order must be a non-negative integer"),
+  order: z.int("Order must be an integer").nonnegative("Order must be a non-negative integer"),
 });
 
 export type Attribute = z.infer<typeof AttributeSchema>;
