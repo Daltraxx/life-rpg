@@ -21,11 +21,9 @@ import useSignupValidation, {
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { createSimpleInitialFormActionState } from "@/utils/helpers/createInitialFormActionState";
 
-const INITIAL_SIGNUP_STATE: SignupState = {
-  errors: {},
-  message: null,
-};
+const INITIAL_SIGNUP_STATE: SignupState = createSimpleInitialFormActionState();
 
 type Field = keyof ValidationErrorMessages;
 
