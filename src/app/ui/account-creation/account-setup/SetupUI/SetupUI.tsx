@@ -64,7 +64,9 @@ export default function SetupUI({ authUser }: { authUser: User }) {
           onQuestOrderChange={questActions.questOrderChange}
           onExperiencePointValueChange={questActions.experiencePointValueChange}
         />
-        <ButtonWrapper color="blue-700">CONFIRM QUEST BOARD</ButtonWrapper>
+        <ButtonWrapper color="blue-700" type="submit">
+          CONFIRM QUEST BOARD
+        </ButtonWrapper>
       </Bounded>
     </form>
   );
