@@ -2,7 +2,6 @@
 import type {
   Attribute,
   Quest,
-  AffectedAttribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import {
