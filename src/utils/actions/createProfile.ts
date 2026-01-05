@@ -119,6 +119,7 @@ export default async function createProfile(
   });
 
   if (error) {
+    // TODO: Consider structured logging solution
     console.error("Error in profile creation transaction:", error);
     return {
       message: "Failed to create profile. Please try again.",
