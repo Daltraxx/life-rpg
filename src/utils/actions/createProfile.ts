@@ -1,8 +1,4 @@
 "use server";
-import type {
-  Attribute,
-  Quest,
-} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import {
   ProfileCreationSchema,
