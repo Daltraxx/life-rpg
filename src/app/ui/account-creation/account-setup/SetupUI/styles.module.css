@@ -2,16 +2,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  --component-spacing: 1.5rem;
+  gap: var(--component-spacing);
 }
 
 .widgetContainer {
-  --widget-spacing: 2rem;
   --container-max-width: 38rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: var(--widget-spacing);
+  gap: var(--component-spacing);
   max-width: var(--container-max-width);
   margin: 0 auto;
 }
