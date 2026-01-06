@@ -25,7 +25,7 @@ const INITIAL_ATTRIBUTES: Attribute[] = [
 ];
 const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 
-export default function SetupUI({ authUser }: { authUser: User }) {
+export default function SetupUI() {
   // Manage available attributes state
   const attributeManagement = useAttributeSetup(INITIAL_ATTRIBUTES);
   const {
