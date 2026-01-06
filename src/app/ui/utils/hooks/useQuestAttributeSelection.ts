@@ -59,6 +59,7 @@ const useQuestAttributeSelection = (
   attributes: Attribute[],
   noAvailableAttributesText: string
 ): UseQuestAttributeSelectionReturn => {
+  // Consider useReducer for selectedAttributes, availableAttributes, and currentAttributeName;
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(attributes);
 
