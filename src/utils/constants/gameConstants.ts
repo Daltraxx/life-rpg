@@ -17,10 +17,10 @@ export const SAFE_CHARACTERS_REGEX = /^[a-zA-Z0-9 _:!'"\(\)$@%&*\-=+./—]+$/;
 
 // ------------------------------------------------------------------------
 
-/**  Typical maximum length for user-facing names (e.g., usernames, attribute names).
+/** Typical maximum length for user-facing names (e.g., usernames, attribute names).
  */
 export const REGULAR_NAME_MAX_LENGTH = 30;
-/**  Typical minimum length for user-facing names (e.g., usernames, attribute names).
+/** Typical minimum length for user-facing names (e.g., usernames, attribute names).
  */
 export const REGULAR_NAME_MIN_LENGTH = 1;
 
