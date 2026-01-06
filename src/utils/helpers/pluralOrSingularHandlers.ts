@@ -1,5 +1,5 @@
 /**
- * Adds an 's' suffix to a word if the count is greater than 1, otherwise returns the word unchanged.
+ * Adds an 's' suffix to a word if the count is not equal to 1, otherwise returns the word unchanged.
  * Useful for pluralizing nouns based on a numeric count.
  *
  * @param word - The word to potentially pluralize
