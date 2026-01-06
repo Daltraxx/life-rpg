@@ -1,3 +1,5 @@
+// Consider library like 'pluralize' for more complex pluralization needs in the future
+
 /**
  * Adds an 's' suffix to a word if the count is not equal to 1, otherwise returns the word unchanged.
  * Useful for pluralizing nouns based on a numeric count.
