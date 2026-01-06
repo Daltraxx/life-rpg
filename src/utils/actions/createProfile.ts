@@ -104,6 +104,7 @@ export default async function createProfile(
           message: `Invalid strength value: ${affectedAttribute.strength}`,
         };
       }
+      // Duplicate names are restricted by DB constraints and validation schema
       questsAttributesData.push({
         quest_name: quest.name,
         attribute_name: affectedAttribute.name,
