@@ -10,7 +10,6 @@ import QuestBoard from "./QuestBoard/QuestBoard";
 import useQuestSetup from "@/app/ui/utils/hooks/useQuestSetup";
 import useAttributeSetup from "@/app/ui/utils/hooks/useAttributeSetup";
 import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import type { User } from "@supabase/supabase-js";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
