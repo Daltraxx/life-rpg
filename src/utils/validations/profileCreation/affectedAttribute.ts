@@ -2,7 +2,6 @@ import { z } from "zod";
 import { AttributeStrengthValues } from "@/app/ui/utils/types/AttributeStrength";
 import { SAFE_CHARACTERS_REGEX } from "@/utils/constants/gameConstants";
 
-// TODO: Further refine schema (e.g., restrict special characters in name)
 export const AffectedAttributeSchema = z.object({
   name: z
     .string()
