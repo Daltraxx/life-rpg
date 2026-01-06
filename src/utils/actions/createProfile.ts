@@ -68,6 +68,7 @@ export default async function createProfile(
   });
 
   // TODO: Test with nested field errors like AffectedAttributes
+  // Consider more granular error handling/logging (treeify the zod errors?)
   if (!validatedInput.success) {
     return {
       errors: z.flattenError(validatedInput.error).fieldErrors,
