@@ -9,7 +9,10 @@ import {
   MIN_QUEST_NAME_LENGTH,
   MAX_QUEST_NAME_LENGTH,
 } from "@/utils/constants/gameConstants";
-import { addSIfPluralOrZero } from "@/utils/helpers/pluralOrSingularHandlers";
+import {
+  addSIfPluralOrZero,
+  getNounAndVerbAgreement,
+} from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const QuestSchema = z.object({
   name: z
@@ -34,11 +37,17 @@ export const QuestSchema = z.object({
     .array(AffectedAttributeSchema)
     .min(
       MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
-      `At least ${MIN_AFFECTED_ATTRIBUTES_PER_QUEST} affected attribute is required`
+      `At least ${MIN_AFFECTED_ATTRIBUTES_PER_QUEST} ${getNounAndVerbAgreement(
+        "affected attribute",
+        MIN_AFFECTED_ATTRIBUTES_PER_QUEST
+      )} required`
     )
     .max(
       MAX_AFFECTED_ATTRIBUTES_PER_QUEST,
-      `A maximum of ${MAX_AFFECTED_ATTRIBUTES_PER_QUEST} affected attributes are allowed`
+      `A maximum of ${MAX_AFFECTED_ATTRIBUTES_PER_QUEST} ${getNounAndVerbAgreement(
+        "affected attribute",
+        MAX_AFFECTED_ATTRIBUTES_PER_QUEST
+      )} allowed`
     )
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Affected attribute names must be unique",
