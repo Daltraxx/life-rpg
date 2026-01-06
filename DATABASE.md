@@ -99,6 +99,8 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 - UNIQUE (user_id, position)
   - Ensures each user has unique quest ordering
+- UNIQUE (user_id, name)
+  - Ensures quest names are unique per user
 
 **quest_completions**: Records each quest completion with streak and experience earned
 
