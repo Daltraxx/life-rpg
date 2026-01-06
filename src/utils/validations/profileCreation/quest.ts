@@ -1,22 +1,22 @@
 import { z } from "zod";
 import { AffectedAttributeSchema } from "@/utils/validations/profileCreation/affectedAttribute";
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
+import { SAFE_CHARACTERS_REGEX } from "@/utils/constants/gameConstants";
 
-// TODO: Further refine schema (e.g., restrict names to certain characters)
 export const QuestSchema = z.object({
   name: z
     .string()
     .trim()
     .min(1, "Quest name cannot be empty")
-    .max(50, "Quest name cannot exceed 50 characters"),
+    .max(50, "Quest name cannot exceed 50 characters")
+    .regex(SAFE_CHARACTERS_REGEX, "Quest name contains invalid characters"),
   affectedAttributes: z
     .array(AffectedAttributeSchema)
     .min(1, "At least one affected attribute is required")
     .max(50, "A maximum of 50 affected attributes are allowed")
-    .refine(
-      (attributes) =>  hasUniqueValues(attributes, "name"),
-      { message: "Affected attribute names must be unique" }
-    ),
+    .refine((attributes) => hasUniqueValues(attributes, "name"), {
+      message: "Affected attribute names must be unique",
+    }),
   order: z.int().nonnegative("Order must be a non-negative integer"),
   experiencePointValue: z
     .int()
