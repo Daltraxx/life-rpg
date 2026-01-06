@@ -1,19 +1,34 @@
 import { z } from "zod";
 import { AffectedAttributeSchema } from "@/utils/validations/profileCreation/affectedAttribute";
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
-import { SAFE_CHARACTERS_REGEX } from "@/utils/constants/gameConstants";
+import {
+  SAFE_CHARACTERS_REGEX,
+  MIN_QUESTS_ALLOWED,
+  MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
+  MAX_QUESTS_ALLOWED,
+  MAX_AFFECTED_ATTRIBUTES_PER_QUEST,
+} from "@/utils/constants/gameConstants";
 
 export const QuestSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(1, "Quest name cannot be empty")
-    .max(50, "Quest name cannot exceed 50 characters")
+    .min(MIN_QUESTS_ALLOWED, "Quest name cannot be empty")
+    .max(
+      MAX_QUESTS_ALLOWED,
+      `Quest name cannot exceed ${MAX_QUESTS_ALLOWED} characters`
+    )
     .regex(SAFE_CHARACTERS_REGEX, "Quest name contains invalid characters"),
   affectedAttributes: z
     .array(AffectedAttributeSchema)
-    .min(1, "At least one affected attribute is required")
-    .max(50, "A maximum of 50 affected attributes are allowed")
+    .min(
+      MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
+      `At least ${MIN_AFFECTED_ATTRIBUTES_PER_QUEST} affected attribute is required`
+    )
+    .max(
+      MAX_AFFECTED_ATTRIBUTES_PER_QUEST,
+      `A maximum of ${MAX_AFFECTED_ATTRIBUTES_PER_QUEST} affected attributes are allowed`
+    )
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Affected attribute names must be unique",
     }),
