@@ -166,6 +166,8 @@ CREATE INDEX idx_quests_attributes_user_id ON quests_attributes(user_id);
 CREATE INDEX idx_quest_completions_completed_at ON quest_completions(completed_at);
 CREATE INDEX idx_experience_log_quest_id ON experience_log(quest_id);
 CREATE INDEX idx_users_usertag ON users (usertag);
+CREATE INDEX idx_quests_attributes_quest_id ON quests_attributes (quest_id);
+CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_id);
 
 ### Functions and Triggers Reference
 - Handle New User Signup
