@@ -196,7 +196,8 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   -- Define function that takes user_id, array of attribute objects, 
   -- array of quest objects, and array of quests_attributes 
   -- for insertion into respective tables in single atomic transaction.
-  -- Duplicate handling and handling existing records should not be an issue,
+  -- Conflicting names or positions should be handled before calling this function.
+  -- Existing records should not be an issue (this is intended for new users),
   -- but is handled just in case.
   CREATE OR REPLACE FUNCTION create_profile_transaction(
     p_user_id UUID,
