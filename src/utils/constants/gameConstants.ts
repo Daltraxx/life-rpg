@@ -35,6 +35,9 @@ export const MAX_QUESTS_ALLOWED = 50;
 /** Maximum experience points that can be awarded per quest.
  */
 export const MAX_EXPERIENCE_POINTS_PER_QUEST = 100;
+/** Minimum experience points that can be awarded per quest.
+ */
+export const MIN_EXPERIENCE_POINTS_PER_QUEST = 0;
 
 // ------------------------------------------------------------------------
 
