@@ -26,3 +26,9 @@ export const addSIfPluralOrZero = (word: string, count: number): string => {
 export const getAreOrIs = (count: number): string => {
   return count === 1 ? "is" : "are";
 };
+
+export const getNounAndVerbAgreement = (noun: string, count: number) => {
+  const pluralNoun = addSIfPluralOrZero(noun, count);
+  const verb = getAreOrIs(count);
+  return `${pluralNoun} ${verb}`;
+};

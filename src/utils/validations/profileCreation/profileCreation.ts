@@ -8,6 +8,11 @@ import {
   MAX_ATTRIBUTES_ALLOWED,
   MIN_ATTRIBUTES_ALLOWED,
 } from "@/utils/constants/gameConstants";
+import {
+  addSIfPluralOrZero,
+  getAreOrIs,
+  getNounAndVerbAgreement,
+} from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const ProfileCreationSchema = z.object({
   userId: z.uuid("Invalid user ID"),
@@ -25,11 +30,17 @@ export const ProfileCreationSchema = z.object({
     .array(AttributeSchema)
     .min(
       MIN_ATTRIBUTES_ALLOWED,
-      `At least ${MIN_ATTRIBUTES_ALLOWED} attribute is required`
+      `At least ${MIN_ATTRIBUTES_ALLOWED} ${getNounAndVerbAgreement(
+        "attribute",
+        MIN_ATTRIBUTES_ALLOWED
+      )} required`
     )
     .max(
       MAX_ATTRIBUTES_ALLOWED,
-      `No more than ${MAX_ATTRIBUTES_ALLOWED} attributes are allowed`
+      `No more than ${MAX_ATTRIBUTES_ALLOWED} ${getNounAndVerbAgreement(
+        "attribute",
+        MAX_ATTRIBUTES_ALLOWED
+      )} allowed`
     )
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Attribute names must be unique",
