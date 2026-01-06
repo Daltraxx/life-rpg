@@ -8,12 +8,12 @@
  * This regex allows the following characters:
  * - Uppercase and lowercase letters (a-z, A-Z)
  * - Digits (0-9)
- * - Space and special characters: _ : ! ' " ( ) $ @ % & * - = + . / - —
+ * - Space and special characters: _ : ! ' " ( ) $ @ % & * = + . / - —
  *
  * It is used to validate strings to ensure they only contain safe characters,
  * preventing issues with invalid input in the application.
  */
-export const SAFE_CHARACTERS_REGEX = /^[a-zA-Z0-9 _:!'"\(\)$@%&*\-=+.\/ —]+$/;
+export const SAFE_CHARACTERS_REGEX = /^[a-zA-Z0-9 _:!'"\(\)$@%&*\-=+./—]+$/;
 
 // ------------------------------------------------------------------------
 
