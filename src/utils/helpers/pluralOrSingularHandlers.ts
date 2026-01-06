@@ -27,6 +27,16 @@ export const getAreOrIs = (count: number): string => {
   return count === 1 ? "is" : "are";
 };
 
+/**
+ * Gets the grammatically correct noun and verb agreement for a given count.
+ * @param noun - The base noun to pluralize if necessary
+ * @param count - The number used to determine if the noun should be plural and which verb form to use
+ * @returns A string containing the pluralized noun (if count is not 1) and the correct verb form (is/are)
+ * @example
+ * getNounAndVerbAgreement('cat', 1) // returns "cat is"
+ * getNounAndVerbAgreement('cat', 2) // returns "cats are"
+ * getNounAndVerbAgreement('cat', 0) // returns "cats are"
+ */
 export const getNounAndVerbAgreement = (noun: string, count: number) => {
   const pluralNoun = addSIfPluralOrZero(noun, count);
   const verb = getAreOrIs(count);
