@@ -4,14 +4,16 @@ import { AttributeSchema } from "@/utils/validations/profileCreation/attribute";
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
 import {
   MAX_QUESTS_ALLOWED,
+  MIN_QUESTS_ALLOWED,
   MAX_ATTRIBUTES_ALLOWED,
+  MIN_ATTRIBUTES_ALLOWED,
 } from "@/utils/constants/gameConstants";
 
 export const ProfileCreationSchema = z.object({
   userId: z.uuid("Invalid user ID"),
   quests: z
     .array(QuestSchema)
-    .min(1, "At least one quest is required")
+    .min(MIN_QUESTS_ALLOWED, `At least ${MIN_QUESTS_ALLOWED} quest is required`)
     .max(
       MAX_QUESTS_ALLOWED,
       `No more than ${MAX_QUESTS_ALLOWED} quests are allowed`
@@ -21,7 +23,10 @@ export const ProfileCreationSchema = z.object({
     }),
   attributes: z
     .array(AttributeSchema)
-    .min(1, "At least one attribute is required")
+    .min(
+      MIN_ATTRIBUTES_ALLOWED,
+      `At least ${MIN_ATTRIBUTES_ALLOWED} attribute is required`
+    )
     .max(
       MAX_ATTRIBUTES_ALLOWED,
       `No more than ${MAX_ATTRIBUTES_ALLOWED} attributes are allowed`
