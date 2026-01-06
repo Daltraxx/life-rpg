@@ -9,8 +9,6 @@ import {
   MIN_ATTRIBUTES_ALLOWED,
 } from "@/utils/constants/gameConstants";
 import {
-  addSIfPluralOrZero,
-  getAreOrIs,
   getNounAndVerbAgreement,
 } from "@/utils/helpers/pluralOrSingularHandlers";
 
