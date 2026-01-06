@@ -60,7 +60,7 @@ export default function SetupUI({ authUser }: { authUser: User }) {
     event.preventDefault();
     formAction({
       userId: authUser.id,
-      quests: quests,
+      quests,
       attributes: availableAttributes,
     });
   };
