@@ -45,6 +45,12 @@ export const MIN_ATTRIBUTES_ALLOWED = 1;
  */
 export const MAX_ATTRIBUTES_ALLOWED = 50;
 
+/** Maximum length for an attribute name.
+ */
+export const MAX_ATTRIBUTE_NAME_LENGTH = REGULAR_NAME_MAX_LENGTH;
+/** Minimum length for an attribute name.
+ */
+export const MIN_ATTRIBUTE_NAME_LENGTH = REGULAR_NAME_MIN_LENGTH;
 // ------------------------------------------------------------------------
 
 /** Minimum number of affected attributes required per quest.
