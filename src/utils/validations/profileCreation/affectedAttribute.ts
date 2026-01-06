@@ -1,14 +1,34 @@
 import { z } from "zod";
 import { AttributeStrengthValues } from "@/app/ui/utils/types/AttributeStrength";
-import { SAFE_CHARACTERS_REGEX } from "@/utils/constants/gameConstants";
+import {
+  SAFE_CHARACTERS_REGEX,
+  MIN_ATTRIBUTE_NAME_LENGTH,
+  MAX_ATTRIBUTE_NAME_LENGTH,
+} from "@/utils/constants/gameConstants";
+import { addSIfPlural } from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const AffectedAttributeSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(1, "Attribute name cannot be empty")
-    .max(30, "Attribute name cannot exceed 30 characters")
-    .regex(SAFE_CHARACTERS_REGEX, "Affected Attribute name contains invalid characters"),
+    .min(
+      MIN_ATTRIBUTE_NAME_LENGTH,
+      `Attribute name cannot be less than ${MIN_ATTRIBUTE_NAME_LENGTH} ${addSIfPlural(
+        "character",
+        MIN_ATTRIBUTE_NAME_LENGTH
+      )}`
+    )
+    .max(
+      MAX_ATTRIBUTE_NAME_LENGTH,
+      `Attribute name cannot exceed ${MAX_ATTRIBUTE_NAME_LENGTH} ${addSIfPlural(
+        "character",
+        MAX_ATTRIBUTE_NAME_LENGTH
+      )}`
+    )
+    .regex(
+      SAFE_CHARACTERS_REGEX,
+      "Affected Attribute name contains invalid characters"
+    ),
   strength: z.enum(AttributeStrengthValues, {
     message: "Please select a valid attribute strength",
   }),
