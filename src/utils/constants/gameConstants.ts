@@ -32,12 +32,14 @@ export const MIN_QUESTS_ALLOWED = 1;
 /** Maximum number of quests a player can have active simultaneously.
  */
 export const MAX_QUESTS_ALLOWED = 50;
+
 /** Maximum experience points that can be awarded per quest.
  */
 export const MAX_EXPERIENCE_POINTS_PER_QUEST = 100;
 /** Minimum experience points that can be awarded per quest.
  */
 export const MIN_EXPERIENCE_POINTS_PER_QUEST = 0;
+
 /** Minimum length for a quest name.
  */
 export const MIN_QUEST_NAME_LENGTH = REGULAR_NAME_MIN_LENGTH;

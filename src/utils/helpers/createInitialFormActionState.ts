@@ -14,6 +14,5 @@ import type { SimpleFormActionState } from "@/utils/types/formActionState";
 export const createSimpleInitialFormActionState = (): SimpleFormActionState => {
   return {
     errors: {},
-    message: undefined,
   };
 };
