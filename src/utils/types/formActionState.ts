@@ -9,6 +9,6 @@
  *           Can be undefined if no message is available.
  */
 export interface SimpleFormActionState {
-  errors: Record<string, string[]>;
-  message: string | undefined;
+  errors?: Record<string, string[]>;
+  message?: string;
 }
