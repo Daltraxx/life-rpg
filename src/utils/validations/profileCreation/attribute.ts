@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { MAX_ATTRIBUTES_ALLOWED } from "@/app/ui/utils/constants/gameConstants";
+import { MAX_ATTRIBUTES_ALLOWED } from "@/utils/constants/gameConstants";
 
 // TODO: Further refine schema (e.g., restrict names to certain characters)
 export const AttributeSchema = z.object({

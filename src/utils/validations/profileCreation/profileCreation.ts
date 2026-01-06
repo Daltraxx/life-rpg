@@ -5,7 +5,7 @@ import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
 import {
   MAX_QUESTS_ALLOWED,
   MAX_ATTRIBUTES_ALLOWED,
-} from "@/app/ui/utils/constants/gameConstants";
+} from "@/utils/constants/gameConstants";
 
 export const ProfileCreationSchema = z.object({
   userId: z.uuid("Invalid user ID"),
