@@ -5,7 +5,7 @@ import {
   MIN_ATTRIBUTE_NAME_LENGTH,
   MAX_ATTRIBUTE_NAME_LENGTH,
 } from "@/utils/constants/gameConstants";
-import { addSIfPlural } from "@/utils/helpers/pluralOrSingularHandlers";
+import { addSIfPluralOrZero } from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const AffectedAttributeSchema = z.object({
   name: z
@@ -13,14 +13,14 @@ export const AffectedAttributeSchema = z.object({
     .trim()
     .min(
       MIN_ATTRIBUTE_NAME_LENGTH,
-      `Attribute name cannot be less than ${MIN_ATTRIBUTE_NAME_LENGTH} ${addSIfPlural(
+      `Attribute name cannot be less than ${MIN_ATTRIBUTE_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
         MIN_ATTRIBUTE_NAME_LENGTH
       )}`
     )
     .max(
       MAX_ATTRIBUTE_NAME_LENGTH,
-      `Attribute name cannot exceed ${MAX_ATTRIBUTE_NAME_LENGTH} ${addSIfPlural(
+      `Attribute name cannot exceed ${MAX_ATTRIBUTE_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
         MAX_ATTRIBUTE_NAME_LENGTH
       )}`

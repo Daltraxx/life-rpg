@@ -9,7 +9,7 @@ import {
   MIN_QUEST_NAME_LENGTH,
   MAX_QUEST_NAME_LENGTH,
 } from "@/utils/constants/gameConstants";
-import { addSIfPlural } from "@/utils/helpers/pluralOrSingularHandlers";
+import { addSIfPluralOrZero } from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const QuestSchema = z.object({
   name: z
@@ -17,14 +17,14 @@ export const QuestSchema = z.object({
     .trim()
     .min(
       MIN_QUEST_NAME_LENGTH,
-      `Quest name cannot be less than ${MIN_QUEST_NAME_LENGTH} ${addSIfPlural(
+      `Quest name cannot be less than ${MIN_QUEST_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
         MIN_QUEST_NAME_LENGTH
       )}`
     )
     .max(
       MAX_QUEST_NAME_LENGTH,
-      `Quest name cannot exceed ${MAX_QUEST_NAME_LENGTH} ${addSIfPlural(
+      `Quest name cannot exceed ${MAX_QUEST_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
         MAX_QUEST_NAME_LENGTH
       )}`

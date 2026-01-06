@@ -7,11 +7,11 @@
  * @returns The word with 's' appended if count !== 1, otherwise the original word
  *
  * @example
- * addSIfPlural('apple', 1) // Returns 'apple'
- * addSIfPlural('apple', 2) // Returns 'apples'
- * addSIfPlural('item', 0) // Returns 'items'
+ * addSIfPluralOrZero('apple', 1) // Returns 'apple'
+ * addSIfPluralOrZero('apple', 2) // Returns 'apples'
+ * addSIfPluralOrZero('item', 0) // Returns 'items'
  */
-export const addSIfPlural = (word: string, count: number): string => {
+export const addSIfPluralOrZero = (word: string, count: number): string => {
   return count === 1 ? word : `${word}s`;
 };
 
