@@ -8,7 +8,7 @@ export const AffectedAttributeSchema = z.object({
     .trim()
     .min(1, "Attribute name cannot be empty")
     .max(30, "Attribute name cannot exceed 30 characters")
-    .regex(SAFE_CHARACTERS_REGEX, "Attribute name contains invalid characters"),
+    .regex(SAFE_CHARACTERS_REGEX, "Affected Attribute name contains invalid characters"),
   strength: z.enum(AttributeStrengthValues, {
     message: "Please select a valid attribute strength",
   }),
