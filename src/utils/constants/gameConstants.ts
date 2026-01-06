@@ -23,6 +23,10 @@ export const MIN_QUESTS_ALLOWED = 1;
  */
 export const MAX_QUESTS_ALLOWED = 50;
 
+/** Maximum experience points that can be awarded per quest.
+ */
+export const MAX_EXPERIENCE_POINTS_PER_QUEST = 100;
+
 /** Maximum number of attributes a player can have.
  */
 export const MAX_ATTRIBUTES_ALLOWED = 50;

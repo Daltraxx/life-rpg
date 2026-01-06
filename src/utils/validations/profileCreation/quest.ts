@@ -7,6 +7,7 @@ import {
   MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
   MAX_QUESTS_ALLOWED,
   MAX_AFFECTED_ATTRIBUTES_PER_QUEST,
+  MAX_EXPERIENCE_POINTS_PER_QUEST,
 } from "@/utils/constants/gameConstants";
 
 export const QuestSchema = z.object({
@@ -36,7 +37,10 @@ export const QuestSchema = z.object({
   experiencePointValue: z
     .int()
     .nonnegative("Experience point value must be a non-negative integer")
-    .max(100, "Experience point value must be at most 100"),
+    .max(
+      MAX_EXPERIENCE_POINTS_PER_QUEST,
+      `Experience point value must be at most ${MAX_EXPERIENCE_POINTS_PER_QUEST}`
+    ),
 });
 
 export type Quest = z.infer<typeof QuestSchema>;
