@@ -56,17 +56,8 @@ export default function SetupUI({ authUser }: { authUser: User }) {
     return false;
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    formAction({
-      userId: authUser.id,
-      quests,
-      attributes: availableAttributes,
-    });
-  };
-
   return (
-    <form onSubmit={handleSubmit}>
+    <form action={formAction}>
       <Bounded innerClassName={styles.setupContainer}>
         <div className={styles.widgetContainer}>
           <AttributeWidget
@@ -96,6 +87,9 @@ export default function SetupUI({ authUser }: { authUser: User }) {
             {errorState.message}
           </Paragraph>
         )}
+        {/* Hidden inputs to include user data in form submission */}
+        <input type="hidden" name="quests" value={JSON.stringify(quests)} />
+        <input type="hidden" name="attributes" value={JSON.stringify(availableAttributes)} />
         <ButtonWrapper
           className={styles.submitButton}
           color="blue-700"

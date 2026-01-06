@@ -45,27 +45,25 @@ import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
  */
 export default async function createProfile(
   prevState: ProfileCreationState | void,
-  formData: ProfileCreationFormData
+  formData: FormData
 ): Promise<ProfileCreationState | void> {
-  const { userId, quests, attributes } = formData;
   const supabase = await createSupabaseServerClient();
   // Verify the userId matches the authenticated user
   const {
     data: { user },
     error: authError,
   } = await supabase.auth.getUser();
-  if (authError || !user || user.id !== userId) {
+  if (authError || !user ) {
     return {
-      message: "Unauthorized action. Cannot create profile for another user.",
+      message: "Unauthorized action.",
     };
   }
 
+  const rawFormData = Object.fromEntries(formData);
+  rawFormData.userId = user.id;
+
   // Validate input data
-  const validatedInput = ProfileCreationSchema.safeParse({
-    userId,
-    quests,
-    attributes,
-  });
+  const validatedInput = ProfileCreationSchema.safeParse(rawFormData);
 
   // TODO: Test with nested field errors like AffectedAttributes
   // Consider more granular error handling/logging (treeify the zod errors?)
