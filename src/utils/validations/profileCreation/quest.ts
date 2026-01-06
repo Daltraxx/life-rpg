@@ -3,21 +3,31 @@ import { AffectedAttributeSchema } from "@/utils/validations/profileCreation/aff
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
 import {
   SAFE_CHARACTERS_REGEX,
-  MIN_QUESTS_ALLOWED,
   MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
-  MAX_QUESTS_ALLOWED,
   MAX_AFFECTED_ATTRIBUTES_PER_QUEST,
   MAX_EXPERIENCE_POINTS_PER_QUEST,
+  MIN_QUEST_NAME_LENGTH,
+  MAX_QUEST_NAME_LENGTH,
 } from "@/utils/constants/gameConstants";
+import { addSIfPlural } from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const QuestSchema = z.object({
   name: z
     .string()
     .trim()
-    .min(MIN_QUESTS_ALLOWED, "Quest name cannot be empty")
+    .min(
+      MIN_QUEST_NAME_LENGTH,
+      `Quest name cannot be less than ${MIN_QUEST_NAME_LENGTH} ${addSIfPlural(
+        "character",
+        MIN_QUEST_NAME_LENGTH
+      )}`
+    )
     .max(
-      MAX_QUESTS_ALLOWED,
-      `Quest name cannot exceed ${MAX_QUESTS_ALLOWED} characters`
+      MAX_QUEST_NAME_LENGTH,
+      `Quest name cannot exceed ${MAX_QUEST_NAME_LENGTH} ${addSIfPlural(
+        "character",
+        MAX_QUEST_NAME_LENGTH
+      )}`
     )
     .regex(SAFE_CHARACTERS_REGEX, "Quest name contains invalid characters"),
   affectedAttributes: z

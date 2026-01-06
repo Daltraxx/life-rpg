@@ -38,6 +38,12 @@ export const MAX_EXPERIENCE_POINTS_PER_QUEST = 100;
 /** Minimum experience points that can be awarded per quest.
  */
 export const MIN_EXPERIENCE_POINTS_PER_QUEST = 0;
+/** Minimum length for a quest name.
+ */
+export const MIN_QUEST_NAME_LENGTH = REGULAR_NAME_MIN_LENGTH;
+/** Maximum length for a quest name.
+ */
+export const MAX_QUEST_NAME_LENGTH = REGULAR_NAME_MAX_LENGTH;
 
 // ------------------------------------------------------------------------
 
