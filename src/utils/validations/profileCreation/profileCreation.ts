@@ -8,18 +8,25 @@ import {
   MAX_ATTRIBUTES_ALLOWED,
   MIN_ATTRIBUTES_ALLOWED,
 } from "@/utils/constants/gameConstants";
-import {
-  getNounAndVerbAgreement,
-} from "@/utils/helpers/pluralOrSingularHandlers";
+import { getNounAndVerbAgreement } from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const ProfileCreationSchema = z.object({
   userId: z.uuid("Invalid user ID"),
   quests: z
     .array(QuestSchema)
-    .min(MIN_QUESTS_ALLOWED, `At least ${MIN_QUESTS_ALLOWED} quest is required`)
+    .min(
+      MIN_QUESTS_ALLOWED,
+      `At least ${MIN_QUESTS_ALLOWED} ${getNounAndVerbAgreement(
+        "quest",
+        MIN_QUESTS_ALLOWED
+      )} required`
+    )
     .max(
       MAX_QUESTS_ALLOWED,
-      `No more than ${MAX_QUESTS_ALLOWED} quests are allowed`
+      `No more than ${MAX_QUESTS_ALLOWED} ${getNounAndVerbAgreement(
+        "quest",
+        MAX_QUESTS_ALLOWED
+      )} allowed`
     )
     .refine((quests) => hasUniqueValues(quests, "name"), {
       message: "Quest names must be unique",
