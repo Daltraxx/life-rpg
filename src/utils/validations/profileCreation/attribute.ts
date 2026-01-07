@@ -28,7 +28,7 @@ export const AttributeSchema = z.object({
     .nonnegative("Order must be a non-negative integer")
     .max(
       MAX_ATTRIBUTES_ALLOWED - 1,
-      `Order must be less than ${MAX_ATTRIBUTES_ALLOWED}`
+      `Order cannot exceed ${MAX_ATTRIBUTES_ALLOWED - 1}`
     ),
 });
 
