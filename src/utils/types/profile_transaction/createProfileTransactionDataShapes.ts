@@ -2,6 +2,8 @@
 
 /**
  * Represents attribute data necessary for a profile transaction rpc call.
+ * Position is zero-based index indicating the order of the attribute. 
+ * Order matters and must be preserved.
  */
 export interface CreateProfileTransactionAttributes {
   name: string;
