@@ -13,14 +13,14 @@ export const AffectedAttributeSchema = z.object({
     .trim()
     .min(
       MIN_ATTRIBUTE_NAME_LENGTH,
-      `Attribute name cannot be less than ${MIN_ATTRIBUTE_NAME_LENGTH} ${addSIfPluralOrZero(
+      `Affected Attribute name cannot be less than ${MIN_ATTRIBUTE_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
         MIN_ATTRIBUTE_NAME_LENGTH
       )}`
     )
     .max(
       MAX_ATTRIBUTE_NAME_LENGTH,
-      `Attribute name cannot exceed ${MAX_ATTRIBUTE_NAME_LENGTH} ${addSIfPluralOrZero(
+      `Affected Attribute name cannot exceed ${MAX_ATTRIBUTE_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
         MAX_ATTRIBUTE_NAME_LENGTH
       )}`
