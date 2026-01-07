@@ -5,11 +5,10 @@ import type { SimpleFormActionState } from "@/utils/types/formActionState";
  *
  * @returns {Object} An object containing:
  * - `errors`: An empty object for storing form field errors
- * - `message`: An undefined value for status messages
  *
  * @example
  * const initialState = createSimpleInitialFormActionState();
- * // Returns: { errors: {}, message: undefined }
+ * // Returns: { errors: {} }
  */
 export const createSimpleInitialFormActionState = (): SimpleFormActionState => {
   return {
