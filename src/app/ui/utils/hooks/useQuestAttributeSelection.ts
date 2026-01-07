@@ -122,7 +122,7 @@ const useQuestAttributeSelection = (
     ) {
       setCurrentAttributeName(updatedAvailableAttributes[0].name);
     }
-  }, [attributes]); // Only run when attributes prop changes (user adds/removes attributes)
+  }, [attributes]); // Only run when attributes prop changes (user adds/removes attributes in AttributeWidget)
 
   const handleAddAffectedAttribute = useCallback(() => {
     // TODO: Add proper error handling and user feedback
