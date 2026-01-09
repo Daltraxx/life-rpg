@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useMemo, useReducer } from "react";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
   type Attribute,
@@ -248,9 +248,8 @@ const useAffectedAttributeSelection = (
     initialState
   );
 
-  return {
-    ...state,
-    actions: {
+  const actions = useMemo(
+    () => ({
       setCurrentAttributeName: (newAttributeName: string) => {
         dispatch({
           type: "SET_CURRENT_ATTRIBUTE_NAME",
@@ -292,7 +291,13 @@ const useAffectedAttributeSelection = (
           payload: newAttributes,
         });
       },
-    },
+    }),
+    [attributes]
+  );
+
+  return {
+    ...state,
+    actions,
   };
 };
 
