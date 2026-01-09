@@ -14,6 +14,7 @@ type AffectedAttributeSelectionState = {
   selectedAttributes: AffectedAttribute[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
+  noAttributesAvailableText: string;
 };
 
 // Action types for managing attribute selection state
@@ -58,8 +59,7 @@ const sortAttributesByOrderInPlace = (attributes: Attribute[]): void => {
 // Reducer function to manage attribute selection state
 const affectedAttributeSelectionReducer = (
   state: AffectedAttributeSelectionState,
-  action: AffectedAttributeSelectionAction,
-  noAttributesAvailableText: string
+  action: AffectedAttributeSelectionAction
 ): AffectedAttributeSelectionState => {
   switch (action.type) {
     case "SET_CURRENT_ATTRIBUTE_NAME":
@@ -68,7 +68,11 @@ const affectedAttributeSelectionReducer = (
       return { ...state, currentAttributeStrength: action.payload };
     case "ADD_AFFECTED_ATTRIBUTE": {
       const allAvailableAttributes = action.payload;
-      const { currentAttributeName, currentAttributeStrength } = state;
+      const {
+        currentAttributeName,
+        currentAttributeStrength,
+        noAttributesAvailableText,
+      } = state;
       // Prevent adding if no attribute selected or already added
       if (
         currentAttributeName === noAttributesAvailableText ||
@@ -103,6 +107,7 @@ const affectedAttributeSelectionReducer = (
     }
     case "DELETE_AFFECTED_ATTRIBUTE": {
       const { affectedAttributeName, allAttributes } = action.payload;
+      const { noAttributesAvailableText } = state;
       // Remove the specified attribute from the selected list
       const updatedSelectedAttributes = state.selectedAttributes.filter(
         (attr) => attr.name !== affectedAttributeName
@@ -126,15 +131,21 @@ const affectedAttributeSelectionReducer = (
     case "RESET_ATTRIBUTE_SELECTION_UI": {
       const attributes = action.payload;
       return {
+        noAttributesAvailableText: state.noAttributesAvailableText,
         availableAttributes: attributes,
         selectedAttributes: [],
-        currentAttributeName: attributes[0]?.name || noAttributesAvailableText,
+        currentAttributeName:
+          attributes[0]?.name || state.noAttributesAvailableText,
         currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
       };
     }
     case "SYNC_WITH_ATTRIBUTES_PROP": {
       const newAttributes = action.payload;
-      const { currentAttributeName, selectedAttributes } = state;
+      const {
+        currentAttributeName,
+        selectedAttributes,
+        noAttributesAvailableText,
+      } = state;
       // Validate selected attributes still exist in the new attributes list
       const validSelectedAttributes = selectedAttributes.filter((attr) =>
         newAttributes.some((a) => a.name === attr.name)
@@ -182,6 +193,7 @@ export type UseAffectedAttributeSelectionReturn = {
   selectedAttributes: AffectedAttribute[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
+  noAttributesAvailableText: string;
   actions: {
     setCurrentAttributeName: (newAttributeName: string) => void;
     setAttributeStrength: (newAttributeStrength: AttributeStrength) => void;
@@ -201,23 +213,9 @@ const useAffectedAttributeSelection = (
     selectedAttributes: [],
     currentAttributeName: attributes[0]?.name || noAttributesAvailableText,
     currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
+    noAttributesAvailableText,
   };
-  // Create a custom reducer that binds noAvailableAttributesText
-  const reducer = useMemo(
-    () =>
-      (
-        state: AffectedAttributeSelectionState,
-        action: AffectedAttributeSelectionAction
-      ) =>
-        affectedAttributeSelectionReducer(
-          state,
-          action,
-          noAttributesAvailableText
-        ),
-    [noAttributesAvailableText]
-  );
-
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(affectedAttributeSelectionReducer, initialState);
 
   return {
     ...state,
