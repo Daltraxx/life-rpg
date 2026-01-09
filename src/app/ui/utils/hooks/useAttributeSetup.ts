@@ -65,7 +65,10 @@ export default function useAttributeSetup(
         (attr) => attribute.name !== attr.name
       );
       for (let i = attribute.order; i < updatedAttributes.length; i++) {
-        updatedAttributes[i].order -= 1;
+        updatedAttributes[i] = {
+          ...updatedAttributes[i],
+          order: updatedAttributes[i].order - 1,
+        };
       }
       syncAffectedAttributes(updatedAttributes);
       return updatedAttributes;
