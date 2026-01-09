@@ -15,6 +15,7 @@ import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
 import { createSimpleInitialFormActionState } from "@/utils/helpers/createInitialFormActionState";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import useAffectedAttributeSelection from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -24,7 +25,15 @@ const INITIAL_ATTRIBUTES: Attribute[] = [
 ];
 const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 
+const NO_ATTIBUTES_AVAILABLE_TEXT = "N/A";
+
 export default function SetupUI() {
+  // Manage affected attribute selection state
+  const affectedAttributeManager = useAffectedAttributeSelection(
+    INITIAL_ATTRIBUTES,
+    NO_ATTIBUTES_AVAILABLE_TEXT
+  );
+
   // Manage available attributes state
   const attributeManagement = useAttributeSetup(INITIAL_ATTRIBUTES);
   const {
@@ -67,7 +76,7 @@ export default function SetupUI() {
             deleteAttribute={attributeActions.deleteAttribute}
           />
           <QuestsWidget
-            availableAttributes={availableAttributes}
+            affectedAttributeManager={affectedAttributeManager}
             quests={quests}
             addQuest={questActions.addQuest}
             nextQuestOrderNumber={nextQuestOrderNumber}

@@ -11,19 +11,17 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
-import useAffectedAttributeSelection from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
 import {
   createAffectedAttribute,
-  type Attribute,
   type Quest,
   createQuest,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import type { UseAffectedAttributeSelectionReturn } from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
-const NO_AVAILABLE_ATTRIBUTES_TEXT = "N/A";
 
 interface QuestsWidgetProps {
-  availableAttributes: Attribute[];
+  affectedAttributeManager: UseAffectedAttributeSelectionReturn;
   quests: Quest[];
   addQuest: (quest: Quest) => void;
   nextQuestOrderNumber: number;
@@ -31,7 +29,7 @@ interface QuestsWidgetProps {
 }
 
 export default function QuestsWidget({
-  availableAttributes,
+  affectedAttributeManager,
   quests,
   addQuest,
   nextQuestOrderNumber,
@@ -40,15 +38,10 @@ export default function QuestsWidget({
   // TODO: Implement error handling and validation for quest creation
   const [newQuestName, setNewQuestName] = useState<string>("");
 
-  const attributeSelection = useAffectedAttributeSelection(
-    availableAttributes,
-    NO_AVAILABLE_ATTRIBUTES_TEXT
-  );
-
-  const { selectedAttributes, actions: attributeActions } = attributeSelection;
-
-  const { deleteAffectedAttribute, resetAttributeSelectionUI } =
-    attributeActions;
+  const {
+    selectedAttributes,
+    actions: { deleteAffectedAttribute, resetAttributeSelectionUI },
+  } = affectedAttributeManager;
 
   const handleCreateQuest = () => {
     const trimmedQuestName = newQuestName.trim();
@@ -108,10 +101,7 @@ export default function QuestsWidget({
       </div>
 
       {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
-      <AddAffectedAttributeUI
-        attributeSelection={attributeSelection}
-        noAvailableAttributesText={NO_AVAILABLE_ATTRIBUTES_TEXT}
-      />
+      <AddAffectedAttributeUI affectedAttributeManager={affectedAttributeManager} />
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
       <AffectedAttributesTable

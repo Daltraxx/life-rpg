@@ -14,39 +14,48 @@ import StrengthMenu from "./SelectMenus/StrengthMenu";
  * @property {string} noAvailableAttributesText - The text to display when there are no available attributes to select.
  */
 export interface AddAffectedAttributeUIProps {
-  attributeSelection: UseAffectedAttributeSelectionReturn;
-  noAvailableAttributesText: string;
+  affectedAttributeManager: UseAffectedAttributeSelectionReturn;
 }
 
 /**
- * A component that provides UI for adding affected attributes to a quest.
- *
- * Displays a fieldset containing dropdown menus for selecting an attribute and its strength,
- * along with an "ADD" button to add the selected attribute to the quest. The button is disabled
- * when no attributes are available for selection.
- *
- * @param props - The component props
- * @param props.attributeSelection - Object containing available attributes, current selections, and actions
- * @param props.noAvailableAttributesText - Text displayed when no attributes are available for selection
- *
- * @returns A fieldset component with attribute selection UI
+ * Renders a UI component for adding affected attributes to a quest.
+ * 
+ * Allows users to select an attribute from available options, set the strength/impact
+ * of that attribute, and add it to the quest's affected attributes list.
+ * 
+ * @component
+ * @param {AddAffectedAttributeUIProps} props - The component props
+ * @param {AffectedAttributeManager} props.affectedAttributeManager - Manager object containing:
+ *   - availableAttributes: List of attributes that can be affected
+ *   - currentAttributeName: Currently selected attribute name
+ *   - currentAttributeStrength: Strength value for the selected attribute
+ *   - noAttributesAvailableText: Text shown when no attributes are available
+ *   - actions: Object containing state update functions:
+ *     - setCurrentAttributeName: Updates the selected attribute
+ *     - setAttributeStrength: Updates the strength of the selected attribute
+ *     - addAffectedAttribute: Adds the current selection to the quest's affected attributes
+ * 
+ * @returns {React.ReactElement} A fieldset containing attribute selection menus and an add button
+ * 
+ * @example
+ * ```tsx
+ * <AddAffectedAttributeUI affectedAttributeManager={manager} />
+ * ```
  */
 export default function AddAffectedAttributeUI({
-  attributeSelection,
-  noAvailableAttributesText,
+  affectedAttributeManager,
 }: AddAffectedAttributeUIProps) {
   const {
     availableAttributes,
     currentAttributeName,
     currentAttributeStrength,
-    actions: attributeActions,
-  } = attributeSelection;
-
-  const {
-    setCurrentAttributeName,
-    setAttributeStrength,
-    addAffectedAttribute,
-  } = attributeActions;
+    noAttributesAvailableText,
+    actions: {
+      setCurrentAttributeName,
+      setAttributeStrength,
+      addAffectedAttribute,
+    },
+  } = affectedAttributeManager;
 
   return (
     <fieldset className={styles.addAffectedAttributeFieldset}>
@@ -87,7 +96,7 @@ export default function AddAffectedAttributeUI({
           className={clsx(styles.appendedButton, styles.addAttributeButton)}
           type="button"
           onClick={addAffectedAttribute}
-          disabled={currentAttributeName === noAvailableAttributesText}
+          disabled={currentAttributeName === noAttributesAvailableText}
         >
           ADD
         </button>
