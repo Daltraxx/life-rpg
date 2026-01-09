@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useReducer } from "react";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
   type Attribute,
@@ -6,202 +6,256 @@ import {
   createAffectedAttribute,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
-export type UseQuestAttributeSelectionReturn = {
+const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
+
+// State type for the attribute selection UI
+type AffectedAttributeSelectionState = {
   availableAttributes: Attribute[];
+  selectedAttributes: AffectedAttribute[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
+};
+
+// Action types for managing attribute selection state
+// CONSIDER: Are all these payloads necessary, or can we just derive from state?
+type AffectedAttributeSelectionAction =
+  | { type: "SET_CURRENT_ATTRIBUTE_NAME"; payload: string }
+  | { type: "SET_ATTRIBUTE_STRENGTH"; payload: AttributeStrength }
+  | {
+      type: "ADD_AFFECTED_ATTRIBUTE";
+      payload: {
+        currentAttributeName: string;
+        currentAttributeStrength: AttributeStrength;
+        allAvailableAttributes: Attribute[];
+        noAvailableAttributesText: string;
+      };
+    }
+  | {
+      type: "DELETE_AFFECTED_ATTRIBUTE";
+      payload: {
+        attributeName: string;
+        allAttributes: Attribute[];
+        noAvailableAttributesText: string;
+      };
+    }
+  | {
+      type: "RESET_ATTRIBUTE_SELECTION_UI";
+      payload: { attributes: Attribute[]; noAvailableAttributesText: string };
+    }
+  | {
+      type: "SYNC_WITH_ATTRIBUTES_PROP";
+      payload: { newAttributes: Attribute[]; noAvailableAttributesText: string };
+    };
+
+// Helper to get available attributes by excluding selected ones
+const getAvailableAttributes = (
+  attributes: Attribute[],
+  selectedAttributes: AffectedAttribute[]
+): Attribute[] => {
+  const selectedNames = new Set(selectedAttributes.map((attr) => attr.name));
+  return attributes.filter((attr) => !selectedNames.has(attr.name));
+};
+
+// Helper to sort attributes by their order property
+const sortAttributesByOrderInPlace = (attributes: Attribute[]): void => {
+  attributes.sort((a, b) => a.order - b.order);
+};
+
+// Reducer function to manage attribute selection state
+const affectedAttributeSelectionReducer = (
+  state: AffectedAttributeSelectionState,
+  action: AffectedAttributeSelectionAction
+): AffectedAttributeSelectionState => {
+  switch (action.type) {
+    case "SET_CURRENT_ATTRIBUTE_NAME":
+      return { ...state, currentAttributeName: action.payload };
+    case "SET_ATTRIBUTE_STRENGTH":
+      return { ...state, currentAttributeStrength: action.payload };
+    case "ADD_AFFECTED_ATTRIBUTE": {
+      const {
+        currentAttributeName,
+        currentAttributeStrength,
+        allAvailableAttributes,
+        noAvailableAttributesText,
+      } = action.payload;
+      // Prevent adding if no attribute selected or already added
+      if (
+        currentAttributeName === noAvailableAttributesText ||
+        state.selectedAttributes.some(
+          (attr) => attr.name === currentAttributeName
+        )
+      ) {
+        return state;
+      }
+
+      // Add new affected attribute to selected list
+      const updatedSelectedAttributes = [
+        ...state.selectedAttributes,
+        createAffectedAttribute(currentAttributeName, currentAttributeStrength),
+      ];
+
+      // Update available attributes by removing the newly selected one
+      const updatedAvailableAttributes = getAvailableAttributes(
+        allAvailableAttributes,
+        updatedSelectedAttributes
+      );
+      sortAttributesByOrderInPlace(updatedAvailableAttributes);
+
+      return {
+        ...state,
+        selectedAttributes: updatedSelectedAttributes,
+        availableAttributes: updatedAvailableAttributes,
+        currentAttributeName:
+          updatedAvailableAttributes[0]?.name || noAvailableAttributesText,
+        currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
+      };
+    }
+    case "DELETE_AFFECTED_ATTRIBUTE": {
+      const { attributeName, allAttributes, noAvailableAttributesText } =
+        action.payload;
+      // Remove the specified attribute from the selected list
+      const updatedSelectedAttributes = state.selectedAttributes.filter(
+        (attr) => attr.name !== attributeName
+      );
+      // Update available attributes by adding back the removed attribute
+      const updatedAvailableAttributes = getAvailableAttributes(
+        allAttributes,
+        updatedSelectedAttributes
+      );
+      sortAttributesByOrderInPlace(updatedAvailableAttributes);
+      return {
+        ...state,
+        selectedAttributes: updatedSelectedAttributes,
+        availableAttributes: updatedAvailableAttributes,
+        currentAttributeName:
+          state.currentAttributeName === noAvailableAttributesText
+            ? attributeName
+            : state.currentAttributeName,
+      };
+    }
+    case "RESET_ATTRIBUTE_SELECTION_UI": {
+      const { attributes, noAvailableAttributesText } = action.payload;
+      return {
+        availableAttributes: attributes,
+        selectedAttributes: [],
+        currentAttributeName: attributes[0]?.name || noAvailableAttributesText,
+        currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
+      };
+    }
+    case "SYNC_WITH_ATTRIBUTES_PROP": {
+      const { newAttributes, noAvailableAttributesText } = action.payload;
+      // Validate selected attributes still exist in the new attributes list
+      const validSelectedAttributes = state.selectedAttributes.filter((attr) =>
+        newAttributes.some((a) => a.name === attr.name)
+      );
+
+      // Update available attributes accordingly
+      const updatedAvailableAttributes = getAvailableAttributes(
+        newAttributes,
+        validSelectedAttributes
+      );
+
+      let updatedCurrentAttributeName = state.currentAttributeName;
+      // Update current attribute name if it's no longer available
+      if (
+        updatedCurrentAttributeName !== noAvailableAttributesText &&
+        !updatedAvailableAttributes.some(
+          (attr) => attr.name === updatedCurrentAttributeName
+        )
+      ) {
+        updatedCurrentAttributeName =
+          updatedAvailableAttributes[0]?.name || noAvailableAttributesText;
+      }
+      // If current attribute is the no-attributes text and there are available attributes, set to first available
+      if (
+        updatedAvailableAttributes.length &&
+        updatedCurrentAttributeName === noAvailableAttributesText
+      ) {
+        updatedCurrentAttributeName = updatedAvailableAttributes[0].name;
+      }
+
+      return {
+        ...state,
+        availableAttributes: updatedAvailableAttributes,
+        selectedAttributes: validSelectedAttributes,
+        currentAttributeName: updatedCurrentAttributeName,
+      };
+    }
+    default:
+      return state;
+  }
+};
+
+export type UseAffectedAttributeSelectionReturn = {
+  availableAttributes: Attribute[];
   selectedAttributes: AffectedAttribute[];
+  currentAttributeName: string;
+  currentAttributeStrength: AttributeStrength;
   actions: {
-    setCurrentAttributeName: (name: string) => void;
-    setAttributeStrength: (strength: AttributeStrength) => void;
+    setCurrentAttributeName: (newAttributeName: string) => void;
+    setAttributeStrength: (newAttributeStrength: AttributeStrength) => void;
     addAffectedAttribute: () => void;
     deleteAffectedAttribute: (name: string) => void;
     resetAttributeSelectionUI: () => void;
+    syncWithAttributesProp: (attributes: Attribute[]) => void;
   };
 };
 
-const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
-
-/**
- * Custom hook for managing attribute selection UI state and operations.
- *
- * Handles the selection, addition, and removal of attributes with strength levels,
- * maintaining a list of available and selected attributes.
- *
- * @param {Attribute[]} attributes - Array of all available attributes to choose from
- * @param {string} noAvailableAttributesText - Text to display when no attributes are available
- *
- * @returns {UseQuestAttributeSelectionReturn} Object containing:
- *   - availableAttributes: Array of attributes not yet selected
- *   - currentAttributeName: Name of the currently selected attribute
- *   - currentAttributeStrength: Strength level of the current attribute
- *   - selectedAttributes: Array of added AffectedAttribute objects
- *   - actions: Object containing handler functions:
- *     - setCurrentAttributeName: Update the current attribute selection
- *     - setAttributeStrength: Update the strength level of current attribute
- *     - addAffectedAttribute: Add current attribute to selected list
- *     - deleteAffectedAttribute: Remove attribute from selected list
- *     - resetAttributeSelectionUI: Reset all state to initial values
- *
- * @example
- * const {
- *   availableAttributes,
- *   currentAttributeName,
- *   selectedAttributes,
- *   actions
- * } = useQuestAttributeSelection(['Strength', 'Dexterity', 'Wisdom'], 'No attributes');
- *
- * actions.addAffectedAttribute();
- * actions.deleteAffectedAttribute('Strength');
- * actions.resetAttributeSelectionUI();
- */
-const useQuestAttributeSelection = (
+const useAffectedAttributeSelection = (
   attributes: Attribute[],
   noAvailableAttributesText: string
-): UseQuestAttributeSelectionReturn => {
-  // TODO: Consider useReducer for selectedAttributes, availableAttributes, and currentAttributeName;
-  const [availableAttributes, setAvailableAttributes] =
-    useState<Attribute[]>(attributes);
-
-  const [currentAttributeName, setCurrentAttributeName] = useState<string>(
-    attributes[0]?.name || noAvailableAttributesText
-  );
-
-  const [currentAttributeStrength, setCurrentAttributeStrength] =
-    useState<AttributeStrength>(DEFAULT_ATTRIBUTE_STRENGTH);
-
-  const [selectedAttributes, setSelectedAttributes] = useState<
-    AffectedAttribute[]
-  >([]);
-
-  // Helper to check if current attribute is no longer available
-  const isCurrentAttributeNotAvailable = useCallback(
-    (currentAttribute: string, availableAttributes: Attribute[]) => {
-      return (
-        currentAttribute !== noAvailableAttributesText &&
-        !availableAttributes.some((attr) => attr.name === currentAttribute)
-      );
-    },
-    [noAvailableAttributesText]
-  );
-
-  // Effect to sync available and selected attributes when user adds/removes attributes
-  useEffect(() => {
-    // Update available attributes when user adds or removes attributes
-    const currentlySelectedAttributeNames = new Set(
-      selectedAttributes.map((attr) => attr.name)
-    );
-    const updatedAvailableAttributes = attributes.filter(
-      (attr) => !currentlySelectedAttributeNames.has(attr.name)
-    );
-    setAvailableAttributes(updatedAvailableAttributes);
-
-    // Update selected attributes if any previously selected were removed by user
-    setSelectedAttributes((prevSelected) =>
-      prevSelected.filter((attr) =>
-        attributes.some((a) => a.name === attr.name)
-      )
-    );
-
-    // Update current attribute name if it's no longer available
-    if (
-      isCurrentAttributeNotAvailable(
-        currentAttributeName,
-        updatedAvailableAttributes
-      )
-    ) {
-      setCurrentAttributeName(
-        updatedAvailableAttributes[0]?.name || noAvailableAttributesText
-      );
-    }
-
-    // If user adds an attribute and current is the no-attributes text, set to first available
-    if (
-      updatedAvailableAttributes.length &&
-      currentAttributeName === noAvailableAttributesText
-    ) {
-      setCurrentAttributeName(updatedAvailableAttributes[0].name);
-    }
-  }, [attributes]); // Only run when attributes prop changes (user adds/removes attributes in AttributeWidget)
-
-  const handleAddAffectedAttribute = useCallback(() => {
-    // TODO: Add proper error handling and user feedback
-    if (currentAttributeName === noAvailableAttributesText) {
-      return;
-    }
-    if (selectedAttributes.some((attr) => attr.name === currentAttributeName)) {
-      return;
-    }
-
-    const updatedAvailableAttributes = availableAttributes.filter(
-      (attr) => attr.name !== currentAttributeName
-    );
-
-    setAvailableAttributes(updatedAvailableAttributes);
-    setCurrentAttributeName(
-      updatedAvailableAttributes[0]?.name || noAvailableAttributesText
-    );
-
-    setSelectedAttributes((prevSelected) => [
-      ...prevSelected,
-      createAffectedAttribute(currentAttributeName, currentAttributeStrength),
-    ]);
-
-    setCurrentAttributeStrength(DEFAULT_ATTRIBUTE_STRENGTH);
-  }, [
-    currentAttributeName,
-    currentAttributeStrength,
-    noAvailableAttributesText,
-    selectedAttributes,
-    availableAttributes,
-  ]);
-
-  const handleDeleteAffectedAttribute = useCallback(
-    (attributeName: string) => {
-      setSelectedAttributes((prevSelected) =>
-        prevSelected.filter((attr) => attr.name !== attributeName)
-      );
-      setAvailableAttributes((prevAvailable) => {
-        const attribute = attributes.find(
-          (attr) => attr.name === attributeName
-        );
-        if (!attribute) {
-          console.error(
-            `Attribute "${attributeName}" not found in affected attributes list.`
-          );
-          return prevAvailable;
-        }
-        const updatedAvailableAttributes = [...prevAvailable, attribute];
-        // Sort available attributes to maintain order
-        return updatedAvailableAttributes.sort((a, b) => a.order - b.order);
-      });
-      setCurrentAttributeName((prevCurrent) =>
-        prevCurrent === noAvailableAttributesText ? attributeName : prevCurrent
-      );
-    },
-    [attributes, noAvailableAttributesText]
-  );
-
-  const handleResetAttributeSelectionUI = useCallback(() => {
-    setAvailableAttributes(attributes);
-    setSelectedAttributes([]);
-    setCurrentAttributeName(attributes[0]?.name || noAvailableAttributesText);
-    setCurrentAttributeStrength(DEFAULT_ATTRIBUTE_STRENGTH);
-  }, [attributes, noAvailableAttributesText]);
+): UseAffectedAttributeSelectionReturn => {
+  const initialState: AffectedAttributeSelectionState = {
+    availableAttributes: attributes,
+    selectedAttributes: [],
+    currentAttributeName: attributes[0]?.name || noAvailableAttributesText,
+    currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
+  };
+  const [state, dispatch] = useReducer(affectedAttributeSelectionReducer, initialState);
 
   return {
-    availableAttributes,
-    currentAttributeName,
-    currentAttributeStrength,
-    selectedAttributes,
+    ...state,
     actions: {
-      setCurrentAttributeName,
-      setAttributeStrength: setCurrentAttributeStrength,
-      addAffectedAttribute: handleAddAffectedAttribute,
-      deleteAffectedAttribute: handleDeleteAffectedAttribute,
-      resetAttributeSelectionUI: handleResetAttributeSelectionUI,
+      setCurrentAttributeName: (newAttributeName: string) => {
+        dispatch({
+          type: "SET_CURRENT_ATTRIBUTE_NAME",
+          payload: newAttributeName,
+        });
+      },
+      setAttributeStrength: (newAttributeStrength: AttributeStrength) => {
+        dispatch({
+          type: "SET_ATTRIBUTE_STRENGTH",
+          payload: newAttributeStrength,
+        });
+      },
+      addAffectedAttribute: () => {
+        dispatch({
+          type: "ADD_AFFECTED_ATTRIBUTE",
+          payload: {
+            currentAttributeName: state.currentAttributeName,
+            currentAttributeStrength: state.currentAttributeStrength,
+            allAvailableAttributes: attributes,
+            noAvailableAttributesText,
+          },
+        });
+      },
+      deleteAffectedAttribute: (name: string) => {
+        dispatch({
+          type: "DELETE_AFFECTED_ATTRIBUTE",
+          payload: { attributeName: name, allAttributes: attributes, noAvailableAttributesText },
+        });
+      },
+      resetAttributeSelectionUI: () => {
+        dispatch({ type: "RESET_ATTRIBUTE_SELECTION_UI", payload: { attributes, noAvailableAttributesText } });
+      },
+      syncWithAttributesProp: (newAttributes: Attribute[]) => {
+        dispatch({
+          type: "SYNC_WITH_ATTRIBUTES_PROP",
+          payload: { newAttributes, noAvailableAttributesText },
+        });
+      },
     },
   };
 };
 
-export default useQuestAttributeSelection;
+export default useAffectedAttributeSelection;
