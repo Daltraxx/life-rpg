@@ -20,19 +20,27 @@ interface UseAttributeSetupReturn {
   };
 }
 
+
 /**
- * Hook for managing attribute setup state and operations.
+ * Custom hook for managing attribute setup and lifecycle.
+ * Handles adding and deleting attributes while maintaining proper ordering.
  *
  * @param initialAttributes - The initial array of attributes to set up
- * @returns {UseAttributeSetupReturn}An object containing:
- *   - availableAttributes: The current list of available attributes
+ * @param syncAffectedAttributes - Callback function to sync affected attributes when changes occur
+ *
+ * @returns {UseAttributeSetupReturn} Object containing:
+ *   - availableAttributes: Current list of managed attributes
  *   - nextAttributeOrderNumber: The order number for the next attribute to be added
- *   - actions: An object with methods to manipulate attributes:
- *     - addAttribute: Adds a new attribute to the available attributes list
- *     - deleteAttribute: Removes an attribute and reorders remaining attributes
+ *   - actions: Object containing action handlers:
+ *     - addAttribute: Function to add a new attribute to the list
+ *     - deleteAttribute: Function to remove an attribute and reorder remaining attributes
  *
  * @example
- * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeSetup(initialAttrs);
+ * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeSetup(
+ *   initialAttrs,
+ *   (attrs) => updateParentState(attrs)
+ * );
+ *
  * actions.addAttribute(newAttribute);
  * actions.deleteAttribute(attributeToRemove);
  */
