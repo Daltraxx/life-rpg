@@ -12,7 +12,7 @@ export interface CreateProfileTransactionAttributes {
 /**
  * Represents quest data necessary for a profile transaction rpc call.
  * Experience share is a percentage (0-100) of experience points allocated to the quest.
- * Position is zero-based index indicating the order of the attribute.
+ * Position is zero-based index indicating the order of the quest.
  * Order matters and must be preserved.
  */
 export interface CreateProfileTransactionQuests {
