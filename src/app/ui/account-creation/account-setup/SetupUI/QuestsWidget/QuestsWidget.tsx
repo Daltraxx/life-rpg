@@ -11,7 +11,7 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
-import useQuestAttributeSelection from "@/app/ui/utils/hooks/useQuestAttributeSelection";
+import useAffectedAttributeSelection from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
 import {
   createAffectedAttribute,
   type Attribute,
@@ -40,7 +40,7 @@ export default function QuestsWidget({
   // TODO: Implement error handling and validation for quest creation
   const [newQuestName, setNewQuestName] = useState<string>("");
 
-  const attributeSelection = useQuestAttributeSelection(
+  const attributeSelection = useAffectedAttributeSelection(
     availableAttributes,
     NO_AVAILABLE_ATTRIBUTES_TEXT
   );

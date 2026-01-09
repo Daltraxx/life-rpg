@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import type { UseQuestAttributeSelectionReturn } from "@/app/ui/utils/hooks/useQuestAttributeSelection";
+import type { UseAffectedAttributeSelectionReturn } from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
 
@@ -14,7 +14,7 @@ import StrengthMenu from "./SelectMenus/StrengthMenu";
  * @property {string} noAvailableAttributesText - The text to display when there are no available attributes to select.
  */
 export interface AddAffectedAttributeUIProps {
-  attributeSelection: UseQuestAttributeSelectionReturn;
+  attributeSelection: UseAffectedAttributeSelectionReturn;
   noAvailableAttributesText: string;
 }
 
