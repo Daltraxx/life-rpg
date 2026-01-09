@@ -38,7 +38,7 @@ type AffectedAttributeSelectionAction =
       payload: Attribute[];
     }
   | {
-      type: "SYNC_WITH_ATTRIBUTES_PROP";
+      type: "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES";
       payload: Attribute[];
     };
 
@@ -139,7 +139,7 @@ const affectedAttributeSelectionReducer = (
         currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
       };
     }
-    case "SYNC_WITH_ATTRIBUTES_PROP": {
+    case "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES": {
       const newAttributes = action.payload;
       const {
         currentAttributeName,
@@ -200,7 +200,7 @@ export type UseAffectedAttributeSelectionReturn = {
     addAffectedAttribute: () => void;
     deleteAffectedAttribute: (name: string) => void;
     resetAttributeSelectionUI: () => void;
-    syncWithAttributesProp: (attributes: Attribute[]) => void;
+    syncAffectedAttributesWithAllAvailableAttributes: (attributes: Attribute[]) => void;
   };
 };
 
@@ -253,9 +253,9 @@ const useAffectedAttributeSelection = (
           payload: attributes,
         });
       },
-      syncWithAttributesProp: (newAttributes: Attribute[]) => {
+      syncAffectedAttributesWithAllAvailableAttributes: (newAttributes: Attribute[]) => {
         dispatch({
-          type: "SYNC_WITH_ATTRIBUTES_PROP",
+          type: "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES",
           payload: newAttributes,
         });
       },
