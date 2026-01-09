@@ -108,13 +108,14 @@ export default function SetupUI() {
           name="attributes"
           value={JSON.stringify(availableAttributes)}
         />
+        {/* TODO: Add styling for pending submission */}
         <ButtonWrapper
           className={styles.submitButton}
           color="blue-700"
           type="submit"
           disabled={isPending || determineDisabledState()}
         >
-          CONFIRM QUEST BOARD
+          {isPending ? "SUBMITTING..." : "CONFIRM QUEST BOARD"}
         </ButtonWrapper>
       </Bounded>
     </form>
