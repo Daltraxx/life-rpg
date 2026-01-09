@@ -200,10 +200,38 @@ export type UseAffectedAttributeSelectionReturn = {
     addAffectedAttribute: () => void;
     deleteAffectedAttribute: (name: string) => void;
     resetAttributeSelectionUI: () => void;
-    syncAffectedAttributesWithAllAvailableAttributes: (attributes: Attribute[]) => void;
+    syncAffectedAttributesWithAllAvailableAttributes: (
+      attributes: Attribute[]
+    ) => void;
   };
 };
 
+/**
+ * Hook for managing the selection and configuration of affected attributes.
+ *
+ * Provides state management for selecting attributes, setting their strength values,
+ * and maintaining a list of affected attributes with various operations.
+ *
+ * @param attributes - Array of available attributes to select from.
+ * @param noAttributesAvailableText - Fallback text to display when no attributes are available
+ *
+ * @returns Object containing:
+ *   - availableAttributes: Array of all available attributes
+ *   - selectedAttributes: Array of currently selected affected attributes
+ *   - currentAttributeName: Name of the currently selected attribute
+ *   - currentAttributeStrength: Strength value of the current attribute
+ *   - noAttributesAvailableText: Fallback text for empty state
+ *   - actions: Object with the following methods:
+ *     - setCurrentAttributeName: Updates the currently selected attribute name
+ *     - setAttributeStrength: Updates the strength value of the current attribute
+ *     - addAffectedAttribute: Adds the current attribute to the affected attributes list
+ *     - deleteAffectedAttribute: Removes an affected attribute by name
+ *     - resetAttributeSelectionUI: Resets the selection UI to initial state
+ *     - syncAffectedAttributesWithAllAvailableAttributes: Synchronizes affected attributes with updated available attributes
+ * @remarks
+ * attributes is trusted to already be sorted by order.
+ * syncAffectedAttributesWithAllAvailableAttributes should be called wherever the available attributes change.
+ */
 const useAffectedAttributeSelection = (
   attributes: Attribute[],
   noAttributesAvailableText: string
@@ -215,7 +243,10 @@ const useAffectedAttributeSelection = (
     currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
     noAttributesAvailableText,
   };
-  const [state, dispatch] = useReducer(affectedAttributeSelectionReducer, initialState);
+  const [state, dispatch] = useReducer(
+    affectedAttributeSelectionReducer,
+    initialState
+  );
 
   return {
     ...state,
@@ -253,7 +284,9 @@ const useAffectedAttributeSelection = (
           payload: attributes,
         });
       },
-      syncAffectedAttributesWithAllAvailableAttributes: (newAttributes: Attribute[]) => {
+      syncAffectedAttributesWithAllAvailableAttributes: (
+        newAttributes: Attribute[]
+      ) => {
         dispatch({
           type: "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES",
           payload: newAttributes,
