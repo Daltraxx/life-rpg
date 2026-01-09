@@ -37,7 +37,8 @@ interface UseAttributeSetupReturn {
  * actions.deleteAttribute(attributeToRemove);
  */
 export default function useAttributeSetup(
-  initialAttributes: Attribute[]
+  initialAttributes: Attribute[],
+  syncAffectedAttributes: (attributes: Attribute[]) => void
 ): UseAttributeSetupReturn {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
@@ -47,6 +48,7 @@ export default function useAttributeSetup(
   const handleAddAttribute = (attribute: Attribute) => {
     setAvailableAttributes((prev) => [...prev, attribute]);
     setNextAttributeOrderNumber((prev) => prev + 1);
+    syncAffectedAttributes([...availableAttributes, attribute]);
   };
 
   const handleDeleteAttribute = (attribute: Attribute) => {
@@ -57,6 +59,7 @@ export default function useAttributeSetup(
       for (let i = attribute.order; i < updatedAttributes.length; i++) {
         updatedAttributes[i].order -= 1;
       }
+      syncAffectedAttributes(updatedAttributes);
       return updatedAttributes;
     });
     setNextAttributeOrderNumber((prev) => prev - 1);

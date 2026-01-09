@@ -34,8 +34,14 @@ export default function SetupUI() {
     NO_ATTIBUTES_AVAILABLE_TEXT
   );
 
+  const { syncAffectedAttributesWithAllAvailableAttributes } =
+    affectedAttributeManager.actions;
+
   // Manage available attributes state
-  const attributeManagement = useAttributeSetup(INITIAL_ATTRIBUTES);
+  const attributeManagement = useAttributeSetup(
+    INITIAL_ATTRIBUTES,
+    syncAffectedAttributesWithAllAvailableAttributes
+  );
   const {
     availableAttributes,
     nextAttributeOrderNumber,
@@ -97,7 +103,11 @@ export default function SetupUI() {
         )}
         {/* Hidden inputs to include user data in form submission */}
         <input type="hidden" name="quests" value={JSON.stringify(quests)} />
-        <input type="hidden" name="attributes" value={JSON.stringify(availableAttributes)} />
+        <input
+          type="hidden"
+          name="attributes"
+          value={JSON.stringify(availableAttributes)}
+        />
         <ButtonWrapper
           className={styles.submitButton}
           color="blue-700"
