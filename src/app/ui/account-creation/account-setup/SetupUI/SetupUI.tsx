@@ -25,13 +25,13 @@ const INITIAL_ATTRIBUTES: Attribute[] = [
 ];
 const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 
-const NO_ATTIBUTES_AVAILABLE_TEXT = "N/A";
+const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 
 export default function SetupUI() {
   // Manage affected attribute selection state
   const affectedAttributeManager = useAffectedAttributeSelection(
     INITIAL_ATTRIBUTES,
-    NO_ATTIBUTES_AVAILABLE_TEXT
+    NO_ATTRIBUTES_AVAILABLE_TEXT
   );
 
   const { syncAffectedAttributesWithAllAvailableAttributes } =
