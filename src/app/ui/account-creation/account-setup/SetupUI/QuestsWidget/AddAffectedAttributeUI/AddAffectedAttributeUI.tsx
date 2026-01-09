@@ -19,13 +19,13 @@ export interface AddAffectedAttributeUIProps {
 
 /**
  * Renders a UI component for adding affected attributes to a quest.
- * 
+ *
  * Allows users to select an attribute from available options, set the strength/impact
  * of that attribute, and add it to the quest's affected attributes list.
- * 
+ *
  * @component
- * @param {AddAffectedAttributeUIProps} props - The component props
- * @param {AffectedAttributeManager} props.affectedAttributeManager - Manager object containing:
+ * @param props - The component props
+ * @param props.affectedAttributeManager - Manager object containing:
  *   - availableAttributes: List of attributes that can be affected
  *   - currentAttributeName: Currently selected attribute name
  *   - currentAttributeStrength: Strength value for the selected attribute
@@ -34,9 +34,9 @@ export interface AddAffectedAttributeUIProps {
  *     - setCurrentAttributeName: Updates the selected attribute
  *     - setAttributeStrength: Updates the strength of the selected attribute
  *     - addAffectedAttribute: Adds the current selection to the quest's affected attributes
- * 
- * @returns {React.ReactElement} A fieldset containing attribute selection menus and an add button
- * 
+ *
+ * @returns A fieldset containing attribute selection menus and an add button
+ *
  * @example
  * ```tsx
  * <AddAffectedAttributeUI affectedAttributeManager={manager} />
