@@ -199,6 +199,7 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   -- Conflicting names or positions should be handled before calling this function.
   -- Existing records should not be an issue (this is intended for new users),
   -- but is handled just in case.
+  -- Descriptions are not handled here but can be added once their support is added.
   CREATE OR REPLACE FUNCTION create_profile_transaction(
     p_user_id UUID,
     p_attributes JSONB,
