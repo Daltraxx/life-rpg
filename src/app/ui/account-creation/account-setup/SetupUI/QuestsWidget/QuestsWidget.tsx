@@ -40,7 +40,7 @@ export default function QuestsWidget({
 
   const {
     selectedAttributes,
-    actions: { deleteAffectedAttribute, resetAttributeSelectionUI },
+    actions: { deleteAffectedAttribute, resetAffectedAttributeSelectionUI },
   } = affectedAttributeManager;
 
   const handleCreateQuest = () => {
@@ -68,7 +68,7 @@ export default function QuestsWidget({
 
     // Reset UI state
     setNewQuestName("");
-    resetAttributeSelectionUI();
+    resetAffectedAttributeSelectionUI();
   };
 
   return (

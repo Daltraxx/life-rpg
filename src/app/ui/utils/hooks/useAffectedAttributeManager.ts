@@ -34,7 +34,7 @@ type AffectedAttributeSelectionAction =
       };
     }
   | {
-      type: "RESET_ATTRIBUTE_SELECTION_UI";
+      type: "RESET_AFFECTED_ATTRIBUTE_SELECTION_UI";
       payload: Attribute[];
     }
   | {
@@ -128,7 +128,7 @@ const affectedAttributeSelectionReducer = (
             : state.currentAttributeName,
       };
     }
-    case "RESET_ATTRIBUTE_SELECTION_UI": {
+    case "RESET_AFFECTED_ATTRIBUTE_SELECTION_UI": {
       const attributes = action.payload;
       return {
         noAttributesAvailableText: state.noAttributesAvailableText,
@@ -202,7 +202,7 @@ const affectedAttributeSelectionReducer = (
  * @property {function(AttributeStrength): void} actions.setAttributeStrength - Updates the strength of the attribute being configured
  * @property {function(): void} actions.addAffectedAttribute - Adds the currently configured attribute to the selection
  * @property {function(string): void} actions.deleteAffectedAttribute - Removes an attribute from the selection by name
- * @property {function(): void} actions.resetAttributeSelectionUI - Resets the attribute selection interface to its initial state
+ * @property {function(): void} actions.resetAffectedAttributeSelectionUI - Resets the attribute selection interface to its initial state
  * @property {function(Attribute[]): void} actions.syncAffectedAttributesWithAllAvailableAttributes - Synchronizes affected attributes with an updated list of available attributes
  */
 export type AffectedAttributeManager = {
@@ -216,7 +216,7 @@ export type AffectedAttributeManager = {
     setAttributeStrength: (newAttributeStrength: AttributeStrength) => void;
     addAffectedAttribute: () => void;
     deleteAffectedAttribute: (name: string) => void;
-    resetAttributeSelectionUI: () => void;
+    resetAffectedAttributeSelectionUI: () => void;
     syncAffectedAttributesWithAllAvailableAttributes: (
       attributes: Attribute[]
     ) => void;
@@ -243,7 +243,7 @@ export type AffectedAttributeManager = {
  *     - setAttributeStrength: Updates the strength value of the current attribute
  *     - addAffectedAttribute: Adds the current attribute to the affected attributes list
  *     - deleteAffectedAttribute: Removes an affected attribute by name
- *     - resetAttributeSelectionUI: Resets the selection UI to initial state
+ *     - resetAffectedAttributeSelectionUI: Resets the selection UI to initial state
  *     - syncAffectedAttributesWithAllAvailableAttributes: Synchronizes affected attributes with updated available attributes
  * @remarks
  * attributes is trusted to already be sorted by order.
@@ -294,9 +294,9 @@ const useAffectedAttributeManager = (
           },
         });
       },
-      resetAttributeSelectionUI: () => {
+      resetAffectedAttributeSelectionUI: () => {
         dispatch({
-          type: "RESET_ATTRIBUTE_SELECTION_UI",
+          type: "RESET_AFFECTED_ATTRIBUTE_SELECTION_UI",
           payload: attributes,
         });
       },
