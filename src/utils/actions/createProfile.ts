@@ -146,6 +146,10 @@ export default async function createProfile(
           message:
             "A profile already exists for this user or duplicate names detected.",
         };
+      case "42501": // Unauthorized
+        return {
+          message: "Unauthorized action.",
+        };
       // Add more specific error handling as needed
       default:
         return {
