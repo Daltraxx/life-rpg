@@ -18,7 +18,6 @@ type AffectedAttributeSelectionState = {
 };
 
 // Action types for managing attribute selection state
-// CONSIDER: Are all these payloads necessary, or can we just derive from state?
 type AffectedAttributeSelectionAction =
   | { type: "SET_CURRENT_ATTRIBUTE_NAME"; payload: string }
   | { type: "SET_ATTRIBUTE_STRENGTH"; payload: AttributeStrength }
