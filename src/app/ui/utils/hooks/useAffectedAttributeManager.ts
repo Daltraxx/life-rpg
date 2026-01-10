@@ -188,6 +188,23 @@ const affectedAttributeSelectionReducer = (
   }
 };
 
+/**
+ * Manages the selection and configuration of attributes that affect game mechanics.
+ *
+ * @typedef {Object} AffectedAttributeManager
+ * @property {Attribute[]} availableAttributes - List of all attributes available for selection
+ * @property {AffectedAttribute[]} selectedAttributes - Currently selected attributes and their configurations
+ * @property {string} currentAttributeName - Name of the attribute currently being configured
+ * @property {AttributeStrength} currentAttributeStrength - Strength level of the attribute being configured
+ * @property {string} noAttributesAvailableText - Message to display when no attributes are available
+ * @property {Object} actions - Collection of action handlers for attribute management
+ * @property {function(string): void} actions.setCurrentAttributeName - Updates the name of the attribute being configured
+ * @property {function(AttributeStrength): void} actions.setAttributeStrength - Updates the strength of the attribute being configured
+ * @property {function(): void} actions.addAffectedAttribute - Adds the currently configured attribute to the selection
+ * @property {function(string): void} actions.deleteAffectedAttribute - Removes an attribute from the selection by name
+ * @property {function(): void} actions.resetAttributeSelectionUI - Resets the attribute selection interface to its initial state
+ * @property {function(Attribute[]): void} actions.syncAffectedAttributesWithAllAvailableAttributes - Synchronizes affected attributes with an updated list of available attributes
+ */
 export type AffectedAttributeManager = {
   availableAttributes: Attribute[];
   selectedAttributes: AffectedAttribute[];
