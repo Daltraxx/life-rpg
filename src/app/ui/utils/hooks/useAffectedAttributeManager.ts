@@ -71,14 +71,12 @@ const affectedAttributeSelectionReducer = (
         currentAttributeName,
         currentAttributeStrength,
         noAttributesAvailableText,
-        selectedAttributes
+        selectedAttributes,
       } = state;
       // Prevent adding if no attribute selected or already added
       if (
         currentAttributeName === noAttributesAvailableText ||
-        selectedAttributes.some(
-          (attr) => attr.name === currentAttributeName
-        )
+        selectedAttributes.some((attr) => attr.name === currentAttributeName)
       ) {
         return state;
       }
@@ -107,9 +105,13 @@ const affectedAttributeSelectionReducer = (
     }
     case "DELETE_AFFECTED_ATTRIBUTE": {
       const { affectedAttributeName, allAttributes } = action.payload;
-      const { noAttributesAvailableText } = state;
+      const {
+        noAttributesAvailableText,
+        currentAttributeName,
+        selectedAttributes,
+      } = state;
       // Remove the specified attribute from the selected list
-      const updatedSelectedAttributes = state.selectedAttributes.filter(
+      const updatedSelectedAttributes = selectedAttributes.filter(
         (attr) => attr.name !== affectedAttributeName
       );
       // Update available attributes by adding back the removed attribute
@@ -122,10 +124,11 @@ const affectedAttributeSelectionReducer = (
         ...state,
         selectedAttributes: updatedSelectedAttributes,
         availableAttributes: updatedAvailableAttributes,
+        // If no attributes were available, set current to the newly available (deleted) attribute
         currentAttributeName:
-          state.currentAttributeName === noAttributesAvailableText
+          currentAttributeName === noAttributesAvailableText
             ? affectedAttributeName
-            : state.currentAttributeName,
+            : currentAttributeName,
       };
     }
     case "RESET_AFFECTED_ATTRIBUTE_SELECTION_UI": {
