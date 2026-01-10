@@ -8,6 +8,7 @@ import {
   MAX_EXPERIENCE_POINTS_PER_QUEST,
   MIN_QUEST_NAME_LENGTH,
   MAX_QUEST_NAME_LENGTH,
+  MAX_QUESTS_ALLOWED,
 } from "@/utils/constants/gameConstants";
 import {
   addSIfPluralOrZero,
@@ -52,7 +53,10 @@ export const QuestSchema = z.object({
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Affected attribute names must be unique",
     }),
-  order: z.int().nonnegative("Order must be a non-negative integer"),
+  order: z
+    .int()
+    .nonnegative("Order must be a non-negative integer")
+    .max(MAX_QUESTS_ALLOWED, `Order cannot exceed ${MAX_QUESTS_ALLOWED - 1}`),
   experiencePointValue: z
     .int()
     .nonnegative("Experience point value must be a non-negative integer")
