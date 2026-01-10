@@ -210,6 +210,16 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   DECLARE
     v_result jsonb;
   BEGIN
+    -- Validate inputs are not NULL
+    IF p_attributes IS NULL THEN
+      RAISE EXCEPTION 'p_attributes cannot be NULL';
+    END IF;
+    IF p_quests IS NULL THEN
+      RAISE EXCEPTION 'p_quests cannot be NULL';
+    END IF;
+    IF p_quests_attributes IS NULL THEN
+      RAISE EXCEPTION 'p_quests_attributes cannot be NULL';
+    END IF;
     WITH 
     -- Parse and deduplicate attribute inputs
     attr_input AS (
