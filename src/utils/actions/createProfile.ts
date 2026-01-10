@@ -66,6 +66,14 @@ export default async function createProfile(
   }
 
   const rawFormData = Object.fromEntries(formData);
+  // Parse JSON fields if they're sent as stringified JSON
+  if (typeof rawFormData.quests === "string") {
+    rawFormData.quests = JSON.parse(rawFormData.quests);
+  }
+  if (typeof rawFormData.attributes === "string") {
+    rawFormData.attributes = JSON.parse(rawFormData.attributes);
+  }
+
   rawFormData.userId = user.id;
 
   // Validate input data
@@ -74,6 +82,10 @@ export default async function createProfile(
   // TODO: Test with nested field errors like AffectedAttributes
   // Consider more granular error handling/logging (treeify the zod errors?)
   if (!validatedInput.success) {
+    console.warn(
+      "Profile creation input validation failed:",
+      validatedInput.error
+    );
     return {
       errors: z.flattenError(validatedInput.error).fieldErrors,
       message: "Fields not valid. Failed to create profile.",
