@@ -51,9 +51,17 @@ export default function AttributeMenu({
   return (
     <Select.Root
       value={currentAttribute}
-      onValueChange={(value) => onAttributeSelect(value)}
+      onValueChange={(value) => {
+        // Prevents calling the callback with an empty value,
+        // which can happen when all attributes are selected/removed or UI is reset.
+        if (value) onAttributeSelect(value);
+      }}
     >
-      <Select.Trigger className={styles.trigger} aria-label="Select Attribute">
+      <Select.Trigger
+        className={styles.trigger}
+        aria-label="Select Attribute"
+        disabled={availableAttributes.length === 0}
+      >
         <Select.Value>{currentAttribute}</Select.Value>
       </Select.Trigger>
       <Select.Portal>
