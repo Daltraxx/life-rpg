@@ -25,7 +25,6 @@ interface UseAttributeSetupReturn {
  * Handles adding and deleting attributes while maintaining proper ordering.
  *
  * @param initialAttributes - The initial array of attributes to set up
- * @param syncAffectedAttributes - Callback function to sync affected attributes when changes occur
  *
  * @returns {UseAttributeSetupReturn} Object containing:
  *   - availableAttributes: Current list of managed attributes
@@ -45,7 +44,6 @@ interface UseAttributeSetupReturn {
  */
 export default function useAttributeSetup(
   initialAttributes: Attribute[],
-  syncAffectedAttributes: (attributes: Attribute[]) => void
 ): UseAttributeSetupReturn {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
@@ -56,7 +54,6 @@ export default function useAttributeSetup(
     const newAvailableAttributes = [...availableAttributes, attribute];
     setAvailableAttributes(newAvailableAttributes);
     setNextAttributeOrderNumber((prev) => prev + 1);
-    syncAffectedAttributes(newAvailableAttributes);
   };
 
   const handleDeleteAttribute = (attribute: Attribute) => {
@@ -70,7 +67,6 @@ export default function useAttributeSetup(
           order: updatedAttributes[i].order - 1,
         };
       }
-      syncAffectedAttributes(updatedAttributes);
       return updatedAttributes;
     });
     setNextAttributeOrderNumber((prev) => prev - 1);

@@ -28,25 +28,19 @@ const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 
 export default function SetupUI() {
-  // Manage affected attribute selection state
-  const affectedAttributeManager = useAffectedAttributeManager(
-    INITIAL_ATTRIBUTES,
-    NO_ATTRIBUTES_AVAILABLE_TEXT
-  );
-
-  const { syncAffectedAttributesWithAllAvailableAttributes } =
-    affectedAttributeManager.actions;
-
   // Manage available attributes state
-  const attributeManagement = useAttributeSetup(
-    INITIAL_ATTRIBUTES,
-    syncAffectedAttributesWithAllAvailableAttributes
-  );
+  const attributeManagement = useAttributeSetup(INITIAL_ATTRIBUTES);
   const {
     availableAttributes,
     nextAttributeOrderNumber,
     actions: attributeActions,
   } = attributeManagement;
+
+  // Manage affected attribute selection state
+  const affectedAttributeManager = useAffectedAttributeManager(
+    availableAttributes,
+    NO_ATTRIBUTES_AVAILABLE_TEXT
+  );
 
   // Manage quests state
   const questManagement = useQuestSetup();

@@ -1,4 +1,4 @@
-import { useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer } from "react";
 import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
 import {
   type Attribute,
@@ -229,7 +229,11 @@ export type AffectedAttributeManager = {
  * Provides state management for selecting attributes, setting their strength values,
  * and maintaining a list of affected attributes with various operations.
  *
- * @param attributes - Array of available attributes to select from.
+ * Automatically synchronizes affected attributes whenever the available attributes change
+ * via an internal useEffect hook, ensuring selected attributes remain valid when the
+ * attributes list is updated externally.
+ *
+ * @param attributes - Array of available attributes to select from. Expected to be pre-sorted by order.
  * @param noAttributesAvailableText - Fallback text to display when no attributes are available
  *
  * @returns Object containing:
@@ -244,10 +248,12 @@ export type AffectedAttributeManager = {
  *     - addAffectedAttribute: Adds the current attribute to the affected attributes list
  *     - deleteAffectedAttribute: Removes an affected attribute by name
  *     - resetAffectedAttributeSelectionUI: Resets the selection UI to initial state
- *     - syncAffectedAttributesWithAllAvailableAttributes: Synchronizes affected attributes with updated available attributes
+ *     - syncAffectedAttributesWithAllAvailableAttributes: Manually synchronizes affected attributes with updated available attributes
+ *
  * @remarks
- * attributes is trusted to already be sorted by order.
- * syncAffectedAttributesWithAllAvailableAttributes should be called wherever the available attributes change.
+ * The hook automatically calls syncAffectedAttributesWithAllAvailableAttributes whenever
+ * the attributes parameter changes, so manual calls are typically unnecessary unless you need
+ * to update attributes outside of the hook's parameters.
  */
 const useAffectedAttributeManager = (
   attributes: Attribute[],
@@ -264,6 +270,13 @@ const useAffectedAttributeManager = (
     affectedAttributeSelectionReducer,
     initialState
   );
+
+  useEffect(() => {
+    dispatch({
+      type: "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES",
+      payload: attributes,
+    });
+  }, [attributes]);
 
   const actions = useMemo(
     () => ({
