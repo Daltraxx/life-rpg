@@ -50,7 +50,7 @@ Full table can be found on the Supabase dashboard.
   - Current attribute level
 - `experience`: DECIMAL(10, 2) DEFAULT 0
   - Attribute experience points
-- `position`: INT NOT NULL
+- `position`: INT NOT NULL CHECK (position >= 0)
   - Display order for attribute list (unique per user)
   - Position is zero-indexed and handled before insertion
 - `created_at`: TIMESTAMP DEFAULT NOW()
@@ -92,7 +92,7 @@ Full table can be found on the Supabase dashboard.
   - Current strength rank (E-S)
 - `last_completed_date`: DATE
   - Date of last completion
-- `position`: INT NOT NULL
+- `position`: INT NOT NULL CHECK (position >= 0)
   - Display order for quest list (unique per user)
   - Position is zero-indexed and handled before insertion
 - `updated_at`: TIMESTAMP DEFAULT NOW()
