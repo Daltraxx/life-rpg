@@ -14,34 +14,42 @@ import type {
 } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 
-
 /**
  * Creates a user profile with associated quests and attributes.
- * 
+ *
  * This server action handles the complete profile creation flow including:
  * - Authentication verification
  * - Input validation against the ProfileCreationSchema
  * - Data transformation for database insertion
  * - Atomic transaction execution via Supabase RPC
- * 
- * @param prevState - The previous state from the form action (unused but required by Next.js server actions)
+ *
+ * @param prevState - The previous state from the form action
  * @param formData - The form data containing userId, quests, and attributes
  * @param formData.userId - The ID of the user creating the profile (must match authenticated user)
  * @param formData.quests - Array of quest objects with name, experiencePointValue, order, and affectedAttributes
  * @param formData.attributes - Array of attribute objects with name and order
- * 
+ *
  * @returns A Promise resolving to either:
  * - void on successful profile creation (redirects to /dashboard)
  * - ProfileCreationState object with error message or field errors on failure
- * 
+ *
  * @throws Redirects to /dashboard on successful creation
- * 
+ *
  * @example
- * const result = await createProfile(null, {
- *   userId: "user-123",
- *   quests: [{ name: "Learn TypeScript", experiencePointValue: 100, order: 1, affectedAttributes: [...] }],
- *   attributes: [{ name: "Programming", order: 1 }]
- * });
+ * const [state, formAction] = useActionState(
+     createProfile,
+     INITIAL_PROFILE_CREATION_STATE
+   );
+ *
+ * return (
+ *   <form action={formAction}>
+ *     <input type="hidden" name="userId" value={userId} />
+ *     <input type="text" name="quests" />
+ *     <input type="text" name="attributes" />
+ *     <button type="submit">Create Profile</button>
+ *     {state?.message && <p>{state.message}</p>}
+ *   </form>
+ * );
  */
 export default async function createProfile(
   prevState: ProfileCreationState | void,
@@ -53,7 +61,7 @@ export default async function createProfile(
     data: { user },
     error: authError,
   } = await supabase.auth.getUser();
-  if (authError || !user ) {
+  if (authError || !user) {
     return {
       message: "Unauthorized action.",
     };
