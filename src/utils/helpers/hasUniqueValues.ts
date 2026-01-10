@@ -6,7 +6,7 @@
  * @param key - The key of the property to check for uniqueness
  * @returns True if all values for the specified key are unique, false otherwise
  * @note For string values, comparison is case-insensitive and ignores leading/trailing whitespace
- * @note For non-string values, comparison is by reference, not by deep equality
+ * @note For non-string values, comparison uses Set semantics (value equality for primitives, reference equality for objects; no deep equality check)
  * @note null, undefined, and NaN are treated as distinct values; multiple nulls, undefineds, or NaNs are considered duplicates
  * @note Empty arrays return true (vacuously, all zero values are unique)
  * @example
