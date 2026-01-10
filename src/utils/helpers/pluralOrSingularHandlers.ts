@@ -14,6 +14,9 @@
  * addSIfPluralOrZero('item', 0) // Returns 'items'
  */
 export const addSIfPluralOrZero = (word: string, count: number): string => {
+  if (!Number.isFinite(count) || count < 0) {
+    throw new Error('Count must be a non-negative finite number');
+  }
   return count === 1 ? word : `${word}s`;
 };
 
@@ -26,6 +29,9 @@ export const addSIfPluralOrZero = (word: string, count: number): string => {
  * getAreOrIs(5) // returns "are"
  */
 export const getAreOrIs = (count: number): string => {
+  if (!Number.isFinite(count) || count < 0) {
+    throw new Error("Count must be a non-negative finite number");
+  }
   return count === 1 ? "is" : "are";
 };
 
@@ -43,6 +49,9 @@ export const getNounAndVerbAgreement = (
   noun: string,
   count: number
 ): string => {
+  if (!Number.isFinite(count) || count < 0) {
+    throw new Error("Count must be a non-negative finite number");
+  }
   const pluralNoun = addSIfPluralOrZero(noun, count);
   const verb = getAreOrIs(count);
   return `${pluralNoun} ${verb}`;
