@@ -66,6 +66,7 @@ export default function AddAffectedAttributeUI({
               availableAttributes={availableAttributes}
               currentAttribute={currentAttributeName}
               onAttributeSelect={setCurrentAttributeName}
+              noAvailableAttributesText={noAttributesAvailableText}
             />
           </div>
 

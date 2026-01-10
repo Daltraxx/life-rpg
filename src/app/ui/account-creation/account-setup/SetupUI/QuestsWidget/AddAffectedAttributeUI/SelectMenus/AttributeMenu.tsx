@@ -14,6 +14,7 @@ interface AttributeMenuProps {
   availableAttributes: Attribute[];
   currentAttribute: string;
   onAttributeSelect: (attribute: string) => void;
+  noAvailableAttributesText: string;
 }
 
 /**
@@ -28,6 +29,7 @@ interface AttributeMenuProps {
  * @param props.currentAttribute - The currently selected attribute value
  * @param props.onAttributeSelect - Callback function invoked when an attribute is selected,
  *                                   receives the selected attribute value as a parameter
+ * @param props.noAvailableAttributesText - Text to display when no attributes are available for selection
  *
  * @returns A controlled select menu component for attribute selection
  *
@@ -47,6 +49,7 @@ export default function AttributeMenu({
   availableAttributes,
   currentAttribute,
   onAttributeSelect,
+  noAvailableAttributesText,
 }: AttributeMenuProps) {
   return (
     <Select.Root
@@ -62,7 +65,11 @@ export default function AttributeMenu({
         aria-label="Select Attribute"
         disabled={availableAttributes.length === 0}
       >
-        <Select.Value>{currentAttribute}</Select.Value>
+        <Select.Value>
+          {availableAttributes.length === 0
+            ? noAvailableAttributesText
+            : currentAttribute}
+        </Select.Value>
       </Select.Trigger>
       <Select.Portal>
         <Select.Content
