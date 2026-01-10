@@ -128,11 +128,19 @@ export default async function createProfile(
 
   if (error) {
     // TODO: Consider structured logging solution
-    // TODO: Differentiate between different error types (e.g. constraint violations)
-    console.error("Error in profile creation transaction:", error);
-    return {
-      message: "Failed to create profile. Please try again.",
-    };
+    console.warn("Error creating profile:", error);
+    switch (error.code) {
+      case "23505": // Unique violation
+        return {
+          message:
+            "A profile already exists for this user or duplicate names detected.",
+        };
+      // Add more specific error handling as needed
+      default:
+        return {
+          message: "Failed to create profile. Please try again.",
+        };
+    }
   }
 
   // Redirect to dashboard upon successful profile creation
