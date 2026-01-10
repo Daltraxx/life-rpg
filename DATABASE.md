@@ -261,13 +261,15 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
       JOIN inserted_quests iq ON qa.quest_name = iq.name
       JOIN inserted_attrs ia ON qa.attribute_name = ia.name
       ON CONFLICT (quest_id, attribute_id) DO UPDATE SET attribute_power = EXCLUDED.attribute_power
+      RETURNING quest_id
     )
 
     -- Build the response with the newly created IDs
     SELECT jsonb_build_object(
       'success', true,
       'attribute_ids', (SELECT jsonb_agg(id) FROM inserted_attrs),
-      'quest_ids', (SELECT jsonb_agg(id) FROM inserted_quests)
+      'quest_ids', (SELECT jsonb_agg(id) FROM inserted_quests),
+      'junction_records_inserted', (SELECT count(*) FROM final_insert)
     ) INTO v_result;
 
     RETURN v_result;
