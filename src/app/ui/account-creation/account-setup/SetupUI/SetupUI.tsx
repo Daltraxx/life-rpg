@@ -57,7 +57,7 @@ export default function SetupUI() {
     INITIAL_PROFILE_CREATION_STATE
   );
 
-  const isSubmitDisabled = (): boolean =>
+  const isSubmitDisabled =
     quests.length === 0 ||
     pointsRemaining > 0 ||
     availableAttributes.length === 0;
@@ -105,7 +105,7 @@ export default function SetupUI() {
           className={styles.submitButton}
           color="blue-700"
           type="submit"
-          disabled={isPending || isSubmitDisabled()}
+          disabled={isPending || isSubmitDisabled}
         >
           {isPending ? "SUBMITTING..." : "CONFIRM QUEST BOARD"}
         </ButtonWrapper>
