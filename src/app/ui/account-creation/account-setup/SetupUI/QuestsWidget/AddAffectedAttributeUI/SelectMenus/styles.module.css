@@ -5,6 +5,7 @@
   justify-content: center;
   text-align: center;
   font-size: 1.5rem;
+  background-color: var(--background, #fafafa);
   color: var(--blue-700);
   width: 100%;
   height: 100%;
@@ -12,9 +13,15 @@
   transition: background-color 0.2s ease;
 }
 
+.trigger[disabled],
+.trigger[disabled]:hover {
+  cursor: inherit;
+  background-color: var(--background, #fafafa);
+}
+
 .trigger:focus-visible {
-    background-color: var(--brown-100);
-  }
+  background-color: var(--brown-100);
+}
 
 @media (hover: hover) {
   .trigger:hover {
@@ -53,9 +60,9 @@
 }
 
 .item[data-highlighted] {
-   outline: none;
-   background-color: var(--brown-100);
- }
+  outline: none;
+  background-color: var(--brown-100);
+}
 
 .plus {
   font-size: var(--plus-font-size, 2rem);
