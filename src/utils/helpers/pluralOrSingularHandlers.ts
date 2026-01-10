@@ -39,7 +39,10 @@ export const getAreOrIs = (count: number): string => {
  * getNounAndVerbAgreement('cat', 2) // returns "cats are"
  * getNounAndVerbAgreement('cat', 0) // returns "cats are"
  */
-export const getNounAndVerbAgreement = (noun: string, count: number) => {
+export const getNounAndVerbAgreement = (
+  noun: string,
+  count: number
+): string => {
   const pluralNoun = addSIfPluralOrZero(noun, count);
   const verb = getAreOrIs(count);
   return `${pluralNoun} ${verb}`;
