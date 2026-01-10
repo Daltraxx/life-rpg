@@ -20,7 +20,6 @@ interface UseAttributeSetupReturn {
   };
 }
 
-
 /**
  * Custom hook for managing attribute setup and lifecycle.
  * Handles adding and deleting attributes while maintaining proper ordering.
