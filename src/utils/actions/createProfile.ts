@@ -56,7 +56,7 @@ export default async function createProfile(
   formData: FormData
 ): Promise<ProfileCreationState | void> {
   const supabase = await createSupabaseServerClient();
-  // Verify the userId matches the authenticated user
+  
   const {
     data: { user },
     error: authError,
