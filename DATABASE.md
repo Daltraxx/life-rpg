@@ -158,6 +158,15 @@ Full table can be found on the Supabase dashboard.
 - Trigger upon insertion to Supabase auth.users that inserts user to project users table
 - Function to create user profile with attributes and quests in single atomic transaction
 
+### Strength Levels Reference
+INSERT INTO strength_levels (level, multiplier) VALUES
+  ('E', 0),
+  ('D', 0.20),
+  ('C', 0.40),
+  ('B', 0.60),
+  ('A', 0.80),
+  ('S', 1.00);
+
 ### Indexes Reference
 
 CREATE INDEX idx_attributes_user_id ON attributes(user_id);
