@@ -71,11 +71,12 @@ const affectedAttributeSelectionReducer = (
         currentAttributeName,
         currentAttributeStrength,
         noAttributesAvailableText,
+        selectedAttributes
       } = state;
       // Prevent adding if no attribute selected or already added
       if (
         currentAttributeName === noAttributesAvailableText ||
-        state.selectedAttributes.some(
+        selectedAttributes.some(
           (attr) => attr.name === currentAttributeName
         )
       ) {
@@ -84,7 +85,7 @@ const affectedAttributeSelectionReducer = (
 
       // Add new affected attribute to selected list
       const updatedSelectedAttributes = [
-        ...state.selectedAttributes,
+        ...selectedAttributes,
         createAffectedAttribute(currentAttributeName, currentAttributeStrength),
       ];
 
