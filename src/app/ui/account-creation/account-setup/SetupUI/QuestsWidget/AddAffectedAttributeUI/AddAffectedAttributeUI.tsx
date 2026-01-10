@@ -88,7 +88,7 @@ export default function AddAffectedAttributeUI({
           className={clsx(styles.appendedButton, styles.addAttributeButton)}
           type="button"
           onClick={addAffectedAttribute}
-          disabled={currentAttributeName === noAttributesAvailableText}
+          disabled={availableAttributes.length === 0}
         >
           ADD
         </button>
