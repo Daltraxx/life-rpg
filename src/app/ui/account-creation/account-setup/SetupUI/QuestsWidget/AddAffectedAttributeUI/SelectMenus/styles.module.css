@@ -15,7 +15,7 @@
 
 .trigger[disabled],
 .trigger[disabled]:hover {
-  cursor: inherit;
+  cursor: default;
   background-color: var(--background, #fafafa);
 }
 
