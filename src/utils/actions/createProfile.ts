@@ -43,9 +43,8 @@ import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
  *
  * return (
  *   <form action={formAction}>
- *     <input type="hidden" name="userId" value={userId} />
- *     <input type="text" name="quests" />
- *     <input type="text" name="attributes" />
+ *     <input type="hidden" name="quests" value={JSON.stringify(questsArray)} />
+ *     <input type="hidden" name="attributes" value={JSON.stringify(attributesArray)} />
  *     <button type="submit">Create Profile</button>
  *     {state?.message && <p>{state.message}</p>}
  *   </form>
