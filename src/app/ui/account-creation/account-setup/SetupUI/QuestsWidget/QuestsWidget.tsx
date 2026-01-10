@@ -16,12 +16,12 @@ import {
   type Quest,
   createQuest,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import type { UseAffectedAttributeSelectionReturn } from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
+import type { AffectedAttributeManager } from "@/app/ui/utils/hooks/useAffectedAttributeManager";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 
 interface QuestsWidgetProps {
-  affectedAttributeManager: UseAffectedAttributeSelectionReturn;
+  affectedAttributeManager: AffectedAttributeManager;
   quests: Quest[];
   addQuest: (quest: Quest) => void;
   nextQuestOrderNumber: number;
@@ -101,7 +101,9 @@ export default function QuestsWidget({
       </div>
 
       {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
-      <AddAffectedAttributeUI affectedAttributeManager={affectedAttributeManager} />
+      <AddAffectedAttributeUI
+        affectedAttributeManager={affectedAttributeManager}
+      />
 
       {/* AFFECTED ATTRIBUTES DISPLAY TABLE */}
       <AffectedAttributesTable

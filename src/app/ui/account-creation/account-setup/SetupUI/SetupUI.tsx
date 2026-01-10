@@ -15,7 +15,7 @@ import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
 import { createSimpleInitialFormActionState } from "@/utils/helpers/createInitialFormActionState";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import useAffectedAttributeSelection from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
+import useAffectedAttributeManager from "@/app/ui/utils/hooks/useAffectedAttributeManager";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline", order: 0 },
@@ -29,7 +29,7 @@ const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 
 export default function SetupUI() {
   // Manage affected attribute selection state
-  const affectedAttributeManager = useAffectedAttributeSelection(
+  const affectedAttributeManager = useAffectedAttributeManager(
     INITIAL_ATTRIBUTES,
     NO_ATTRIBUTES_AVAILABLE_TEXT
   );

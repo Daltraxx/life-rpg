@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import type { UseAffectedAttributeSelectionReturn } from "@/app/ui/utils/hooks/useAffectedAttributeSelection";
+import type { AffectedAttributeManager } from "@/app/ui/utils/hooks/useAffectedAttributeManager";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
 
@@ -14,7 +14,7 @@ import StrengthMenu from "./SelectMenus/StrengthMenu";
  * @property {string} noAvailableAttributesText - The text to display when there are no available attributes to select.
  */
 export interface AddAffectedAttributeUIProps {
-  affectedAttributeManager: UseAffectedAttributeSelectionReturn;
+  affectedAttributeManager: AffectedAttributeManager;
 }
 
 /**
@@ -24,18 +24,10 @@ export interface AddAffectedAttributeUIProps {
  * of that attribute, and add it to the quest's affected attributes list.
  *
  * @component
- * @param props - The component props
- * @param props.affectedAttributeManager - Manager object containing:
- *   - availableAttributes: List of attributes that can be affected
- *   - currentAttributeName: Currently selected attribute name
- *   - currentAttributeStrength: Strength value for the selected attribute
- *   - noAttributesAvailableText: Text shown when no attributes are available
- *   - actions: Object containing state update functions:
- *     - setCurrentAttributeName: Updates the selected attribute
- *     - setAttributeStrength: Updates the strength of the selected attribute
- *     - addAffectedAttribute: Adds the current selection to the quest's affected attributes
+ * @param {AddAffectedAttributeUIProps} props - The component props
+ * @param {AffectedAttributeManager} props.affectedAttributeManager - Manager object for affected attribute selection state and actions
  *
- * @returns A fieldset containing attribute selection menus and an add button
+ * @returns {React.ReactElement} A fieldset containing attribute selection menus and an add button
  *
  * @example
  * ```tsx

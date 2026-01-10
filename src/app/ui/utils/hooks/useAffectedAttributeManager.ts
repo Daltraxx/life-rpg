@@ -188,7 +188,7 @@ const affectedAttributeSelectionReducer = (
   }
 };
 
-export type UseAffectedAttributeSelectionReturn = {
+export type AffectedAttributeManager = {
   availableAttributes: Attribute[];
   selectedAttributes: AffectedAttribute[];
   currentAttributeName: string;
@@ -232,10 +232,10 @@ export type UseAffectedAttributeSelectionReturn = {
  * attributes is trusted to already be sorted by order.
  * syncAffectedAttributesWithAllAvailableAttributes should be called wherever the available attributes change.
  */
-const useAffectedAttributeSelection = (
+const useAffectedAttributeManager = (
   attributes: Attribute[],
   noAttributesAvailableText: string
-): UseAffectedAttributeSelectionReturn => {
+): AffectedAttributeManager => {
   const initialState: AffectedAttributeSelectionState = {
     availableAttributes: attributes,
     selectedAttributes: [],
@@ -301,4 +301,4 @@ const useAffectedAttributeSelection = (
   };
 };
 
-export default useAffectedAttributeSelection;
+export default useAffectedAttributeManager;
