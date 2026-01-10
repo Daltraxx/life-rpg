@@ -200,6 +200,7 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   -- Existing records should not be an issue (this is intended for new users),
   -- but is handled just in case.
   -- Descriptions are not handled here but can be added once their support is added.
+  -- Uses SECURITY DEFINER to ensure proper permissioning.
   CREATE OR REPLACE FUNCTION create_profile_transaction(
     p_user_id UUID,
     p_attributes JSONB,
@@ -210,15 +211,14 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   DECLARE
     v_result jsonb;
   BEGIN
+   -- SECURITY CHECK: Ensure the authenticated user can only modify their own data
+    IF p_user_id IS NULL OR p_user_id <> auth.uid() THEN
+      RAISE EXCEPTION 'Unauthorized: User ID mismatch' USING ERRCODE = '42501';
+    END IF;
+
     -- Validate inputs are not NULL
-    IF p_attributes IS NULL THEN
-      RAISE EXCEPTION 'p_attributes cannot be NULL';
-    END IF;
-    IF p_quests IS NULL THEN
-      RAISE EXCEPTION 'p_quests cannot be NULL';
-    END IF;
-    IF p_quests_attributes IS NULL THEN
-      RAISE EXCEPTION 'p_quests_attributes cannot be NULL';
+    IF p_attributes IS NULL OR p_quests IS NULL OR p_quests_attributes IS NULL THEN
+      RAISE EXCEPTION 'Input parameters cannot be NULL';
     END IF;
     WITH 
     -- Parse and deduplicate attribute inputs
