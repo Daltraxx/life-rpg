@@ -7,7 +7,7 @@
  * @returns True if all values for the specified key are unique, false otherwise
  * @note For string values, comparison is case-insensitive and ignores leading/trailing whitespace
  * @note For non-string values, comparison is by reference, not by deep equality
- * @note null and undefined are treated as distinct values; multiple nulls or undefineds are considered duplicates
+ * @note null, undefined, and NaN are treated as distinct values; multiple nulls, undefineds, or NaNs are considered duplicates
  * @note Empty arrays return true (vacuously, all zero values are unique)
  * @example
  * const users = [
