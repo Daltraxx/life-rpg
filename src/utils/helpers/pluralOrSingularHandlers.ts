@@ -2,7 +2,7 @@
 
 /**
  * Adds an 's' suffix to a word if the count is not equal to 1, otherwise returns the word unchanged.
- * Useful for pluralizing nouns based on a numeric count.
+ * Useful for pluralizing nouns based on a numeric count. Only handles simple pluralization by adding 's'.
  *
  * @param word - The word to potentially pluralize
  * @param count - The numeric count to determine singular or plural form
@@ -18,7 +18,7 @@ export const addSIfPluralOrZero = (word: string, count: number): string => {
     throw new Error("Word must be a non-empty string");
   }
   if (!Number.isFinite(count) || count < 0) {
-    throw new Error('Count must be a non-negative finite number');
+    throw new Error("Count must be a non-negative finite number");
   }
   return count === 1 ? word : `${word}s`;
 };
@@ -39,7 +39,7 @@ export const getAreOrIs = (count: number): string => {
 };
 
 /**
- * Gets the grammatically correct noun and verb agreement for a given count.
+ * Gets the grammatically correct noun and verb agreement for a given count. Only handles simple pluralization by adding 's'.
  * @param noun - The base noun to pluralize if necessary
  * @param count - The number used to determine if the noun should be plural and which verb form to use
  * @returns A string containing the pluralized noun (if count is not 1) and the correct verb form (is/are)
