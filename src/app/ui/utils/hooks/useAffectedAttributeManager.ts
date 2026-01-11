@@ -254,6 +254,8 @@ export type AffectedAttributeManager = {
  *     - syncAffectedAttributesWithAllAvailableAttributes: Manually synchronizes affected attributes with updated available attributes
  *
  * @remarks
+ * Attributes passed to the hook should be pre-sorted by their order property for consistent behavior.
+ * Attributes should be stable and not recreated on every render to avoid unnecessary state resets.
  * The hook automatically calls syncAffectedAttributesWithAllAvailableAttributes whenever
  * the attributes parameter changes, so manual calls are typically unnecessary unless you need
  * to update attributes outside of the hook's parameters.
