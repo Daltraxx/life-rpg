@@ -334,6 +334,7 @@ BEGIN
     UPDATE users
     SET profile_complete = TRUE, updated_at = NOW()
     WHERE id = p_user_id
+    RETURNING id
   )
 
   -- Build the response with the newly created IDs
@@ -341,7 +342,8 @@ BEGIN
     'success', true,
     'attribute_ids', (SELECT jsonb_agg(id) FROM inserted_attrs),
     'quest_ids', (SELECT jsonb_agg(id) FROM inserted_quests),
-    'junction_records_inserted', (SELECT count(*) FROM final_insert)
+    'junction_records_inserted', (SELECT count(*) FROM final_insert),
+    'profile_marked_complete', (SELECT count(*) > 0 FROM update_profile)
   ) INTO v_result;
 
   RETURN v_result;
