@@ -14,6 +14,9 @@
  * addSIfPluralOrZero('item', 0) // Returns 'items'
  */
 export const addSIfPluralOrZero = (word: string, count: number): string => {
+  if (!word || typeof word !== "string") {
+    throw new Error("Word must be a non-empty string");
+  }
   if (!Number.isFinite(count) || count < 0) {
     throw new Error('Count must be a non-negative finite number');
   }
@@ -49,6 +52,9 @@ export const getNounAndVerbAgreement = (
   noun: string,
   count: number
 ): string => {
+  if (!noun || typeof noun !== "string") {
+    throw new Error("Noun must be a non-empty string");
+  }
   if (!Number.isFinite(count) || count < 0) {
     throw new Error("Count must be a non-negative finite number");
   }
