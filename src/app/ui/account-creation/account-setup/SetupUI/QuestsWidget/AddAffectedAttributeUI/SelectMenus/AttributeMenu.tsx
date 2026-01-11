@@ -62,7 +62,11 @@ export default function AttributeMenu({
     >
       <Select.Trigger
         className={styles.trigger}
-        aria-label="Select Attribute"
+        aria-label={
+          availableAttributes.length === 0
+            ? noAvailableAttributesText
+            : "Select Attribute"
+        }
         disabled={availableAttributes.length === 0}
       >
         <Select.Value>
