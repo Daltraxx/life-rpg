@@ -22,4 +22,7 @@ export const intToStrengthMap = {
   1: "normal",
   2: "plus",
   3: "plusPlus",
-} as const satisfies Record<number, AttributeStrength>;
+} as const satisfies Record<
+  (typeof strengthToIntMap)[AttributeStrength],
+  AttributeStrength
+>;
