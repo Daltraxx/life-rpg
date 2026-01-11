@@ -67,11 +67,15 @@ export default async function createProfile(
 
   const rawFormData = Object.fromEntries(formData);
   // Parse JSON fields if they're sent as stringified JSON
-  if (typeof rawFormData.quests === "string") {
-    rawFormData.quests = JSON.parse(rawFormData.quests);
-  }
-  if (typeof rawFormData.attributes === "string") {
-    rawFormData.attributes = JSON.parse(rawFormData.attributes);
+  try {
+    if (typeof rawFormData.quests === "string")
+      rawFormData.quests = JSON.parse(rawFormData.quests);
+    if (typeof rawFormData.attributes === "string")
+      rawFormData.attributes = JSON.parse(rawFormData.attributes);
+  } catch {
+    return {
+      message: "Invalid JSON format in form data.",
+    };
   }
 
   rawFormData.userId = user.id;
