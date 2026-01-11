@@ -51,9 +51,10 @@ const getAvailableAttributes = (
 };
 
 // Helper to sort attributes by their order property
-const sortAttributesByOrderInPlace = (attributes: Attribute[]): void => {
-  attributes.sort((a, b) => a.order - b.order);
-};
+// Not currently necessary due to pre-sorted input
+// const sortAttributesByOrderInPlace = (attributes: Attribute[]): void => {
+//   attributes.sort((a, b) => a.order - b.order);
+// };
 
 // Reducer function to manage attribute selection state
 const affectedAttributeSelectionReducer = (
@@ -92,7 +93,6 @@ const affectedAttributeSelectionReducer = (
         allAvailableAttributes,
         updatedSelectedAttributes
       );
-      sortAttributesByOrderInPlace(updatedAvailableAttributes);
 
       return {
         ...state,
@@ -119,7 +119,6 @@ const affectedAttributeSelectionReducer = (
         allAttributes,
         updatedSelectedAttributes
       );
-      sortAttributesByOrderInPlace(updatedAvailableAttributes);
       return {
         ...state,
         selectedAttributes: updatedSelectedAttributes,
