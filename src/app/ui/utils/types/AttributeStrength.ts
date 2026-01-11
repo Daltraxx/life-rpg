@@ -1,3 +1,6 @@
+/**
+ * Valid values for attribute strength levels.
+ */
 export const AttributeStrengthValues = ["normal", "plus", "plusPlus"] as const;
 
 /**
