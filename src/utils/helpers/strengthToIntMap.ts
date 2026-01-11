@@ -14,3 +14,12 @@ export const strengthToIntMap = {
   plus: 2,
   plusPlus: 3,
 } as const satisfies Record<AttributeStrength, number>;
+
+/**
+ * Reverse mapping from integer to `AttributeStrength`.
+ */
+export const intToStrengthMap = {
+  1: "normal",
+  2: "plus",
+  3: "plusPlus",
+} as const satisfies Record<number, AttributeStrength>;
