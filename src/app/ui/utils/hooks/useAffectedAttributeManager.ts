@@ -226,6 +226,21 @@ export type AffectedAttributeManager = {
   };
 };
 
+// Initializer function for the reducer for initial state setup
+const reducerInitializerFunction = ({
+  attributes,
+  noAttributesAvailableText,
+}: {
+  attributes: Attribute[];
+  noAttributesAvailableText: string;
+}): AffectedAttributeSelectionState => ({
+  availableAttributes: attributes,
+  selectedAttributes: [],
+  currentAttributeName: attributes[0]?.name || noAttributesAvailableText,
+  currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
+  noAttributesAvailableText,
+});
+
 /**
  * Hook for managing the selection and configuration of affected attributes.
  *
@@ -264,16 +279,10 @@ const useAffectedAttributeManager = (
   attributes: Attribute[],
   noAttributesAvailableText: string
 ): AffectedAttributeManager => {
-  const initialState: AffectedAttributeSelectionState = {
-    availableAttributes: attributes,
-    selectedAttributes: [],
-    currentAttributeName: attributes[0]?.name || noAttributesAvailableText,
-    currentAttributeStrength: DEFAULT_ATTRIBUTE_STRENGTH,
-    noAttributesAvailableText,
-  };
   const [state, dispatch] = useReducer(
     affectedAttributeSelectionReducer,
-    initialState
+    { attributes, noAttributesAvailableText },
+    reducerInitializerFunction
   );
 
   useEffect(() => {
