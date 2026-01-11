@@ -51,8 +51,7 @@ export default function useAttributeSetup(
     useState<number>(initialAttributes.length);
 
   const handleAddAttribute = (attribute: Attribute) => {
-    const newAvailableAttributes = [...availableAttributes, attribute];
-    setAvailableAttributes(newAvailableAttributes);
+    setAvailableAttributes((prev) => [...prev, attribute]);
     setNextAttributeOrderNumber((prev) => prev + 1);
   };
 
