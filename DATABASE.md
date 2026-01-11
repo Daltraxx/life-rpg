@@ -186,24 +186,22 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
 #### Handle New User Signup (Trigger)
 
 ```sql
-  -- Trigger Function
-  CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
-  RETURNS TRIGGER AS
+-- Trigger Function
+CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
+RETURNS TRIGGER AS
+$$
+BEGIN
+  INSERT INTO public.users (id, email, username, usertag)
+  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username', NEW.raw_user_meta_data ->> 'usertag');
+  RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
 
-  $$
-  BEGIN
-    INSERT INTO public.users (id, email, username)
-    VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username');
-    RETURN NEW;
-  END;
-  $$
-
-  LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
-
-  -- Trigger
-  CREATE TRIGGER after_user_signup_create_user
-  AFTER INSERT ON auth.users
-  FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
+-- Trigger
+CREATE TRIGGER after_user_signup_create_user
+AFTER INSERT ON auth.users
+FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
 ```
 
 #### Atomic Profile Creation Function
