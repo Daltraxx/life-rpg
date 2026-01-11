@@ -50,12 +50,6 @@ const getAvailableAttributes = (
   return attributes.filter((attr) => !selectedNames.has(attr.name));
 };
 
-// Helper to sort attributes by their order property
-// Not currently necessary due to pre-sorted input
-// const sortAttributesByOrderInPlace = (attributes: Attribute[]): void => {
-//   attributes.sort((a, b) => a.order - b.order);
-// };
-
 // Reducer function to manage attribute selection state
 const affectedAttributeSelectionReducer = (
   state: AffectedAttributeSelectionState,
