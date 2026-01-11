@@ -30,7 +30,7 @@ Full table can be found on the Supabase dashboard.
 - `verified`: BOOLEAN DEFAULT FALSE
   - Account verification status
 - `profile_complete`: BOOLEAN DEFAULT FALSE
-  - Whether user has defined their quests
+  - Whether user has defined their quests and attributes
 - `level`: INT DEFAULT 1
   - Overall player level
 - `experience`: DECIMAL(10, 2) DEFAULT 0
