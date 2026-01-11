@@ -52,12 +52,6 @@ export const getNounAndVerbAgreement = (
   noun: string,
   count: number
 ): string => {
-  if (!noun || typeof noun !== "string") {
-    throw new Error("Noun must be a non-empty string");
-  }
-  if (!Number.isFinite(count) || count < 0) {
-    throw new Error("Count must be a non-negative finite number");
-  }
   const pluralNoun = addSIfPluralOrZero(noun, count);
   const verb = getAreOrIs(count);
   return `${pluralNoun} ${verb}`;
