@@ -158,7 +158,7 @@ Full table can be found on the Supabase dashboard.
 - Trigger upon insertion to Supabase auth.users that inserts user to project users table
 - Function to create user profile with attributes and quests in single atomic transaction
 
-### Strength Levels Reference
+### Strength Levels Reference (from setup)
 
 INSERT INTO strength_levels (level, multiplier) VALUES
 ('E', 0),
