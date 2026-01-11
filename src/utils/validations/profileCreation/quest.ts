@@ -56,7 +56,7 @@ export const QuestSchema = z.object({
   order: z
     .int()
     .nonnegative("Order must be a non-negative integer")
-    .max(MAX_QUESTS_ALLOWED, `Order cannot exceed ${MAX_QUESTS_ALLOWED - 1}`),
+    .max(MAX_QUESTS_ALLOWED - 1, `Order cannot exceed ${MAX_QUESTS_ALLOWED - 1}`),
   experiencePointValue: z
     .int()
     .nonnegative("Experience point value must be a non-negative integer")
