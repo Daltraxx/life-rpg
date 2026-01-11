@@ -181,7 +181,7 @@ CREATE INDEX idx_quests_attributes_quest_id ON quests_attributes (quest_id);
 CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_id);
 
 ### Functions and Triggers Reference
-#### Handle New User Signup
+#### Handle New User Signup (Trigger)
   -- Trigger Function
   CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
   RETURNS TRIGGER AS
@@ -202,6 +202,48 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
 
 #### Atomic Profile Creation Function
+##### Example Call
+```typescript
+// Prepare data for insertion
+const attributesData: CreateProfileTransactionAttributes[] =
+    validatedAttributes.map((attribute) => ({
+      name: attribute.name,
+      position: attribute.order,
+    }));
+
+  const questsData: CreateProfileTransactionQuests[] = [];
+  const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
+  for (const quest of validatedQuests) {
+    questsData.push({
+      name: quest.name,
+      experience_share: quest.experiencePointValue,
+      position: quest.order,
+    });
+    for (const affectedAttribute of quest.affectedAttributes) {
+      const attributePower = strengthToIntMap[affectedAttribute.strength];
+      if (attributePower === undefined) {
+        return {
+          message: `Invalid strength value: ${affectedAttribute.strength}`,
+        };
+      }
+      // Duplicate names are restricted by DB constraints and validation schema
+      questsAttributesData.push({
+        quest_name: quest.name,
+        attribute_name: affectedAttribute.name,
+        attribute_power: attributePower,
+      });
+    }
+  }
+
+  // Insert data into the database within a transaction
+  const { error } = await supabase.rpc("create_profile_transaction", {
+    p_user_id: validatedUserId,
+    p_attributes: attributesData,
+    p_quests: questsData,
+    p_quests_attributes: questsAttributesData,
+  });
+```
+#### Function Definition
   -- Define function that takes user_id, array of attribute objects, 
   -- array of quest objects, and array of quests_attributes 
   -- for insertion into respective tables in single atomic transaction.
