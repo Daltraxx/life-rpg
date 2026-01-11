@@ -181,7 +181,7 @@ CREATE INDEX idx_quests_attributes_quest_id ON quests_attributes (quest_id);
 CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_id);
 
 ### Functions and Triggers Reference
-- Handle New User Signup
+#### Handle New User Signup
   -- Trigger Function
   CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
   RETURNS TRIGGER AS
@@ -201,7 +201,7 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
 
-- Atomic Profile Creation Function
+#### Atomic Profile Creation Function
   -- Define function that takes user_id, array of attribute objects, 
   -- array of quest objects, and array of quests_attributes 
   -- for insertion into respective tables in single atomic transaction.
@@ -210,7 +210,7 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   -- but is handled just in case.
   -- Descriptions are not handled here but can be added once their support is added.
   -- Uses SECURITY DEFINER to ensure proper permissioning.
-  CREATE OR REPLACE FUNCTION create_profile_transaction(
+CREATE OR REPLACE FUNCTION create_profile_transaction(
   p_user_id UUID,
   p_attributes JSONB,
   p_quests JSONB,
