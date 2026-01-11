@@ -327,6 +327,13 @@ BEGIN
     JOIN inserted_attrs ia ON qa.attribute_name = ia.name
     ON CONFLICT (quest_id, attribute_id) DO UPDATE SET attribute_power = EXCLUDED.attribute_power
     RETURNING quest_id
+  ),
+
+  -- Mark profile as complete
+  update_profile AS (
+    UPDATE users
+    SET profile_complete = TRUE, updated_at = NOW()
+    WHERE id = p_user_id
   )
 
   -- Build the response with the newly created IDs
