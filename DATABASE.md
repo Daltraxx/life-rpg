@@ -159,13 +159,14 @@ Full table can be found on the Supabase dashboard.
 - Function to create user profile with attributes and quests in single atomic transaction
 
 ### Strength Levels Reference
+
 INSERT INTO strength_levels (level, multiplier) VALUES
-  ('E', 0),
-  ('D', 0.20),
-  ('C', 0.40),
-  ('B', 0.60),
-  ('A', 0.80),
-  ('S', 1.00);
+('E', 0),
+('D', 0.20),
+('C', 0.40),
+('B', 0.60),
+('A', 0.80),
+('S', 1.00);
 
 ### Indexes Reference
 
@@ -181,7 +182,10 @@ CREATE INDEX idx_quests_attributes_quest_id ON quests_attributes (quest_id);
 CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_id);
 
 ### Functions and Triggers Reference
+
 #### Handle New User Signup (Trigger)
+
+```sql
   -- Trigger Function
   CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
   RETURNS TRIGGER AS
@@ -200,58 +204,65 @@ CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_
   CREATE TRIGGER after_user_signup_create_user
   AFTER INSERT ON auth.users
   FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
+```
 
 #### Atomic Profile Creation Function
+
 ##### Example Call
+
 ```typescript
 // Prepare data for insertion
 const attributesData: CreateProfileTransactionAttributes[] =
-    validatedAttributes.map((attribute) => ({
-      name: attribute.name,
-      position: attribute.order,
-    }));
+  validatedAttributes.map((attribute) => ({
+    name: attribute.name,
+    position: attribute.order,
+  }));
 
-  const questsData: CreateProfileTransactionQuests[] = [];
-  const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
-  for (const quest of validatedQuests) {
-    questsData.push({
-      name: quest.name,
-      experience_share: quest.experiencePointValue,
-      position: quest.order,
-    });
-    for (const affectedAttribute of quest.affectedAttributes) {
-      const attributePower = strengthToIntMap[affectedAttribute.strength];
-      if (attributePower === undefined) {
-        return {
-          message: `Invalid strength value: ${affectedAttribute.strength}`,
-        };
-      }
-      // Duplicate names are restricted by DB constraints and validation schema
-      questsAttributesData.push({
-        quest_name: quest.name,
-        attribute_name: affectedAttribute.name,
-        attribute_power: attributePower,
-      });
-    }
-  }
-
-  // Insert data into the database within a transaction
-  const { error } = await supabase.rpc("create_profile_transaction", {
-    p_user_id: validatedUserId,
-    p_attributes: attributesData,
-    p_quests: questsData,
-    p_quests_attributes: questsAttributesData,
+const questsData: CreateProfileTransactionQuests[] = [];
+const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
+for (const quest of validatedQuests) {
+  questsData.push({
+    name: quest.name,
+    experience_share: quest.experiencePointValue,
+    position: quest.order,
   });
+  for (const affectedAttribute of quest.affectedAttributes) {
+    const attributePower = strengthToIntMap[affectedAttribute.strength];
+    if (attributePower === undefined) {
+      return {
+        message: `Invalid strength value: ${affectedAttribute.strength}`,
+      };
+    }
+    // Duplicate names are restricted by DB constraints and validation schema
+    questsAttributesData.push({
+      quest_name: quest.name,
+      attribute_name: affectedAttribute.name,
+      attribute_power: attributePower,
+    });
+  }
+}
+
+// Insert data into the database within a transaction
+const { error } = await supabase.rpc("create_profile_transaction", {
+  p_user_id: validatedUserId,
+  p_attributes: attributesData,
+  p_quests: questsData,
+  p_quests_attributes: questsAttributesData,
+});
 ```
+
 #### Function Definition
-  -- Define function that takes user_id, array of attribute objects, 
-  -- array of quest objects, and array of quests_attributes 
-  -- for insertion into respective tables in single atomic transaction.
-  -- Conflicting names or positions should be handled before calling this function.
-  -- Existing records should not be an issue (this is intended for new users),
-  -- but is handled just in case.
-  -- Descriptions are not handled here but can be added once their support is added.
-  -- Uses SECURITY DEFINER to ensure proper permissioning.
+
+-- Define function that takes user_id, array of attribute objects,
+-- array of quest objects, and array of quests_attributes
+-- for insertion into respective tables in single atomic transaction.
+-- Conflicting names or positions should be handled before calling this function.
+-- Existing records should not be an issue (this is intended for new users),
+-- but is handled just in case.
+-- Descriptions are not handled here but can be added once their support is added.
+-- Uses SECURITY DEFINER to ensure proper permissioning.
+
+```sql
 CREATE OR REPLACE FUNCTION create_profile_transaction(
   p_user_id UUID,
   p_attributes JSONB,
@@ -276,10 +287,10 @@ BEGIN
     RAISE EXCEPTION 'Input parameters cannot be NULL';
   END IF;
 
-  WITH 
+  WITH
   -- Parse and deduplicate attribute inputs
   attr_input AS (
-    SELECT DISTINCT name, position 
+    SELECT DISTINCT name, position
     FROM jsonb_to_recordset(p_attributes) AS x(name text, position int)
   ),
 
@@ -293,7 +304,7 @@ BEGIN
 
   -- Parse and deduplicate quest inputs
   quest_input AS (
-    SELECT DISTINCT name, experience_share, position 
+    SELECT DISTINCT name, experience_share, position
     FROM jsonb_to_recordset(p_quests) AS x(name text, experience_share int, position int)
   ),
 
@@ -308,10 +319,10 @@ BEGIN
   -- Final insert into junction table using results from above CTEs
   final_insert AS (
     INSERT INTO quests_attributes (user_id, quest_id, attribute_id, attribute_power)
-    SELECT 
-      p_user_id, 
-      iq.id, 
-      ia.id, 
+    SELECT
+      p_user_id,
+      iq.id,
+      ia.id,
       qa.attribute_power
     FROM jsonb_to_recordset(p_quests_attributes) AS qa(quest_name text, attribute_name text, attribute_power int)
     JOIN inserted_quests iq ON qa.quest_name = iq.name
@@ -330,9 +341,10 @@ BEGIN
 
   RETURN v_result;
 
-EXCEPTION 
+EXCEPTION
   WHEN OTHERS THEN
     -- Re-raise with a custom message while preserving the internal SQLSTATE
     RAISE EXCEPTION 'Transaction failed: % (SQLSTATE: %)', SQLERRM, SQLSTATE;
 END;
 $$;
+```
