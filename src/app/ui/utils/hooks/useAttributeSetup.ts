@@ -34,10 +34,7 @@ interface UseAttributeSetupReturn {
  *     - deleteAttribute: Function to remove an attribute and reorder remaining attributes
  *
  * @example
- * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeSetup(
- *   initialAttrs,
- *   (attrs) => updateParentState(attrs)
- * );
+ * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeSetup(initialAttrs);
  *
  * actions.addAttribute(newAttribute);
  * actions.deleteAttribute(attributeToRemove);
