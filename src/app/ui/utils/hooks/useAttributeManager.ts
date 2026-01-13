@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Attribute } from "../classesAndInterfaces/AttributesAndQuests";
 
 /**
@@ -47,15 +47,18 @@ export default function useAttributeManager(
   const [nextAttributeOrderNumber, setNextAttributeOrderNumber] =
     useState<number>(initialAttributes.length);
 
-  const handleAddAttribute = (attribute: Attribute) => {
-    setAvailableAttributes((prev) => [
-      ...prev,
-      { ...attribute, order: nextAttributeOrderNumber },
-    ]);
-    setNextAttributeOrderNumber((prev) => prev + 1);
-  };
+  const handleAddAttribute = useCallback(
+    (attribute: Attribute) => {
+      setAvailableAttributes((prev) => [
+        ...prev,
+        { ...attribute, order: nextAttributeOrderNumber },
+      ]);
+      setNextAttributeOrderNumber((prev) => prev + 1);
+    },
+    [nextAttributeOrderNumber]
+  );
 
-  const handleDeleteAttribute = (attribute: Attribute) => {
+  const handleDeleteAttribute = useCallback((attribute: Attribute) => {
     // Note: attributes array is always sorted by order with no gaps
     setAvailableAttributes((prev) => {
       const updatedAttributes = prev.filter(
@@ -70,14 +73,19 @@ export default function useAttributeManager(
       return updatedAttributes;
     });
     setNextAttributeOrderNumber((prev) => prev - 1);
-  };
+  }, []);
+
+  const actions = useMemo(
+    () => ({
+      addAttribute: handleAddAttribute,
+      deleteAttribute: handleDeleteAttribute,
+    }),
+    [handleAddAttribute, handleDeleteAttribute]
+  );
 
   return {
     availableAttributes,
     nextAttributeOrderNumber,
-    actions: {
-      addAttribute: handleAddAttribute,
-      deleteAttribute: handleDeleteAttribute,
-    },
+    actions,
   };
 }
