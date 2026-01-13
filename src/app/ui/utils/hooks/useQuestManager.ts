@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useReducer, useMemo } from "react";
 import { Quest } from "../classesAndInterfaces/AttributesAndQuests";
 
 // TODO: add structured logging
@@ -256,9 +256,8 @@ export default function useQuestManager(): QuestManager {
     pointsRemaining: TOTAL_EXPERIENCE_POINTS,
   });
 
-  return {
-    ...state,
-    actions: {
+  const actions = useMemo(
+    () => ({
       addQuest: (quest: Quest) => {
         dispatch({ type: "ADD_QUEST", payload: quest });
       },
@@ -274,6 +273,12 @@ export default function useQuestManager(): QuestManager {
           payload: { quest, direction },
         });
       },
-    },
+    }),
+    []
+  );
+
+  return {
+    ...state,
+    actions,
   };
 }
