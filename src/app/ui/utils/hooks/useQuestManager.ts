@@ -79,20 +79,24 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "DELETE_QUEST": {
       const deletedQuest = action.payload;
-      const updatedQuests = structuredClone(state.quests).filter(
-        (quest) => deletedQuest.name !== quest.name
+      const existingQuest = state.quests.find(
+        (quest) => quest.name === deletedQuest.name
       );
-      // Only update state if quest was actually deleted
-      if (updatedQuests.length === state.quests.length) {
+      if (!existingQuest) {
         console.warn("Attempted to delete a quest that does not exist");
         return state; // Quest not found, no changes
       }
-      const deletedQuestIndex = deletedQuest.order;
-      updatedQuests.forEach((quest) => {
-        if (quest.order > deletedQuestIndex) {
-          quest.order -= 1;
-        }
-      });
+      const deletedQuestIndex = existingQuest.order;
+      const updatedQuests = state.quests.filter(
+        (quest) => quest.name !== deletedQuest.name
+      );
+      // Reorder remaining quests
+      for (let i = deletedQuestIndex; i < updatedQuests.length; i++) {
+        updatedQuests[i] = {
+          ...updatedQuests[i],
+          order: updatedQuests[i].order - 1,
+        };
+      }
       return {
         ...state,
         quests: updatedQuests,
