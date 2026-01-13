@@ -46,7 +46,6 @@ export default function SetupUI() {
   const questManagement = useQuestManager();
   const {
     quests,
-    nextQuestOrderNumber,
     pointsRemaining,
     actions: questActions,
   } = questManagement;
@@ -77,7 +76,6 @@ export default function SetupUI() {
             affectedAttributeManager={affectedAttributeManager}
             quests={quests}
             addQuest={questActions.addQuest}
-            nextQuestOrderNumber={nextQuestOrderNumber}
             className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
           />
         </div>

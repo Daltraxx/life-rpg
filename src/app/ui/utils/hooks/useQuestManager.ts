@@ -10,12 +10,10 @@ const TOTAL_EXPERIENCE_POINTS = 100;
  * Represents the state of quests in the application.
  * @interface QuestState
  * @property {Quest[]} quests - Array of quest objects managed by the application.
- * @property {number} nextQuestOrderNumber - The order number to be assigned to the next quest.
  * @property {number} pointsRemaining - The number of points available for quest allocation.
  */
 interface QuestState {
   quests: Quest[];
-  nextQuestOrderNumber: number;
   pointsRemaining: number;
 }
 
@@ -64,8 +62,8 @@ type QuestAction =
 function questReducer(state: QuestState, action: QuestAction): QuestState {
   switch (action.type) {
     case "ADD_QUEST": {
-      // TODO: Consider handling quest order here, or keep in Quest Widget?
       const newQuest = action.payload;
+      newQuest.order = state.quests.length;
       // Note: duplicates should be prevented by the UI, but adding a safeguard here as well
       if (state.quests.some((quest) => quest.name === newQuest.name)) {
         console.warn("Quest with this name already exists");
@@ -80,7 +78,6 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       return {
         ...state,
         quests: [...state.quests, newQuest],
-        nextQuestOrderNumber: state.nextQuestOrderNumber + 1,
         pointsRemaining: state.pointsRemaining - newQuest.experiencePointValue,
       };
     }
@@ -116,7 +113,6 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       return {
         ...state,
         quests: updatedQuests,
-        nextQuestOrderNumber: state.nextQuestOrderNumber - 1,
         pointsRemaining: state.pointsRemaining + deletedQuestExperiencePoints,
       };
     }
@@ -206,7 +202,6 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
  * Return type for the useQuestManager hook
  * @interface QuestManager
  * @property {Quest[]} quests - Array of quest objects
- * @property {number} nextQuestOrderNumber - The next sequential order number for a new quest
  * @property {number} pointsRemaining - The number of experience points available to allocate
  * @property {Object} actions - Object containing quest management action handlers
  * @property {(quest: Quest) => void} actions.addQuest - Adds a new quest to the list
@@ -216,7 +211,6 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
  */
 interface QuestManager {
   quests: Quest[];
-  nextQuestOrderNumber: number;
   pointsRemaining: number;
   actions: {
     addQuest: (quest: Quest) => void;
@@ -238,7 +232,6 @@ interface QuestManager {
  *
  * @returns {QuestManager} An object containing:
  *   - `quests`: Array of current quests
- *   - `nextQuestOrderNumber`: The next available order number for new quests
  *   - `pointsRemaining`: Remaining experience points available to allocate
  *   - `actions`: Object containing action creators:
  *     - `addQuest`: Adds a new quest to the state
@@ -254,7 +247,6 @@ interface QuestManager {
 export default function useQuestManager(): QuestManager {
   const [state, dispatch] = useReducer(questReducer, {
     quests: [],
-    nextQuestOrderNumber: 0,
     pointsRemaining: TOTAL_EXPERIENCE_POINTS,
   });
 

@@ -24,7 +24,6 @@ interface QuestsWidgetProps {
   affectedAttributeManager: AffectedAttributeManager;
   quests: Quest[];
   addQuest: (quest: Quest) => void;
-  nextQuestOrderNumber: number;
   className?: string;
 }
 
@@ -32,7 +31,6 @@ export default function QuestsWidget({
   affectedAttributeManager,
   quests,
   addQuest,
-  nextQuestOrderNumber,
   className,
 }: QuestsWidgetProps) {
   // TODO: Implement error handling and validation for quest creation
@@ -63,7 +61,7 @@ export default function QuestsWidget({
     }
 
     addQuest(
-      createQuest(trimmedQuestName, affectedAttributes, nextQuestOrderNumber)
+      createQuest(trimmedQuestName, affectedAttributes, quests.length)
     );
 
     // Reset UI state
