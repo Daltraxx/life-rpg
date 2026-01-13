@@ -4,14 +4,14 @@ import { Attribute } from "../classesAndInterfaces/AttributesAndQuests";
 /**
  * Return type for the `useAttributeSetup` hook.
  *
- * @interface UseAttributeSetupReturn
+ * @interface UseAttributeManager
  * @property {Attribute[]} availableAttributes - Array of attributes that are currently available for use.
  * @property {number} nextAttributeOrderNumber - The next sequential order number to assign to a new attribute.
  * @property {Object} actions - Object containing attribute manipulation functions.
  * @property {(attribute: Attribute) => void} actions.addAttribute - Function to add a new attribute to the setup.
  * @property {(attribute: Attribute) => void} actions.deleteAttribute - Function to remove an attribute from the setup.
  */
-interface UseAttributeSetupReturn {
+interface UseAttributeManager {
   availableAttributes: Attribute[];
   nextAttributeOrderNumber: number;
   actions: {
@@ -26,7 +26,7 @@ interface UseAttributeSetupReturn {
  *
  * @param initialAttributes - The initial array of attributes to set up
  *
- * @returns {UseAttributeSetupReturn} Object containing:
+ * @returns {UseAttributeManager} Object containing:
  *   - availableAttributes: Current list of managed attributes
  *   - nextAttributeOrderNumber: The order number for the next attribute to be added
  *   - actions: Object containing action handlers:
@@ -41,7 +41,7 @@ interface UseAttributeSetupReturn {
  */
 export default function useAttributeSetup(
   initialAttributes: Attribute[],
-): UseAttributeSetupReturn {
+): UseAttributeManager {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
   const [nextAttributeOrderNumber, setNextAttributeOrderNumber] =
