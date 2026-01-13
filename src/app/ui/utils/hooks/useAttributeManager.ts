@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Attribute } from "../classesAndInterfaces/AttributesAndQuests";
 
 /**
- * Return type for the `useAttributeSetup` hook.
+ * Return type for the `useAttributeManager` hook.
  *
  * @interface UseAttributeManager
  * @property {Attribute[]} availableAttributes - Array of attributes that are currently available for use.
@@ -34,12 +34,12 @@ interface UseAttributeManager {
  *     - deleteAttribute: Function to remove an attribute and reorder remaining attributes
  *
  * @example
- * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeSetup(initialAttrs);
+ * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeManager(initialAttrs);
  *
  * actions.addAttribute(newAttribute);
  * actions.deleteAttribute(attributeToRemove);
  */
-export default function useAttributeSetup(
+export default function useAttributeManager(
   initialAttributes: Attribute[],
 ): UseAttributeManager {
   const [availableAttributes, setAvailableAttributes] =

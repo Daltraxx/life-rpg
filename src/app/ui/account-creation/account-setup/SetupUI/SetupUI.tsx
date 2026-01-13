@@ -8,7 +8,7 @@ import cssVars from "./QuestsWidget/vars.module.css";
 import clsx from "clsx";
 import QuestBoard from "./QuestBoard/QuestBoard";
 import useQuestSetup from "@/app/ui/utils/hooks/useQuestSetup";
-import useAttributeSetup from "@/app/ui/utils/hooks/useAttributeSetup";
+import useAttributeManager from "@/app/ui/utils/hooks/useAttributeManager";
 import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import createProfile from "@/utils/actions/createProfile";
@@ -29,7 +29,7 @@ const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 
 export default function SetupUI() {
   // Manage available attributes state
-  const attributeManagement = useAttributeSetup(INITIAL_ATTRIBUTES);
+  const attributeManagement = useAttributeManager(INITIAL_ATTRIBUTES);
   const {
     availableAttributes,
     nextAttributeOrderNumber,
