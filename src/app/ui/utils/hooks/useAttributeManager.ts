@@ -51,11 +51,11 @@ export default function useAttributeManager(
     (attribute: Attribute) => {
       setAvailableAttributes((prev) => [
         ...prev,
-        { ...attribute, order: nextAttributeOrderNumber },
+        { ...attribute, order: prev.length },
       ]);
       setNextAttributeOrderNumber((prev) => prev + 1);
     },
-    [nextAttributeOrderNumber]
+    []
   );
 
   const handleDeleteAttribute = useCallback((attribute: Attribute) => {
