@@ -66,6 +66,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     case "ADD_QUEST": {
       // TODO: Consider handling quest order here, or keep in Quest Widget?
       const newQuest = action.payload;
+      // Note: duplicates should be prevented by the UI, but adding a safeguard here as well
       if (state.quests.some((quest) => quest.name === newQuest.name)) {
         console.warn("Quest with this name already exists");
         return state; // Prevent adding duplicate quest names
