@@ -53,6 +53,7 @@ export default function useAttributeManager(
   };
 
   const handleDeleteAttribute = (attribute: Attribute) => {
+    // Note: attributes array is always sorted by order with no gaps
     setAvailableAttributes((prev) => {
       const updatedAttributes = prev.filter(
         (attr) => attribute.name !== attr.name
