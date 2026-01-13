@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import cssVars from "./QuestsWidget/vars.module.css";
 import clsx from "clsx";
 import QuestBoard from "./QuestBoard/QuestBoard";
-import useQuestSetup from "@/app/ui/utils/hooks/useQuestSetup";
+import useQuestManager from "@/app/ui/utils/hooks/useQuestManager";
 import useAttributeManager from "@/app/ui/utils/hooks/useAttributeManager";
 import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
@@ -43,7 +43,7 @@ export default function SetupUI() {
   );
 
   // Manage quests state
-  const questManagement = useQuestSetup();
+  const questManagement = useQuestManager();
   const {
     quests,
     nextQuestOrderNumber,

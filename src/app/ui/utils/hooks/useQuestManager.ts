@@ -175,8 +175,8 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
 }
 
 /**
- * Return type for the useQuestSetup hook
- * @interface UseQuestSetupReturn
+ * Return type for the useQuestManager hook
+ * @interface QuestManager
  * @property {Quest[]} quests - Array of quest objects
  * @property {number} nextQuestOrderNumber - The next sequential order number for a new quest
  * @property {number} pointsRemaining - The number of experience points available to allocate
@@ -186,7 +186,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
  * @property {(quest: Quest, direction: "up" | "down") => void} actions.questOrderChange - Moves a quest up or down in the order
  * @property {(quest: Quest, direction: "up" | "down") => void} actions.experiencePointValueChange - Adjusts the experience point value of a quest
  */
-interface UseQuestSetupReturn {
+interface QuestManager {
   quests: Quest[];
   nextQuestOrderNumber: number;
   pointsRemaining: number;
@@ -208,7 +208,7 @@ interface UseQuestSetupReturn {
  * ordering, and experience point adjustments. Uses a reducer pattern to handle
  * state transitions.
  *
- * @returns {UseQuestSetupReturn} An object containing:
+ * @returns {QuestManager} An object containing:
  *   - `quests`: Array of current quests
  *   - `nextQuestOrderNumber`: The next available order number for new quests
  *   - `pointsRemaining`: Remaining experience points available to allocate
@@ -219,11 +219,11 @@ interface UseQuestSetupReturn {
  *     - `experiencePointValueChange`: Adjusts a quest's experience point value
  *
  * @example
- * const { quests, pointsRemaining, actions } = useQuestSetup();
+ * const { quests, pointsRemaining, actions } = useQuestManager();
  * actions.addQuest(newQuest);
  * actions.questOrderChange(quest, 'up');
  */
-export default function useQuestSetup(): UseQuestSetupReturn {
+export default function useQuestManager(): QuestManager {
   const [state, dispatch] = useReducer(questReducer, {
     quests: [],
     nextQuestOrderNumber: 0,
