@@ -40,7 +40,7 @@ interface AttributeManager {
  * actions.deleteAttribute(attributeToRemove);
  */
 export default function useAttributeManager(
-  initialAttributes: Attribute[],
+  initialAttributes: Attribute[]
 ): AttributeManager {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
@@ -48,7 +48,10 @@ export default function useAttributeManager(
     useState<number>(initialAttributes.length);
 
   const handleAddAttribute = (attribute: Attribute) => {
-    setAvailableAttributes((prev) => [...prev, attribute]);
+    setAvailableAttributes((prev) => [
+      ...prev,
+      { ...attribute, order: nextAttributeOrderNumber },
+    ]);
     setNextAttributeOrderNumber((prev) => prev + 1);
   };
 
