@@ -72,7 +72,9 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         return state; // Prevent adding duplicate quest names
       }
       if (newQuest.experiencePointValue > state.pointsRemaining) {
-        console.warn("Not enough points remaining to add quest with experience points");
+        console.warn(
+          "Not enough points remaining to add quest with experience points"
+        );
         return state;
       }
       return {
@@ -157,14 +159,15 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_EXPERIENCE": {
       const { quest, direction } = action.payload;
+      const existingQuest = state.quests.find((q) => q.name === quest.name);
+      if (!existingQuest) {
+        console.warn("Attempted to change experience of a quest that does not exist");
+        return state;
+      }
       // Prevent increasing beyond available points or decreasing below 0
       if (direction === "up" && state.pointsRemaining <= 0) return state;
-      // Double conditional check on "down" to prevent going below 0 when button is held
-      if (
-        (direction === "down" && quest.experiencePointValue <= 0) ||
-        (direction === "down" &&
-          state.pointsRemaining >= TOTAL_EXPERIENCE_POINTS)
-      ) {
+      // Prevent decreasing below 0
+      if (direction === "down" && existingQuest.experiencePointValue <= 0) {
         return state;
       }
       // Find quest index and validate
