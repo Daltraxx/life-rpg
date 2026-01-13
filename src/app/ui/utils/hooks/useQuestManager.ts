@@ -158,6 +158,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_EXPERIENCE": {
       const { quest, direction } = action.payload;
+      // Prevent increasing beyond available points or decreasing below 0
       if (direction === "up" && state.pointsRemaining <= 0) return state;
       // Double conditional check on "down" to prevent going below 0 when button is held
       if (
@@ -167,20 +168,27 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       ) {
         return state;
       }
-      const updatedQuests = structuredClone(state.quests);
-      let questToUpdate = updatedQuests[quest.order];
-      // Fallback in case the order index is out of sync. Should not happen.
-      if (!questToUpdate || questToUpdate.name !== quest.name) {
+      // Find quest index and validate
+      let questIndex = quest.order;
+      if (
+        questIndex < 0 ||
+        questIndex >= state.quests.length ||
+        state.quests[questIndex].name !== quest.name
+      ) {
         console.warn(
           "Quest order index out of sync. Searching by name as fallback."
         );
-        questToUpdate = updatedQuests.find(
-          (q) => q.name === quest.name
-        ) as Quest;
-        if (!questToUpdate)
+        questIndex = state.quests.findIndex((q) => q.name === quest.name);
+        if (questIndex === -1) {
           throw new Error("Quest not found in state during experience update");
+        }
       }
-      questToUpdate.experiencePointValue += direction === "up" ? 1 : -1;
+
+      // Update experience point value
+      const updatedQuests = structuredClone(state.quests);
+      updatedQuests[questIndex].experiencePointValue +=
+        direction === "up" ? 1 : -1;
+
       return {
         ...state,
         quests: updatedQuests,
