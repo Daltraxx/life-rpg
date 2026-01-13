@@ -66,6 +66,10 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     case "ADD_QUEST": {
       // TODO: Consider handling quest order here, or keep in Quest Widget?
       const newQuest = action.payload;
+      if (state.quests.some((quest) => quest.name === newQuest.name)) {
+        console.warn("Quest with this name already exists");
+        return state; // Prevent adding duplicate quest names
+      }
       return {
         ...state,
         quests: [...state.quests, newQuest],
@@ -153,7 +157,8 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       // Double conditional check on "down" to prevent going below 0 when button is held
       if (
         (direction === "down" && quest.experiencePointValue <= 0) ||
-        (direction === "down" && state.pointsRemaining >= TOTAL_EXPERIENCE_POINTS)
+        (direction === "down" &&
+          state.pointsRemaining >= TOTAL_EXPERIENCE_POINTS)
       ) {
         return state;
       }
