@@ -110,8 +110,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         ...state,
         quests: updatedQuests,
         nextQuestOrderNumber: state.nextQuestOrderNumber - 1,
-        pointsRemaining:
-          state.pointsRemaining + deletedQuestExperiencePoints,
+        pointsRemaining: state.pointsRemaining + deletedQuestExperiencePoints,
       };
     }
     case "CHANGE_QUEST_ORDER": {
@@ -132,34 +131,20 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         }
       }
 
-      if (direction === "up" && index > 0) {
-        // Swap with the quest above
+      const swapIndex = direction === "up" ? index - 1 : index + 1;
+      const canSwap =
+        (direction === "up" && index > 0) ||
+        (direction === "down" && index < state.quests.length - 1);
+
+      if (canSwap) {
         const updatedQuests = structuredClone(state.quests);
-        [updatedQuests[index - 1], updatedQuests[index]] = [
+        [updatedQuests[swapIndex], updatedQuests[index]] = [
           updatedQuests[index],
-          updatedQuests[index - 1],
+          updatedQuests[swapIndex],
         ];
-        // Update order numbers
-        updatedQuests[index - 1].order = index - 1;
+        updatedQuests[swapIndex].order = swapIndex;
         updatedQuests[index].order = index;
-        return {
-          ...state,
-          quests: updatedQuests,
-        };
-      } else if (direction === "down" && index < state.quests.length - 1) {
-        // Swap with the quest below
-        const updatedQuests = structuredClone(state.quests);
-        [updatedQuests[index + 1], updatedQuests[index]] = [
-          updatedQuests[index],
-          updatedQuests[index + 1],
-        ];
-        // Update order numbers
-        updatedQuests[index + 1].order = index + 1;
-        updatedQuests[index].order = index;
-        return {
-          ...state,
-          quests: updatedQuests,
-        };
+        return { ...state, quests: updatedQuests };
       }
 
       // No change if at boundaries and no swap occurs
