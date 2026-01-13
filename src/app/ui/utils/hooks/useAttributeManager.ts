@@ -4,7 +4,7 @@ import { Attribute } from "../classesAndInterfaces/AttributesAndQuests";
 /**
  * Return type for the `useAttributeManager` hook.
  *
- * @interface UseAttributeManager
+ * @interface AttributeManager
  * @property {Attribute[]} availableAttributes - Array of attributes that are currently available for use.
  * @property {number} nextAttributeOrderNumber - The next sequential order number to assign to a new attribute.
  * @property {Object} actions - Object containing attribute manipulation functions.
