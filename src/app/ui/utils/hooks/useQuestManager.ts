@@ -71,10 +71,15 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         console.warn("Quest with this name already exists");
         return state; // Prevent adding duplicate quest names
       }
+      if (newQuest.experiencePointValue > state.pointsRemaining) {
+        console.warn("Not enough points remaining to add quest with experience points");
+        return state;
+      }
       return {
         ...state,
         quests: [...state.quests, newQuest],
         nextQuestOrderNumber: state.nextQuestOrderNumber + 1,
+        pointsRemaining: state.pointsRemaining - newQuest.experiencePointValue,
       };
     }
     case "DELETE_QUEST": {
