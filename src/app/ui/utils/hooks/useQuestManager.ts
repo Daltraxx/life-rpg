@@ -79,17 +79,26 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "DELETE_QUEST": {
       const deletedQuest = action.payload;
-      const existingQuest = state.quests.find(
-        (quest) => quest.name === deletedQuest.name
-      );
-      if (!existingQuest) {
+      let exists = false;
+      let deletedQuestIndex = -1;
+      let deletedQuestExperiencePoints = 0;
+      const updatedQuests = state.quests.filter((quest, index) => {
+        if (quest.name === deletedQuest.name) {
+          exists = true;
+          deletedQuestIndex = index;
+          deletedQuestExperiencePoints = quest.experiencePointValue;
+          return false;
+        }
+        return true;
+      });
+      if (!exists) {
         console.warn("Attempted to delete a quest that does not exist");
         return state; // Quest not found, no changes
       }
-      const deletedQuestIndex = existingQuest.order;
-      const updatedQuests = state.quests.filter(
-        (quest) => quest.name !== deletedQuest.name
-      );
+      if (deletedQuestIndex !== deletedQuest.order)
+        console.warn(
+          "Quest order index out of sync during deletion. Using found index."
+        );
       // Reorder remaining quests
       for (let i = deletedQuestIndex; i < updatedQuests.length; i++) {
         updatedQuests[i] = {
@@ -102,7 +111,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         quests: updatedQuests,
         nextQuestOrderNumber: state.nextQuestOrderNumber - 1,
         pointsRemaining:
-          state.pointsRemaining + deletedQuest.experiencePointValue,
+          state.pointsRemaining + deletedQuestExperiencePoints,
       };
     }
     case "CHANGE_QUEST_ORDER": {
