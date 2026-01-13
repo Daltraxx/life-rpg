@@ -11,7 +11,7 @@ import { Attribute } from "../classesAndInterfaces/AttributesAndQuests";
  * @property {(attribute: Attribute) => void} actions.addAttribute - Function to add a new attribute to the setup.
  * @property {(attribute: Attribute) => void} actions.deleteAttribute - Function to remove an attribute from the setup.
  */
-interface UseAttributeManager {
+interface AttributeManager {
   availableAttributes: Attribute[];
   nextAttributeOrderNumber: number;
   actions: {
@@ -26,7 +26,7 @@ interface UseAttributeManager {
  *
  * @param initialAttributes - The initial array of attributes to set up
  *
- * @returns {UseAttributeManager} Object containing:
+ * @returns {AttributeManager} Object containing:
  *   - availableAttributes: Current list of managed attributes
  *   - nextAttributeOrderNumber: The order number for the next attribute to be added
  *   - actions: Object containing action handlers:
@@ -41,7 +41,7 @@ interface UseAttributeManager {
  */
 export default function useAttributeManager(
   initialAttributes: Attribute[],
-): UseAttributeManager {
+): AttributeManager {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
   const [nextAttributeOrderNumber, setNextAttributeOrderNumber] =
