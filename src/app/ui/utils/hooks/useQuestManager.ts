@@ -164,17 +164,17 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
           return true;
         }
       });
-      if (questIndex !== quest.order) {
-        console.warn(
-          "Quest order index out of sync during experience change. Using found index."
-        );
-      }
       if (!targetQuest) {
         console.warn(
           "Attempted to change experience of a quest that does not exist"
         );
         return state;
       }
+       if (questIndex !== quest.order) {
+         console.warn(
+           "Quest order index out of sync during experience change. Using found index."
+         );
+       }
       // Prevent increasing beyond available points or decreasing below 0
       if (direction === "up" && state.pointsRemaining <= 0) return state;
       // Prevent decreasing below 0
