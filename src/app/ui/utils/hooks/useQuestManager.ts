@@ -157,7 +157,18 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_EXPERIENCE": {
       const { quest, direction } = action.payload;
-      const targetQuest = state.quests.find((q) => q.name === quest.name);
+      let questIndex = quest.order;
+      const targetQuest = state.quests.find((q, index) => {
+        if (q.name === quest.name) {
+          questIndex = index;
+          return true;
+        }
+      });
+      if (questIndex !== quest.order) {
+        console.warn(
+          "Quest order index out of sync during experience change. Using found index."
+        );
+      }
       if (!targetQuest) {
         console.warn(
           "Attempted to change experience of a quest that does not exist"
@@ -169,21 +180,6 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       // Prevent decreasing below 0
       if (direction === "down" && targetQuest.experiencePointValue <= 0) {
         return state;
-      }
-      // Find quest index and validate
-      let questIndex = targetQuest.order;
-      if (
-        questIndex < 0 ||
-        questIndex >= state.quests.length ||
-        state.quests[questIndex].name !== targetQuest.name
-      ) {
-        console.warn(
-          "Quest order index out of sync. Searching by name as fallback."
-        );
-        questIndex = state.quests.findIndex((q) => q.name === targetQuest.name);
-        if (questIndex === -1) {
-          throw new Error("Quest not found in state during experience update");
-        }
       }
 
       // Update experience point value
