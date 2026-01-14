@@ -143,15 +143,8 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
 
       if (canSwap) {
         const updatedQuests = [...state.quests];
-        // Swap the quests
-        updatedQuests[swapIndex] = {
-          ...updatedQuests[index],
-          order: index,
-        };
-        updatedQuests[index] = {
-          ...updatedQuests[swapIndex],
-          order: swapIndex,
-        };
+        updatedQuests[swapIndex] = { ...state.quests[index], order: swapIndex };
+        updatedQuests[index] = { ...state.quests[swapIndex], order: index };
         return { ...state, quests: updatedQuests };
       }
 
