@@ -142,13 +142,16 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         (direction === "down" && index < state.quests.length - 1);
 
       if (canSwap) {
-        const updatedQuests = structuredClone(state.quests);
-        [updatedQuests[swapIndex], updatedQuests[index]] = [
-          updatedQuests[index],
-          updatedQuests[swapIndex],
-        ];
-        updatedQuests[swapIndex].order = swapIndex;
-        updatedQuests[index].order = index;
+        const updatedQuests = [...state.quests];
+        // Swap the quests
+        updatedQuests[swapIndex] = {
+          ...updatedQuests[index],
+          order: index,
+        };
+        updatedQuests[index] = {
+          ...updatedQuests[swapIndex],
+          order: swapIndex,
+        };
         return { ...state, quests: updatedQuests };
       }
 
@@ -165,11 +168,11 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         );
         return state;
       }
-       if (questIndex !== quest.order) {
-         console.warn(
-           "Quest order index out of sync during experience change. Using found index."
-         );
-       }
+      if (questIndex !== quest.order) {
+        console.warn(
+          "Quest order index out of sync during experience change. Using found index."
+        );
+      }
       // Prevent increasing beyond available points or decreasing below 0
       if (direction === "up" && state.pointsRemaining <= 0) return state;
       // Prevent decreasing below 0
@@ -183,7 +186,9 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
           targetQuest.experiencePointValue + experienceChange,
       };
       // Update experience point value
-      const updatedQuests = state.quests.map((quest, index) => index === questIndex ? updatedQuest : quest);
+      const updatedQuests = state.quests.map((quest, index) =>
+        index === questIndex ? updatedQuest : quest
+      );
 
       return {
         ...state,
