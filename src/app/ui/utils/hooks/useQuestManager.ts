@@ -157,13 +157,8 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_EXPERIENCE": {
       const { quest, direction } = action.payload;
-      let questIndex = quest.order;
-      const targetQuest = state.quests.find((q, index) => {
-        if (q.name === quest.name) {
-          questIndex = index;
-          return true;
-        }
-      });
+      let questIndex = state.quests.findIndex((q) => q.name === quest.name);
+      const targetQuest = state.quests[questIndex];
       if (!targetQuest) {
         console.warn(
           "Attempted to change experience of a quest that does not exist"
