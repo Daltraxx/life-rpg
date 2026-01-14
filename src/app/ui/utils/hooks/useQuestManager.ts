@@ -62,6 +62,8 @@ type QuestAction =
 function questReducer(state: QuestState, action: QuestAction): QuestState {
   switch (action.type) {
     case "ADD_QUEST": {
+      // Assign order based on current length 
+      // (also assigned in the UI, but added here as well as safeguard against state desync)
       const newQuest = {...action.payload, order: state.quests.length};
       // Note: duplicates should be prevented by the UI, but adding a safeguard here as well
       if (state.quests.some((quest) => quest.name === newQuest.name)) {
