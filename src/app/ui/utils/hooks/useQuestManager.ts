@@ -62,8 +62,7 @@ type QuestAction =
 function questReducer(state: QuestState, action: QuestAction): QuestState {
   switch (action.type) {
     case "ADD_QUEST": {
-      const newQuest = action.payload;
-      newQuest.order = state.quests.length;
+      const newQuest = {...action.payload, order: state.quests.length};
       // Note: duplicates should be prevented by the UI, but adding a safeguard here as well
       if (state.quests.some((quest) => quest.name === newQuest.name)) {
         console.warn("Quest with this name already exists");
