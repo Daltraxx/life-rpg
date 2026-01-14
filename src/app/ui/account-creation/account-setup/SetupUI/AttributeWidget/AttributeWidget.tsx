@@ -16,7 +16,6 @@ import {
 
 interface AttributeWidgetProps {
   attributes: Attribute[];
-  nextAttributeOrderNumber: number;
   addAttribute: (attribute: Attribute) => void;
   deleteAttribute: (attribute: Attribute) => void;
   className?: string;
@@ -44,7 +43,6 @@ interface AttributeWidgetProps {
  */
 export default function AttributeWidget({
   attributes,
-  nextAttributeOrderNumber,
   addAttribute,
   deleteAttribute,
   className,
@@ -78,7 +76,7 @@ export default function AttributeWidget({
 
     const newAttribute = createAttribute(
       trimmedAttribute,
-      nextAttributeOrderNumber
+      attributes.length
     );
     addAttribute(newAttribute);
     setNewAttribute("");

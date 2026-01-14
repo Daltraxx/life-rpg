@@ -32,7 +32,6 @@ export default function SetupUI() {
   const attributeManagement = useAttributeManager(INITIAL_ATTRIBUTES);
   const {
     availableAttributes,
-    nextAttributeOrderNumber,
     actions: attributeActions,
   } = attributeManagement;
 
@@ -68,7 +67,6 @@ export default function SetupUI() {
           <AttributeWidget
             className={styles.attributeWidget}
             attributes={availableAttributes}
-            nextAttributeOrderNumber={nextAttributeOrderNumber}
             addAttribute={attributeActions.addAttribute}
             deleteAttribute={attributeActions.deleteAttribute}
           />

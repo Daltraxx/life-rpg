@@ -6,14 +6,12 @@ import { Attribute } from "../classesAndInterfaces/AttributesAndQuests";
  *
  * @interface AttributeManager
  * @property {Attribute[]} availableAttributes - Array of attributes that are currently available for use.
- * @property {number} nextAttributeOrderNumber - The next sequential order number to assign to a new attribute.
  * @property {Object} actions - Object containing attribute manipulation functions.
  * @property {(attribute: Attribute) => void} actions.addAttribute - Function to add a new attribute to the setup.
  * @property {(attribute: Attribute) => void} actions.deleteAttribute - Function to remove an attribute from the setup.
  */
 interface AttributeManager {
   availableAttributes: Attribute[];
-  nextAttributeOrderNumber: number;
   actions: {
     addAttribute: (attribute: Attribute) => void;
     deleteAttribute: (attribute: Attribute) => void;
@@ -28,7 +26,6 @@ interface AttributeManager {
  *
  * @returns {AttributeManager} Object containing:
  *   - availableAttributes: Current list of managed attributes
- *   - nextAttributeOrderNumber: The order number for the next attribute to be added
  *   - actions: Object containing action handlers:
  *     - addAttribute: Function to add a new attribute to the list
  *     - deleteAttribute: Function to remove an attribute and reorder remaining attributes
@@ -44,16 +41,14 @@ export default function useAttributeManager(
 ): AttributeManager {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
-  const [nextAttributeOrderNumber, setNextAttributeOrderNumber] =
-    useState<number>(initialAttributes.length);
 
   const handleAddAttribute = useCallback(
     (attribute: Attribute) => {
       setAvailableAttributes((prev) => [
         ...prev,
+        // Note: Order is also assigned in UI, but is ensured here to prevent desync
         { ...attribute, order: prev.length },
       ]);
-      setNextAttributeOrderNumber((prev) => prev + 1);
     },
     []
   );
@@ -72,7 +67,6 @@ export default function useAttributeManager(
       }
       return updatedAttributes;
     });
-    setNextAttributeOrderNumber((prev) => prev - 1);
   }, []);
 
   const actions = useMemo(
@@ -85,7 +79,6 @@ export default function useAttributeManager(
 
   return {
     availableAttributes,
-    nextAttributeOrderNumber,
     actions,
   };
 }
