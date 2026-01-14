@@ -31,7 +31,7 @@ interface AttributeManager {
  *     - deleteAttribute: Function to remove an attribute and reorder remaining attributes
  *
  * @example
- * const { availableAttributes, nextAttributeOrderNumber, actions } = useAttributeManager(initialAttrs);
+ * const { availableAttributes, actions } = useAttributeManager(initialAttrs);
  *
  * actions.addAttribute(newAttribute);
  * actions.deleteAttribute(attributeToRemove);
