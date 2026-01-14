@@ -176,11 +176,14 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       if (direction === "down" && targetQuest.experiencePointValue <= 0) {
         return state;
       }
-
+      const experienceChange = direction === "up" ? 1 : -1;
+      const updatedQuest = {
+        ...targetQuest,
+        experiencePointValue:
+          targetQuest.experiencePointValue + experienceChange,
+      };
       // Update experience point value
-      const updatedQuests = structuredClone(state.quests);
-      updatedQuests[questIndex].experiencePointValue +=
-        direction === "up" ? 1 : -1;
+      const updatedQuests = state.quests.map((quest, index) => index === questIndex ? updatedQuest : quest);
 
       return {
         ...state,
