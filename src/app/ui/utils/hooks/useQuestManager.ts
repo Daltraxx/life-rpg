@@ -62,9 +62,9 @@ type QuestAction =
 function questReducer(state: QuestState, action: QuestAction): QuestState {
   switch (action.type) {
     case "ADD_QUEST": {
-      // Assign order based on current length 
+      // Assign order based on current length
       // (also assigned in the UI, but added here as well as safeguard against state desync)
-      const newQuest = {...action.payload, order: state.quests.length};
+      const newQuest = { ...action.payload, order: state.quests.length };
       // Note: duplicates should be prevented by the UI, but adding a safeguard here as well
       if (state.quests.some((quest) => quest.name === newQuest.name)) {
         console.warn("Quest with this name already exists");
@@ -100,10 +100,11 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         console.warn("Attempted to delete a quest that does not exist");
         return state; // Quest not found, no changes
       }
-      if (deletedQuestIndex !== deletedQuest.order)
+      if (deletedQuestIndex !== deletedQuest.order) {
         console.warn(
           "Quest order index out of sync during deletion. Using found index."
         );
+      }
       // Reorder remaining quests
       for (let i = deletedQuestIndex; i < updatedQuests.length; i++) {
         updatedQuests[i] = {
@@ -158,7 +159,9 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       const { quest, direction } = action.payload;
       const targetQuest = state.quests.find((q) => q.name === quest.name);
       if (!targetQuest) {
-        console.warn("Attempted to change experience of a quest that does not exist");
+        console.warn(
+          "Attempted to change experience of a quest that does not exist"
+        );
         return state;
       }
       // Prevent increasing beyond available points or decreasing below 0
