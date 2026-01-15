@@ -47,7 +47,7 @@ export default function AttributeWidget({
   deleteAttribute,
   className,
 }: AttributeWidgetProps) {
-  const [newAttribute, setNewAttribute] = useState<string>("");
+  const [newAttributeName, setNewAttributeName] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
 
   const handleAddAttribute = (attribute: string) => {
@@ -76,7 +76,7 @@ export default function AttributeWidget({
 
     const newAttribute = createAttribute(trimmedAttribute);
     addAttribute(newAttribute);
-    setNewAttribute("");
+    setNewAttributeName("");
   };
 
   const handleDeleteAttribute = (attribute: Attribute) => {
@@ -116,16 +116,16 @@ export default function AttributeWidget({
           <input
             type="text"
             id="add-attribute"
-            value={newAttribute}
+            value={newAttributeName}
             className={styles.addAttributeInput}
             onChange={(e) => {
               if (addAttributeError) setAddAttributeError("");
-              setNewAttribute(e.target.value);
+              setNewAttributeName(e.target.value);
             }}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                handleAddAttribute(newAttribute);
+                handleAddAttribute(newAttributeName);
               }
             }}
             aria-describedby={addAttributeError ? "attribute-error" : undefined}
@@ -133,7 +133,7 @@ export default function AttributeWidget({
           <button
             type="button"
             className={styles.addAttributeButton}
-            onClick={() => handleAddAttribute(newAttribute)}
+            onClick={() => handleAddAttribute(newAttributeName)}
           >
             ADD
           </button>
