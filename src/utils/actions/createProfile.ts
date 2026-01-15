@@ -104,10 +104,7 @@ export default async function createProfile(
   } = validatedInput.data;
 
   const attributesData: CreateProfileTransactionAttributes[] =
-    validatedAttributes.map((attribute) => ({
-      name: attribute.name,
-      position: attribute.order,
-    }));
+    validatedAttributes.map((attribute) => ({ name: attribute.name, position: attribute.position }));
 
   const questsData: CreateProfileTransactionQuests[] = [];
   const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
