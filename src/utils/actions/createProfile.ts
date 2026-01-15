@@ -14,6 +14,7 @@ import type {
 } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
+import { prepareQuestsForDBInsertion } from "../helpers/prepareQuestsForDBInsertion";
 
 /**
  * Creates a user profile with associated quests and attributes.
@@ -102,15 +103,10 @@ export default async function createProfile(
 
   const attributesData: CreateProfileTransactionAttributes[] =
     prepareAttributesForDBInsertion(validatedAttributes);
+  const questsData: CreateProfileTransactionQuests[] = prepareQuestsForDBInsertion(validatedQuests);
 
-  const questsData: CreateProfileTransactionQuests[] = [];
   const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
   for (const quest of validatedQuests) {
-    questsData.push({
-      name: quest.name,
-      experience_share: quest.experiencePointValue,
-      position: quest.order,
-    });
     for (const affectedAttribute of quest.affectedAttributes) {
       const attributePower = strengthToIntMap[affectedAttribute.strength];
       // Duplicate names are restricted by DB constraints and validation schema
