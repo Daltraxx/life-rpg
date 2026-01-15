@@ -4,9 +4,10 @@
  * Represents the complete data shape for the create_profile_transaction rpc call.
  */
 export interface CreateProfileTransactionDataShapes {
-  attributes: CreateProfileTransactionAttributes[];
-  quests: CreateProfileTransactionQuests[];
-  quests_attributes: CreateProfileTransactionQuestsAttributes[];
+  p_user_id: string;
+  p_attributes: CreateProfileTransactionAttributes[];
+  p_quests: CreateProfileTransactionQuests[];
+  p_quests_attributes: CreateProfileTransactionQuestsAttributes[];
 }
 
 /**
