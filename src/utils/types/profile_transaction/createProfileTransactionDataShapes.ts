@@ -42,7 +42,7 @@ export interface CreateProfileTransactionQuests {
 }
 
 /**
- * Represents quest-attribute relationship data necessary for a profile transaction rpc call
+ * Represents quest-attribute relationship data necessary for a profile transaction rpc call.
  */
 export interface CreateProfileTransactionQuestsAttributes {
   /**
