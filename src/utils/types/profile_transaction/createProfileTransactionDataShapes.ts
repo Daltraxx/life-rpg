@@ -1,6 +1,15 @@
 // Contains data shapes used in data preparation for the create_profile_transaction supabase function.
 
 /**
+ * Represents the complete data shape for the create_profile_transaction rpc call.
+ */
+export interface CreateProfileTransactionDataShapes {
+  attributes: CreateProfileTransactionAttributes[];
+  quests: CreateProfileTransactionQuests[];
+  quests_attributes: CreateProfileTransactionQuestsAttributes[];
+}
+
+/**
  * Represents attribute data necessary for a profile transaction rpc call.
  */
 export interface CreateProfileTransactionAttributes {
