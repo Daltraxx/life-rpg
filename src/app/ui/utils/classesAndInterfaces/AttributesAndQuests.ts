@@ -63,14 +63,12 @@ export function createAffectedAttribute(
  * @interface Quest
  * @property {string} name - The name or title of the quest.
  * @property {AffectedAttribute[]} affectedAttributes - An array of attributes that are affected by completing this quest.
- * @property {number} order - The sequence or priority order of the quest, used for sorting or determining quest progression.
  * @property {number} experiencePointValue - The amount of experience points awarded for completing the quest.
  */
 export interface Quest {
   name: string;
   affectedAttributes: AffectedAttribute[];
   experiencePointValue: number;
-  order: number;
 }
 
 /**
@@ -79,14 +77,12 @@ export interface Quest {
  * @param name - The name of the quest. It must not be empty or consist only of whitespace.
  * @param affectedAttributes - An array of attributes that are affected by the quest.
  * @param experiencePointValue - The experience points awarded for completing the quest. Defaults to 0.
- * @param order - Number determining where quest appears in a list.
  * @throws {Error} Throws an error if the quest name is empty or only whitespace.
  * @returns A Quest object containing the name and affected attributes.
  */
 export function createQuest(
   name: string,
   affectedAttributes: AffectedAttribute[],
-  order: number,
   experiencePointValue: number = 0
 ): Quest {
   if (!name?.trim()) {
@@ -98,5 +94,5 @@ export function createQuest(
   if (experiencePointValue < 0) {
     throw new Error("Experience point value cannot be negative");
   }
-  return { name, affectedAttributes, experiencePointValue, order };
+  return { name, affectedAttributes, experiencePointValue };
 }
