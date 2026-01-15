@@ -2,25 +2,24 @@ import type { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQue
 import type { CreateProfileTransactionQuests } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 
 /**
- * Transforms an array of attributes into a format suitable for database insertion.
- * Each attribute is mapped to include its name and position (index) in the array.
+ * Prepares an array of quests for database insertion by mapping them to a transaction-compatible format.
  *
- * @param attributes - An array of {@link Attribute} objects to be prepared for insertion
- * @returns An array of {@link CreateProfileTransactionAttributes} objects with name and position properties
+ * @param quests - An array of Quest objects to be prepared for insertion
+ * @returns An array of CreateProfileTransactionQuests objects with normalized fields and positional ordering
  *
  * @example
- * const attributes = [
- *   { name: 'Strength' },
- *   { name: 'Dexterity' },
- *   { name: 'Intelligence' }
+ * ```typescript
+ * const quests = [
+ *   { name: 'Slay the dragon', experiencePointValue: 100 },
+ *   { name: 'Find the treasure', experiencePointValue: 50 }
  * ];
- * const prepared = prepareAttributesForDBInsertion(attributes);
- * // Result:
+ * const prepared = prepareQuestsForDBInsertion(quests);
+ * // Returns:
  * // [
- * //   { name: 'Strength', position: 0 },
- * //   { name: 'Dexterity', position: 1 },
- * //   { name: 'Intelligence', position: 2 }
+ * //   { name: 'Slay the dragon', experience_share: 100, position: 0 },
+ * //   { name: 'Find the treasure', experience_share: 50, position: 1 }
  * // ]
+ * ```
  */
 export const prepareQuestsForDBInsertion = (
   quests: Quest[]
