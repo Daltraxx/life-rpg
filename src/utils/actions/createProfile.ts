@@ -10,9 +10,10 @@ import type {
   CreateProfileTransactionAttributes,
   CreateProfileTransactionQuests,
   CreateProfileTransactionQuestsAttributes,
-  CreateProfileTransactionDataShapes
+  CreateProfileTransactionDataShapes,
 } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
+import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
 
 /**
  * Creates a user profile with associated quests and attributes.
@@ -79,8 +80,6 @@ export default async function createProfile(
     };
   }
 
-  rawFormData.userId = user.id;
-
   // Validate input data
   const validatedInput = ProfileCreationSchema.safeParse(rawFormData);
 
@@ -98,14 +97,11 @@ export default async function createProfile(
   }
 
   // Prepare data for insertion into "attributes", "quests", and "quests_attributes" tables
-  const {
-    userId: validatedUserId,
-    quests: validatedQuests,
-    attributes: validatedAttributes,
-  } = validatedInput.data;
+  let { quests: validatedQuests, attributes: validatedAttributes } =
+    validatedInput.data;
 
   const attributesData: CreateProfileTransactionAttributes[] =
-    validatedAttributes.map((attribute) => ({ name: attribute.name, position: attribute.position }));
+    prepareAttributesForDBInsertion(validatedAttributes);
 
   const questsData: CreateProfileTransactionQuests[] = [];
   const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
@@ -127,14 +123,17 @@ export default async function createProfile(
   }
 
   const createProfileTransactionData: CreateProfileTransactionDataShapes = {
-    p_user_id: validatedUserId,
+    p_user_id: user.id,
     p_attributes: attributesData,
     p_quests: questsData,
     p_quests_attributes: questsAttributesData,
-  }
+  };
 
   // Insert data into the database within a transaction
-  const { error } = await supabase.rpc("create_profile_transaction", createProfileTransactionData);
+  const { error } = await supabase.rpc(
+    "create_profile_transaction",
+    createProfileTransactionData
+  );
 
   if (error) {
     // TODO: Consider structured logging solution

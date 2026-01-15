@@ -22,14 +22,7 @@ export const AttributeSchema = z.object({
       MAX_ATTRIBUTE_NAME_LENGTH,
       `Attribute name cannot exceed ${MAX_ATTRIBUTE_NAME_LENGTH} characters`
     )
-    .regex(SAFE_CHARACTERS_REGEX, "Attribute name contains invalid characters"),
-  position: z
-    .int("Position must be an integer")
-    .nonnegative("Position must be a non-negative integer")
-    .max(
-      MAX_ATTRIBUTES_ALLOWED - 1,
-      `Position cannot exceed ${MAX_ATTRIBUTES_ALLOWED - 1}`
-    ),
+    .regex(SAFE_CHARACTERS_REGEX, "Attribute name contains invalid characters")
 });
 
 export type Attribute = z.infer<typeof AttributeSchema>;

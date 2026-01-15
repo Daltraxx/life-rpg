@@ -11,7 +11,6 @@ import {
 import { getNounAndVerbAgreement } from "@/utils/helpers/pluralOrSingularHandlers";
 
 export const ProfileCreationSchema = z.object({
-  userId: z.uuid("Invalid user ID"),
   quests: z
     .array(QuestSchema)
     .min(
