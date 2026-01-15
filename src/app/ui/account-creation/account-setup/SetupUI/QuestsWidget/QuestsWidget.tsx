@@ -61,7 +61,7 @@ export default function QuestsWidget({
     }
 
     addQuest(
-      createQuest(trimmedQuestName, affectedAttributes, quests.length)
+      createQuest(trimmedQuestName, affectedAttributes)
     );
 
     // Reset UI state
