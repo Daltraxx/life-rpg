@@ -11,7 +11,7 @@ export interface Attribute {
 }
 
 /**
- * Creates a new Attribute object with the specified name and order.
+ * Creates a new Attribute object with the specified name.
  *
  * @param name - The name of the attribute. Must be a non-empty string after trimming whitespace.
  * @returns A new Attribute object containing the provided name.
