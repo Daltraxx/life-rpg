@@ -62,9 +62,7 @@ type QuestAction =
 function questReducer(state: QuestState, action: QuestAction): QuestState {
   switch (action.type) {
     case "ADD_QUEST": {
-      // Assign order based on current length
-      // (also assigned in the UI, but added here as well as safeguard against state desync)
-      const newQuest = { ...action.payload, order: state.quests.length };
+      const newQuest = action.payload;
       // Note: duplicates should be prevented by the UI, but adding a safeguard here as well
       if (state.quests.some((quest) => quest.name === newQuest.name)) {
         console.warn("Quest with this name already exists");
@@ -83,34 +81,16 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       };
     }
     case "DELETE_QUEST": {
-      const deletedQuest = action.payload;
-      let exists = false;
-      let deletedQuestIndex = -1;
-      let deletedQuestExperiencePoints = 0;
-      const updatedQuests = state.quests.filter((quest, index) => {
-        if (quest.name === deletedQuest.name) {
-          exists = true;
-          deletedQuestIndex = index;
-          deletedQuestExperiencePoints = quest.experiencePointValue;
-          return false;
-        }
-        return true;
-      });
-      if (!exists) {
+      const {
+        name: deletedQuestName,
+        experiencePointValue: deletedQuestExperiencePoints,
+      } = action.payload;
+      const updatedQuests = state.quests.filter(
+        (quest) => quest.name !== deletedQuestName
+      );
+      if (state.quests.length === updatedQuests.length) {
         console.warn("Attempted to delete a quest that does not exist");
         return state; // Quest not found, no changes
-      }
-      if (deletedQuestIndex !== deletedQuest.order) {
-        console.warn(
-          "Quest order index out of sync during deletion. Using found index."
-        );
-      }
-      // Reorder remaining quests
-      for (let i = deletedQuestIndex; i < updatedQuests.length; i++) {
-        updatedQuests[i] = {
-          ...updatedQuests[i],
-          order: updatedQuests[i].order - 1,
-        };
       }
       return {
         ...state,
@@ -120,20 +100,12 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_ORDER": {
       const { quest, direction } = action.payload;
-      let index = quest.order;
-      if (
-        index < 0 ||
-        index >= state.quests.length ||
-        state.quests[index].name !== quest.name
-      ) {
-        // Fallback in case the order index is out of sync. Should not happen.
+      let index = state.quests.findIndex((q) => q.name === quest.name);
+      if (index === -1) {
         console.warn(
-          "Quest order index out of sync. Searching by name as fallback."
+          "Attempted to change order of a quest that does not exist"
         );
-        index = state.quests.findIndex((q) => q.name === quest.name);
-        if (index === -1) {
-          throw new Error("Quest not found in state during order change");
-        }
+        return state;
       }
 
       const swapIndex = direction === "up" ? index - 1 : index + 1;
@@ -143,8 +115,10 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
 
       if (canSwap) {
         const updatedQuests = [...state.quests];
-        updatedQuests[swapIndex] = { ...state.quests[index], order: swapIndex };
-        updatedQuests[index] = { ...state.quests[swapIndex], order: index };
+        [updatedQuests[swapIndex], updatedQuests[index]] = [
+          updatedQuests[index],
+          updatedQuests[swapIndex],
+        ];
         return { ...state, quests: updatedQuests };
       }
 
@@ -153,21 +127,18 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_EXPERIENCE": {
       const { quest, direction } = action.payload;
-      let questIndex = state.quests.findIndex((q) => q.name === quest.name);
-      const targetQuest = state.quests[questIndex];
+      // Prevent increasing beyond available points or decreasing below 0
+      if (direction === "up" && state.pointsRemaining <= 0) return state;
+      
+      // Use quest in state to prevent usage of stale data
+      const targetQuest = state.quests.find((q) => q.name === quest.name);
       if (!targetQuest) {
         console.warn(
           "Attempted to change experience of a quest that does not exist"
         );
         return state;
       }
-      if (questIndex !== quest.order) {
-        console.warn(
-          "Quest order index out of sync during experience change. Using found index."
-        );
-      }
-      // Prevent increasing beyond available points or decreasing below 0
-      if (direction === "up" && state.pointsRemaining <= 0) return state;
+
       // Prevent decreasing below 0
       if (direction === "down" && targetQuest.experiencePointValue <= 0) {
         return state;
@@ -179,8 +150,8 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
           targetQuest.experiencePointValue + experienceChange,
       };
       // Update experience point value
-      const updatedQuests = state.quests.map((quest, index) =>
-        index === questIndex ? updatedQuest : quest
+      const updatedQuests = state.quests.map((quest) =>
+        quest.name === targetQuest.name ? updatedQuest : quest
       );
 
       return {
