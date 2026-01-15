@@ -74,10 +74,7 @@ export default function AttributeWidget({
 
     setAddAttributeError("");
 
-    const newAttribute = createAttribute(
-      trimmedAttribute,
-      attributes.length
-    );
+    const newAttribute = createAttribute(trimmedAttribute);
     addAttribute(newAttribute);
     setNewAttribute("");
   };

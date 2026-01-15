@@ -5,29 +5,23 @@ import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
  *
  * @interface Attribute
  * @property {string} name - The name of the attribute.
- * @property {number} order - The display order or priority of the attribute.
  */
 export interface Attribute {
   name: string;
-  order: number;
 }
 
 /**
  * Creates a new Attribute object with the specified name and order.
  *
  * @param name - The name of the attribute. Must be a non-empty string after trimming whitespace.
- * @param order - The numeric order/position of the attribute.
- * @returns A new Attribute object containing the provided name and order.
+ * @returns A new Attribute object containing the provided name.
  * @throws {Error} Throws an error if the name parameter is empty, null, undefined, or contains only whitespace
  */
-export function createAttribute(name: string, order: number): Attribute {
+export function createAttribute(name: string): Attribute {
   if (!name?.trim()) {
     throw new Error("Attribute name cannot be empty");
   }
-  if (!Number.isFinite(order)) {
-    throw new Error("Attribute order must be a finite number");
-  }
-  return { name, order };
+  return { name };
 }
 
 /**

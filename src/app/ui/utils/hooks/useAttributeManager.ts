@@ -46,43 +46,13 @@ export default function useAttributeManager(
     setAvailableAttributes((prev) => [
       ...prev,
       // Note: Order is also assigned in UI, but is ensured here to prevent desync
-      { ...attribute, order: prev.length },
+      attribute,
     ]);
   }, []);
 
   const handleDeleteAttribute = useCallback((attribute: Attribute) => {
     // Note: attributes array is always sorted by order with no gaps
-    setAvailableAttributes((prev) => {
-      let deletedAttributeIndex = -1;
-
-      const updatedAttributes = prev.filter((attr, index) => {
-        if (attr.name === attribute.name) {
-          deletedAttributeIndex = index;
-          return false;
-        }
-        return true;
-      });
-      if (deletedAttributeIndex === -1) {
-        console.warn(
-          "Attempted to delete an attribute that does not exist:",
-          attribute
-        );
-        return prev;
-      }
-      const deletedAttribute = prev[deletedAttributeIndex];
-      if (deletedAttribute.order !== deletedAttributeIndex) {
-        console.warn(
-          "Attribute order mismatch during deletion. This may indicate a logic error. Using index for updating order values."
-        );
-      }
-      for (let i = deletedAttributeIndex; i < updatedAttributes.length; i++) {
-        updatedAttributes[i] = {
-          ...updatedAttributes[i],
-          order: updatedAttributes[i].order - 1,
-        };
-      }
-      return updatedAttributes;
-    });
+    setAvailableAttributes((prev) => prev.filter(attr => attr.name !== attribute.name));
   }, []);
 
   const actions = useMemo(

@@ -18,10 +18,10 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import useAffectedAttributeManager from "@/app/ui/utils/hooks/useAffectedAttributeManager";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
-  { name: "Discipline", order: 0 },
-  { name: "Vitality", order: 1 },
-  { name: "Intelligence", order: 2 },
-  { name: "Fitness", order: 3 },
+  { name: "Discipline" },
+  { name: "Vitality" },
+  { name: "Intelligence" },
+  { name: "Fitness" },
 ];
 const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 
