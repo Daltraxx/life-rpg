@@ -22,7 +22,7 @@ import type { CreateProfileTransactionAttributes } from "@/utils/types/profile_t
  * //   { name: 'Intelligence', position: 2 }
  * // ]
  */
- export const prepareAttributesForDBInsertion = (
+export const prepareAttributesForDBInsertion = (
   attributes: Attribute[]
 ): CreateProfileTransactionAttributes[] => {
   return attributes.map((attr, index) => ({
