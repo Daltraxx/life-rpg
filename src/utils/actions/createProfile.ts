@@ -97,7 +97,7 @@ export default async function createProfile(
   }
 
   // Prepare data for insertion into "attributes", "quests", and "quests_attributes" tables
-  let { quests: validatedQuests, attributes: validatedAttributes } =
+  const { quests: validatedQuests, attributes: validatedAttributes } =
     validatedInput.data;
 
   const attributesData: CreateProfileTransactionAttributes[] =
