@@ -1,5 +1,5 @@
 import { useReducer, useMemo } from "react";
-import { Quest } from "../classesAndInterfaces/AttributesAndQuests";
+import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
 // TODO: add structured logging
 
