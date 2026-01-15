@@ -14,7 +14,7 @@ import type {
 } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
-import { prepareQuestsForDBInsertion } from "../helpers/prepareQuestsForDBInsertion";
+import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
 
 /**
  * Creates a user profile with associated quests and attributes.
