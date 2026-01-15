@@ -32,9 +32,7 @@ export interface CreateProfileTransactionQuests {
 }
 
 /**
- * Represents quest-attribute relationship data necessary for a profile transaction rpc call.
- * Attribute name refers to an attribute that gains experience from the quest.
- * Attribute power indicates how much experience is given to that attribute upon quest completion (see strengthToIntMap.ts).
+ * Represents quest-attribute relationship data necessary for a profile transaction rpc call
  */
 export interface CreateProfileTransactionQuestsAttributes {
   /**
