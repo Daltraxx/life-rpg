@@ -50,7 +50,6 @@ export default function useAttributeManager(
   }, []);
 
   const handleDeleteAttribute = useCallback((attribute: Attribute) => {
-    // Note: attributes array is always sorted by order with no gaps
     setAvailableAttributes((prev) => prev.filter(attr => attr.name !== attribute.name));
   }, []);
 
