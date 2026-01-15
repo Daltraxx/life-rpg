@@ -1,5 +1,5 @@
 import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import type { CreateProfileTransactionAttributes } from "@/utils//types/profile_transaction/createProfileTransactionDataShapes";
+import type { CreateProfileTransactionAttributes } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 
 /**
  * Transforms an array of attributes into a format suitable for database insertion.
