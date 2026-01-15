@@ -2,22 +2,32 @@
 
 /**
  * Represents attribute data necessary for a profile transaction rpc call.
- * Position is zero-based index indicating the order of the attribute.
- * Order matters and must be preserved.
  */
 export interface CreateProfileTransactionAttributes {
+  /**
+   * The name of the attribute.
+   */
   name: string;
+  /**
+   * The 0-indexed position of the attribute in the ordered list.
+   */
   position: number;
 }
 /**
  * Represents quest data necessary for a profile transaction rpc call.
- * Experience share is a percentage (0-100) of experience points allocated to the quest.
- * Position is zero-based index indicating the order of the quest.
- * Order matters and must be preserved.
  */
 export interface CreateProfileTransactionQuests {
+  /**
+   * The name of the quest.
+   */
   name: string;
+  /**
+   * The share (0-100) of daily possible experience points allocated to the quest.
+   */
   experience_share: number;
+  /**
+   * The 0-indexed position of the quest in the ordered list.
+   */
   position: number;
 }
 
@@ -27,7 +37,16 @@ export interface CreateProfileTransactionQuests {
  * Attribute power indicates how much experience is given to that attribute upon quest completion (see strengthToIntMap.ts).
  */
 export interface CreateProfileTransactionQuestsAttributes {
+  /**
+   * The name of the quest.
+   */
   quest_name: string;
+  /**
+   * The name of the attribute.
+   */
   attribute_name: string;
+  /**
+   * The integer indicator (1-3) of the experience points given to the attribute upon the associated quests completion.
+   */
   attribute_power: number;
 }
