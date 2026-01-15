@@ -45,7 +45,6 @@ export default function useAttributeManager(
   const handleAddAttribute = useCallback((attribute: Attribute) => {
     setAvailableAttributes((prev) => [
       ...prev,
-      // Note: Order is also assigned in UI, but is ensured here to prevent desync
       attribute,
     ]);
   }, []);
