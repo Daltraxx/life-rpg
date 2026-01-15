@@ -100,7 +100,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "CHANGE_QUEST_ORDER": {
       const { quest, direction } = action.payload;
-      let index = state.quests.findIndex((q) => q.name === quest.name);
+      const index = state.quests.findIndex((q) => q.name === quest.name);
       if (index === -1) {
         console.warn(
           "Attempted to change order of a quest that does not exist"
