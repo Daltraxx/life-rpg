@@ -57,12 +57,3 @@ export interface CreateProfileTransactionQuestsAttributes {
    */
   attribute_power: number;
 }
-
-/**
- * Represents the complete data shape for the create_profile_transaction rpc call.
- */
-export interface CreateProfileTransactionDataShapes {
-  attributes: CreateProfileTransactionAttributes[];
-  quests: CreateProfileTransactionQuests[];
-  quests_attributes: CreateProfileTransactionQuestsAttributes[];
-}
