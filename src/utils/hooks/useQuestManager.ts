@@ -24,17 +24,17 @@ type QuestAction =
   | { type: "ADD_QUEST"; payload: Quest }
   | { type: "DELETE_QUEST"; payload: Quest }
   | {
-    type: "CHANGE_QUEST_ORDER";
-    payload: { quest: Quest; direction: "up" | "down" };
-  }
+      type: "CHANGE_QUEST_ORDER";
+      payload: { quest: Quest; direction: "up" | "down" };
+    }
   | {
-    type: "CHANGE_QUEST_EXPERIENCE";
-    payload: { quest: Quest; direction: "up" | "down" };
-  }
+      type: "CHANGE_QUEST_EXPERIENCE";
+      payload: { quest: Quest; direction: "up" | "down" };
+    }
   | {
-    type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES";
-    payload: Set<string>;
-  };
+      type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES";
+      payload: Set<string>;
+    };
 
 /**
  * Reducer function for managing quest state transitions.
@@ -164,12 +164,22 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         pointsRemaining: state.pointsRemaining + (direction === "up" ? -1 : 1),
       };
     }
-    case "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES": { 
+    case "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES": {
       const availableAttributesSet = action.payload;
       const updatedQuests = state.quests;
+      let attributeRemoved = false;
       updatedQuests.forEach((quest) => {
-        quest.affectedAttributes = quest.affectedAttributes.filter((attr) => availableAttributesSet.has(attr.name));
-      })
+        quest.affectedAttributes = quest.affectedAttributes.filter((attr) => {
+          if (!availableAttributesSet.has(attr.name)) {
+            attributeRemoved = true;
+            return false;
+          }
+          return true;
+        });
+      });
+      if (!attributeRemoved) {
+        return state; // No changes needed
+      }
       return {
         ...state,
         quests: updatedQuests,
@@ -243,8 +253,11 @@ export default function useQuestManager(
       return;
     }
     attributesLengthRef.current = availableAttributes.length;
-    const attributesSet = new Set(availableAttributes.map(attr => attr.name));
-    dispatch({ type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES", payload: attributesSet });
+    const attributesSet = new Set(availableAttributes.map((attr) => attr.name));
+    dispatch({
+      type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES",
+      payload: attributesSet,
+    });
   }, [availableAttributes]);
 
   const actions = useMemo(
