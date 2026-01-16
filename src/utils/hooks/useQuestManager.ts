@@ -166,16 +166,14 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES": {
       const availableAttributesSet = action.payload;
-      const updatedQuests = state.quests;
       let attributeRemoved = false;
-      updatedQuests.forEach((quest) => {
-        quest.affectedAttributes = quest.affectedAttributes.filter((attr) => {
-          if (!availableAttributesSet.has(attr.name)) {
-            attributeRemoved = true;
-            return false;
-          }
-          return true;
-        });
+      const updatedQuests = state.quests.map((quest) => {
+        const filteredAttributes = quest.affectedAttributes.filter((attr) => availableAttributesSet.has(attr.name));
+        if (filteredAttributes.length !== quest.affectedAttributes.length) {
+          attributeRemoved = true;
+          return { ...quest, affectedAttributes: filteredAttributes };
+        }
+        return quest;
       });
       if (!attributeRemoved) {
         return state; // No changes needed
