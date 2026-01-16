@@ -220,7 +220,7 @@ interface QuestManager {
  *
  * Provides centralized state management for quests including creation, deletion,
  * ordering, and experience point adjustments. Uses a reducer pattern to handle
- * state transitions.
+ * state transitions. Also ensures quests remain consistent with available attributes.
  *
  * @returns {QuestManager} An object containing:
  *   - `quests`: Array of current quests
