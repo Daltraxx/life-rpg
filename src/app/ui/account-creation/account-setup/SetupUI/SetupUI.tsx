@@ -40,7 +40,7 @@ export default function SetupUI() {
   );
 
   // Manage quests state
-  const questManagement = useQuestManager();
+  const questManagement = useQuestManager(availableAttributes);
   const { quests, pointsRemaining, actions: questActions } = questManagement;
 
   // Handle form submission state

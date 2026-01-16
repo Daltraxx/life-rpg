@@ -1,5 +1,5 @@
-import { useReducer, useMemo } from "react";
-import { Quest } from "@/utils/types/AttributesAndQuests";
+import { useReducer, useMemo, useEffect } from "react";
+import { Attribute, Quest } from "@/utils/types/AttributesAndQuests";
 
 // TODO: add structured logging
 
@@ -24,13 +24,17 @@ type QuestAction =
   | { type: "ADD_QUEST"; payload: Quest }
   | { type: "DELETE_QUEST"; payload: Quest }
   | {
-      type: "CHANGE_QUEST_ORDER";
-      payload: { quest: Quest; direction: "up" | "down" };
-    }
+    type: "CHANGE_QUEST_ORDER";
+    payload: { quest: Quest; direction: "up" | "down" };
+  }
   | {
-      type: "CHANGE_QUEST_EXPERIENCE";
-      payload: { quest: Quest; direction: "up" | "down" };
-    };
+    type: "CHANGE_QUEST_EXPERIENCE";
+    payload: { quest: Quest; direction: "up" | "down" };
+  }
+  | {
+    type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES";
+    payload: Set<string>;
+  };
 
 /**
  * Reducer function for managing quest state transitions.
@@ -38,7 +42,7 @@ type QuestAction =
  *
  * @param state - The current quest state containing quests array and metadata
  * @param action - The action object describing the state mutation to perform
- * @param action.type - The type of action: "ADD_QUEST" | "DELETE_QUEST" | "CHANGE_QUEST_ORDER" | "CHANGE_QUEST_EXPERIENCE"
+ * @param action.type - The type of action: "ADD_QUEST" | "DELETE_QUEST" | "CHANGE_QUEST_ORDER" | "CHANGE_QUEST_EXPERIENCE" | "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES"
  * @param action.payload - The payload data specific to the action type
  *
  * @returns {QuestState} The updated quest state after applying the action
@@ -160,6 +164,17 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         pointsRemaining: state.pointsRemaining + (direction === "up" ? -1 : 1),
       };
     }
+    case "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES": { 
+      const availableAttributesSet = action.payload;
+      const updatedQuests = state.quests;
+      updatedQuests.forEach((quest) => {
+        quest.affectedAttributes = quest.affectedAttributes.filter((attr) => availableAttributesSet.has(attr.name));
+      })
+      return {
+        ...state,
+        quests: updatedQuests,
+      };
+    }
     default:
       throw new Error("Unhandled action type in questReducer");
   }
@@ -211,11 +226,19 @@ interface QuestManager {
  * actions.addQuest(newQuest);
  * actions.questOrderChange(quest, 'up');
  */
-export default function useQuestManager(): QuestManager {
+export default function useQuestManager(
+  availableAttributes: Attribute[]
+): QuestManager {
   const [state, dispatch] = useReducer(questReducer, {
     quests: [],
     pointsRemaining: TOTAL_EXPERIENCE_POINTS,
   });
+
+  // Ensure that quests do not reference attributes that are no longer available
+  useEffect(() => {
+    const attributesSet = new Set(availableAttributes.map(attr => attr.name));
+    dispatch({ type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES", payload: attributesSet });
+  }, [availableAttributes]);
 
   const actions = useMemo(
     () => ({
