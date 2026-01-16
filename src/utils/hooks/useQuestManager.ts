@@ -165,10 +165,12 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       };
     }
     case "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES": {
-      const availableAttributesSet = action.payload;
+      const availableAttributeNames = action.payload;
       let attributeRemoved = false;
       const updatedQuests = state.quests.map((quest) => {
-        const filteredAttributes = quest.affectedAttributes.filter((attr) => availableAttributesSet.has(attr.name));
+        const filteredAttributes = quest.affectedAttributes.filter((attr) =>
+          availableAttributeNames.has(attr.name)
+        );
         if (filteredAttributes.length !== quest.affectedAttributes.length) {
           attributeRemoved = true;
           return { ...quest, affectedAttributes: filteredAttributes };
@@ -245,16 +247,19 @@ export default function useQuestManager(
 
   // Ensure that quests do not reference attributes that are no longer available
   useEffect(() => {
-    // Prevent running when attributes are added
+    // Only run when attributes are removed
+    // Length is sufficient for this check since attributes cannot be replaced, only added or removed
     if (attributesLengthRef.current < availableAttributes.length) {
       attributesLengthRef.current = availableAttributes.length;
       return;
     }
     attributesLengthRef.current = availableAttributes.length;
-    const attributesSet = new Set(availableAttributes.map((attr) => attr.name));
+    const attributeNames = new Set(
+      availableAttributes.map((attr) => attr.name)
+    );
     dispatch({
       type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES",
-      payload: attributesSet,
+      payload: attributeNames,
     });
   }, [availableAttributes]);
 
