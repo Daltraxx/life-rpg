@@ -14,10 +14,10 @@ import {
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 import styles from "./styles.module.css";
-import useTruncatedString from "@/app/ui/utils/hooks/useTruncatedString";
+import useTruncatedString from "@/utils/hooks/useTruncatedString";
 import useSignupValidation, {
   ValidationErrorMessages,
-} from "@/app/ui/utils/hooks/useSignupValidation";
+} from "@/utils/hooks/useSignupValidation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";

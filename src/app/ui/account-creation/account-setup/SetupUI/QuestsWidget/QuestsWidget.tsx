@@ -16,7 +16,7 @@ import {
   type Quest,
   createQuest,
 } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
-import type { AffectedAttributeManager } from "@/app/ui/utils/hooks/useAffectedAttributeManager";
+import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 

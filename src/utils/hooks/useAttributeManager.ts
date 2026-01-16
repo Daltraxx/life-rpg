@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { Attribute } from "../classesAndInterfaces/AttributesAndQuests";
+import { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 
 /**
  * Return type for the `useAttributeManager` hook.

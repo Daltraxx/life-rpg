@@ -7,15 +7,15 @@ import styles from "./styles.module.css";
 import cssVars from "./QuestsWidget/vars.module.css";
 import clsx from "clsx";
 import QuestBoard from "./QuestBoard/QuestBoard";
-import useQuestManager from "@/app/ui/utils/hooks/useQuestManager";
-import useAttributeManager from "@/app/ui/utils/hooks/useAttributeManager";
+import useQuestManager from "@/utils/hooks/useQuestManager";
+import useAttributeManager from "@/utils/hooks/useAttributeManager";
 import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
 import { createSimpleInitialFormActionState } from "@/utils/helpers/createInitialFormActionState";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import useAffectedAttributeManager from "@/app/ui/utils/hooks/useAffectedAttributeManager";
+import useAffectedAttributeManager from "@/utils/hooks/useAffectedAttributeManager";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { name: "Discipline" },

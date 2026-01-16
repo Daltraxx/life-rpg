@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import type { AffectedAttributeManager } from "@/app/ui/utils/hooks/useAffectedAttributeManager";
+import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
 

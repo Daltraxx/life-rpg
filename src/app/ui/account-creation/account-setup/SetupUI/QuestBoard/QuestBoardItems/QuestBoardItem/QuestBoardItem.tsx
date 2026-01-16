@@ -9,14 +9,14 @@ import {
   ChevronDownButton,
 } from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
 import clsx from "clsx";
-import useSetElementHeight from "@/app/ui/utils/hooks/useSetElementHeight";
-import useSetCSSProperty from "@/app/ui/utils/hooks/useSetCSSProperty";
+import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
+import useSetCSSProperty from "@/utils/hooks/useSetCSSProperty";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
-import useWindowWidth from "@/app/ui/utils/hooks/useWindowWidth";
-import useButtonHold from "@/app/ui/utils/hooks/useButtonHold";
+import useWindowWidth from "@/utils/hooks/useWindowWidth";
+import useButtonHold from "@/utils/hooks/useButtonHold";
 
 const DELETE_ANIMATION_DURATION_MS = 500;
 
