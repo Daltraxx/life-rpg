@@ -1,10 +1,13 @@
-/* Grid structure: 7 columns total (2fr gutter + 5×5fr content + 2fr gutter)
+/* Grid structure: 7 columns total (1 side + 5 content + 1 side)
    Header row uses the middle 5 content columns only
-   Quest details use columns 2-7 (the 5 content columns + right gutter)
+   Quest details use columns 2-7 (the 5 content columns + right side)
    The outside columns are for order toggles and delete buttons */
 .gridVars {
+  /* Main Columns: Quest, Attributes, Streak, Strength, Experience */
   --grid-template-columns-headers: 5fr 6fr 4fr 4fr 5fr;
-  --grid-template-columns-quest-details: var(--grid-template-columns-headers) 3.5rem;
-  --full-grid-template-columns: 3.5rem var(--grid-template-columns-headers) 3.5rem;
+  /* Sides include order toggles (left) and delete buttons (right) */
+  --grid-template-side: 3.5rem;
+  --grid-template-columns-quest-details: var(--grid-template-columns-headers) var(--grid-template-side);
+  --full-grid-template-columns: var(--grid-template-side) var(--grid-template-columns-headers) var(--grid-template-side);
   --column-gap: 1.25rem;
 }
