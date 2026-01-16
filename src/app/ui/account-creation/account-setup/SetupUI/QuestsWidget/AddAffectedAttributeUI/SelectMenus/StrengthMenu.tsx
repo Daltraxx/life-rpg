@@ -2,7 +2,7 @@
 
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import { strengthDisplayMap } from "@/app/ui/utils/helpers/StrengthDisplayMap";
+import { strengthDisplayMap } from "@/utils/helpers/StrengthDisplayMap";
 import type { AttributeStrength } from "@/utils/types/AttributeStrength";
 import { Select } from "radix-ui";
 import {

@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { FontSize } from "@/app/ui/utils/helpers/fontSizeToTWMap";
+import { FontSize } from "@/utils/helpers/fontSizeToTWMap";
 
 interface FieldErrorsDisplayProps extends ComponentProps<"div"> {
   errors: string[] | undefined;

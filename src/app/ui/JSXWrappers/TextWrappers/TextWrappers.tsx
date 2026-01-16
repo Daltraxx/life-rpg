@@ -1,10 +1,7 @@
 import React, { ComponentProps } from "react";
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import {
-  fontSizeToTWMap,
-  FontSize,
-} from "@/app/ui/utils/helpers/fontSizeToTWMap";
+import { fontSizeToTWMap, FontSize } from "@/utils/helpers/fontSizeToTWMap";
 
 const textColorMap = {
   custom: "",

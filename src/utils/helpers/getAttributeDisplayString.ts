@@ -1,5 +1,5 @@
 import { AffectedAttribute } from "@/utils/types/AttributesAndQuests";
-import { getStrengthDisplay } from "@/app/ui/utils/helpers/StrengthDisplayMap";
+import { getStrengthDisplay } from "@/utils/helpers/StrengthDisplayMap";
 
 /**
  * Generates a display string for an attribute by combining its name with a strength indicator.

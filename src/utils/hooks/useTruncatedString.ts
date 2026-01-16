@@ -1,7 +1,7 @@
 import { useEffect, useState, RefObject, useRef } from "react";
 import useWindowWidth from "./useWindowWidth";
 import useElementWidth from "./useElementWidth";
-import getTruncatedString from "@/app/ui/utils/helpers/getTruncatedString";
+import getTruncatedString from "@/utils/helpers/getTruncatedString";
 
 /**
  * A custom hook that truncates a string based on the available width of an element

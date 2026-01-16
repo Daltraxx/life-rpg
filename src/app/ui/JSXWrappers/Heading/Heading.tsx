@@ -1,15 +1,12 @@
 import { ComponentProps } from "react";
 import clsx from "clsx";
-import {
-  fontSizeToTWMap,
-  FontSize,
-} from "@/app/ui/utils/helpers/fontSizeToTWMap";
+import { fontSizeToTWMap, FontSize } from "@/utils/helpers/fontSizeToTWMap";
 import styles from "./styles.module.css";
 
 export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 const headingColorMap = {
-  "background": styles.textBackground,
+  background: styles.textBackground,
   "blue-700": styles.textBlue700,
 } satisfies Record<string, string>;
 

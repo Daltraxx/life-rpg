@@ -1,8 +1,8 @@
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import { sortAffectedAttributes } from "@/app/ui/utils/helpers/sortAffectedAttributes";
-import { getAttributeDisplayString } from "@/app/ui/utils/helpers/getAttributeDisplayString";
+import { sortAffectedAttributes } from "@/utils/helpers/sortAffectedAttributes";
+import { getAttributeDisplayString } from "@/utils/helpers/getAttributeDisplayString";
 import { useState, useRef, useEffect } from "react";
 import {
   ChevronUpButton,

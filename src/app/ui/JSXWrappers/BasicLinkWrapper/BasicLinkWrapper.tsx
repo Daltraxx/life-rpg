@@ -2,11 +2,11 @@ import Link, { LinkProps } from "next/link";
 import {
   type FontSize,
   fontSizeToTWMap,
-} from "@/app/ui/utils/helpers/fontSizeToTWMap";
+} from "@/utils/helpers/fontSizeToTWMap";
 import { type ReactNode } from "react";
 import clsx from "clsx";
 import styles from "./styles.module.css";
-import getSecureRel from "../../utils/helpers/getSecureRel";
+import getSecureRel from "../../../../utils/helpers/getSecureRel";
 
 const basicLinkColorMap = {
   "brown-600": styles.brown600,

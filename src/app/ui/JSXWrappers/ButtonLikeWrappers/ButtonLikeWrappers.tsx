@@ -3,11 +3,8 @@ import type { LinkProps } from "next/link";
 import Link from "next/link";
 import styles from "./styles.module.css";
 import clsx from "clsx";
-import {
-  fontSizeToTWMap,
-  FontSize,
-} from "@/app/ui/utils/helpers/fontSizeToTWMap";
-import getSecureRel from "../../utils/helpers/getSecureRel";
+import { fontSizeToTWMap, FontSize } from "@/utils/helpers/fontSizeToTWMap";
+import getSecureRel from "../../../../utils/helpers/getSecureRel";
 
 /**
  * Color variants for buttons and links with button appearance.
@@ -17,7 +14,7 @@ const buttonColorMap = {
   "brown-600": styles.buttonBrown600,
   "blue-700": styles.buttonBlue700,
   "orange-600": styles.buttonOrange600,
-  "background": styles.buttonBackground,
+  background: styles.buttonBackground,
   custom: "",
 } satisfies Record<string, string>;
 
