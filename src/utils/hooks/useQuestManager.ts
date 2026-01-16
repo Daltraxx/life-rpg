@@ -1,4 +1,4 @@
-import { useReducer, useMemo, useEffect } from "react";
+import { useReducer, useMemo, useEffect, useRef } from "react";
 import { Attribute, Quest } from "@/utils/types/AttributesAndQuests";
 
 // TODO: add structured logging
@@ -233,9 +233,16 @@ export default function useQuestManager(
     quests: [],
     pointsRemaining: TOTAL_EXPERIENCE_POINTS,
   });
+  const attributesLengthRef = useRef(availableAttributes.length);
 
   // Ensure that quests do not reference attributes that are no longer available
   useEffect(() => {
+    // Prevent running when attributes are added
+    if (attributesLengthRef.current < availableAttributes.length) {
+      attributesLengthRef.current = availableAttributes.length;
+      return;
+    }
+    attributesLengthRef.current = availableAttributes.length;
     const attributesSet = new Set(availableAttributes.map(attr => attr.name));
     dispatch({ type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES", payload: attributesSet });
   }, [availableAttributes]);
