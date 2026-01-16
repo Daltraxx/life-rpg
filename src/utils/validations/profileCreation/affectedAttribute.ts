@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AttributeStrengthValues } from "@/app/ui/utils/types/AttributeStrength";
+import { AttributeStrengthValues } from "@/utils/types/AttributeStrength";
 import {
   SAFE_CHARACTERS_REGEX,
   MIN_ATTRIBUTE_NAME_LENGTH,

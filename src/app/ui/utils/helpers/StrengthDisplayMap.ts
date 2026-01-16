@@ -1,4 +1,4 @@
-import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
+import type { AttributeStrength } from "@/utils/types/AttributeStrength";
 
 /**
  * Maps attribute strength values to their display string representations.

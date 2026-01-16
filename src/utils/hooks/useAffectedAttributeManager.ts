@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useReducer } from "react";
-import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
+import type { AttributeStrength } from "@/utils/types/AttributeStrength";
 import {
   type Attribute,
   type AffectedAttribute,

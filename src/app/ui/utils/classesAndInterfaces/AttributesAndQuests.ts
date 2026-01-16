@@ -1,4 +1,4 @@
-import type { AttributeStrength } from "@/app/ui/utils/types/AttributeStrength";
+import type { AttributeStrength } from "@/utils/types/AttributeStrength";
 
 /**
  * Represents an attribute with a name and display order.
