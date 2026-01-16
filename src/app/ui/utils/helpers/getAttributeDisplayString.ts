@@ -1,4 +1,4 @@
-import { AffectedAttribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { AffectedAttribute } from "@/utils/types/AttributesAndQuests";
 import { getStrengthDisplay } from "@/app/ui/utils/helpers/StrengthDisplayMap";
 
 /**

@@ -1,5 +1,5 @@
 import { useReducer, useMemo } from "react";
-import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { Quest } from "@/utils/types/AttributesAndQuests";
 
 // TODO: add structured logging
 
@@ -129,7 +129,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       const { quest, direction } = action.payload;
       // Prevent increasing beyond available points or decreasing below 0
       if (direction === "up" && state.pointsRemaining <= 0) return state;
-      
+
       // Use quest in state to prevent usage of stale data
       const targetQuest = state.quests.find((q) => q.name === quest.name);
       if (!targetQuest) {

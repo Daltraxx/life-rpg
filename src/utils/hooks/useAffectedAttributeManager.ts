@@ -4,7 +4,7 @@ import {
   type Attribute,
   type AffectedAttribute,
   createAffectedAttribute,
-} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+} from "@/utils/types/AttributesAndQuests";
 
 const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
 

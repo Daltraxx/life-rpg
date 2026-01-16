@@ -12,7 +12,7 @@ import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 import useSetCSSProperty from "@/utils/hooks/useSetCSSProperty";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { Quest } from "@/utils/types/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";

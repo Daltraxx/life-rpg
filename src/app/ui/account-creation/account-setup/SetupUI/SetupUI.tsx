@@ -9,7 +9,7 @@ import clsx from "clsx";
 import QuestBoard from "./QuestBoard/QuestBoard";
 import useQuestManager from "@/utils/hooks/useQuestManager";
 import useAttributeManager from "@/utils/hooks/useAttributeManager";
-import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import type { Attribute } from "@/utils/types/AttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
@@ -30,10 +30,8 @@ const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 export default function SetupUI() {
   // Manage available attributes state
   const attributeManagement = useAttributeManager(INITIAL_ATTRIBUTES);
-  const {
-    availableAttributes,
-    actions: attributeActions,
-  } = attributeManagement;
+  const { availableAttributes, actions: attributeActions } =
+    attributeManagement;
 
   // Manage affected attribute selection state
   const affectedAttributeManager = useAffectedAttributeManager(
@@ -43,11 +41,7 @@ export default function SetupUI() {
 
   // Manage quests state
   const questManagement = useQuestManager();
-  const {
-    quests,
-    pointsRemaining,
-    actions: questActions,
-  } = questManagement;
+  const { quests, pointsRemaining, actions: questActions } = questManagement;
 
   // Handle form submission state
   const [errorState, formAction, isPending] = useActionState(

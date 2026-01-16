@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { strengthDisplayMap } from "@/app/ui/utils/helpers/StrengthDisplayMap";
-import type { AffectedAttribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import type { AffectedAttribute } from "@/utils/types/AttributesAndQuests";
 
 interface AffectedAttributesTableProps {
   selectedAttributes: AffectedAttribute[];

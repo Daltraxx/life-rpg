@@ -1,4 +1,4 @@
-import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { Quest } from "@/utils/types/AttributesAndQuests";
 import styles from "./styles.module.css";
 import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";

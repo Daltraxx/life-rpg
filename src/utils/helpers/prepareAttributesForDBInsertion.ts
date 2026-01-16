@@ -1,4 +1,4 @@
-import type { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import type { Attribute } from "@/utils/types/AttributesAndQuests";
 import type { CreateProfileTransactionAttributes } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 
 /**

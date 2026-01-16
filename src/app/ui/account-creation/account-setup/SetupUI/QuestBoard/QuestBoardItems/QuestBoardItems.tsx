@@ -1,5 +1,5 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { Quest } from "@/utils/types/AttributesAndQuests";
 import QuestBoardItem from "./QuestBoardItem/QuestBoardItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";

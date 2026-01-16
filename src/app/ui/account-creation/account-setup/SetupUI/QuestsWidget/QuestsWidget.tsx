@@ -15,7 +15,7 @@ import {
   createAffectedAttribute,
   type Quest,
   createQuest,
-} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+} from "@/utils/types/AttributesAndQuests";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
@@ -60,9 +60,7 @@ export default function QuestsWidget({
       );
     }
 
-    addQuest(
-      createQuest(trimmedQuestName, affectedAttributes)
-    );
+    addQuest(createQuest(trimmedQuestName, affectedAttributes));
 
     // Reset UI state
     setNewQuestName("");

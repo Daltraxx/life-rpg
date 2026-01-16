@@ -12,7 +12,7 @@ import clsx from "clsx";
 import {
   type Attribute,
   createAttribute,
-} from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+} from "@/utils/types/AttributesAndQuests";
 
 interface AttributeWidgetProps {
   attributes: Attribute[];

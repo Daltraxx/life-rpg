@@ -1,4 +1,4 @@
-import { AffectedAttribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { AffectedAttribute } from "@/utils/types/AttributesAndQuests";
 import { AttributeStrength } from "@/utils/types/AttributeStrength";
 
 const strengthPriority: Record<AttributeStrength, number> = {

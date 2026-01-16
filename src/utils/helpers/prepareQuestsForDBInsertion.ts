@@ -1,4 +1,4 @@
-import type { Quest } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import type { Quest } from "@/utils/types/AttributesAndQuests";
 import type { CreateProfileTransactionQuests } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
 
 /**

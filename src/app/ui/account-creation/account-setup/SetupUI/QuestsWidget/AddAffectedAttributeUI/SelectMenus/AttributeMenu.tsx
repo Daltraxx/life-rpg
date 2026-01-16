@@ -3,7 +3,7 @@
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { Select } from "radix-ui";
-import { type Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { type Attribute } from "@/utils/types/AttributesAndQuests";
 import {
   ChevronUpIcon,
   ChevronDownIcon,

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { Attribute } from "@/app/ui/utils/classesAndInterfaces/AttributesAndQuests";
+import { Attribute } from "@/utils/types/AttributesAndQuests";
 
 /**
  * Return type for the `useAttributeManager` hook.
@@ -43,14 +43,13 @@ export default function useAttributeManager(
     useState<Attribute[]>(initialAttributes);
 
   const handleAddAttribute = useCallback((attribute: Attribute) => {
-    setAvailableAttributes((prev) => [
-      ...prev,
-      attribute,
-    ]);
+    setAvailableAttributes((prev) => [...prev, attribute]);
   }, []);
 
   const handleDeleteAttribute = useCallback((attribute: Attribute) => {
-    setAvailableAttributes((prev) => prev.filter(attr => attr.name !== attribute.name));
+    setAvailableAttributes((prev) =>
+      prev.filter((attr) => attr.name !== attribute.name)
+    );
   }, []);
 
   const actions = useMemo(
