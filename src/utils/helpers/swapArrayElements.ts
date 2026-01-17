@@ -7,6 +7,7 @@
  * @param indexA - The index of the first element to swap
  * @param indexB - The index of the second element to swap
  * @returns A new array with the elements at indexA and indexB swapped
+ * @throws {RangeError} If either indexA or indexB is out of bounds for the array
  *
  * @example
  * ```ts
