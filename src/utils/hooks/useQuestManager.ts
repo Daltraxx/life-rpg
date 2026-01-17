@@ -165,6 +165,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       };
     }
     case "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES": {
+      // TODO: take into account editing attribute names (future potential functionality) and replace instead of just removing
       const availableAttributeNames = action.payload;
       let attributeRemoved = false;
       const updatedQuests = state.quests.map((quest) => {
