@@ -62,20 +62,24 @@ export default function useAttributeManager(
   const swapAttributeUp = useCallback((attribute: Attribute) => {
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
-      if (index > 0) {
-        return swapArrayElements(prev, index, index - 1);
+      if (index === -1 || index === 0) {
+        const msg = index === -1 ? "not found" : "already at the top";
+        console.warn(`Attribute ${msg} when swapping up:`, attribute);
+        return prev;
       }
-      return prev;
+      return swapArrayElements(prev, index, index - 1);
     });
   }, []);
 
   const swapAttributeDown = useCallback((attribute: Attribute) => {
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
-      if (index < prev.length - 1) {
-        return swapArrayElements(prev, index, index + 1);
+      if (index === -1 || index === prev.length - 1) {
+        const msg = index === -1 ? "not found" : "already at the bottom";
+        console.warn(`Attribute ${msg} when swapping down:`, attribute);
+        return prev;
       }
-      return prev;
+      return swapArrayElements(prev, index, index + 1);
     });
   }, []);
 
