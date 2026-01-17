@@ -20,6 +20,16 @@ const swapArrayElements = <T>(
   indexA: number,
   indexB: number
 ): T[] => {
+  if (
+    indexA < 0 ||
+    indexB < 0 ||
+    indexA >= array.length ||
+    indexB >= array.length
+  ) {
+    throw new RangeError(
+      `Indices out of bounds: indexA=${indexA}, indexB=${indexB}, array length=${array.length}`
+    );
+  }
   const newArray = [...array];
   [newArray[indexA], newArray[indexB]] = [newArray[indexB], newArray[indexA]];
   return newArray;
