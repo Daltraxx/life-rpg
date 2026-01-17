@@ -243,24 +243,40 @@ export default function useQuestManager(
     quests: [],
     pointsRemaining: TOTAL_EXPERIENCE_POINTS,
   });
-  const attributesLengthRef = useRef(availableAttributes.length);
+  const attributesRef = useRef(
+    new Set(availableAttributes.map((attr) => attr.name))
+  );
+
+  const hasAttributeBeenDeletedOrSwapped = (
+    prevAttributes: Set<string>,
+    newAttributes: Set<string>
+  ) => {
+    if (prevAttributes.size > newAttributes.size) {
+      return true;
+    }
+    for (let attr of prevAttributes) {
+      if (!newAttributes.has(attr)) {
+        return true;
+      }
+    }
+    return false;
+  };
 
   // Ensure that quests do not reference attributes that are no longer available
   useEffect(() => {
-    // Only run when attributes are removed
-    // Length is sufficient for this check since attributes cannot be replaced, only added or removed
-    if (attributesLengthRef.current < availableAttributes.length) {
-      attributesLengthRef.current = availableAttributes.length;
-      return;
-    }
-    attributesLengthRef.current = availableAttributes.length;
     const attributeNames = new Set(
       availableAttributes.map((attr) => attr.name)
     );
-    dispatch({
-      type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES",
-      payload: attributeNames,
-    });
+    // Only run when attributes are removed or swapped
+    if (
+      hasAttributeBeenDeletedOrSwapped(attributesRef.current, attributeNames)
+    ) {
+      dispatch({
+        type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES",
+        payload: attributeNames,
+      });
+    }
+    attributesRef.current = attributeNames;
   }, [availableAttributes]);
 
   const actions = useMemo(
