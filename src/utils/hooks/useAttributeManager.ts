@@ -90,7 +90,12 @@ export default function useAttributeManager(
       swapAttributeUp,
       swapAttributeDown,
     }),
-    [handleAddAttribute, handleDeleteAttribute]
+    [
+      handleAddAttribute,
+      handleDeleteAttribute,
+      swapAttributeUp,
+      swapAttributeDown,
+    ]
   );
 
   return {
