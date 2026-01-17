@@ -1,5 +1,6 @@
 import { useReducer, useMemo, useEffect, useRef } from "react";
 import { Attribute, Quest } from "@/utils/types/AttributesAndQuests";
+import hasAttributeBeenDeletedOrSwapped from "@/utils/helpers/hasAttributeBeenDeletedOrSwapped";
 
 // TODO: add structured logging
 
@@ -247,21 +248,6 @@ export default function useQuestManager(
   const attributesRef = useRef(
     new Set(availableAttributes.map((attr) => attr.name))
   );
-
-  const hasAttributeBeenDeletedOrSwapped = (
-    prevAttributes: Set<string>,
-    newAttributes: Set<string>
-  ) => {
-    if (prevAttributes.size > newAttributes.size) {
-      return true;
-    }
-    for (let attr of prevAttributes) {
-      if (!newAttributes.has(attr)) {
-        return true;
-      }
-    }
-    return false;
-  };
 
   // Ensure that quests do not reference attributes that are no longer available
   useEffect(() => {
