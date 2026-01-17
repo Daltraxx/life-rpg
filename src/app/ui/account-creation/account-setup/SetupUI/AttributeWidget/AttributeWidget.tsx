@@ -51,6 +51,7 @@ export default function AttributeWidget({
   const [addAttributeError, setAddAttributeError] = useState("");
 
   const handleAddAttribute = (attribute: string) => {
+    //TODO: Replace with Zod validation
     const trimmedAttribute = attribute.trim();
     const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
     const attributeSet = new Set(
