@@ -1,5 +1,6 @@
 import { useCallback, useMemo, useState } from "react";
 import { Attribute } from "@/utils/types/AttributesAndQuests";
+import swapArrayElements from "@/utils/helpers/swapArrayElements";
 
 /**
  * Return type for the `useAttributeManager` hook.
@@ -62,12 +63,7 @@ export default function useAttributeManager(
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
       if (index > 0) {
-        const newAttributes = [...prev];
-        [newAttributes[index - 1], newAttributes[index]] = [
-          newAttributes[index],
-          newAttributes[index - 1],
-        ];
-        return newAttributes;
+        return swapArrayElements(prev, index, index - 1);
       }
       return prev;
     });
@@ -77,12 +73,7 @@ export default function useAttributeManager(
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
       if (index < prev.length - 1) {
-        const newAttributes = [...prev];
-        [newAttributes[index + 1], newAttributes[index]] = [
-          newAttributes[index],
-          newAttributes[index + 1],
-        ];
-        return newAttributes;
+        return swapArrayElements(prev, index, index + 1);
       }
       return prev;
     });
