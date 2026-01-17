@@ -9,12 +9,16 @@ import { Attribute } from "@/utils/types/AttributesAndQuests";
  * @property {Object} actions - Object containing attribute manipulation functions.
  * @property {(attribute: Attribute) => void} actions.addAttribute - Function to add a new attribute to the setup.
  * @property {(attribute: Attribute) => void} actions.deleteAttribute - Function to remove an attribute from the setup.
+ * @property {(attribute: Attribute) => void} actions.swapAttributeUp - Function to move an attribute up in the order.
+ * @property {(attribute: Attribute) => void} actions.swapAttributeDown - Function to move an attribute down in the order.
  */
 interface AttributeManager {
   availableAttributes: Attribute[];
   actions: {
     addAttribute: (attribute: Attribute) => void;
     deleteAttribute: (attribute: Attribute) => void;
+    swapAttributeUp: (attribute: Attribute) => void;
+    swapAttributeDown: (attribute: Attribute) => void;
   };
 }
 
@@ -28,7 +32,9 @@ interface AttributeManager {
  *   - availableAttributes: Current list of managed attributes
  *   - actions: Object containing action handlers:
  *     - addAttribute: Function to add a new attribute to the list
- *     - deleteAttribute: Function to remove an attribute and reorder remaining attributes
+ *     - deleteAttribute: Function to remove an attribute from the list
+ *     - swapAttributeUp: Function to move an attribute up in the order
+ *     - swapAttributeDown: Function to move an attribute down in the order
  *
  * @example
  * const { availableAttributes, actions } = useAttributeManager(initialAttrs);
@@ -52,10 +58,42 @@ export default function useAttributeManager(
     );
   }, []);
 
+  const swapAttributeUp = useCallback((attribute: Attribute) => {
+    setAvailableAttributes((prev) => {
+      const index = prev.findIndex((attr) => attr.name === attribute.name);
+      if (index > 0) {
+        const newAttributes = [...prev];
+        [newAttributes[index - 1], newAttributes[index]] = [
+          newAttributes[index],
+          newAttributes[index - 1],
+        ];
+        return newAttributes;
+      }
+      return prev;
+    });
+  }, []);
+
+  const swapAttributeDown = useCallback((attribute: Attribute) => {
+    setAvailableAttributes((prev) => {
+      const index = prev.findIndex((attr) => attr.name === attribute.name);
+      if (index < prev.length - 1) {
+        const newAttributes = [...prev];
+        [newAttributes[index + 1], newAttributes[index]] = [
+          newAttributes[index],
+          newAttributes[index + 1],
+        ];
+        return newAttributes;
+      }
+      return prev;
+    });
+  }, []);
+
   const actions = useMemo(
     () => ({
       addAttribute: handleAddAttribute,
       deleteAttribute: handleDeleteAttribute,
+      swapAttributeUp,
+      swapAttributeDown,
     }),
     [handleAddAttribute, handleDeleteAttribute]
   );
