@@ -20,9 +20,15 @@
   .gold400HoverBackground:hover {
     background-color: var(--gold-400, #ffb800);
   }
+  .gray200HoverBackground:hover {
+    background-color: var(--gray-200, #d9d9d9);
+  }
 }
 .gold400HoverBackground:active {
   background-color: var(--gold-600, #d89b00);
+}
+.gray200HoverBackground:active {
+  background-color: var(--gray-300, #cccccc);
 }
 
 .button:disabled,

@@ -81,6 +81,7 @@ export default function AttributeListItem({
           onClick={() => handleMoveUp(attribute)}
           iconColor="blue-700"
           backgroundColor="none"
+          hoverBackgroundColor="gray-200"
           aria-label="Move attribute up"
         />
       )}
@@ -90,6 +91,7 @@ export default function AttributeListItem({
           onClick={() => handleMoveDown(attribute)}
           iconColor="blue-700"
           backgroundColor="none"
+          hoverBackgroundColor="gray-200"
           aria-label="Move attribute down"
         />
       )}
