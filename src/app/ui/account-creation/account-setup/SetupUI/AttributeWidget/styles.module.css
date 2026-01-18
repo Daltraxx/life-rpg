@@ -11,7 +11,7 @@
 }
 
 .description {
-  height: var(--widget-desc-height); /* Match heights of both widget descriptions to line up inputs */
+  min-height: var(--widget-desc-height, 5.25rem); /* Match heights of both widget descriptions to line up inputs */
 }
 
 /* ADD ATTRIBUTE WIDGET */
