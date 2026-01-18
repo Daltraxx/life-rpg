@@ -23,6 +23,21 @@ export const AttributeNameSchema = z
   )
   .regex(SAFE_CHARACTERS_REGEX, "Attribute name contains invalid characters");
 
+/**
+ * Creates a Zod schema for validating attribute names with uniqueness constraint.
+ *
+ * @param existingAttributes - Array of existing attributes to check against for name duplicates
+ * @returns A refined Zod schema that validates attribute names and ensures uniqueness
+ *
+ * @example
+ * const schema = createAttributeNameSchema(existingAttributes);
+ * const result = schema.parse("New Attribute"); // Valid if name doesn't exist
+ *
+ * @remarks
+ * - The validation is case-insensitive
+ * - Existing attribute names are normalized to lowercase for comparison
+ * - Returns a validation error if an attribute with the same name already exists
+ */
 export const createAttributeNameSchema = (existingAttributes: Attribute[]) => {
   const existingAttributeNames = new Set(
     existingAttributes.map((attr) => attr.name.toLowerCase()),
