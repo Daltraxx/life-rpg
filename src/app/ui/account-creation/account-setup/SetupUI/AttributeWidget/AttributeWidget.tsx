@@ -15,6 +15,7 @@ import {
 } from "@/utils/types/AttributesAndQuests";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 import { createAttributeNameSchema } from "@/utils/validations/attributeName";
+import z from "zod";
 
 interface AttributeWidgetProps {
   attributes: Attribute[];
@@ -48,23 +49,20 @@ export default function AttributeWidget({
   className,
 }: AttributeWidgetProps) {
   const [newAttributeName, setNewAttributeName] = useState<string>("");
-  const [addAttributeError, setAddAttributeError] = useState("");
+  const [addAttributeError, setAddAttributeError] = useState<string[]>([]);
 
   const { addAttribute, deleteAttribute, swapAttributeUp, swapAttributeDown } =
     attributeManager.actions;
 
   const handleAddAttribute = (attributeName: string) => {
-    //TODO: Replace with Zod validation
-    
     const schema = createAttributeNameSchema(attributes);
     const parseResult = schema.safeParse(attributeName);
     if (!parseResult.success) {
-      setAddAttributeError(parseResult.error.issues[0].message);
+      setAddAttributeError(parseResult.error.issues.map((err) => err.message));
       return;
     }
 
-    setAddAttributeError("");
-
+    setAddAttributeError([]);
     const newAttribute = createAttribute(parseResult.data);
     addAttribute(newAttribute);
     setNewAttributeName("");
@@ -110,7 +108,7 @@ export default function AttributeWidget({
             value={newAttributeName}
             className={styles.addAttributeInput}
             onChange={(e) => {
-              if (addAttributeError) setAddAttributeError("");
+              if (addAttributeError.length > 0) setAddAttributeError([]);
               setNewAttributeName(e.target.value);
             }}
             onKeyDown={(e) => {
@@ -130,16 +128,18 @@ export default function AttributeWidget({
           </button>
         </div>
       </div>
-      {addAttributeError && (
-        <Paragraph
-          id="attribute-error"
-          size="20"
-          className={styles.addAttributeError}
-          role="alert"
-        >
-          {addAttributeError}
-        </Paragraph>
-      )}
+      {addAttributeError.length > 0 &&
+        addAttributeError.map((error, index) => (
+          <Paragraph
+            id="attribute-error"
+            size="20"
+            className={styles.addAttributeError}
+            role="alert"
+            key={index}
+          >
+            {error}
+          </Paragraph>
+        ))}
 
       {/* CURRENT ATTRIBUTES LIST */}
       <div>
