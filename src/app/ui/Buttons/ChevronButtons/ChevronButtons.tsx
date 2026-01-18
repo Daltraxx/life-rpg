@@ -6,11 +6,13 @@ import { ComponentProps } from "react";
 const ICON_SIZE_RATIO = 0.9;
 
 const backgroundColorStyleMap: Record<string, string> = {
+  "none": "",
   "gray-200": styles.gray200Background,
 };
 
 const colorStyleMap: Record<string, string> = {
   "brown-600": styles.brown600Fill,
+  "blue-700": styles.blue700Fill,
 };
 
 interface ChevronButtonProps extends ComponentProps<"button"> {

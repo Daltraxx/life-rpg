@@ -36,3 +36,7 @@
 .brown600Fill path {
   fill: var(--brown-600, #362009);
 }
+
+.blue700Fill path {
+  fill: var(--blue-700, #091f36);
+}
