@@ -33,7 +33,7 @@ interface AttributeWidgetProps {
  *
  * @example
  * // Basic usage in account setup flow
- * <AttributeWidget />
+ * <AttributeWidget attributes={attributes} attributeManager={attributeManager} />
  *
  * @remarks
  * - Duplicate checking is performed directly against current state
