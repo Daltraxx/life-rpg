@@ -7,7 +7,7 @@ const ICON_SIZE_RATIO = 0.9;
 
 export type BackgroundColorKeys = "gray-200" | "none";
 const backgroundColorStyleMap: Record<BackgroundColorKeys, string> = {
-  "none": "",
+  none: "",
   "gray-200": styles.gray200Background,
 } as const;
 
@@ -23,7 +23,7 @@ const hoverBackgroundColorStyleMap: Record<HoverBackgroundColorKeys, string> = {
   "gray-200": styles.gray200HoverBackground,
 } as const;
 
- export interface ChevronButtonProps extends ComponentProps<"button"> {
+export interface ChevronButtonProps extends ComponentProps<"button"> {
   size?: number;
   iconColor?: IconColorKeys;
   backgroundColor?: BackgroundColorKeys;
