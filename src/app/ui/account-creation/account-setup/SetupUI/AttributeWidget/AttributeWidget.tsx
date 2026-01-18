@@ -15,7 +15,6 @@ import {
 } from "@/utils/types/AttributesAndQuests";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 import { createAttributeNameSchema } from "@/utils/validations/attributeName";
-import z from "zod";
 
 interface AttributeWidgetProps {
   attributes: Attribute[];
