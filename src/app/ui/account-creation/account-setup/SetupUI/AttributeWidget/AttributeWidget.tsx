@@ -84,11 +84,13 @@ export default function AttributeWidget({
     deleteAttribute(attribute);
   };
 
-  const attributeList = attributes.map((attribute) => (
+  const attributeList = attributes.map((attribute, index) => (
     <AttributeListItem
       key={attribute.name}
       attribute={attribute}
       onDelete={handleDeleteAttribute}
+      attributesLength={attributes.length}
+      index={index}
     />
   ));
 

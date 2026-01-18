@@ -5,10 +5,16 @@ import { ListItem } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { JSX, useCallback } from "react";
 import { type Attribute } from "@/utils/types/AttributesAndQuests";
+import {
+  ChevronDownButton,
+  ChevronUpButton,
+} from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
 
 interface AttributeListItemProps {
   attribute: Attribute;
   onDelete: (attribute: Attribute) => void;
+  attributesLength: number;
+  index: number;
 }
 
 const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
@@ -19,6 +25,7 @@ const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
  * @param props - The component props
  * @param props.attribute - The attribute object to display
  * @param props.onDelete - Callback function invoked when the delete button is clicked
+ * @param props.index - The index of the attribute in the list
  *
  * @returns A list item containing the attribute name and a remove button
  *
@@ -30,6 +37,8 @@ const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
 export default function AttributeListItem({
   attribute,
   onDelete,
+  attributesLength,
+  index,
 }: AttributeListItemProps): JSX.Element {
   const isDiscipline = attribute.name === REQUIRED_DISCIPLINE_ATTRIBUTE;
   const handleDelete = useCallback(() => {
@@ -49,7 +58,7 @@ export default function AttributeListItem({
         type="button"
         className={clsx(
           !isDiscipline && styles.removeAttributeButton,
-          isDiscipline && styles.disciplineAttributeRemoveButton
+          isDiscipline && styles.disciplineAttributeRemoveButton,
         )}
         title={isDiscipline ? "Discipline is a required attribute" : undefined}
         onClick={handleDelete}
@@ -62,6 +71,22 @@ export default function AttributeListItem({
         />
       </button>
       {attribute.name}
+      {index > 0 && (
+        <ChevronUpButton
+          size={24}
+          iconColor="blue-700"
+          backgroundColor="none"
+          aria-label="Move attribute up"
+        />
+      )}
+      {index < attributesLength - 1 && (
+        <ChevronDownButton
+          size={24}
+          iconColor="blue-700"
+          backgroundColor="none"
+          aria-label="Move attribute down"
+        />
+      )}
     </ListItem>
   );
 }
