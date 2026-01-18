@@ -17,11 +17,11 @@
 }
 
 @media (hover: hover) {
-  .button:hover {
+  .gold400HoverBackground:hover {
     background-color: var(--gold-400, #ffb800);
   }
 }
-.button:active {
+.gold400HoverBackground:active {
   background-color: var(--gold-600, #d89b00);
 }
 

@@ -15,10 +15,16 @@ const iconColorStyleMap: Record<string, string> = {
   "blue-700": styles.blue700Fill,
 };
 
+const hoverBackgroundColorStyleMap: Record<string, string> = {
+  "gold-400": styles.gold400HoverBackground,
+  "gray-200": styles.gray200HoverBackground,
+};
+
 interface ChevronButtonProps extends ComponentProps<"button"> {
   size?: number;
   iconColor?: keyof typeof iconColorStyleMap;
   backgroundColor?: keyof typeof backgroundColorStyleMap;
+  hoverBackgroundColor?: keyof typeof hoverBackgroundColorStyleMap;
   "aria-label": string;
 }
 
@@ -31,6 +37,7 @@ interface ChevronButtonProps extends ComponentProps<"button"> {
  * @param props.icon - A React functional component that accepts a size prop and renders an icon
  * @param props.iconColor - Optional color key for the icon from the colorStyleMap
  * @param props.backgroundColor - Optional background color key from the backgroundColorStyleMap
+ * @param props.hoverBackgroundColor - Optional hover background color key from the hoverBackgroundColorStyleMap. Also affects active state.
  * @param props....props - Additional HTML button attributes from ChevronButtonProps
  *
  * @returns A styled button element containing the specified icon, scaled proportionally to the button size
@@ -50,6 +57,7 @@ function ChevronButton({
   icon: Icon,
   iconColor = "brown-600",
   backgroundColor = "gray-200",
+  hoverBackgroundColor = "gold-400",
   ...props
 }: ChevronButtonProps & { icon: React.FC<{ size?: number }> }) {
   return (
@@ -59,6 +67,7 @@ function ChevronButton({
         styles.button,
         backgroundColorStyleMap[backgroundColor],
         iconColorStyleMap[iconColor],
+        hoverBackgroundColorStyleMap[hoverBackgroundColor],
         className,
       )}
       style={{ width: size, height: size }}
