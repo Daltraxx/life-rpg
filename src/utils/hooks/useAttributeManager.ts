@@ -63,8 +63,10 @@ export default function useAttributeManager(
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
       if (index === -1 || index === 0) {
-        const msg = index === -1 ? "not found" : "already at the top";
-        console.warn(`Attribute ${msg} when swapping up:`, attribute);
+        if (process.env.NODE_ENV === "development") {
+          const msg = index === -1 ? "not found" : "already at the top";
+          console.warn(`Attribute ${msg} when swapping up:`, attribute);
+        }
         return prev;
       }
       return swapArrayElements(prev, index, index - 1);
