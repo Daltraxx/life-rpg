@@ -27,6 +27,9 @@ const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
  * @param props - The component props
  * @param props.attribute - The attribute object to display
  * @param props.onDelete - Callback function invoked when the delete button is clicked
+ * @param props.handleMoveUp - Callback function to move the attribute up in the list
+ * @param props.handleMoveDown - Callback function to move the attribute down in the list
+ * @param props.attributesLength - The total number of attributes in the list (used to conditionally render move buttons)
  * @param props.index - The index of the attribute in the list
  *
  * @returns A list item containing the attribute name and a remove button
