@@ -10,14 +10,14 @@ const backgroundColorStyleMap: Record<string, string> = {
   "gray-200": styles.gray200Background,
 };
 
-const colorStyleMap: Record<string, string> = {
+const iconColorStyleMap: Record<string, string> = {
   "brown-600": styles.brown600Fill,
   "blue-700": styles.blue700Fill,
 };
 
 interface ChevronButtonProps extends ComponentProps<"button"> {
   size?: number;
-  iconColor?: keyof typeof colorStyleMap;
+  iconColor?: keyof typeof iconColorStyleMap;
   backgroundColor?: keyof typeof backgroundColorStyleMap;
   "aria-label": string;
 }
@@ -58,7 +58,7 @@ function ChevronButton({
       className={clsx(
         styles.button,
         backgroundColorStyleMap[backgroundColor],
-        colorStyleMap[iconColor],
+        iconColorStyleMap[iconColor],
         className,
       )}
       style={{ width: size, height: size }}
