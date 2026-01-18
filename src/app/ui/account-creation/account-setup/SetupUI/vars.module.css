@@ -8,7 +8,7 @@
   /* appendedButton */
   --appended-button-font-size: 1.25rem;
   --appended-button-border: 3px solid var(--blue-700, #091f36);
-  --appended-button-padding: 0rem 0.75rem;
+  --appended-button-padding: 0 0.75rem;
   --appended-button-cursor: pointer;
   --appended-button-transition: background-color 0.2s ease;
   --appended-button-border-left: none;
