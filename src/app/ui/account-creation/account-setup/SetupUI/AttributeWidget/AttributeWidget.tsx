@@ -14,6 +14,7 @@ import {
   createAttribute,
 } from "@/utils/types/AttributesAndQuests";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
+import { createAttributeNameSchema } from "@/utils/validations/attributeName";
 
 interface AttributeWidgetProps {
   attributes: Attribute[];
@@ -52,32 +53,19 @@ export default function AttributeWidget({
   const { addAttribute, deleteAttribute, swapAttributeUp, swapAttributeDown } =
     attributeManager.actions;
 
-  const handleAddAttribute = (attribute: string) => {
+  const handleAddAttribute = (attributeName: string) => {
     //TODO: Replace with Zod validation
-    const trimmedAttribute = attribute.trim();
-    const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
-    const attributeSet = new Set(
-      attributes.map((attr) => attr.name.toLowerCase()),
-    );
-
-    if (trimmedAttributeLowerCase.length === 0) {
-      setAddAttributeError("Please enter an attribute.");
-      return;
-    }
-    if (trimmedAttribute.length > 24) {
-      setAddAttributeError(
-        "Please enter a shorter attribute name (max 24 characters).",
-      );
-      return;
-    }
-    if (attributeSet.has(trimmedAttributeLowerCase)) {
-      setAddAttributeError("Attribute already exists.");
+    
+    const schema = createAttributeNameSchema(attributes);
+    const parseResult = schema.safeParse(attributeName);
+    if (!parseResult.success) {
+      setAddAttributeError(parseResult.error.issues[0].message);
       return;
     }
 
     setAddAttributeError("");
 
-    const newAttribute = createAttribute(trimmedAttribute);
+    const newAttribute = createAttribute(parseResult.data);
     addAttribute(newAttribute);
     setNewAttributeName("");
   };
