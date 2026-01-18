@@ -13,7 +13,7 @@
  * It is used to validate strings to ensure they only contain safe characters,
  * preventing issues with invalid input in the application.
  * @remarks
- * - Empty strings will not match this regex. Length checks must be performed separately.
+ * - Empty strings will match this regex. Length checks must be performed separately.
  */
 export const SAFE_CHARACTERS_REGEX = /^[-a-zA-Z0-9 _:!'"\(\)$@%&*=+./—]*$/;
 
