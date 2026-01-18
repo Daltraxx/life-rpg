@@ -127,18 +127,24 @@ export default function AttributeWidget({
           </button>
         </div>
       </div>
-      {addAttributeError.length > 0 &&
-        addAttributeError.map((error, index) => (
-          <Paragraph
-            id="attribute-error"
-            size="20"
-            className={styles.addAttributeError}
-            role="alert"
-            key={index}
-          >
-            {error}
-          </Paragraph>
-        ))}
+      {addAttributeError.length > 0 && (
+        <div
+          id="attribute-error"
+          role="alert"
+          className={styles.addAttributeErrorContainer}
+        >
+          {addAttributeError.map((error, index) => (
+            <Paragraph
+              size="20"
+              className={styles.addAttributeError}
+              role="alert"
+              key={index}
+            >
+              {error}
+            </Paragraph>
+          ))}
+        </div>
+      )}
 
       {/* CURRENT ATTRIBUTES LIST */}
       <div>
