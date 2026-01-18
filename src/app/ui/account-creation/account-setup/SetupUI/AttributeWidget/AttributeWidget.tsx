@@ -137,7 +137,6 @@ export default function AttributeWidget({
             <Paragraph
               size="20"
               className={styles.addAttributeError}
-              role="alert"
               key={index}
             >
               {error}
