@@ -23,7 +23,7 @@ const hoverBackgroundColorStyleMap: Record<hoverBackgroundColorKeys, string> = {
   "gray-200": styles.gray200HoverBackground,
 } as const;
 
-interface ChevronButtonProps extends ComponentProps<"button"> {
+ export interface ChevronButtonProps extends ComponentProps<"button"> {
   size?: number;
   iconColor?: iconColorKeys;
   backgroundColor?: backgroundColorKeys;
