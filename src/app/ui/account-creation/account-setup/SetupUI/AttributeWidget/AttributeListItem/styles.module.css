@@ -17,7 +17,7 @@
 
 .removeAttributeButton:focus-visible {
   outline: 2px solid var(--blue-700, #091f36);
- }
+}
 
 .removeAttributeButton path {
   fill: var(--blue-700, #091f36);
