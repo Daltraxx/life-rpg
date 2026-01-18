@@ -13,7 +13,7 @@ import swapArrayElements from "@/utils/helpers/swapArrayElements";
  * @property {(attribute: Attribute) => void} actions.swapAttributeUp - Function to move an attribute up in the order.
  * @property {(attribute: Attribute) => void} actions.swapAttributeDown - Function to move an attribute down in the order.
  */
-interface AttributeManager {
+export interface AttributeManager {
   availableAttributes: Attribute[];
   actions: {
     addAttribute: (attribute: Attribute) => void;
