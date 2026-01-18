@@ -57,7 +57,7 @@ export default function AttributeListItem({
         aria-label={
           isDiscipline
             ? "Discipline is a required attribute and cannot be removed"
-            : `Remove ${attribute}`
+            : `Remove ${attribute.name} attribute`
         }
         type="button"
         className={clsx(
