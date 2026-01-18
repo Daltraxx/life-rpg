@@ -5,26 +5,29 @@ import { ComponentProps } from "react";
 
 const ICON_SIZE_RATIO = 0.9;
 
-const backgroundColorStyleMap: Record<string, string> = {
+export type backgroundColorKeys = "gray-200" | "none";
+const backgroundColorStyleMap: Record<backgroundColorKeys, string> = {
   "none": "",
   "gray-200": styles.gray200Background,
-};
+} as const;
 
-const iconColorStyleMap: Record<string, string> = {
+export type iconColorKeys = "brown-600" | "blue-700";
+const iconColorStyleMap: Record<iconColorKeys, string> = {
   "brown-600": styles.brown600Fill,
   "blue-700": styles.blue700Fill,
-};
+} as const;
 
-const hoverBackgroundColorStyleMap: Record<string, string> = {
+export type hoverBackgroundColorKeys = "gold-400" | "gray-200";
+const hoverBackgroundColorStyleMap: Record<hoverBackgroundColorKeys, string> = {
   "gold-400": styles.gold400HoverBackground,
   "gray-200": styles.gray200HoverBackground,
-};
+} as const;
 
 interface ChevronButtonProps extends ComponentProps<"button"> {
   size?: number;
-  iconColor?: keyof typeof iconColorStyleMap;
-  backgroundColor?: keyof typeof backgroundColorStyleMap;
-  hoverBackgroundColor?: keyof typeof hoverBackgroundColorStyleMap;
+  iconColor?: iconColorKeys;
+  backgroundColor?: backgroundColorKeys;
+  hoverBackgroundColor?: hoverBackgroundColorKeys;
   "aria-label": string;
 }
 
