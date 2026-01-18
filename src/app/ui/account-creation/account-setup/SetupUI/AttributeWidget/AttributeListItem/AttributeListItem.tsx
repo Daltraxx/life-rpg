@@ -13,6 +13,8 @@ import {
 interface AttributeListItemProps {
   attribute: Attribute;
   onDelete: (attribute: Attribute) => void;
+  handleMoveUp: (attribute: Attribute) => void;
+  handleMoveDown: (attribute: Attribute) => void;
   attributesLength: number;
   index: number;
 }
@@ -37,6 +39,8 @@ const REQUIRED_DISCIPLINE_ATTRIBUTE = "Discipline";
 export default function AttributeListItem({
   attribute,
   onDelete,
+  handleMoveUp,
+  handleMoveDown,
   attributesLength,
   index,
 }: AttributeListItemProps): JSX.Element {
@@ -74,6 +78,7 @@ export default function AttributeListItem({
       {index > 0 && (
         <ChevronUpButton
           size={24}
+          onClick={() => handleMoveUp(attribute)}
           iconColor="blue-700"
           backgroundColor="none"
           aria-label="Move attribute up"
@@ -82,6 +87,7 @@ export default function AttributeListItem({
       {index < attributesLength - 1 && (
         <ChevronDownButton
           size={24}
+          onClick={() => handleMoveDown(attribute)}
           iconColor="blue-700"
           backgroundColor="none"
           aria-label="Move attribute down"

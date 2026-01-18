@@ -13,11 +13,11 @@ import {
   type Attribute,
   createAttribute,
 } from "@/utils/types/AttributesAndQuests";
+import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 
 interface AttributeWidgetProps {
   attributes: Attribute[];
-  addAttribute: (attribute: Attribute) => void;
-  deleteAttribute: (attribute: Attribute) => void;
+  attributeManager: AttributeManager;
   className?: string;
 }
 
@@ -43,19 +43,21 @@ interface AttributeWidgetProps {
  */
 export default function AttributeWidget({
   attributes,
-  addAttribute,
-  deleteAttribute,
+  attributeManager,
   className,
 }: AttributeWidgetProps) {
   const [newAttributeName, setNewAttributeName] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState("");
+
+  const { addAttribute, deleteAttribute, swapAttributeUp, swapAttributeDown } =
+    attributeManager.actions;
 
   const handleAddAttribute = (attribute: string) => {
     //TODO: Replace with Zod validation
     const trimmedAttribute = attribute.trim();
     const trimmedAttributeLowerCase = trimmedAttribute.toLowerCase();
     const attributeSet = new Set(
-      attributes.map((attr) => attr.name.toLowerCase())
+      attributes.map((attr) => attr.name.toLowerCase()),
     );
 
     if (trimmedAttributeLowerCase.length === 0) {
@@ -64,7 +66,7 @@ export default function AttributeWidget({
     }
     if (trimmedAttribute.length > 24) {
       setAddAttributeError(
-        "Please enter a shorter attribute name (max 24 characters)."
+        "Please enter a shorter attribute name (max 24 characters).",
       );
       return;
     }
@@ -89,6 +91,8 @@ export default function AttributeWidget({
       key={attribute.name}
       attribute={attribute}
       onDelete={handleDeleteAttribute}
+      handleMoveUp={swapAttributeUp}
+      handleMoveDown={swapAttributeDown}
       attributesLength={attributes.length}
       index={index}
     />

@@ -29,9 +29,9 @@ const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 
 export default function SetupUI() {
   // Manage available attributes state
-  const attributeManagement = useAttributeManager(INITIAL_ATTRIBUTES);
+  const attributeManager = useAttributeManager(INITIAL_ATTRIBUTES);
   const { availableAttributes, actions: attributeActions } =
-    attributeManagement;
+    attributeManager;
 
   // Manage affected attribute selection state
   const affectedAttributeManager = useAffectedAttributeManager(
@@ -61,8 +61,7 @@ export default function SetupUI() {
           <AttributeWidget
             className={styles.attributeWidget}
             attributes={availableAttributes}
-            addAttribute={attributeActions.addAttribute}
-            deleteAttribute={attributeActions.deleteAttribute}
+            attributeManager={attributeManager}
           />
           <QuestsWidget
             affectedAttributeManager={affectedAttributeManager}
