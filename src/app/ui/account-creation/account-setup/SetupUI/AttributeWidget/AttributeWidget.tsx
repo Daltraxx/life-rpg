@@ -7,7 +7,7 @@ import {
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { useState } from "react";
-import AttributeListItem from "./AttributeList/AttributeListItem";
+import AttributeListItem from "./AttributeListItem/AttributeListItem";
 import clsx from "clsx";
 import {
   type Attribute,
