@@ -72,7 +72,7 @@ const introCopy: IntroCopy = {
           text: "Be honest! Show care when setting how much your attributes are strengthened by a particular task, and in playing this game in general. Do your best to define the game in such a way that it ensures the numbers mean something. We should feel a sense of accomplishment when numbers go up. That doesn't work if we cheat ourselves.",
         },
         {
-          text: "There are more details regarding leveling and daily point bonuses (like streaks and quest strength) that would make this introduction even longer. Once you've completed the setup, you can explore the Manual to understand how everything works if you so choose.",
+          text: "There are more details regarding leveling and daily point bonuses (like streaks and quest strength) that would make this introduction even longer. Once you've completed the setup, you can explore the Manual to understand how everything works.",
         },
       ],
     },
