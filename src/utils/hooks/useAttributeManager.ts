@@ -44,7 +44,7 @@ export interface AttributeManager {
  * actions.deleteAttribute(attributeToRemove);
  */
 export default function useAttributeManager(
-  initialAttributes: Attribute[]
+  initialAttributes: Attribute[],
 ): AttributeManager {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
@@ -55,7 +55,7 @@ export default function useAttributeManager(
 
   const handleDeleteAttribute = useCallback((attribute: Attribute) => {
     setAvailableAttributes((prev) =>
-      prev.filter((attr) => attr.name !== attribute.name)
+      prev.filter((attr) => attr.name !== attribute.name),
     );
   }, []);
 
@@ -77,8 +77,10 @@ export default function useAttributeManager(
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
       if (index === -1 || index === prev.length - 1) {
-        const msg = index === -1 ? "not found" : "already at the bottom";
-        console.warn(`Attribute ${msg} when swapping down:`, attribute);
+        if (process.env.NODE_ENV === "development") {
+          const msg = index === -1 ? "not found" : "already at the bottom";
+          console.warn(`Attribute ${msg} when swapping down:`, attribute);
+        }
         return prev;
       }
       return swapArrayElements(prev, index, index + 1);
@@ -97,7 +99,7 @@ export default function useAttributeManager(
       handleDeleteAttribute,
       swapAttributeUp,
       swapAttributeDown,
-    ]
+    ],
   );
 
   return {
