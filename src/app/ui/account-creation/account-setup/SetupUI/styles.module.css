@@ -23,15 +23,9 @@
 
 @media (min-width: 1024px) {
   .widgetContainer {
-    --widget-desc-height: 5.25rem;
     flex-direction: row;
     justify-content: center;
     align-items: flex-start;
     max-width: 100%;
-  }
-
-  .attributeWidget p:first-of-type,
-  .questsWidget p:first-of-type {
-    height: var(--widget-desc-height); /* Match heights of both widget descriptions to line up inputs */
   }
 }

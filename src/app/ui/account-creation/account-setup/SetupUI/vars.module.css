@@ -19,3 +19,9 @@
   --plus-font-size: 2rem;
   --plus-line-height: 0.55;
 }
+
+@media (min-width: 1024px) {
+  .widgetVars {
+    --widget-desc-height: 5.25rem;
+  }
+}

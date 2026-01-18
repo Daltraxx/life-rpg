@@ -4,7 +4,7 @@ import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import AttributeWidget from "./AttributeWidget/AttributeWidget";
 import QuestsWidget from "./QuestsWidget/QuestsWidget";
 import styles from "./styles.module.css";
-import cssVars from "./QuestsWidget/vars.module.css";
+import cssVars from "./vars.module.css";
 import clsx from "clsx";
 import QuestBoard from "./QuestBoard/QuestBoard";
 import useQuestManager from "@/utils/hooks/useQuestManager";
@@ -56,7 +56,7 @@ export default function SetupUI() {
   return (
     <form action={formAction}>
       <Bounded innerClassName={styles.setupContainer}>
-        <div className={styles.widgetContainer}>
+        <div className={clsx(styles.widgetContainer, cssVars.widgetVars)}>
           <AttributeWidget
             className={styles.attributeWidget}
             attributes={availableAttributes}

@@ -10,6 +10,10 @@
   text-align: center;
 }
 
+.description {
+  height: var(--widget-desc-height); /* Match heights of both widget descriptions to line up inputs */
+}
+
 /* ADD ATTRIBUTE WIDGET */
 
 .addAttributeContainer {
