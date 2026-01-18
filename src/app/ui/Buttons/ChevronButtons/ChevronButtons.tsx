@@ -9,19 +9,19 @@ export type BackgroundColorKeys = "gray-200" | "none";
 const backgroundColorStyleMap: Record<BackgroundColorKeys, string> = {
   none: "",
   "gray-200": styles.gray200Background,
-} as const;
+};
 
 export type IconColorKeys = "brown-600" | "blue-700";
 const iconColorStyleMap: Record<IconColorKeys, string> = {
   "brown-600": styles.brown600Fill,
   "blue-700": styles.blue700Fill,
-} as const;
+};
 
 export type HoverBackgroundColorKeys = "gold-400" | "gray-200";
 const hoverBackgroundColorStyleMap: Record<HoverBackgroundColorKeys, string> = {
   "gold-400": styles.gold400HoverBackground,
   "gray-200": styles.gray200HoverBackground,
-} as const;
+};
 
 export interface ChevronButtonProps extends ComponentProps<"button"> {
   size?: number;
