@@ -82,15 +82,11 @@ export default function AttributeWidget({
     setNewAttributeName("");
   };
 
-  const handleDeleteAttribute = (attribute: Attribute) => {
-    deleteAttribute(attribute);
-  };
-
   const attributeList = attributes.map((attribute, index) => (
     <AttributeListItem
       key={attribute.name}
       attribute={attribute}
-      onDelete={handleDeleteAttribute}
+      onDelete={deleteAttribute}
       handleMoveUp={swapAttributeUp}
       handleMoveDown={swapAttributeDown}
       attributesLength={attributes.length}
