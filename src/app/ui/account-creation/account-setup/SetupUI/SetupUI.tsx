@@ -30,13 +30,12 @@ const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 export default function SetupUI() {
   // Manage available attributes state
   const attributeManager = useAttributeManager(INITIAL_ATTRIBUTES);
-  const { availableAttributes, actions: attributeActions } =
-    attributeManager;
+  const { availableAttributes } = attributeManager;
 
   // Manage affected attribute selection state
   const affectedAttributeManager = useAffectedAttributeManager(
     availableAttributes,
-    NO_ATTRIBUTES_AVAILABLE_TEXT
+    NO_ATTRIBUTES_AVAILABLE_TEXT,
   );
 
   // Manage quests state
@@ -46,7 +45,7 @@ export default function SetupUI() {
   // Handle form submission state
   const [errorState, formAction, isPending] = useActionState(
     createProfile,
-    INITIAL_PROFILE_CREATION_STATE
+    INITIAL_PROFILE_CREATION_STATE,
   );
 
   const isSubmitDisabled =
