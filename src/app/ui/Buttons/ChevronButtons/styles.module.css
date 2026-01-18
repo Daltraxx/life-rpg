@@ -17,10 +17,10 @@
 }
 
 @media (hover: hover) {
-  .gold400HoverBackground:hover {
+  .gold400HoverBackground:hover:not(:disabled) {
     background-color: var(--gold-400, #ffb800);
   }
-  .gray200HoverBackground:hover {
+  .gray200HoverBackground:hover:not(:disabled) {
     background-color: var(--gray-200, #d9d9d9);
   }
 }
@@ -36,7 +36,6 @@
 .button:disabled:active {
   opacity: 0.5;
   cursor: not-allowed;
-  background-color: var(--gray-200, #d9d9d9);
 }
 
 .brown600Fill path {
