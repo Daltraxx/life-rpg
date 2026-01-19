@@ -14,7 +14,10 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
 import { createSimpleInitialFormActionState } from "@/utils/helpers/createInitialFormActionState";
-import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import {
+  ListItem,
+  Paragraph,
+} from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import useAffectedAttributeManager from "@/utils/hooks/useAffectedAttributeManager";
 
 const INITIAL_ATTRIBUTES: Attribute[] = [
@@ -56,6 +59,8 @@ export default function SetupUI() {
   return (
     <form action={formAction}>
       <Bounded innerClassName={styles.setupContainer}>
+
+        {/* ATTRIBUTE AND QUEST WIDGETS */}
         <div className={clsx(styles.widgetContainer, cssVars.widgetVars)}>
           <AttributeWidget
             className={styles.attributeWidget}
@@ -69,6 +74,8 @@ export default function SetupUI() {
             className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
           />
         </div>
+
+        {/* QUEST BOARD AND SUBMISSION */}
         <QuestBoard
           quests={quests}
           pointsRemaining={pointsRemaining}
@@ -76,11 +83,38 @@ export default function SetupUI() {
           onQuestOrderChange={questActions.questOrderChange}
           onExperiencePointValueChange={questActions.experiencePointValueChange}
         />
+
+        {/* ERROR MESSAGES */}
         {errorState?.message && (
-          <Paragraph className={styles.errorMessage} role="alert" size="20">
-            {errorState.message}
-          </Paragraph>
+          <div>
+            <Paragraph className={styles.errorMessage} role="alert" size="20">
+              {errorState.message}
+            </Paragraph>
+            <ul className={styles.errorList}>
+              {errorState.errors?.attributes &&
+                errorState.errors.attributes.map((err, idx) => (
+                  <ListItem
+                    key={`attr-err-${idx}`}
+                    className={styles.errorItem}
+                    size="16"
+                  >
+                    {err}
+                  </ListItem>
+                ))}
+              {errorState.errors?.quests &&
+                errorState.errors.quests.map((err, idx) => (
+                  <ListItem
+                    key={`quest-err-${idx}`}
+                    className={styles.errorItem}
+                    size="16"
+                  >
+                    {err}
+                  </ListItem>
+                ))}
+            </ul>
+          </div>
         )}
+
         {/* Hidden inputs to include user data in form submission */}
         <input type="hidden" name="quests" value={JSON.stringify(quests)} />
         <input
@@ -88,6 +122,7 @@ export default function SetupUI() {
           name="attributes"
           value={JSON.stringify(availableAttributes)}
         />
+        
         {/* TODO: Add styling for pending submission */}
         <ButtonWrapper
           className={styles.submitButton}
