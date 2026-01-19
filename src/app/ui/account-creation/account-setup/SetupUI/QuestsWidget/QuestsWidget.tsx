@@ -150,6 +150,8 @@ export default function QuestsWidget({
           onChange={handleOnChangeNewQuestName}
         />
       </div>
+      
+      {/* QUEST NAME ERROR MESSAGES */}
       {questErrors.length > 0 && (
         <ul
           className={styles.errorList}
