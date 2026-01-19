@@ -29,6 +29,39 @@ interface QuestsWidgetProps {
   className?: string;
 }
 
+/**
+ * QuestsWidget Component
+ *
+ * A form component for creating new quests with associated attributes.
+ * Allows users to input a quest name, select affected attributes, and create
+ * the quest with validation feedback.
+ *
+ * @component
+ * @param {QuestsWidgetProps} props - Component props
+ * @param {AffectedAttributeManager} props.affectedAttributeManager - Manager for handling attribute selection and state
+ * @param {Quest[]} props.quests - Array of existing quests used for name validation
+ * @param {(quest: Quest) => void} props.addQuest - Callback function to add a new quest
+ * @param {string} [props.className] - Optional CSS class name for styling the container
+ *
+ * @returns {React.ReactElement} The rendered quests widget section
+ *
+ * @example
+ * ```tsx
+ * <QuestsWidget
+ *   affectedAttributeManager={manager}
+ *   quests={questList}
+ *   addQuest={handleAddQuest}
+ *   className="custom-class"
+ * />
+ * ```
+ *
+ * @remarks
+ * - Automatically adds the REQUIRED_ATTRIBUTE (Discipline) at normal strength if not specified
+ * - Validates quest names against existing quests to prevent duplicates
+ * - Implements debounced validation on input change to improve performance
+ * - Resets all UI state after successful quest creation
+ * - Uses accessible ARIA attributes for error messages and live regions
+ */
 export default function QuestsWidget({
   affectedAttributeManager,
   quests,
