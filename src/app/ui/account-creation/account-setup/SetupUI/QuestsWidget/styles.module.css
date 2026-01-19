@@ -96,6 +96,11 @@
     grid-column: 2;
   }
 
+  /* QUEST NAME ERROR MESSAGES */
+  .errorList {
+    grid-column: 1 / span 3;
+  }
+
   /* CREATE QUEST BUTTON */
   .createQuestButton {
     grid-column: 2;
