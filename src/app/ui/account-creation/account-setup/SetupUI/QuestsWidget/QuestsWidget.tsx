@@ -69,6 +69,22 @@ export default function QuestsWidget({
     resetAffectedAttributeSelectionUI();
   };
 
+  const handleOnChangeNewQuestName = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    setNewQuestName(e.target.value);
+    if (questErrors.length > 0) {
+      setTimeout(() => { 
+        const questNameSchema = createQuestNameSchema(quests);
+        const validationResult = questNameSchema.safeParse(e.target.value);
+        if (!validationResult.success) {
+          const errors = validationResult.error.issues.map((err) => err.message);
+          setQuestErrors(errors);
+        } else {
+          setQuestErrors([]);
+        }
+      }, 300); // Debounce to avoid rapid state updates
+    }
+  }
+
   return (
     <section className={clsx(styles.widgetContainer, className)}>
       <Heading as="h3" size="36" color="blue-700" className={styles.heading}>
@@ -94,7 +110,7 @@ export default function QuestsWidget({
           id="add-quest"
           className={styles.addQuestInput}
           value={newQuestName}
-          onChange={(e) => setNewQuestName(e.target.value)}
+          onChange={handleOnChangeNewQuestName}
         />
       </div>
       {questErrors.length > 0 && (
