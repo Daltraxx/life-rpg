@@ -56,8 +56,8 @@ export type ProfileCreationFormData = z.infer<typeof ProfileCreationSchema>;
 export type ProfileCreationState = {
   errors?: {
     userId?: string[];
-    quests?: string[] | Record<number, Record<string, string[]>>;
-    attributes?: string[] | Record<number, Record<string, string[]>>;
+    quests?: string[];
+    attributes?: string[];
   };
   message?: string;
 };
