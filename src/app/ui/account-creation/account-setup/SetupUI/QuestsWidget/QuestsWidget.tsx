@@ -157,7 +157,9 @@ export default function QuestsWidget({
         <input
           type="text"
           id="add-quest"
-          aria-describedby="quest-name-error"
+          aria-describedby={
+            questErrors.length > 0 ? "quest-name-error" : undefined
+          }
           className={styles.addQuestInput}
           value={newQuestName}
           onChange={handleOnChangeNewQuestName}
@@ -169,7 +171,6 @@ export default function QuestsWidget({
         <ul
           className={styles.errorList}
           role="alert"
-          aria-live="assertive"
           aria-atomic="true"
           id="quest-name-error"
         >
