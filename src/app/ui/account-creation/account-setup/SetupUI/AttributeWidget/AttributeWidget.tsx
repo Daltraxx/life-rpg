@@ -7,7 +7,7 @@ import {
   Paragraph,
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AttributeListItem from "./AttributeListItem/AttributeListItem";
 import clsx from "clsx";
 import {
@@ -54,6 +54,7 @@ export default function AttributeWidget({
   const { addAttribute, deleteAttribute, swapAttributeUp, swapAttributeDown } =
     attributeManager.actions;
 
+  // Handle adding a new attribute with validation
   const handleAddAttribute = (attributeName: string) => {
     const schema = createAttributeNameSchema(attributes);
     const parseResult = schema.safeParse(attributeName);
@@ -68,6 +69,37 @@ export default function AttributeWidget({
     setNewAttributeName("");
   };
 
+  // Debounce validation on input change if there are existing errors
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleChangeAttributeName = (e: React.ChangeEvent<HTMLInputElement>) => { 
+    setNewAttributeName(e.target.value);
+    if (addAttributeError.length > 0) {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
+        const schema = createAttributeNameSchema(attributes);
+        const parseResult = schema.safeParse(e.target.value);
+        if (!parseResult.success) {
+          setAddAttributeError(
+            parseResult.error.issues.map((err) => err.message),
+          );
+        } else {
+          setAddAttributeError([]);
+        }
+      }, 300);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  // Render the list of current attributes
   const attributeList = attributes.map((attribute, index) => (
     <AttributeListItem
       key={attribute.name}
@@ -107,10 +139,7 @@ export default function AttributeWidget({
             id="add-attribute"
             value={newAttributeName}
             className={styles.addAttributeInput}
-            onChange={(e) => {
-              if (addAttributeError.length > 0) setAddAttributeError([]);
-              setNewAttributeName(e.target.value);
-            }}
+            onChange={handleChangeAttributeName}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
