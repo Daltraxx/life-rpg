@@ -132,7 +132,7 @@ export default function QuestsWidget({
         clearTimeout(timeoutRef.current);
       }
     };
-  });
+  }, []);
 
   return (
     <section className={clsx(styles.widgetContainer, className)}>
