@@ -3,6 +3,7 @@
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import {
   Label,
+  ListItem,
   Paragraph,
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
@@ -127,22 +128,25 @@ export default function AttributeWidget({
           </button>
         </div>
       </div>
+
+      {/* ATTRIBUTE NAME ERROR MESSAGES */}
       {addAttributeError.length > 0 && (
-        <div
+        <ul
           id="attribute-error"
           role="alert"
+          aria-atomic="true"
           className={styles.addAttributeErrorContainer}
         >
           {addAttributeError.map((error, index) => (
-            <Paragraph
+            <ListItem
               size="20"
               className={styles.addAttributeError}
               key={index}
             >
               {error}
-            </Paragraph>
+            </ListItem>
           ))}
-        </div>
+        </ul>
       )}
 
       {/* CURRENT ATTRIBUTES LIST */}
