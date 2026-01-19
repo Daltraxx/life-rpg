@@ -59,7 +59,6 @@ export default function SetupUI() {
   return (
     <form action={formAction}>
       <Bounded innerClassName={styles.setupContainer}>
-
         {/* ATTRIBUTE AND QUEST WIDGETS */}
         <div className={clsx(styles.widgetContainer, cssVars.widgetVars)}>
           <AttributeWidget
@@ -90,28 +89,31 @@ export default function SetupUI() {
             <Paragraph className={styles.errorMessage} role="alert" size="20">
               {errorState.message}
             </Paragraph>
-            <ul className={styles.errorList}>
-              {errorState.errors?.attributes &&
-                errorState.errors.attributes.map((err, idx) => (
-                  <ListItem
-                    key={`attr-err-${idx}`}
-                    className={styles.errorItem}
-                    size="16"
-                  >
-                    {err}
-                  </ListItem>
-                ))}
-              {errorState.errors?.quests &&
-                errorState.errors.quests.map((err, idx) => (
-                  <ListItem
-                    key={`quest-err-${idx}`}
-                    className={styles.errorItem}
-                    size="16"
-                  >
-                    {err}
-                  </ListItem>
-                ))}
-            </ul>
+            {(errorState.errors?.attributes?.length ||
+              errorState.errors?.quests?.length) && (
+              <ul className={styles.errorList}>
+                {errorState.errors?.attributes &&
+                  errorState.errors.attributes.map((err, idx) => (
+                    <ListItem
+                      key={`attr-err-${idx}`}
+                      className={styles.errorItem}
+                      size="16"
+                    >
+                      {err}
+                    </ListItem>
+                  ))}
+                {errorState.errors?.quests &&
+                  errorState.errors.quests.map((err, idx) => (
+                    <ListItem
+                      key={`quest-err-${idx}`}
+                      className={styles.errorItem}
+                      size="16"
+                    >
+                      {err}
+                    </ListItem>
+                  ))}
+              </ul>
+            )}
           </div>
         )}
 
@@ -122,7 +124,7 @@ export default function SetupUI() {
           name="attributes"
           value={JSON.stringify(availableAttributes)}
         />
-        
+
         {/* TODO: Add styling for pending submission */}
         <ButtonWrapper
           className={styles.submitButton}
