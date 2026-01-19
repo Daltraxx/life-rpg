@@ -7,7 +7,7 @@ import {
   ListItem,
   Paragraph,
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
@@ -101,12 +101,17 @@ export default function QuestsWidget({
     resetAffectedAttributeSelectionUI();
   };
 
+  // Handle quest name input change with debounced validation
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const handleOnChangeNewQuestName = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setNewQuestName(e.target.value);
     if (questErrors.length > 0) {
-      setTimeout(() => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      timeoutRef.current = setTimeout(() => {
         const questNameSchema = createQuestNameSchema(quests);
         const validationResult = questNameSchema.safeParse(e.target.value);
         if (!validationResult.success) {
@@ -120,6 +125,14 @@ export default function QuestsWidget({
       }, 300); // Debounce to avoid rapid state updates
     }
   };
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  });
 
   return (
     <section className={clsx(styles.widgetContainer, className)}>
@@ -150,7 +163,7 @@ export default function QuestsWidget({
           onChange={handleOnChangeNewQuestName}
         />
       </div>
-      
+
       {/* QUEST NAME ERROR MESSAGES */}
       {questErrors.length > 0 && (
         <ul
