@@ -43,6 +43,11 @@
   background-color: var(--background-focus-orange, #e8c6a1);
 }
 
+/* QUEST NAME ERROR MESSAGES */
+.errorList {
+  color: var(--red-500, #ef2101);
+}
+
 /* LARGER SCREENS */
 @media (min-width: 425px) {
   .heading,
