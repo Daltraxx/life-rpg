@@ -18,6 +18,7 @@ import {
   createQuest,
 } from "@/utils/types/AttributesAndQuests";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
+import { createQuestNameSchema } from "@/utils/validations/questName";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 
@@ -43,13 +44,12 @@ export default function QuestsWidget({
   } = affectedAttributeManager;
 
   const handleCreateQuest = () => {
-    const trimmedQuestName = newQuestName.trim();
-    const loweredQuestName = trimmedQuestName.toLowerCase();
     // TODO: Add proper error handling and user feedback
-    if (trimmedQuestName.length === 0) {
-      return;
-    }
-    if (quests.some((quest) => quest.name.toLowerCase() === loweredQuestName)) {
+    const questNameSchema = createQuestNameSchema(quests);
+    const validationResult = questNameSchema.safeParse(newQuestName);
+    if (!validationResult.success) {
+      const errors = validationResult.error.issues.map((err) => err.message);
+      setQuestErrors(errors);
       return;
     }
 
@@ -57,13 +57,14 @@ export default function QuestsWidget({
     const affectedAttributes = [...selectedAttributes];
     if (!affectedAttributes.some((attr) => attr.name === REQUIRED_ATTRIBUTE)) {
       affectedAttributes.push(
-        createAffectedAttribute(REQUIRED_ATTRIBUTE, "normal")
+        createAffectedAttribute(REQUIRED_ATTRIBUTE, "normal"),
       );
     }
 
-    addQuest(createQuest(trimmedQuestName, affectedAttributes));
+    addQuest(createQuest(validationResult.data, affectedAttributes));
 
     // Reset UI state
+    setQuestErrors([]);
     setNewQuestName("");
     resetAffectedAttributeSelectionUI();
   };
