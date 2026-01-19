@@ -77,7 +77,6 @@ export default function QuestsWidget({
   } = affectedAttributeManager;
 
   const handleCreateQuest = () => {
-    // TODO: Add proper error handling and user feedback
     const questNameSchema = createQuestNameSchema(quests);
     const validationResult = questNameSchema.safeParse(newQuestName);
     if (!validationResult.success) {
