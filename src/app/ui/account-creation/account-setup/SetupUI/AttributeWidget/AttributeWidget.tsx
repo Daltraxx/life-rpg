@@ -71,7 +71,9 @@ export default function AttributeWidget({
 
   // Debounce validation on input change if there are existing errors
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const handleChangeAttributeName = (e: React.ChangeEvent<HTMLInputElement>) => { 
+  const handleChangeAttributeName = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setNewAttributeName(e.target.value);
     if (addAttributeError.length > 0) {
       if (timeoutRef.current) {
