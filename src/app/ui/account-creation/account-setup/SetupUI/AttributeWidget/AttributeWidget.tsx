@@ -39,7 +39,7 @@ interface AttributeWidgetProps {
  *
  * @remarks
  * - Duplicate checking is performed directly against current state
- * - Displays validation errors for empty or duplicate entries
+ * - Displays validation errors for empty, invalid, or duplicate entries
  * - Enter key and button click both trigger attribute addition
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
  */
