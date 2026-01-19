@@ -69,21 +69,25 @@ export default function QuestsWidget({
     resetAffectedAttributeSelectionUI();
   };
 
-  const handleOnChangeNewQuestName = (e: React.ChangeEvent<HTMLInputElement>) => { 
+  const handleOnChangeNewQuestName = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setNewQuestName(e.target.value);
     if (questErrors.length > 0) {
-      setTimeout(() => { 
+      setTimeout(() => {
         const questNameSchema = createQuestNameSchema(quests);
         const validationResult = questNameSchema.safeParse(e.target.value);
         if (!validationResult.success) {
-          const errors = validationResult.error.issues.map((err) => err.message);
+          const errors = validationResult.error.issues.map(
+            (err) => err.message,
+          );
           setQuestErrors(errors);
         } else {
           setQuestErrors([]);
         }
       }, 300); // Debounce to avoid rapid state updates
     }
-  }
+  };
 
   return (
     <section className={clsx(styles.widgetContainer, className)}>
@@ -108,13 +112,20 @@ export default function QuestsWidget({
         <input
           type="text"
           id="add-quest"
+          aria-describedby="quest-name-error"
           className={styles.addQuestInput}
           value={newQuestName}
           onChange={handleOnChangeNewQuestName}
         />
       </div>
       {questErrors.length > 0 && (
-        <ul className={styles.errorList}>
+        <ul
+          className={styles.errorList}
+          role="alert"
+          aria-live="assertive"
+          aria-atomic="true"
+          id="quest-name-error"
+        >
           {questErrors.map((error, index) => (
             <ListItem key={index} className={styles.errorItem} size="20">
               {error}
