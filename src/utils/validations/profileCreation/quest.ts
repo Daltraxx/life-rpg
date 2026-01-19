@@ -55,6 +55,7 @@ export const QuestSchema = z.object({
   experiencePointValue: z
     .int()
     .nonnegative("Experience point value must be a non-negative integer")
+    .min(1, "Each quest must be worth at least 1 experience point")
     .max(
       MAX_EXPERIENCE_POINTS_PER_QUEST,
       `Experience point value must be at most ${MAX_EXPERIENCE_POINTS_PER_QUEST}`
