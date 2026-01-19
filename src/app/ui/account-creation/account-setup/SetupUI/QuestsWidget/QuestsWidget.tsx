@@ -4,6 +4,7 @@ import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import {
   Label,
+  ListItem,
   Paragraph,
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { useState } from "react";
@@ -33,8 +34,8 @@ export default function QuestsWidget({
   addQuest,
   className,
 }: QuestsWidgetProps) {
-  // TODO: Implement error handling and validation for quest creation
   const [newQuestName, setNewQuestName] = useState<string>("");
+  const [questErrors, setQuestErrors] = useState<string[]>([]);
 
   const {
     selectedAttributes,
@@ -95,6 +96,15 @@ export default function QuestsWidget({
           onChange={(e) => setNewQuestName(e.target.value)}
         />
       </div>
+      {questErrors.length > 0 && (
+        <ul className={styles.errorList}>
+          {questErrors.map((error, index) => (
+            <ListItem key={index} className={styles.errorItem} size="20">
+              {error}
+            </ListItem>
+          ))}
+        </ul>
+      )}
 
       {/* UI FOR ADDING THE QUEST'S AFFECTED ATTRIBUTES */}
       <AddAffectedAttributeUI
