@@ -8,11 +8,23 @@ import {
 } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";
 import { Label } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import { login } from "@/utils/actions/login";
+import { useActionState } from "react";
+import { LoginState } from "@/utils/validations/login";
+
+const INITIAL_LOGIN_STATE: LoginState = {
+  message: "",
+  errors: {},
+};
 
 export default function LoginForm() {
+  const [errorState, formAction, isPending] = useActionState(
+    login,
+    INITIAL_LOGIN_STATE,
+  );
   return (
     <Bounded innerClassName={styles.loginContainer}>
-      <form className={styles.loginForm} action="">
+      <form className={styles.loginForm} action={formAction}>
         <Label htmlFor="email-field" size="20">
           Email:
         </Label>
@@ -33,8 +45,12 @@ export default function LoginForm() {
           required
           autoComplete="current-password"
         />
-        <ButtonWrapper type="submit" className={styles.loginButton}>
-          Login
+        <ButtonWrapper
+          type="submit"
+          className={styles.loginButton}
+          disabled={isPending}
+        >
+          {isPending ? "Logging in..." : "Login"}
         </ButtonWrapper>
         <BasicLinkWrapper
           href="/forgot-password"
@@ -51,29 +67,3 @@ export default function LoginForm() {
     </Bounded>
   );
 }
-
-// Instead of below, use formAction and isPending for changes in submit button
-
-// Consider adding loading state to submit button.
-
-// The submit button lacks a loading/disabled state during form submission, which can lead to:
-
-// Multiple submission attempts
-// Poor user feedback during authentication
-// Add loading state handling:
-
-// const [isLoading, setIsLoading] = useState(false);
-
-// // In handleSubmit:
-// setIsLoading(true);
-// try {
-//   // authentication logic
-// } finally {
-//   setIsLoading(false);
-// }
-// Then update the button:
-
-// -<button type="submit">Login</button>
-// +<button type="submit" disabled={isLoading}>
-// +  {isLoading ? 'Logging in...' : 'Login'}
-// +</button>
