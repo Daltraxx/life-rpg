@@ -21,6 +21,21 @@
   cursor: pointer;
   width: fit-content;
   order: 1;
+  transition: background-color 0.3s ease, padding 0.1s ease;
+}
+
+.menuButton:focus-visible {
+  outline: 2px solid var(--focus-color);
+  outline-offset: 2px;
+}
+
+.menuButton:hover {
+  background-color: var(--orange-200);
+}
+
+.menuButton:active {
+  background-color: var(--orange-300);
+  padding: 0.45rem 0.95rem; /* Slightly reduce padding to create a "pressed" effect */
 }
 
 .branding {
