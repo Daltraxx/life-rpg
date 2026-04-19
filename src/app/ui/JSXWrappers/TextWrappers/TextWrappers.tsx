@@ -31,7 +31,7 @@ interface TextWrapperProps {
  * <Paragraph size="24" className="text-red-500">Hello World</Paragraph>
  * ```
  */
-function createTextWrapper<T extends "p" | "span" | "label" | "li">(
+function createTextWrapper<T extends "p" | "span" | "label" | "li" | "button">(
   element: T
 ) {
   const TextWrapper = function ({
@@ -119,3 +119,16 @@ export const Label = createTextWrapper("label");
  * @see {@link createTextWrapper} for the wrapper factory function
  */
 export const ListItem = createTextWrapper("li");
+
+/**
+ * A styled button element wrapper component.
+ * This component is created using the `createTextWrapper` utility function to provide
+ * a reusable button element with consistent styling and behavior across the application.
+ * @example
+ * ```tsx
+ * <Button onClick={() => alert("Clicked!")}>Click Me</Button>
+ * ```tsx
+ *
+ * @see {@link createTextWrapper} for the wrapper factory function
+ */
+export const Button = createTextWrapper("button");
