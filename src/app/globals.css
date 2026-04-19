@@ -55,13 +55,6 @@
   --input-padding: 0.5rem;
 }
 
-@media (min-width: 768px) {
-  :root {
-    /* For use in calculating viewport height in create-account page */
-  
-  }
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
