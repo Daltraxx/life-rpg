@@ -39,7 +39,8 @@
   --shadow-md: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
   /* For use in calculating viewport height in create-account page */
-  --create-account-header-height: 6.5rem;
+  --create-account-header-height-mobile: 10.75rem;
+  --create-account-header-height-large: 6.5rem;
   --create-account-footer-height-mobile: 10.75rem;
   --create-account-footer-height-large: 7.5rem;
 
@@ -52,6 +53,13 @@
   --input-height: 2.5rem;
   --input-font-size: 1.25rem;
   --input-padding: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  :root {
+    /* For use in calculating viewport height in create-account page */
+  
+  }
 }
 
 @theme inline {
