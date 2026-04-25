@@ -3,7 +3,7 @@ import Bounded from "@/app/ui/JSXWrappers/Bounded";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import styles from "./styles.module.css";
 import { JSX } from "react";
-import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import OptionsMenu from "./OptionsMenu/OptionsMenu";
 
 export default function Header(): JSX.Element {
   return (
@@ -12,7 +12,7 @@ export default function Header(): JSX.Element {
       outerClassName={styles.boundedContainer}
       innerClassName={styles.contentContainer}
     >
-      <Button className={styles.menuButton} size="30">MENU</Button>
+      <OptionsMenu className={styles.options} />
       <Link href="/" className={styles.brandingLink}>
         <Heading as="h2" size="72" className={styles.branding}>
           LifeRPG
