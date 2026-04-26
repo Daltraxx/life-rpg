@@ -54,7 +54,7 @@ export async function login(_prevState: LoginState, formData: FormData): Promise
   if (!validatedFields.success) {
     return {
       // NOTE: validatedFields.error.flatten() is deprecated in Zod v4, use z.flattenError instead
-      errors: z.flattenError(validatedFields.error).fieldErrors, // test this
+      errors: z.flattenError(validatedFields.error).fieldErrors, // TODO: Untested
       message: "Fields not valid. Failed to log in.",
     };
   }
