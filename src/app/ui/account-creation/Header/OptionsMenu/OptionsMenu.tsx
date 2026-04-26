@@ -1,4 +1,6 @@
-import { JSX } from "react";
+"use client";
+
+import { JSX, useCallback } from "react";
 import { DropdownMenu } from "radix-ui";
 import styles from "./styles.module.css";
 import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
@@ -8,6 +10,17 @@ export default function OptionsMenu({
 }: {
   className: string;
 }): JSX.Element {
+  const handleSignOut = useCallback(async () => {
+    try {
+      await fetch("/auth/signout", {
+        method: "POST",
+      });
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Error signing out:", error);
+      window.location.href = "/";
+    }
+  }, []);
   return (
     <section className={`${styles.optionsMenu} ${className}`}>
       <DropdownMenu.Root>
@@ -16,7 +29,7 @@ export default function OptionsMenu({
             MENU
           </Button>
         </DropdownMenu.Trigger>
-  
+
         <DropdownMenu.Portal>
           <DropdownMenu.Content
             className={styles.DropdownMenuContent}
@@ -25,7 +38,10 @@ export default function OptionsMenu({
             <DropdownMenu.Item className={styles.DropdownMenuItem}>
               Rules
             </DropdownMenu.Item>
-            <DropdownMenu.Item className={styles.DropdownMenuItem}>
+            <DropdownMenu.Item
+              className={styles.DropdownMenuItem}
+              onSelect={handleSignOut}
+            >
               Sign Out
             </DropdownMenu.Item>
           </DropdownMenu.Content>
