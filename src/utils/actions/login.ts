@@ -26,7 +26,10 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * 
  * @example
  * ```typescript
- * const form = useFormState(login, initialState);
+ * const [errorState, formAction, isPending] = useActionState(
+     login,
+     initialLoginState,
+   );
  * ```
  * 
  * @remarks
@@ -35,7 +38,10 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * - Performance consideration: Consider targeted cache revalidation for specific routes
  * - Requires a /profile page to be implemented for redirect destination
  */
-export async function login(_prevState: LoginState, formData: FormData): Promise<LoginState> {
+export async function login(
+  _prevState: LoginState,
+  formData: FormData,
+): Promise<LoginState> {
   let supabase;
   try {
     supabase = await createSupabaseServerClient();
@@ -45,7 +51,6 @@ export async function login(_prevState: LoginState, formData: FormData): Promise
       message: "Internal server error. Please try again later.",
     };
   }
-  
 
   const rawFormData = Object.fromEntries(formData);
 
@@ -60,7 +65,7 @@ export async function login(_prevState: LoginState, formData: FormData): Promise
   }
 
   const { data, error } = await supabase.auth.signInWithPassword(
-    validatedFields.data
+    validatedFields.data,
   );
 
   if (error) {
