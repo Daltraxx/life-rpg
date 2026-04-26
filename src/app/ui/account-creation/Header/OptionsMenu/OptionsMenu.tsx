@@ -31,9 +31,12 @@ export default function OptionsMenu({
 }): JSX.Element {
   const handleSignOut = useCallback(async () => {
     try {
-      await fetch("/auth/signout", {
+      const response = await fetch("/auth/signout", {
         method: "POST",
       });
+      if (!response.ok) {
+        console.error("Failed to sign out:", response.statusText);
+      }
       window.location.href = "/";
     } catch (error) {
       console.error("Error signing out:", error);
