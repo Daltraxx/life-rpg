@@ -12,12 +12,12 @@ export default function Header(): JSX.Element {
       outerClassName={styles.boundedContainer}
       innerClassName={styles.contentContainer}
     >
-      <OptionsMenu className={styles.options} />
       <Link href="/" className={styles.brandingLink}>
         <Heading as="h2" size="72" className={styles.branding}>
           LifeRPG
         </Heading>
       </Link>
+      <OptionsMenu className={styles.options} />
     </Bounded>
   );
 }
