@@ -11,6 +11,7 @@ import { Label } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { login } from "@/utils/actions/login";
 import { useActionState } from "react";
 import { LoginState } from "@/utils/validations/login";
+import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
 
 const INITIAL_LOGIN_STATE: LoginState = {
   message: "",
@@ -25,6 +26,7 @@ export default function LoginForm() {
   return (
     <Bounded innerClassName={styles.loginContainer}>
       <form className={styles.loginForm} action={formAction}>
+        {/* EMAIL */}
         <Label htmlFor="email-field" size="20">
           Email:
         </Label>
@@ -35,6 +37,13 @@ export default function LoginForm() {
           required
           autoComplete="email"
         />
+        <FieldErrorsDisplay
+          errors={errorState.errors?.email}
+          id="email-field-errors"
+          fontSize="16"
+        />
+
+        {/* PASSWORD */}
         <Label htmlFor="password-field" size="20">
           Password:
         </Label>
@@ -45,6 +54,13 @@ export default function LoginForm() {
           required
           autoComplete="current-password"
         />
+        <FieldErrorsDisplay
+          errors={errorState.errors?.password}
+          id="email-field-errors"
+          fontSize="16"
+        />
+
+        {/* SUBMIT */}
         <ButtonWrapper
           type="submit"
           className={styles.loginButton}
@@ -52,6 +68,8 @@ export default function LoginForm() {
         >
           {isPending ? "Logging in..." : "Login"}
         </ButtonWrapper>
+
+        {/* FORGOT PASSWORD */}
         <BasicLinkWrapper
           href="/forgot-password"
           className={styles.forgotPasswordLink}
@@ -61,6 +79,8 @@ export default function LoginForm() {
         </BasicLinkWrapper>
       </form>
       <div className={styles.divider}></div>
+
+      {/* CREATE ACCOUNT */}
       <LinkWrapper href="/create-account" className={styles.createAccountLink}>
         Create an account
       </LinkWrapper>
