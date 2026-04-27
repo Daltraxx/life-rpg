@@ -9,7 +9,7 @@
   box-shadow: 0 2px 10px black;
   transition:
     background-color 0.3s ease,
-    padding 0.1s ease;
+    transform 0.1s ease;
 }
 
 .menuButton:focus-visible {
@@ -23,7 +23,9 @@
 
 .menuButton:active {
   background-color: var(--orange-300);
-  padding: 0.45rem 0.95rem; /* Slightly reduce padding to create a "pressed" effect */
+  transform: scale(
+    0.98
+  ); /* Slightly reduce scale momentarily to create a "pressed" effect */
 }
 
 .DropdownMenuContent {
