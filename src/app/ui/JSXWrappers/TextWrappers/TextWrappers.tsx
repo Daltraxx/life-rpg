@@ -32,7 +32,7 @@ interface TextWrapperProps {
  * ```
  */
 function createTextWrapper<T extends "p" | "span" | "label" | "li" | "button">(
-  element: T
+  element: T,
 ) {
   const TextWrapper = function ({
     size = "20",
@@ -48,11 +48,11 @@ function createTextWrapper<T extends "p" | "span" | "label" | "li" | "button">(
           "font-main",
           fontSizeToTWMap[size],
           textColorMap[color],
-          className
+          className,
         ),
         ...restProps,
       },
-      children
+      children,
     );
   };
 
@@ -127,7 +127,7 @@ export const ListItem = createTextWrapper("li");
  * @example
  * ```tsx
  * <Button onClick={() => alert("Clicked!")}>Click Me</Button>
- * ```tsx
+ * ```
  *
  * @see {@link createTextWrapper} for the wrapper factory function
  */
