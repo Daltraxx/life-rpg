@@ -41,7 +41,7 @@
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
 }
-.DropdownMenuContent[data-side="top"]{
+.DropdownMenuContent[data-side="top"] {
   animation-name: slideDownAndFade;
 }
 .DropdownMenuContent[data-side="right"] {
