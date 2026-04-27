@@ -36,8 +36,11 @@ export default function OptionsMenu({
       });
       if (!response.ok) {
         console.error("Failed to sign out:", response.statusText);
+        const { redirectUrl } = await response.json();
+        window.location.href = redirectUrl || "/"; // Redirect to provided URL or fallback to home page
+      } else {
+        window.location.href = "/"; // Redirect to home page on successful sign out
       }
-      window.location.href = "/";
     } catch (error) {
       console.error("Error signing out:", error);
       window.location.href = "/";
@@ -58,7 +61,7 @@ export default function OptionsMenu({
             sideOffset={5}
           >
             <DropdownMenu.Item className={styles.DropdownMenuItem}>
-            {/* TODO:  Build page(s)*/}
+              {/* TODO:  Build page(s)*/}
               Rules
             </DropdownMenu.Item>
             <DropdownMenu.Item

@@ -19,7 +19,17 @@ export async function POST(req: NextRequest) {
   const { data: claimsData } = await supabase.auth.getClaims();
 
   if (claimsData?.claims) {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Error signing out:", error);
+      return NextResponse.json(
+        {
+          error: error.message,
+          redirectUrl: `/error?message=${error.message}&status=500`,
+        },
+        { status: 500 },
+      );
+    }
   }
 
   revalidatePath("/", "layout");
