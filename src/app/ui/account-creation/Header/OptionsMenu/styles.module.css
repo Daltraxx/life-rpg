@@ -31,6 +31,7 @@
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  /* TODO: Consider different background color? */
   background-color: white;
   border-radius: var(--border-radius-sm);
   padding: 0.5rem;
@@ -70,7 +71,7 @@
   pointer-events: none;
 }
 .DropdownMenuItem[data-highlighted] {
-  background-color: var(--gray-200);
+  background-color: var(--orange-200);
   cursor: pointer;
 }
 
