@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error: error.message,
-          redirectUrl: `/error?message=${error.message}&status=500`,
+          redirectUrl: `/error?message=${encodeURIComponent(error.message)}&status=500`,
         },
         { status: 500 },
       );
