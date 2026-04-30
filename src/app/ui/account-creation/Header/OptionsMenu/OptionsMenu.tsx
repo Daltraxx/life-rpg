@@ -43,7 +43,7 @@ export default function OptionsMenu({
       }
     } catch (error) {
       console.error("Error signing out:", error);
-      window.location.href = "/";
+      window.location.href = "/error";
     }
   }, []);
   return (
