@@ -36,6 +36,7 @@ export default function LoginForm() {
           name="email"
           required
           autoComplete="email"
+          aria-describedby="email-field-errors"
         />
         <FieldErrorsDisplay
           errors={errorState.errors?.email}
@@ -53,10 +54,11 @@ export default function LoginForm() {
           name="password"
           required
           autoComplete="current-password"
+          aria-describedby="password-field-errors"
         />
         <FieldErrorsDisplay
           errors={errorState.errors?.password}
-          id="email-field-errors"
+          id="password-field-errors"
           fontSize="16"
         />
 
