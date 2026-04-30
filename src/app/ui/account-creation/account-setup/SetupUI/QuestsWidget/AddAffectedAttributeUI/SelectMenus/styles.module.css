@@ -20,12 +20,12 @@
 }
 
 .trigger:focus-visible {
-  background-color: var(--orange-200);
+  background-color: var(--orange-200, #e8c6a1);
 }
 
 @media (hover: hover) {
   .trigger:hover {
-    background-color: var(--orange-200);
+    background-color: var(--orange-200, #e8c6a1);
   }
 }
 
@@ -61,7 +61,7 @@
 
 .item[data-highlighted] {
   outline: none;
-  background-color: var(--orange-200);
+  background-color: var(--orange-200, #e8c6a1);
 }
 
 .plus {
