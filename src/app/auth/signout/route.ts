@@ -33,6 +33,10 @@ export async function POST(req: NextRequest) {
   }
 
   revalidatePath("/", "layout");
+  // Does not actually cause the client to redirect when this endpoint is called via fetch
+  // (this is handled in the client-side code),
+  // but ensures that if the user tries to navigate anywhere after signing out, 
+  // they will be treated as signed out and not get any cached content meant for authenticated users
   return NextResponse.redirect(new URL("/", req.url), {
     status: 302,
   });
