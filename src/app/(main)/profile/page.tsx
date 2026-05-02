@@ -1,4 +1,5 @@
 import { type Metadata } from "next";
+import Profile from "@/app/ui/Profile/Profile";
 export const metadata: Metadata = {
   title: "Profile",
   description:
@@ -6,5 +7,5 @@ export const metadata: Metadata = {
 };
 
 export default function ProfilePage() {
-  return <div>Profile Page</div>;
+  return <Profile />;
 }
