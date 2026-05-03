@@ -1,27 +1,18 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { Quest } from "@/utils/types/AttributesAndQuests";
-import QuestBoardItem from "./QuestBoardItem/QuestBoardItem";
+import QuestItem from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
 
-interface QuestBoardItemsProps {
+interface QuestItemsProps {
   className?: string;
   quests: Quest[];
-  onDeleteQuest: (quest: Quest) => void;
-  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
-  onExperiencePointValueChange: (
-    quest: Quest,
-    direction: "up" | "down"
-  ) => void;
 }
 
-export default function QuestBoardItems({
+export default function QuestItems({
   className,
   quests,
-  onDeleteQuest,
-  onQuestOrderChange,
-  onExperiencePointValueChange,
-}: QuestBoardItemsProps) {
+}: QuestItemsProps) {
   return (
     <div className={clsx(styles.container, className)}>
       <div className={clsx(styles.headerRow, styles.largerScreenOnly)}>
@@ -45,14 +36,11 @@ export default function QuestBoardItems({
       </div>
 
       {quests.map((quest, i) => (
-        <QuestBoardItem
+        <QuestItem
           key={quest.name}
           quest={quest}
           index={i}
           totalQuests={quests.length}
-          onDeleteQuest={onDeleteQuest}
-          onQuestOrderChange={onQuestOrderChange}
-          onExperiencePointValueChange={onExperiencePointValueChange}
           className={styles.questItem}
         />
       ))}

@@ -1,3 +1,11 @@
+import Bounded from "@/app/ui/JSXWrappers/Bounded";
+import DailyQuests from "./DailyQuests/DailyQuests";
+
 export default function Profile() {
-  return <div>Profile</div>;
+  return (
+    <Bounded>
+      <div>Profile Page</div>
+      <DailyQuests />
+    </Bounded>
+  );
 }

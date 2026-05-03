@@ -2,30 +2,30 @@ import { Quest } from "@/utils/types/AttributesAndQuests";
 import styles from "./styles.module.css";
 import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import QuestBoardItems from "./QuestBoardItems/QuestBoardItems";
+import QuestBoardItems from "./QuestItems/QuestItemsSetup";
 import {
   Paragraph,
   Span,
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 
-export interface QuestBoardProps {
+export interface QuestBoardSetupProps {
   quests: Quest[];
   pointsRemaining: number;
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperiencePointValueChange: (
     quest: Quest,
-    direction: "up" | "down"
+    direction: "up" | "down",
   ) => void;
 }
 
-export default function QuestBoard({
+export default function QuestBoardSetup({
   quests,
   pointsRemaining,
   onDeleteQuest,
   onQuestOrderChange,
   onExperiencePointValueChange,
-}: QuestBoardProps) {
+}: QuestBoardSetupProps) {
   return (
     <section className={styles.container}>
       <Heading as="h2" color="blue-700" size="36">

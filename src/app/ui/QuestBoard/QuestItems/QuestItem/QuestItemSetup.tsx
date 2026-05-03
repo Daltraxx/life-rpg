@@ -1,3 +1,5 @@
+"use client";
+
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
@@ -26,7 +28,7 @@ const MAX_EXPERIENCE_POINTS = 100;
 const HOLD_INITIAL_DELAY_MS = 300;
 const HOLD_INTERVAL_MS = 100;
 
-interface QuestItemProps {
+interface QuestItemSetupProps {
   quest: Quest;
   index: number;
   totalQuests: number;
@@ -39,7 +41,7 @@ interface QuestItemProps {
   className?: string;
 }
 
-export default function QuestBoardItem({
+export default function QuestBoardItemSetup({
   quest,
   index,
   totalQuests,
@@ -47,7 +49,7 @@ export default function QuestBoardItem({
   onQuestOrderChange,
   onExperiencePointValueChange,
   className,
-}: QuestItemProps) {
+}: QuestItemSetupProps) {
   const [isRemoving, setIsRemoving] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const itemElementRef = useRef<HTMLDivElement | null>(null);

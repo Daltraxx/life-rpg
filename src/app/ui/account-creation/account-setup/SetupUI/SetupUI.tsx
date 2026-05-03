@@ -6,7 +6,7 @@ import QuestsWidget from "./QuestsWidget/QuestsWidget";
 import styles from "./styles.module.css";
 import cssVars from "./vars.module.css";
 import clsx from "clsx";
-import QuestBoard from "./QuestBoard/QuestBoard";
+import QuestBoard from "@/app/ui/QuestBoard/QuestBoardSetup";
 import useQuestManager from "@/utils/hooks/useQuestManager";
 import useAttributeManager from "@/utils/hooks/useAttributeManager";
 import type { Attribute } from "@/utils/types/AttributesAndQuests";
