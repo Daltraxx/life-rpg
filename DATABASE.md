@@ -74,8 +74,6 @@ Full table can be found on the Supabase dashboard.
   - Optional quest description
 - `created_at`: TIMESTAMP DEFAULT NOW()
   - Creation timestamp
-- `is_completed`: BOOLEAN DEFAULT FALSE
-  - Completion status
 - `frequency`: INT DEFAULT 1 CHECK (frequency >= 0)
   - Interval in days between required completions (1 = daily, 7 = weekly, etc.)
 - `rest_frequency`: INT DEFAULT 0 CHECK (rest_frequency >= 0)
