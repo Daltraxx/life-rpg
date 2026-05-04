@@ -10,6 +10,10 @@ Full table can be found on the Supabase dashboard.
   - Strength rank enum (E, D, C, B, A, S)
 - `multiplier`: DECIMAL(4, 2) NOT NULL
   - Multiplier for experience calculation
+- `min_points`: INT
+  - Minimum strength points required for this rank
+- `max_points`: INT
+  - Maximum strength points for this rank (null for S)
 - `updated_at`: TIMESTAMP DEFAULT NOW()
   - Timestamp of last update
 
