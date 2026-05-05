@@ -1,7 +1,9 @@
-import type { AffectedAttribute } from "@/utils/types/accountSetup/AttributesAndQuests";
+import { AffectedAttribute } from "./AffectedAttribute";
 
 export interface Quest {
+  id: string;
   name: string;
+  description: string | null;
   affectedAttributes: AffectedAttribute[];
   experienceShare: number;
   frequency: number;
