@@ -1,4 +1,4 @@
-import type { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
+import type { Quest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import type { CreateProfileTransactionQuests } from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
 
 /**

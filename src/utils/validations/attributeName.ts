@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
+import type { SetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import {
   SAFE_CHARACTERS_REGEX,
   MIN_ATTRIBUTE_NAME_LENGTH,
@@ -38,7 +38,7 @@ export const AttributeNameSchema = z
  * - Existing attribute names are normalized to lowercase for comparison
  * - Returns a validation error if an attribute with the same name already exists
  */
-export const createAttributeNameSchema = (existingAttributes: Attribute[]) => {
+export const createAttributeNameSchema = (existingAttributes: SetupAttribute[]) => {
   const existingAttributeNames = new Set(
     existingAttributes.map((attr) => attr.name.toLowerCase()),
   );

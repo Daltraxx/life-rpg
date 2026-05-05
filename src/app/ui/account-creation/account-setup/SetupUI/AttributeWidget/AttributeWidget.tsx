@@ -11,14 +11,14 @@ import { useEffect, useRef, useState } from "react";
 import AttributeListItem from "./AttributeListItem/AttributeListItem";
 import clsx from "clsx";
 import {
-  type Attribute,
-  createAttribute,
-} from "@/utils/types/accountSetup/AttributesAndQuests";
+  type SetupAttribute,
+  createSetupAttribute,
+} from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 import { createAttributeNameSchema } from "@/utils/validations/attributeName";
 
 interface AttributeWidgetProps {
-  attributes: Attribute[];
+  attributes: SetupAttribute[];
   attributeManager: AttributeManager;
   className?: string;
 }
@@ -64,7 +64,7 @@ export default function AttributeWidget({
     }
 
     setAddAttributeError([]);
-    const newAttribute = createAttribute(parseResult.data);
+    const newAttribute = createSetupAttribute(parseResult.data);
     addAttribute(newAttribute);
     setNewAttributeName("");
   };

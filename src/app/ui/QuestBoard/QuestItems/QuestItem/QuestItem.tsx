@@ -8,12 +8,12 @@ import { getAttributeDisplayString } from "@/utils/helpers/getAttributeDisplaySt
 import { useState, useRef, useEffect } from "react";
 import clsx from "clsx";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
+import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 
 interface QuestItemProps {
-  quest: Quest;
+  quest: SetupQuest;
   index: number;
   totalQuests: number;
   className?: string;

@@ -14,7 +14,7 @@ import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 import useSetCSSProperty from "@/utils/hooks/useSetCSSProperty";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
+import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
@@ -29,13 +29,13 @@ const HOLD_INITIAL_DELAY_MS = 300;
 const HOLD_INTERVAL_MS = 100;
 
 interface QuestItemSetupProps {
-  quest: Quest;
+  quest: SetupQuest;
   index: number;
   totalQuests: number;
-  onDeleteQuest: (quest: Quest) => void;
-  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
+  onDeleteQuest: (quest: SetupQuest) => void;
+  onQuestOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
   onExperiencePointValueChange: (
-    quest: Quest,
+    quest: SetupQuest,
     direction: "up" | "down",
   ) => void;
   className?: string;

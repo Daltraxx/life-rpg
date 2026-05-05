@@ -6,7 +6,7 @@ import type { AttributeStrength } from "@/utils/types/AttributeStrength";
  * @interface Attribute
  * @property {string} name - The name of the attribute.
  */
-export interface Attribute {
+export interface SetupAttribute {
   name: string;
 }
 
@@ -17,7 +17,7 @@ export interface Attribute {
  * @returns A new Attribute object containing the provided name.
  * @throws {Error} Throws an error if the name parameter is empty, null, undefined, or contains only whitespace
  */
-export function createAttribute(name: string): Attribute {
+export function createSetupAttribute(name: string): SetupAttribute {
   if (!name?.trim()) {
     throw new Error("Attribute name cannot be empty");
   }
@@ -27,11 +27,11 @@ export function createAttribute(name: string): Attribute {
 /**
  * Represents an attribute that is affected by a quest.
  *
- * @interface AffectedAttribute
+ * @interface SetupAffectedAttribute
  * @property {string} name - The name of the affected attribute.
  * @property {AttributeStrength} strength - The strength or intensity of the attribute's effect.
  */
-export interface AffectedAttribute {
+export interface SetupAffectedAttribute {
   name: string;
   strength: AttributeStrength;
 }
@@ -45,12 +45,12 @@ export interface AffectedAttribute {
  * @throws {Error} If the attribute name is empty or contains only whitespace.
  *
  * @example
- * const affected = createAffectedAttribute('Health', AttributeStrength.Major);
+ * const affected = createSetupAffectedAttribute('Health', AttributeStrength.Major);
  */
-export function createAffectedAttribute(
+export function createSetupAffectedAttribute(
   name: string,
   strength: AttributeStrength,
-): AffectedAttribute {
+): SetupAffectedAttribute {
   if (!name?.trim()) {
     throw new Error("Attribute name cannot be empty");
   }
@@ -62,12 +62,12 @@ export function createAffectedAttribute(
  *
  * @interface Quest
  * @property {string} name - The name or title of the quest.
- * @property {AffectedAttribute[]} affectedAttributes - An array of attributes that are affected by completing this quest.
+ * @property {SetupAffectedAttribute[]} affectedAttributes - An array of attributes that are affected by completing this quest.
  * @property {number} experiencePointValue - The amount of experience points awarded for completing the quest.
  */
-export interface Quest {
+export interface SetupQuest {
   name: string;
-  affectedAttributes: AffectedAttribute[];
+  affectedAttributes: SetupAffectedAttribute[];
   experiencePointValue: number;
 }
 
@@ -78,13 +78,13 @@ export interface Quest {
  * @param affectedAttributes - An array of attributes that are affected by the quest.
  * @param experiencePointValue - The experience points awarded for completing the quest. Defaults to 0.
  * @throws {Error} Throws an error if the quest name is empty or only whitespace.
- * @returns A Quest object containing the name and affected attributes.
+ * @returns A SetupQuest object containing the name and affected attributes.
  */
-export function createQuest(
+export function createSetupQuest(
   name: string,
-  affectedAttributes: AffectedAttribute[],
+  affectedAttributes: SetupAffectedAttribute[],
   experiencePointValue: number = 0,
-): Quest {
+): SetupQuest {
   if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
   }

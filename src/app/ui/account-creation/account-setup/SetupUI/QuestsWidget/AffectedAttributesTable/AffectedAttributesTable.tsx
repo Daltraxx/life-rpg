@@ -1,10 +1,10 @@
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { strengthDisplayMap } from "@/utils/helpers/StrengthDisplayMap";
-import type { AffectedAttribute } from "@/utils/types/accountSetup/AttributesAndQuests";
+import type { SetupAffectedAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 
 interface AffectedAttributesTableProps {
-  selectedAttributes: AffectedAttribute[];
+  selectedAttributes: SetupAffectedAttribute[];
   onDeleteAttribute: (name: string) => void;
 }
 

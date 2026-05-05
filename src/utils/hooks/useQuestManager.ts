@@ -1,8 +1,8 @@
 import { useReducer, useMemo, useEffect, useRef } from "react";
 import {
-  Attribute,
-  Quest,
-} from "@/utils/types/accountSetup/AttributesAndQuests";
+  SetupAttribute,
+  SetupQuest,
+} from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import hasAttributeBeenDeletedOrSwapped from "@/utils/helpers/hasAttributeBeenDeletedOrSwapped";
 
 // TODO: add structured logging
@@ -17,7 +17,7 @@ const TOTAL_EXPERIENCE_POINTS = 100;
  * @property {number} pointsRemaining - The number of points available for quest allocation.
  */
 interface QuestState {
-  quests: Quest[];
+  quests: SetupQuest[];
   pointsRemaining: number;
 }
 
@@ -25,15 +25,15 @@ interface QuestState {
  * Represents the possible actions that can be performed on QuestState.
  */
 type QuestAction =
-  | { type: "ADD_QUEST"; payload: Quest }
-  | { type: "DELETE_QUEST"; payload: Quest }
+  | { type: "ADD_QUEST"; payload: SetupQuest }
+  | { type: "DELETE_QUEST"; payload: SetupQuest }
   | {
       type: "CHANGE_QUEST_ORDER";
-      payload: { quest: Quest; direction: "up" | "down" };
+      payload: { quest: SetupQuest; direction: "up" | "down" };
     }
   | {
       type: "CHANGE_QUEST_EXPERIENCE";
-      payload: { quest: Quest; direction: "up" | "down" };
+      payload: { quest: SetupQuest; direction: "up" | "down" };
     }
   | {
       type: "REMOVE_UNAVAILABLE_AFFECTED_ATTRIBUTES";
@@ -198,23 +198,23 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
 /**
  * Return type for the useQuestManager hook
  * @interface QuestManager
- * @property {Quest[]} quests - Array of quest objects
+ * @property {SetupQuest[]} quests - Array of quest objects
  * @property {number} pointsRemaining - The number of experience points available to allocate
  * @property {Object} actions - Object containing quest management action handlers
- * @property {(quest: Quest) => void} actions.addQuest - Adds a new quest to the list
- * @property {(quest: Quest) => void} actions.deleteQuest - Removes a quest from the list
- * @property {(quest: Quest, direction: "up" | "down") => void} actions.questOrderChange - Moves a quest up or down in the order
- * @property {(quest: Quest, direction: "up" | "down") => void} actions.experiencePointValueChange - Adjusts the experience point value of a quest
+ * @property {(quest: SetupQuest) => void} actions.addQuest - Adds a new quest to the list
+ * @property {(quest: SetupQuest) => void} actions.deleteQuest - Removes a quest from the list
+ * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.questOrderChange - Moves a quest up or down in the order
+ * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.experiencePointValueChange - Adjusts the experience point value of a quest
  */
 interface QuestManager {
-  quests: Quest[];
+  quests: SetupQuest[];
   pointsRemaining: number;
   actions: {
-    addQuest: (quest: Quest) => void;
-    deleteQuest: (quest: Quest) => void;
-    questOrderChange: (quest: Quest, direction: "up" | "down") => void;
+    addQuest: (quest: SetupQuest) => void;
+    deleteQuest: (quest: SetupQuest) => void;
+    questOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
     experiencePointValueChange: (
-      quest: Quest,
+      quest: SetupQuest,
       direction: "up" | "down",
     ) => void;
   };
@@ -242,7 +242,7 @@ interface QuestManager {
  * actions.questOrderChange(quest, 'up');
  */
 export default function useQuestManager(
-  availableAttributes: Attribute[],
+  availableAttributes: SetupAttribute[],
 ): QuestManager {
   const [state, dispatch] = useReducer(questReducer, {
     quests: [],
@@ -271,16 +271,16 @@ export default function useQuestManager(
 
   const actions = useMemo(
     () => ({
-      addQuest: (quest: Quest) => {
+      addQuest: (quest: SetupQuest) => {
         dispatch({ type: "ADD_QUEST", payload: quest });
       },
-      deleteQuest: (quest: Quest) => {
+      deleteQuest: (quest: SetupQuest) => {
         dispatch({ type: "DELETE_QUEST", payload: quest });
       },
-      questOrderChange: (quest: Quest, direction: "up" | "down") => {
+      questOrderChange: (quest: SetupQuest, direction: "up" | "down") => {
         dispatch({ type: "CHANGE_QUEST_ORDER", payload: { quest, direction } });
       },
-      experiencePointValueChange: (quest: Quest, direction: "up" | "down") => {
+      experiencePointValueChange: (quest: SetupQuest, direction: "up" | "down") => {
         dispatch({
           type: "CHANGE_QUEST_EXPERIENCE",
           payload: { quest, direction },

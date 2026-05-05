@@ -9,7 +9,7 @@ import clsx from "clsx";
 import QuestBoard from "@/app/ui/QuestBoard/QuestBoardSetup";
 import useQuestManager from "@/utils/hooks/useQuestManager";
 import useAttributeManager from "@/utils/hooks/useAttributeManager";
-import type { Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
+import type { SetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
@@ -20,7 +20,7 @@ import {
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import useAffectedAttributeManager from "@/utils/hooks/useAffectedAttributeManager";
 
-const INITIAL_ATTRIBUTES: Attribute[] = [
+const INITIAL_ATTRIBUTES: SetupAttribute[] = [
   { name: "Discipline" },
   { name: "Vitality" },
   { name: "Intelligence" },

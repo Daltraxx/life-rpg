@@ -13,10 +13,10 @@ import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttribut
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
 import {
-  createAffectedAttribute,
-  type Quest,
-  createQuest,
-} from "@/utils/types/accountSetup/AttributesAndQuests";
+  createSetupAffectedAttribute,
+  type SetupQuest,
+  createSetupQuest,
+} from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import { createQuestNameSchema } from "@/utils/validations/questName";
 
@@ -24,8 +24,8 @@ const REQUIRED_ATTRIBUTE = "Discipline";
 
 interface QuestsWidgetProps {
   affectedAttributeManager: AffectedAttributeManager;
-  quests: Quest[];
-  addQuest: (quest: Quest) => void;
+  quests: SetupQuest[];
+  addQuest: (quest: SetupQuest) => void;
   className?: string;
 }
 
@@ -39,8 +39,8 @@ interface QuestsWidgetProps {
  * @component
  * @param {QuestsWidgetProps} props - Component props
  * @param {AffectedAttributeManager} props.affectedAttributeManager - Manager for handling attribute selection and state
- * @param {Quest[]} props.quests - Array of existing quests used for name validation
- * @param {(quest: Quest) => void} props.addQuest - Callback function to add a new quest
+ * @param {SetupQuest[]} props.quests - Array of existing quests used for name validation
+ * @param {(quest: SetupQuest) => void} props.addQuest - Callback function to add a new quest
  * @param {string} [props.className] - Optional CSS class name for styling the container
  *
  * @returns {React.ReactElement} The rendered quests widget section
@@ -89,11 +89,11 @@ export default function QuestsWidget({
     const affectedAttributes = [...selectedAttributes];
     if (!affectedAttributes.some((attr) => attr.name === REQUIRED_ATTRIBUTE)) {
       affectedAttributes.push(
-        createAffectedAttribute(REQUIRED_ATTRIBUTE, "normal"),
+        createSetupAffectedAttribute(REQUIRED_ATTRIBUTE, "normal"),
       );
     }
 
-    addQuest(createQuest(validationResult.data, affectedAttributes));
+    addQuest(createSetupQuest(validationResult.data, affectedAttributes));
 
     // Reset UI state
     setQuestErrors([]);

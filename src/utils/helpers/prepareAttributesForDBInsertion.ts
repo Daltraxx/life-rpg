@@ -1,4 +1,4 @@
-import type { Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
+import type { Attribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import type { CreateProfileTransactionAttributes } from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
 
 /**
