@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { ListItem } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { JSX, useCallback } from "react";
-import { type Attribute } from "@/utils/types/AttributesAndQuests";
+import { type Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
 import {
   ChevronDownButton,
   ChevronUpButton,

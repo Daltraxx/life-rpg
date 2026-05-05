@@ -1,5 +1,5 @@
-import type { Quest } from "@/utils/types/AttributesAndQuests";
-import type { CreateProfileTransactionQuests } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
+import type { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
+import type { CreateProfileTransactionQuests } from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
 
 /**
  * Prepares an array of quests for database insertion by mapping them to a transaction-compatible format.
@@ -22,7 +22,7 @@ import type { CreateProfileTransactionQuests } from "@/utils/types/profile_trans
  * ```
  */
 export const prepareQuestsForDBInsertion = (
-  quests: Quest[]
+  quests: Quest[],
 ): CreateProfileTransactionQuests[] => {
   return quests.map((quest, index) => ({
     name: quest.name,

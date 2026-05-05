@@ -8,7 +8,7 @@ import { getAttributeDisplayString } from "@/utils/helpers/getAttributeDisplaySt
 import { useState, useRef, useEffect } from "react";
 import clsx from "clsx";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/AttributesAndQuests";
+import { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 
@@ -51,7 +51,6 @@ export default function QuestItem({
       )}
       ref={itemElementRef}
     >
-
       {/* QUEST NAME */}
       <div className={styles.questDetails}>
         <Heading

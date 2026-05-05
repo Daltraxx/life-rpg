@@ -1,4 +1,4 @@
-import { AffectedAttribute } from "@/utils/types/AttributesAndQuests";
+import { AffectedAttribute } from "@/utils/types/accountSetup/AttributesAndQuests";
 import { getStrengthDisplay } from "@/utils/helpers/StrengthDisplayMap";
 
 /**
@@ -20,7 +20,7 @@ import { getStrengthDisplay } from "@/utils/helpers/StrengthDisplayMap";
  * ```
  */
 export const getAttributeDisplayString = (
-  attribute: AffectedAttribute
+  attribute: AffectedAttribute,
 ): string => {
   const { name, strength } = attribute;
   // true = hide "normal" strength indicator

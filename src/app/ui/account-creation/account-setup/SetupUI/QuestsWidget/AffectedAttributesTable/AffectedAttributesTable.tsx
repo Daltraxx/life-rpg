@@ -1,7 +1,7 @@
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { strengthDisplayMap } from "@/utils/helpers/StrengthDisplayMap";
-import type { AffectedAttribute } from "@/utils/types/AttributesAndQuests";
+import type { AffectedAttribute } from "@/utils/types/accountSetup/AttributesAndQuests";
 
 interface AffectedAttributesTableProps {
   selectedAttributes: AffectedAttribute[];
@@ -49,7 +49,7 @@ export default function AffectedAttributesTable({
             <td
               className={clsx(
                 styles.affectedAttributeCell,
-                styles.affectedAttributeName
+                styles.affectedAttributeName,
               )}
             >
               {attribute.name}
@@ -61,7 +61,7 @@ export default function AffectedAttributesTable({
                 attribute.strength === "plus" ||
                   attribute.strength === "plusPlus"
                   ? styles.plus
-                  : null
+                  : null,
               )}
             >
               {strengthDisplayMap[attribute.strength]}
@@ -70,7 +70,7 @@ export default function AffectedAttributesTable({
               <button
                 className={clsx(
                   styles.appendedButton,
-                  styles.deleteAttributeButton
+                  styles.deleteAttributeButton,
                 )}
                 onClick={() => onDeleteAttribute(attribute.name)}
                 type="button"

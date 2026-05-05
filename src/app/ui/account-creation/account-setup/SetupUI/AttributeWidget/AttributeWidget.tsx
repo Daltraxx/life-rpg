@@ -13,7 +13,7 @@ import clsx from "clsx";
 import {
   type Attribute,
   createAttribute,
-} from "@/utils/types/AttributesAndQuests";
+} from "@/utils/types/accountSetup/AttributesAndQuests";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 import { createAttributeNameSchema } from "@/utils/validations/attributeName";
 

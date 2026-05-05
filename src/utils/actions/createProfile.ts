@@ -11,7 +11,7 @@ import type {
   CreateProfileTransactionQuests,
   CreateProfileTransactionQuestsAttributes,
   CreateProfileTransactionDataShapes,
-} from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
+} from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
 import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
@@ -54,7 +54,7 @@ import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBI
  */
 export default async function createProfile(
   prevState: ProfileCreationState | void,
-  formData: FormData
+  formData: FormData,
 ): Promise<ProfileCreationState | void> {
   const supabase = await createSupabaseServerClient();
 
@@ -89,7 +89,7 @@ export default async function createProfile(
   if (!validatedInput.success) {
     console.warn(
       "Profile creation input validation failed:",
-      validatedInput.error
+      validatedInput.error,
     );
     return {
       errors: z.flattenError(validatedInput.error).fieldErrors,
@@ -103,7 +103,8 @@ export default async function createProfile(
 
   const attributesData: CreateProfileTransactionAttributes[] =
     prepareAttributesForDBInsertion(validatedAttributes);
-  const questsData: CreateProfileTransactionQuests[] = prepareQuestsForDBInsertion(validatedQuests);
+  const questsData: CreateProfileTransactionQuests[] =
+    prepareQuestsForDBInsertion(validatedQuests);
 
   const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
   for (const quest of validatedQuests) {
@@ -128,7 +129,7 @@ export default async function createProfile(
   // Insert data into the database within a transaction
   const { error } = await supabase.rpc(
     "create_profile_transaction",
-    createProfileTransactionData
+    createProfileTransactionData,
   );
 
   if (error) {

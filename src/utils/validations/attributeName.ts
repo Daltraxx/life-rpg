@@ -1,5 +1,5 @@
 import { z } from "zod";
-import type { Attribute } from "@/utils/types/AttributesAndQuests";
+import type { Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
 import {
   SAFE_CHARACTERS_REGEX,
   MIN_ATTRIBUTE_NAME_LENGTH,

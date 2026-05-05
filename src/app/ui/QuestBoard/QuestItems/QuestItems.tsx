@@ -1,5 +1,5 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/AttributesAndQuests";
+import { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
 import QuestItem from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
@@ -9,10 +9,7 @@ interface QuestItemsProps {
   quests: Quest[];
 }
 
-export default function QuestItems({
-  className,
-  quests,
-}: QuestItemsProps) {
+export default function QuestItems({ className, quests }: QuestItemsProps) {
   return (
     <div className={clsx(styles.container, className)}>
       <div className={clsx(styles.headerRow, styles.largerScreenOnly)}>

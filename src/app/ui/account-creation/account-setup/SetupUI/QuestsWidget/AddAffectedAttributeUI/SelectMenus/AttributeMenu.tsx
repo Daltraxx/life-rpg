@@ -3,7 +3,7 @@
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { Select } from "radix-ui";
-import { type Attribute } from "@/utils/types/AttributesAndQuests";
+import { type Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -101,8 +101,9 @@ export default function AttributeMenu({
   );
 }
 
-interface AttributeOptionProps
-  extends React.ComponentProps<typeof Select.Item> {
+interface AttributeOptionProps extends React.ComponentProps<
+  typeof Select.Item
+> {
   className?: string;
 }
 

@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { Attribute } from "@/utils/types/AttributesAndQuests";
+import { Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
 import swapArrayElements from "@/utils/helpers/swapArrayElements";
 
 /**

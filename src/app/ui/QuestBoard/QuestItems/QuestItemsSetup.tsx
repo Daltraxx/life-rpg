@@ -1,5 +1,5 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/AttributesAndQuests";
+import { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
 import QuestBoardItemSetup from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItemSetup";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
@@ -11,7 +11,7 @@ interface QuestItemsSetupProps {
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperiencePointValueChange: (
     quest: Quest,
-    direction: "up" | "down"
+    direction: "up" | "down",
   ) => void;
 }
 

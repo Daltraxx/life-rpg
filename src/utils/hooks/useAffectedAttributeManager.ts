@@ -4,7 +4,7 @@ import {
   type Attribute,
   type AffectedAttribute,
   createAffectedAttribute,
-} from "@/utils/types/AttributesAndQuests";
+} from "@/utils/types/accountSetup/AttributesAndQuests";
 
 const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
 
@@ -44,7 +44,7 @@ type AffectedAttributeSelectionAction =
 // Helper to get available attributes by excluding selected ones
 const getAvailableAttributes = (
   attributes: Attribute[],
-  selectedAttributes: AffectedAttribute[]
+  selectedAttributes: AffectedAttribute[],
 ): Attribute[] => {
   const selectedNames = new Set(selectedAttributes.map((attr) => attr.name));
   return attributes.filter((attr) => !selectedNames.has(attr.name));
@@ -53,7 +53,7 @@ const getAvailableAttributes = (
 // Reducer function to manage attribute selection state
 const affectedAttributeSelectionReducer = (
   state: AffectedAttributeSelectionState,
-  action: AffectedAttributeSelectionAction
+  action: AffectedAttributeSelectionAction,
 ): AffectedAttributeSelectionState => {
   switch (action.type) {
     case "SET_CURRENT_ATTRIBUTE_NAME":
@@ -85,7 +85,7 @@ const affectedAttributeSelectionReducer = (
       // Update available attributes by removing the newly selected one
       const updatedAvailableAttributes = getAvailableAttributes(
         allAvailableAttributes,
-        updatedSelectedAttributes
+        updatedSelectedAttributes,
       );
 
       return {
@@ -106,12 +106,12 @@ const affectedAttributeSelectionReducer = (
       } = state;
       // Remove the specified attribute from the selected list
       const updatedSelectedAttributes = selectedAttributes.filter(
-        (attr) => attr.name !== affectedAttributeName
+        (attr) => attr.name !== affectedAttributeName,
       );
       // Update available attributes by adding back the removed attribute
       const updatedAvailableAttributes = getAvailableAttributes(
         allAttributes,
-        updatedSelectedAttributes
+        updatedSelectedAttributes,
       );
       return {
         ...state,
@@ -144,13 +144,13 @@ const affectedAttributeSelectionReducer = (
       } = state;
       // Validate selected attributes still exist in the new attributes list
       const validSelectedAttributes = selectedAttributes.filter((attr) =>
-        newAttributes.some((a) => a.name === attr.name)
+        newAttributes.some((a) => a.name === attr.name),
       );
 
       // Update available attributes accordingly
       const updatedAvailableAttributes = getAvailableAttributes(
         newAttributes,
-        validSelectedAttributes
+        validSelectedAttributes,
       );
 
       let updatedCurrentAttributeName = currentAttributeName;
@@ -158,7 +158,7 @@ const affectedAttributeSelectionReducer = (
       if (
         updatedCurrentAttributeName !== noAttributesAvailableText &&
         !updatedAvailableAttributes.some(
-          (attr) => attr.name === updatedCurrentAttributeName
+          (attr) => attr.name === updatedCurrentAttributeName,
         )
       ) {
         updatedCurrentAttributeName =
@@ -214,7 +214,7 @@ export type AffectedAttributeManager = {
     deleteAffectedAttribute: (name: string) => void;
     resetAffectedAttributeSelectionUI: () => void;
     syncAffectedAttributesWithAllAvailableAttributes: (
-      attributes: Attribute[]
+      attributes: Attribute[],
     ) => void;
   };
 };
@@ -270,12 +270,12 @@ const reducerInitializerFunction = ({
  */
 const useAffectedAttributeManager = (
   attributes: Attribute[],
-  noAttributesAvailableText: string
+  noAttributesAvailableText: string,
 ): AffectedAttributeManager => {
   const [state, dispatch] = useReducer(
     affectedAttributeSelectionReducer,
     { attributes, noAttributesAvailableText },
-    reducerInitializerFunction
+    reducerInitializerFunction,
   );
 
   useEffect(() => {
@@ -321,7 +321,7 @@ const useAffectedAttributeManager = (
         });
       },
       syncAffectedAttributesWithAllAvailableAttributes: (
-        newAttributes: Attribute[]
+        newAttributes: Attribute[],
       ) => {
         dispatch({
           type: "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES",
@@ -329,7 +329,7 @@ const useAffectedAttributeManager = (
         });
       },
     }),
-    [attributes]
+    [attributes],
   );
 
   return {

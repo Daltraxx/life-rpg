@@ -1,5 +1,5 @@
-import type { Attribute } from "@/utils/types/AttributesAndQuests";
-import type { CreateProfileTransactionAttributes } from "@/utils/types/profile_transaction/createProfileTransactionDataShapes";
+import type { Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
+import type { CreateProfileTransactionAttributes } from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
 
 /**
  * Transforms an array of attributes into a format suitable for database insertion.
@@ -23,7 +23,7 @@ import type { CreateProfileTransactionAttributes } from "@/utils/types/profile_t
  * // ]
  */
 export const prepareAttributesForDBInsertion = (
-  attributes: Attribute[]
+  attributes: Attribute[],
 ): CreateProfileTransactionAttributes[] => {
   return attributes.map((attr, index) => ({
     name: attr.name,

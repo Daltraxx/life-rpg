@@ -16,7 +16,7 @@ import {
   createAffectedAttribute,
   type Quest,
   createQuest,
-} from "@/utils/types/AttributesAndQuests";
+} from "@/utils/types/accountSetup/AttributesAndQuests";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import { createQuestNameSchema } from "@/utils/validations/questName";
 

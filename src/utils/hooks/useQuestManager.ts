@@ -1,5 +1,8 @@
 import { useReducer, useMemo, useEffect, useRef } from "react";
-import { Attribute, Quest } from "@/utils/types/AttributesAndQuests";
+import {
+  Attribute,
+  Quest,
+} from "@/utils/types/accountSetup/AttributesAndQuests";
 import hasAttributeBeenDeletedOrSwapped from "@/utils/helpers/hasAttributeBeenDeletedOrSwapped";
 
 // TODO: add structured logging
@@ -75,7 +78,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       }
       if (newQuest.experiencePointValue > state.pointsRemaining) {
         console.warn(
-          "Not enough points remaining to add quest with experience points"
+          "Not enough points remaining to add quest with experience points",
         );
         return state;
       }
@@ -91,7 +94,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         experiencePointValue: deletedQuestExperiencePoints,
       } = action.payload;
       const updatedQuests = state.quests.filter(
-        (quest) => quest.name !== deletedQuestName
+        (quest) => quest.name !== deletedQuestName,
       );
       if (state.quests.length === updatedQuests.length) {
         console.warn("Attempted to delete a quest that does not exist");
@@ -108,7 +111,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       const index = state.quests.findIndex((q) => q.name === quest.name);
       if (index === -1) {
         console.warn(
-          "Attempted to change order of a quest that does not exist"
+          "Attempted to change order of a quest that does not exist",
         );
         return state;
       }
@@ -139,7 +142,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       const targetQuest = state.quests.find((q) => q.name === quest.name);
       if (!targetQuest) {
         console.warn(
-          "Attempted to change experience of a quest that does not exist"
+          "Attempted to change experience of a quest that does not exist",
         );
         return state;
       }
@@ -156,7 +159,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       };
       // Update experience point value
       const updatedQuests = state.quests.map((quest) =>
-        quest.name === targetQuest.name ? updatedQuest : quest
+        quest.name === targetQuest.name ? updatedQuest : quest,
       );
 
       return {
@@ -171,7 +174,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       let attributeRemoved = false;
       const updatedQuests = state.quests.map((quest) => {
         const filteredAttributes = quest.affectedAttributes.filter((attr) =>
-          availableAttributeNames.has(attr.name)
+          availableAttributeNames.has(attr.name),
         );
         if (filteredAttributes.length !== quest.affectedAttributes.length) {
           attributeRemoved = true;
@@ -212,7 +215,7 @@ interface QuestManager {
     questOrderChange: (quest: Quest, direction: "up" | "down") => void;
     experiencePointValueChange: (
       quest: Quest,
-      direction: "up" | "down"
+      direction: "up" | "down",
     ) => void;
   };
 }
@@ -239,20 +242,20 @@ interface QuestManager {
  * actions.questOrderChange(quest, 'up');
  */
 export default function useQuestManager(
-  availableAttributes: Attribute[]
+  availableAttributes: Attribute[],
 ): QuestManager {
   const [state, dispatch] = useReducer(questReducer, {
     quests: [],
     pointsRemaining: TOTAL_EXPERIENCE_POINTS,
   });
   const attributesRef = useRef(
-    new Set(availableAttributes.map((attr) => attr.name))
+    new Set(availableAttributes.map((attr) => attr.name)),
   );
 
   // Ensure that quests do not reference attributes that are no longer available
   useEffect(() => {
     const attributeNames = new Set(
-      availableAttributes.map((attr) => attr.name)
+      availableAttributes.map((attr) => attr.name),
     );
     // Only run when attributes are removed or swapped
     if (
@@ -284,7 +287,7 @@ export default function useQuestManager(
         });
       },
     }),
-    []
+    [],
   );
 
   return {

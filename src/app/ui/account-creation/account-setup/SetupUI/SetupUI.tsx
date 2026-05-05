@@ -9,7 +9,7 @@ import clsx from "clsx";
 import QuestBoard from "@/app/ui/QuestBoard/QuestBoardSetup";
 import useQuestManager from "@/utils/hooks/useQuestManager";
 import useAttributeManager from "@/utils/hooks/useAttributeManager";
-import type { Attribute } from "@/utils/types/AttributesAndQuests";
+import type { Attribute } from "@/utils/types/accountSetup/AttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";

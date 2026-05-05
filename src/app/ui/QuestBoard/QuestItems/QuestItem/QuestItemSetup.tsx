@@ -14,7 +14,7 @@ import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 import useSetCSSProperty from "@/utils/hooks/useSetCSSProperty";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/AttributesAndQuests";
+import { Quest } from "@/utils/types/accountSetup/AttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
@@ -36,7 +36,7 @@ interface QuestItemSetupProps {
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperiencePointValueChange: (
     quest: Quest,
-    direction: "up" | "down"
+    direction: "up" | "down",
   ) => void;
   className?: string;
 }
@@ -99,7 +99,7 @@ export default function QuestBoardItemSetup({
   const setItemHeight = useSetElementHeight();
   const setCSSProperty = useSetCSSProperty(
     "transition-duration",
-    `${DELETE_ANIMATION_DURATION_MS}ms`
+    `${DELETE_ANIMATION_DURATION_MS}ms`,
   );
   useEffect(() => {
     if (itemElementRef.current) {
@@ -132,7 +132,7 @@ export default function QuestBoardItemSetup({
       className={clsx(
         styles.questItem,
         isRemoving && styles.removing,
-        className
+        className,
       )}
       ref={itemElementRef}
     >
@@ -140,7 +140,7 @@ export default function QuestBoardItemSetup({
       <div
         className={clsx(
           styles.questOrderToggleButtons,
-          totalQuests <= 1 && styles.hidden
+          totalQuests <= 1 && styles.hidden,
         )}
       >
         {index > 0 && (
