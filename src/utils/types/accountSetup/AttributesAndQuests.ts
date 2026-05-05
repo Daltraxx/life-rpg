@@ -49,7 +49,7 @@ export interface AffectedAttribute {
  */
 export function createAffectedAttribute(
   name: string,
-  strength: AttributeStrength
+  strength: AttributeStrength,
 ): AffectedAttribute {
   if (!name?.trim()) {
     throw new Error("Attribute name cannot be empty");
@@ -83,7 +83,7 @@ export interface Quest {
 export function createQuest(
   name: string,
   affectedAttributes: AffectedAttribute[],
-  experiencePointValue: number = 0
+  experiencePointValue: number = 0,
 ): Quest {
   if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
