@@ -26,3 +26,24 @@ export const intToStrengthMap = {
   (typeof strengthToIntMap)[AttributeStrength],
   AttributeStrength
 >;
+
+/**
+ * Type representing valid strength keys (1, 2, or 3).
+ */
+export type StrengthKey = keyof typeof intToStrengthMap;
+
+/**
+ * Type guard to check if a value is a valid `StrengthKey`.
+ * Ensures the value is a number and exists in the `intToStrengthMap`.
+ *
+ * @param strength - The value to check
+ * @returns `true` if the value is a valid strength key (1, 2, or 3), `false` otherwise
+ *
+ * @example
+ * isStrengthKey(2) // true
+ * isStrengthKey(5) // false
+ * isStrengthKey("2") // false
+ */
+export const isStrengthKey = (strength: unknown): strength is StrengthKey => {
+  return typeof strength === "number" && strength in intToStrengthMap;
+};
