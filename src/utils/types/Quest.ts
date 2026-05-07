@@ -1,7 +1,7 @@
 import { AffectedAttribute } from "./AffectedAttribute";
 
 export interface Quest {
-  id: string;
+  id: number;
   name: string;
   description: string | null;
   affectedAttributes: AffectedAttribute[];
