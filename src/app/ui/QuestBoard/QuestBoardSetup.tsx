@@ -19,6 +19,19 @@ export interface QuestBoardSetupProps {
   ) => void;
 }
 
+/**
+ * Displays and manages the quest board during setup.
+ * Shows a list of quests with controls for reordering and experience allocation,
+ * or a message to add quests if the board is empty.
+ *
+ * @param props - The component props
+ * @param props.quests - Array of quests to display
+ * @param props.pointsRemaining - Remaining experience points available
+ * @param props.onDeleteQuest - Handler for deleting a quest
+ * @param props.onQuestOrderChange - Handler for reordering quests
+ * @param props.onExperienceShareChange - Handler for adjusting experience allocation
+ * @returns The rendered quest board setup component
+ */
 export default function QuestBoardSetup({
   quests,
   pointsRemaining,
