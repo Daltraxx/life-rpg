@@ -41,6 +41,40 @@ interface QuestItemSetupProps {
   className?: string;
 }
 
+/**
+ * A setup component for displaying and managing an individual quest in the Quest Board setup screen.
+ * 
+ * Provides UI controls for:
+ * - Reordering quests with up/down chevron buttons
+ * - Viewing quest details (name, affected attributes, streak, strength)
+ * - Adjusting experience share with mouse hold or keyboard support
+ * - Deleting the quest with a smooth removal animation
+ * 
+ * The component handles responsive layout with different button styles for small vs larger screens.
+ * Experience adjustment buttons support continuous increments via mouse hold or keyboard hold.
+ * 
+ * @param {QuestItemSetupProps} props - Component props
+ * @param {SetupQuest} props.quest - The quest data to display and manage
+ * @param {number} props.index - The index of the quest in the list (for ordering)
+ * @param {number} props.totalQuests - The total number of quests in the list (for conditional UI)
+ * @param {(quest: SetupQuest) => void} props.onDeleteQuest - Callback for deleting a quest
+ * @param {(quest: SetupQuest, direction: "up" | "down") => void} props.onQuestOrderChange - Callback for changing quest order
+ * @param {(quest: SetupQuest, direction: "up" | "down") => void} props.onExperienceShareChange - Callback for changing experience share
+ * @param {string} [props.className] - Optional additional class name for styling
+ * @returns {JSX.Element} The rendered quest item setup component
+ * 
+ * @example
+ * ```tsx
+ * <QuestBoardItemSetup
+ *   quest={questData}
+ *   index={0}
+ *   totalQuests={3}
+ *   onDeleteQuest={handleDelete}
+ *   onQuestOrderChange={handleReorder}
+ *   onExperienceShareChange={handleExpChange}
+ * />
+ * ```
+ */
 export default function QuestBoardItemSetup({
   quest,
   index,
