@@ -6,9 +6,19 @@ import QuestItems from "./QuestItems/QuestItems";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 
 export interface QuestBoardProps {
+  /** Array of quests to display on the board */
   quests: Quest[];
 }
 
+/**
+ * QuestBoard component displays a list of the daily quests to complete.
+ * Shows quest items in a grid layout if quests are available,
+ * otherwise displays a message prompting the user to complete setup.
+ *
+ * @param props - Component props
+ * @param props.quests - Array of quest objects to display
+ * @returns The rendered quest board section
+ */
 export default function QuestBoard({ quests }: QuestBoardProps) {
   return (
     <section className={styles.container}>
