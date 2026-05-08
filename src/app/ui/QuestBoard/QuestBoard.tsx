@@ -1,4 +1,4 @@
-import { Quest } from "@/utils/types/AttributesAndQuests";
+import { Quest } from "@/utils/types/Quest";
 import styles from "./styles.module.css";
 import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
@@ -18,10 +18,7 @@ export default function QuestBoard({ quests }: QuestBoardProps) {
       <div className={styles.questBoard}>
         {quests.length > 0 ? (
           <>
-            <QuestItems
-              quests={quests}
-              className={gridVars.gridVars}
-            />
+            <QuestItems quests={quests} className={gridVars.gridVars} />
           </>
         ) : (
           <Paragraph
