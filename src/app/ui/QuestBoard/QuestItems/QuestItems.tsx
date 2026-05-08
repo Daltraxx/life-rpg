@@ -40,9 +40,9 @@ export default function QuestItems({ className, quests }: QuestItemsProps) {
         </div>
       </div>
 
-      {quests.map((quest, i) => (
+      {quests.map((quest) => (
         <QuestItem
-          key={quest.name}
+          key={quest.id}
           quest={quest}
           className={styles.questItem}
         />
