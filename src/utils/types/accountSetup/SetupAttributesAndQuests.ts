@@ -63,12 +63,12 @@ export function createSetupAffectedAttribute(
  * @interface Quest
  * @property {string} name - The name or title of the quest.
  * @property {SetupAffectedAttribute[]} affectedAttributes - An array of attributes that are affected by completing this quest.
- * @property {number} experiencePointValue - The amount of experience points awarded for completing the quest.
+ * @property {number} experienceShare - The percentage of experience points awarded for completing the quest.
  */
 export interface SetupQuest {
   name: string;
   affectedAttributes: SetupAffectedAttribute[];
-  experiencePointValue: number;
+  experienceShare: number;
 }
 
 /**
@@ -76,23 +76,23 @@ export interface SetupQuest {
  *
  * @param name - The name of the quest. It must not be empty or consist only of whitespace.
  * @param affectedAttributes - An array of attributes that are affected by the quest.
- * @param experiencePointValue - The experience points awarded for completing the quest. Defaults to 0.
+ * @param experienceShare - The percentage of experience points awarded for completing the quest. Defaults to 0.
  * @throws {Error} Throws an error if the quest name is empty or only whitespace.
  * @returns A SetupQuest object containing the name and affected attributes.
  */
 export function createSetupQuest(
   name: string,
   affectedAttributes: SetupAffectedAttribute[],
-  experiencePointValue: number = 0,
+  experienceShare: number = 0,
 ): SetupQuest {
   if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
   }
-  if (!Number.isFinite(experiencePointValue)) {
-    throw new Error("Experience point value must be a finite number");
+  if (!Number.isFinite(experienceShare)) {
+    throw new Error("Experience share must be a finite number");
   }
-  if (experiencePointValue < 0) {
-    throw new Error("Experience point value cannot be negative");
+  if (experienceShare < 0) {
+    throw new Error("Experience share cannot be negative");
   }
-  return { name, affectedAttributes, experiencePointValue };
+  return { name, affectedAttributes, experienceShare };
 }

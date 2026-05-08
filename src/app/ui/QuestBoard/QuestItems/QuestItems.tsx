@@ -1,5 +1,5 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { Quest } from "@/utils/types/Quest";
 import QuestItem from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
@@ -9,6 +9,14 @@ interface QuestItemsProps {
   quests: Quest[];
 }
 
+/**
+ * QuestItems component displays a list of quest items.
+ *
+ * @param props - Component props
+ * @param props.className - Optional additional class name for styling
+ * @param props.quests - Array of quest objects to display
+ * @returns The rendered quest items section
+ */
 export default function QuestItems({ className, quests }: QuestItemsProps) {
   return (
     <div className={clsx(styles.container, className)}>
