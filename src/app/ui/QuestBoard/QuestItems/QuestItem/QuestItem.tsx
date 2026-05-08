@@ -5,7 +5,7 @@ import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { sortAffectedAttributes } from "@/utils/helpers/sortAffectedAttributes";
 import { getAttributeDisplayString } from "@/utils/helpers/getAttributeDisplayString";
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import clsx from "clsx";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
@@ -14,18 +14,13 @@ import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 
 interface QuestItemProps {
   quest: SetupQuest;
-  index: number;
-  totalQuests: number;
   className?: string;
 }
 
 export default function QuestItem({
   quest,
-  index,
-  totalQuests,
   className,
 }: QuestItemProps) {
-  const [isRemoving, setIsRemoving] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const itemElementRef = useRef<HTMLDivElement | null>(null);
 
@@ -46,7 +41,6 @@ export default function QuestItem({
     <div
       className={clsx(
         styles.questItem,
-        isRemoving && styles.removing,
         className,
       )}
       ref={itemElementRef}
@@ -108,10 +102,9 @@ export default function QuestItem({
           className={clsx(styles.deleteQuestButton, styles.smallScreenOnly)}
           color="background"
           onClick={() => null}
-          disabled={isRemoving}
           aria-label={`Complete quest ${quest.name}`}
         >
-          DELETE QUEST
+          COMPLETE QUEST
         </ButtonWrapper>
         {/* larger screens */}
         <button
@@ -119,7 +112,6 @@ export default function QuestItem({
           onClick={() => null}
           className={clsx(styles.deleteQuestButton, styles.largerScreenOnly)}
           aria-label={`Complete quest ${quest.name}`}
-          disabled={isRemoving}
         >
           <FontAwesomeIcon
             icon={faRectangleXmark}

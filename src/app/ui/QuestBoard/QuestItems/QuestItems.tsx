@@ -44,8 +44,6 @@ export default function QuestItems({ className, quests }: QuestItemsProps) {
         <QuestItem
           key={quest.name}
           quest={quest}
-          index={i}
-          totalQuests={quests.length}
           className={styles.questItem}
         />
       ))}
