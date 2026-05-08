@@ -1,6 +1,6 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
-import QuestBoardItemSetup from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItemSetup";
+import QuestItemSetup from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItemSetup";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
 
@@ -15,6 +15,15 @@ interface QuestItemsSetupProps {
   ) => void;
 }
 
+/**
+ * Renders a list of quest items for setup with a header row and individual quest items.
+ * @param className - Optional CSS class name to apply to the container
+ * @param quests - Array of setup quests to display
+ * @param onDeleteQuest - Callback function invoked when a quest is deleted
+ * @param onQuestOrderChange - Callback function invoked when quest order changes (up or down)
+ * @param onExperienceShareChange - Callback function invoked when experience share changes (up or down)
+ * @returns The rendered quest items setup component
+ */
 export default function QuestItemsSetup({
   className,
   quests,
@@ -45,7 +54,7 @@ export default function QuestItemsSetup({
       </div>
 
       {quests.map((quest, i) => (
-        <QuestBoardItemSetup
+        <QuestItemSetup
           key={quest.name}
           quest={quest}
           index={i}

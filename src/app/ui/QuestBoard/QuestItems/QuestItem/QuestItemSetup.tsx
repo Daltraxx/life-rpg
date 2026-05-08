@@ -65,7 +65,7 @@ interface QuestItemSetupProps {
  * 
  * @example
  * ```tsx
- * <QuestBoardItemSetup
+ * <QuestItemSetup
  *   quest={questData}
  *   index={0}
  *   totalQuests={3}
@@ -75,7 +75,7 @@ interface QuestItemSetupProps {
  * />
  * ```
  */
-export default function QuestBoardItemSetup({
+export default function QuestItemSetup({
   quest,
   index,
   totalQuests,
