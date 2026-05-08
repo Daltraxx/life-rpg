@@ -97,7 +97,7 @@
     display: grid;
     grid-template-columns: var(--grid-template-columns-quest-details);
     column-gap: var(--column-gap);
-    align-items: top;
+    align-items: center;
   }
 
   .questName {
