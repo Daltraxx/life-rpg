@@ -40,7 +40,7 @@ export default function QuestItem({
   return (
     <div
       className={clsx(
-        styles.questItem,
+        styles.questItem, styles.questItemViewOnly,
         className,
       )}
       ref={itemElementRef}

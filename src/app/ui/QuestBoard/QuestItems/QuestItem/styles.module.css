@@ -11,6 +11,11 @@
   transition: max-height var(--transition-duration) ease-in-out,
     opacity var(--transition-duration) ease-in-out;
 }
+
+.questItemViewOnly {
+  display: flex;
+  flex-direction: column;
+}
 /* TODO: smooth out transition finish, slight jump at end */
 .questItem.removing {
   min-height: 0;
@@ -71,6 +76,7 @@
   }
 
   .questItem {
+    display: grid;
     min-height: 2rem;
     max-width: none;
     grid-template-columns: var(--full-grid-template-columns);
@@ -91,7 +97,7 @@
     display: grid;
     grid-template-columns: var(--grid-template-columns-quest-details);
     column-gap: var(--column-gap);
-    align-items: center;
+    align-items: top;
   }
 
   .questName {
