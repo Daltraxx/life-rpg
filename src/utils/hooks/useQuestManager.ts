@@ -76,7 +76,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         console.warn("Quest with this name already exists");
         return state; // Prevent adding duplicate quest names
       }
-      if (newQuest.experiencePointValue > state.pointsRemaining) {
+      if (newQuest.experienceShare > state.pointsRemaining) {
         console.warn(
           "Not enough points remaining to add quest with experience points",
         );
@@ -85,13 +85,13 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       return {
         ...state,
         quests: [...state.quests, newQuest],
-        pointsRemaining: state.pointsRemaining - newQuest.experiencePointValue,
+        pointsRemaining: state.pointsRemaining - newQuest.experienceShare,
       };
     }
     case "DELETE_QUEST": {
       const {
         name: deletedQuestName,
-        experiencePointValue: deletedQuestExperiencePoints,
+        experienceShare: deletedQuestExperiencePoints,
       } = action.payload;
       const updatedQuests = state.quests.filter(
         (quest) => quest.name !== deletedQuestName,
@@ -148,14 +148,14 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       }
 
       // Prevent decreasing below 0
-      if (direction === "down" && targetQuest.experiencePointValue <= 0) {
+      if (direction === "down" && targetQuest.experienceShare <= 0) {
         return state;
       }
       const experienceChange = direction === "up" ? 1 : -1;
       const updatedQuest = {
         ...targetQuest,
-        experiencePointValue:
-          targetQuest.experiencePointValue + experienceChange,
+        experienceShare:
+          targetQuest.experienceShare + experienceChange,
       };
       // Update experience point value
       const updatedQuests = state.quests.map((quest) =>
@@ -204,7 +204,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
  * @property {(quest: SetupQuest) => void} actions.addQuest - Adds a new quest to the list
  * @property {(quest: SetupQuest) => void} actions.deleteQuest - Removes a quest from the list
  * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.questOrderChange - Moves a quest up or down in the order
- * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.experiencePointValueChange - Adjusts the experience point value of a quest
+ * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.experienceShareChange - Adjusts the experience share of a quest
  */
 interface QuestManager {
   quests: SetupQuest[];
@@ -213,7 +213,7 @@ interface QuestManager {
     addQuest: (quest: SetupQuest) => void;
     deleteQuest: (quest: SetupQuest) => void;
     questOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
-    experiencePointValueChange: (
+    experienceShareChange: (
       quest: SetupQuest,
       direction: "up" | "down",
     ) => void;
@@ -234,7 +234,7 @@ interface QuestManager {
  *     - `addQuest`: Adds a new quest to the state
  *     - `deleteQuest`: Removes a quest from the state
  *     - `questOrderChange`: Moves a quest up or down in the list
- *     - `experiencePointValueChange`: Adjusts a quest's experience point value
+ *     - `experienceShareChange`: Adjusts a quest's experience share
  *
  * @example
  * const { quests, pointsRemaining, actions } = useQuestManager();
@@ -280,7 +280,7 @@ export default function useQuestManager(
       questOrderChange: (quest: SetupQuest, direction: "up" | "down") => {
         dispatch({ type: "CHANGE_QUEST_ORDER", payload: { quest, direction } });
       },
-      experiencePointValueChange: (quest: SetupQuest, direction: "up" | "down") => {
+      experienceShareChange: (quest: SetupQuest, direction: "up" | "down") => {
         dispatch({
           type: "CHANGE_QUEST_EXPERIENCE",
           payload: { quest, direction },

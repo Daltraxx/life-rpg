@@ -223,7 +223,7 @@ const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
 for (const quest of validatedQuests) {
   questsData.push({
     name: quest.name,
-    experience_share: quest.experiencePointValue,
+    experience_share: quest.experienceShare,
     position: quest.order,
   });
   for (const affectedAttribute of quest.affectedAttributes) {

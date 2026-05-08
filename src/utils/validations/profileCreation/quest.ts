@@ -52,9 +52,9 @@ export const QuestSchema = z.object({
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Affected attribute names must be unique",
     }),
-  experiencePointValue: z
+  experienceShare: z
     .int()
-    .nonnegative("Experience point value must be a non-negative integer")
+    .nonnegative("Experience share must be a non-negative integer")
     .min(1, "Each quest must be worth at least 1 experience point")
     .max(
       MAX_EXPERIENCE_POINTS_PER_QUEST,

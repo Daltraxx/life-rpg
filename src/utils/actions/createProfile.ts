@@ -28,7 +28,7 @@ import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBI
  * @param prevState - The previous state from the form action
  * @param formData - The form data containing userId, quests, and attributes
  * @param formData.userId - The ID of the user creating the profile (must match authenticated user)
- * @param formData.quests - Array of quest objects with name, experiencePointValue, order, and affectedAttributes
+ * @param formData.quests - Array of quest objects with name, experienceShare, order, and affectedAttributes
  * @param formData.attributes - Array of attribute objects with name and order
  *
  * @returns A Promise resolving to either:

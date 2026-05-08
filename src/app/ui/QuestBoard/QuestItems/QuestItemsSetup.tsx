@@ -1,16 +1,16 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import QuestBoardItemSetup from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItemSetup";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
 
 interface QuestItemsSetupProps {
   className?: string;
-  quests: Quest[];
-  onDeleteQuest: (quest: Quest) => void;
-  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
-  onExperiencePointValueChange: (
-    quest: Quest,
+  quests: SetupQuest[];
+  onDeleteQuest: (quest: SetupQuest) => void;
+  onQuestOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
+  onExperienceShareChange: (
+    quest: SetupQuest,
     direction: "up" | "down",
   ) => void;
 }
@@ -20,7 +20,7 @@ export default function QuestItemsSetup({
   quests,
   onDeleteQuest,
   onQuestOrderChange,
-  onExperiencePointValueChange,
+  onExperienceShareChange,
 }: QuestItemsSetupProps) {
   return (
     <div className={clsx(styles.container, className)}>
@@ -52,7 +52,7 @@ export default function QuestItemsSetup({
           totalQuests={quests.length}
           onDeleteQuest={onDeleteQuest}
           onQuestOrderChange={onQuestOrderChange}
-          onExperiencePointValueChange={onExperiencePointValueChange}
+          onExperienceShareChange={onExperienceShareChange}
           className={styles.questItem}
         />
       ))}

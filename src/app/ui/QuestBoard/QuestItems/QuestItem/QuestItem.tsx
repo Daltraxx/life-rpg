@@ -95,10 +95,10 @@ export default function QuestItem({
             size="24-responsive"
             color="background"
             className={styles.experienceValue}
-            aria-label={`Experience points: ${quest.experiencePointValue}`}
+            aria-label={`Experience share: ${quest.experienceShare}`}
           >
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
-            {quest.experiencePointValue}
+            {quest.experienceShare}
           </Paragraph>
         </div>
 

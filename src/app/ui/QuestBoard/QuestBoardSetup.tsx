@@ -1,4 +1,4 @@
-import { Quest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import styles from "./styles.module.css";
 import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
@@ -9,12 +9,12 @@ import {
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 
 export interface QuestBoardSetupProps {
-  quests: Quest[];
+  quests: SetupQuest[];
   pointsRemaining: number;
-  onDeleteQuest: (quest: Quest) => void;
-  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
-  onExperiencePointValueChange: (
-    quest: Quest,
+  onDeleteQuest: (quest: SetupQuest) => void;
+  onQuestOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
+  onExperienceShareChange: (
+    quest: SetupQuest,
     direction: "up" | "down",
   ) => void;
 }
@@ -24,7 +24,7 @@ export default function QuestBoardSetup({
   pointsRemaining,
   onDeleteQuest,
   onQuestOrderChange,
-  onExperiencePointValueChange,
+  onExperienceShareChange,
 }: QuestBoardSetupProps) {
   return (
     <section className={styles.container}>
@@ -38,7 +38,7 @@ export default function QuestBoardSetup({
               quests={quests}
               onDeleteQuest={onDeleteQuest}
               onQuestOrderChange={onQuestOrderChange}
-              onExperiencePointValueChange={onExperiencePointValueChange}
+              onExperienceShareChange={onExperienceShareChange}
               className={gridVars.gridVars}
             />
             <Span

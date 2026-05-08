@@ -80,7 +80,7 @@ export default function SetupUI() {
           pointsRemaining={pointsRemaining}
           onDeleteQuest={questActions.deleteQuest}
           onQuestOrderChange={questActions.questOrderChange}
-          onExperiencePointValueChange={questActions.experiencePointValueChange}
+          onExperienceShareChange={questActions.experienceShareChange}
         />
 
         {/* ERROR MESSAGES */}

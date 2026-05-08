@@ -34,7 +34,7 @@ interface QuestItemSetupProps {
   totalQuests: number;
   onDeleteQuest: (quest: SetupQuest) => void;
   onQuestOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
-  onExperiencePointValueChange: (
+  onExperienceShareChange: (
     quest: SetupQuest,
     direction: "up" | "down",
   ) => void;
@@ -47,7 +47,7 @@ export default function QuestBoardItemSetup({
   totalQuests,
   onDeleteQuest,
   onQuestOrderChange,
-  onExperiencePointValueChange,
+  onExperienceShareChange,
   className,
 }: QuestItemSetupProps) {
   const [isRemoving, setIsRemoving] = useState(false);
@@ -78,7 +78,7 @@ export default function QuestBoardItemSetup({
     handleKeyUp: stopIncreasingPointsOnKeyHold,
   } = useButtonHold(HOLD_INITIAL_DELAY_MS, {
     onHold: () => {
-      onExperiencePointValueChange(quest, "up");
+      onExperienceShareChange(quest, "up");
     },
     holdInterval: HOLD_INTERVAL_MS,
   });
@@ -90,7 +90,7 @@ export default function QuestBoardItemSetup({
     handleKeyUp: stopDecreasingPointsOnKeyHold,
   } = useButtonHold(HOLD_INITIAL_DELAY_MS, {
     onHold: () => {
-      onExperiencePointValueChange(quest, "down");
+      onExperienceShareChange(quest, "down");
     },
     holdInterval: HOLD_INTERVAL_MS,
   });
@@ -203,33 +203,33 @@ export default function QuestBoardItemSetup({
             size="24-responsive"
             color="background"
             className={styles.experienceValue}
-            aria-label={`Experience points: ${quest.experiencePointValue}`}
+            aria-label={`Experience share: ${quest.experienceShare}`}
           >
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
-            {quest.experiencePointValue}
+            {quest.experienceShare}
           </Paragraph>
           <div className={styles.experienceButtons}>
             <ChevronUpButton
               aria-label="Increase experience"
               size={20}
-              onClick={() => onExperiencePointValueChange(quest, "up")}
+              onClick={() => onExperienceShareChange(quest, "up")}
               onMouseDown={startIncreasingPointsOnMouseHold}
               onMouseUp={stopIncreasingPointsOnMouseHold}
               onMouseLeave={stopIncreasingPointsOnMouseHold}
               onKeyDown={startIncreasingPointsOnKeyHold}
               onKeyUp={stopIncreasingPointsOnKeyHold}
-              disabled={quest.experiencePointValue === MAX_EXPERIENCE_POINTS}
+              disabled={quest.experienceShare === MAX_EXPERIENCE_POINTS}
             />
             <ChevronDownButton
               aria-label="Decrease experience"
               size={20}
-              onClick={() => onExperiencePointValueChange(quest, "down")}
+              onClick={() => onExperienceShareChange(quest, "down")}
               onMouseDown={startDecreasingPointsOnMouseHold}
               onMouseUp={stopDecreasingPointsOnMouseHold}
               onMouseLeave={stopDecreasingPointsOnMouseHold}
               onKeyDown={startDecreasingPointsOnKeyHold}
               onKeyUp={stopDecreasingPointsOnKeyHold}
-              disabled={quest.experiencePointValue === MIN_EXPERIENCE_POINTS}
+              disabled={quest.experienceShare === MIN_EXPERIENCE_POINTS}
             />
           </div>
         </div>
