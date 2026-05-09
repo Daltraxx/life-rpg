@@ -10,7 +10,7 @@ import clsx from "clsx";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
+import { faRectangleXmark, faGem } from "@fortawesome/free-regular-svg-icons";
 
 interface QuestItemProps {
   quest: SetupQuest;
@@ -99,7 +99,7 @@ export default function QuestItem({
         {/* COMPLETE BUTTON */}
         {/* small screens */}
         <ButtonWrapper
-          className={clsx(styles.deleteQuestButton, styles.smallScreenOnly)}
+          className={clsx(styles.completeQuestButton, styles.smallScreenOnly)}
           color="background"
           onClick={() => null}
           aria-label={`Complete quest ${quest.name}`}
@@ -110,12 +110,12 @@ export default function QuestItem({
         <button
           type="button"
           onClick={() => null}
-          className={clsx(styles.deleteQuestButton, styles.largerScreenOnly)}
+          className={clsx(styles.completeQuestButton, styles.largerScreenOnly)}
           aria-label={`Complete quest ${quest.name}`}
         >
           <FontAwesomeIcon
-            icon={faRectangleXmark}
-            className={styles.deleteQuestIcon}
+            icon={faGem}
+            className={styles.completeQuestIcon}
             aria-hidden="true"
           />
         </button>

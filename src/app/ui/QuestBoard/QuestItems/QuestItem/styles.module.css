@@ -8,7 +8,8 @@
   overflow: hidden;
   max-height: var(--item-height);
   opacity: 1;
-  transition: max-height var(--transition-duration) ease-in-out,
+  transition:
+    max-height var(--transition-duration) ease-in-out,
     opacity var(--transition-duration) ease-in-out;
 }
 
@@ -113,24 +114,66 @@
     min-width: 1.75rem; /* Prevents shifts when changing experience points */
   }
 
+  /* DELETE/COMPLETE QUEST BUTTONS */
+  .deleteQuestButton,
+  .completeQuestButton {
+    cursor: pointer;
+  }
+  .deleteQuestButton path,
+  .completeQuestButton path {
+    fill: var(--background, #fafafa);
+    transition: fill 0.1s ease-in-out;
+  }
+  .deleteQuestButton:focus-visible,
+  .completeQuestButton:focus-visible {
+    outline: 2px solid var(--gold-400, #ffb800);
+    outline-offset: -2px;
+  }
+  @media (hover: hover) {
+    .deleteQuestButton:hover path,
+    .completeQuestButton:hover path {
+      fill: var(--gold-400, #ffb800);
+    }
+  }
+
   /* DELETE QUEST BUTTON */
   .deleteQuestButton {
     height: 1.75rem;
     aspect-ratio: 1.5;
-    cursor: pointer;
-  }
-  .deleteQuestButton path {
-    fill: var(--background, #fafafa);
-  }
-  .deleteQuestButton:focus-visible {
-    outline: 2px solid var(--gold-400, #ffb800);
-    outline-offset: -2px;
-  }
-  .deleteQuestButton:hover path {
-    fill: var(--gold-400, #ffb800);
   }
   .deleteQuestIcon {
     height: 100%;
     width: 100%;
+  }
+
+  /* COMPLETE QUEST BUTTON */
+  .completeQuestButton:not(.smallScreenOnly) {
+    border: 2px solid white;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    transition:
+      color 0.2s ease-in-out,
+      border-color 0.1s ease-in-out;
+  }
+  @media (hover: hover) {
+    .completeQuestButton:hover {
+      color: var(--gold-400, #ffb800);
+      border-color: var(--gold-400, #ffb800);
+    }
+  }
+
+  .completeQuestButton:active,
+  .completeQuestButton:active path {
+    fill: var(--gold-600, #d89b00);
+    border-color: var(--gold-600, #d89b00);
+    transform: scale(0.98);
+  }
+  .completeQuestIcon {
+    height: 1.75rem;
+    aspect-ratio: 1.5;
+    padding: 0.25rem 0.5rem;
   }
 }
