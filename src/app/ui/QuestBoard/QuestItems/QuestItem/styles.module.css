@@ -118,7 +118,6 @@
   .deleteQuestButton,
   .completeQuestButton {
     cursor: pointer;
-    background-color: var(--brown-400, #57340f);
   }
   .deleteQuestButton path,
   .completeQuestButton path {
@@ -149,6 +148,7 @@
 
   /* COMPLETE QUEST BUTTON */
   .completeQuestButton:not(.smallScreenOnly) {
+    background-color: var(--brown-400, #57340f);
     border: 2px solid white;
     border-radius: 0.25rem;
     display: flex;
