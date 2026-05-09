@@ -118,6 +118,7 @@
   .deleteQuestButton,
   .completeQuestButton {
     cursor: pointer;
+    background-color: var(--brown-400);
   }
   .deleteQuestButton path,
   .completeQuestButton path {
