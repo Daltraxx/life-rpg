@@ -27,9 +27,7 @@ export default function QuestBoard({ quests }: QuestBoardProps) {
       </Heading>
       <div className={styles.questBoard}>
         {quests.length > 0 ? (
-          <>
-            <QuestItems quests={quests} className={gridVars.gridVars} />
-          </>
+          <QuestItems quests={quests} className={gridVars.gridVars} />
         ) : (
           <Paragraph
             size="30"
