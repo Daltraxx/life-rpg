@@ -80,6 +80,12 @@ export default async function getQuests(): Promise<Quest[]> {
         const attribute = Array.isArray(questAttr.attributes)
           ? questAttr.attributes[0]
           : questAttr.attributes;
+        
+        if (!attribute) {
+          throw new Error(
+            `Missing attribute data for quest ID ${quest.id}`,
+          );
+        }
 
         const { strength } = questAttr;
         if (!isStrengthKey(strength)) {
