@@ -165,12 +165,12 @@
       border-color: var(--gold-400, #ffb800);
     }
   }
-
-  .completeQuestButton:active,
-  .completeQuestButton:active path {
-    fill: var(--gold-600, #d89b00);
+  .completeQuestButton:active {
     border-color: var(--gold-600, #d89b00);
     transform: scale(0.98);
+  }
+  .completeQuestButton:active path {
+    fill: var(--gold-600, #d89b00);
   }
   .completeQuestIcon {
     height: 1.75rem;
