@@ -5,7 +5,6 @@ import styles from "./styles.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { sortAffectedAttributes } from "@/utils/helpers/sortAffectedAttributes";
 import { getAttributeDisplayString } from "@/utils/helpers/getAttributeDisplayString";
-import { useRef, useEffect } from "react";
 import clsx from "clsx";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
@@ -21,16 +20,6 @@ export default function QuestItem({
   quest,
   className,
 }: QuestItemProps) {
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const itemElementRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-    };
-  }, []);
 
   const attributesString = sortAffectedAttributes(quest.affectedAttributes)
     .map((attr) => getAttributeDisplayString(attr))
@@ -43,7 +32,6 @@ export default function QuestItem({
         styles.questItem, styles.questItemViewOnly,
         className,
       )}
-      ref={itemElementRef}
     >
       {/* QUEST NAME */}
       <div className={styles.questDetails}>
