@@ -55,7 +55,7 @@ export default function QuestItemsSetup({
 
       {quests.map((quest, i) => (
         <QuestItemSetup
-          key={quest.name}
+          key={i}
           quest={quest}
           index={i}
           totalQuests={quests.length}
