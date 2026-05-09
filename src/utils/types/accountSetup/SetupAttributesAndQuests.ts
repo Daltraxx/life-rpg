@@ -1,7 +1,7 @@
 import type { AttributeStrength } from "@/utils/types/AttributeStrength";
 
 /**
- * Represents an attribute with a name and display order.
+ * Represents an attribute with a name.
  *
  * @interface Attribute
  * @property {string} name - The name of the attribute.
