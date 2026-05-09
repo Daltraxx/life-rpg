@@ -10,7 +10,7 @@ import clsx from "clsx";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRectangleXmark, faGem } from "@fortawesome/free-regular-svg-icons";
+import { faGem } from "@fortawesome/free-regular-svg-icons";
 
 interface QuestItemProps {
   quest: SetupQuest;
