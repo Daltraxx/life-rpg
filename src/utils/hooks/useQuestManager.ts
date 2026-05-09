@@ -157,7 +157,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
         experienceShare:
           targetQuest.experienceShare + experienceChange,
       };
-      // Update experience point value
+      // Update experience share for the target quest and adjust points remaining accordingly
       const updatedQuests = state.quests.map((quest) =>
         quest.name === targetQuest.name ? updatedQuest : quest,
       );
