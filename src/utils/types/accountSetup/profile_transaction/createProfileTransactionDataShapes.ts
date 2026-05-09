@@ -32,7 +32,7 @@ export interface CreateProfileTransactionQuests {
    */
   name: string;
   /**
-   * The share (0-100) of daily possible experience points allocated to the quest.
+   * The share (integer between 0-100 inclusive) of daily possible experience points allocated to the quest.
    */
   experience_share: number;
   /**
