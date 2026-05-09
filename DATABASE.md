@@ -10,7 +10,7 @@ Full table can be found on the Supabase dashboard.
   - Strength rank enum (E, D, C, B, A, S)
 - `multiplier`: DECIMAL(4, 2) NOT NULL
   - Multiplier for experience calculation
-- `min_points`: INT
+- `min_points`: INT NOT NULL
   - Minimum strength points required for this rank
 - `max_points`: INT
   - Maximum strength points for this rank (null for S)
@@ -162,13 +162,13 @@ Full table can be found on the Supabase dashboard.
 
 ### Strength Levels Reference (from setup)
 
-INSERT INTO strength_levels (level, multiplier) VALUES
-('E', 0),
-('D', 0.20),
-('C', 0.40),
-('B', 0.60),
-('A', 0.80),
-('S', 1.00);
+INSERT INTO strength_levels (level, multiplier, min_points, max_points) VALUES
+('E', 0, 0, 99),
+('D', 0.20, 100, 199),
+('C', 0.40, 200, 299),
+('B', 0.60, 300, 399),
+('A', 0.80, 400, 499),
+('S', 1.00, 500, NULL);
 
 ### Indexes Reference
 
