@@ -3,6 +3,7 @@ import { DailyQuest } from "@/utils/types/DailyQuest";
 import QuestItem from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
+import useDailyQuestManager from "@/utils/hooks/useDailyQuestManager";
 
 interface QuestItemsProps {
   className?: string;
@@ -18,6 +19,7 @@ interface QuestItemsProps {
  * @returns The rendered quest items section
  */
 export default function QuestItems({ className, quests }: QuestItemsProps) {
+  const dailyQuestManager = useDailyQuestManager(quests);
   return (
     <div className={clsx(styles.container, className)}>
       <div className={clsx(styles.headerRow, styles.largerScreenOnly)}>
@@ -45,6 +47,7 @@ export default function QuestItems({ className, quests }: QuestItemsProps) {
           key={quest.id}
           quest={quest}
           className={styles.questItem}
+          dailyQuestManager={dailyQuestManager}
         />
       ))}
     </div>

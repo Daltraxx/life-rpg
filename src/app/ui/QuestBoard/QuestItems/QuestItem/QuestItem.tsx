@@ -10,17 +10,32 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { DailyQuest } from "@/utils/types/DailyQuest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem } from "@fortawesome/free-regular-svg-icons";
+import type { DailyQuestManager } from "@/utils/hooks/useDailyQuestManager";
 
 interface QuestItemProps {
   quest: DailyQuest;
+  dailyQuestManager: DailyQuestManager;
   className?: string;
 }
 
-export default function QuestItem({ quest, className }: QuestItemProps) {
+export default function QuestItem({
+  quest,
+  dailyQuestManager,
+  className,
+}: QuestItemProps) {
   const attributesString = sortAffectedAttributes(quest.affectedAttributes)
     .map((attr) => getAttributeDisplayString(attr))
     .join(", ");
 
+  const { completeQuest, undoCompleteQuest } = dailyQuestManager.actions;
+  const handleCompletionToggle = () => {
+    if (quest.isCompleted) {
+      undoCompleteQuest(quest.id);
+    } else {
+      completeQuest(quest.id);
+    }
+  };
+  // TODO: Render different styling for completed vs incomplete quests (e.g. grayed out, strikethrough, etc.)
   // TODO: Consider rendering table on larger screens for better accessibility
   return (
     <div
@@ -82,7 +97,7 @@ export default function QuestItem({ quest, className }: QuestItemProps) {
         <ButtonWrapper
           className={clsx(styles.completeQuestButton, styles.smallScreenOnly)}
           color="background"
-          onClick={() => null}
+          onClick={() => handleCompletionToggle()}
           aria-label={`Complete quest ${quest.name}`}
         >
           COMPLETE QUEST
@@ -90,7 +105,7 @@ export default function QuestItem({ quest, className }: QuestItemProps) {
         {/* larger screens */}
         <button
           type="button"
-          onClick={() => null}
+          onClick={() => handleCompletionToggle()}
           className={clsx(styles.completeQuestButton, styles.largerScreenOnly)}
           aria-label={`Complete quest ${quest.name}`}
         >

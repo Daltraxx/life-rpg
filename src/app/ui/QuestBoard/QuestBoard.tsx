@@ -5,7 +5,6 @@ import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import QuestItems from "./QuestItems/QuestItems";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import useDailyQuestManager from "@/utils/hooks/useDailyQuestManager";
 
 export interface QuestBoardProps {
   /** Array of quests to display on the board */
@@ -22,7 +21,6 @@ export interface QuestBoardProps {
  * @returns The rendered quest board section
  */
 export default function QuestBoard({ quests }: QuestBoardProps) {
-  const dailyQuestManager = useDailyQuestManager(quests);
   return (
     <section className={styles.container}>
       <Heading as="h2" color="blue-700" size="36">

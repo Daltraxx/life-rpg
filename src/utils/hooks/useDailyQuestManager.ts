@@ -39,7 +39,7 @@ function dailyQuestReducer(
   }
 }
 
-interface DailyQuestManager { 
+export interface DailyQuestManager { 
   dailyQuests: DailyQuest[];
   actions: {
     completeQuest: (questId: number) => void;
