@@ -24,6 +24,8 @@ export default function QuestItem({
   const attributesString = sortAffectedAttributes(quest.affectedAttributes)
     .map((attr) => getAttributeDisplayString(attr))
     .join(", ");
+  
+  
 
   // TODO: Consider rendering table on larger screens for better accessibility
   return (
