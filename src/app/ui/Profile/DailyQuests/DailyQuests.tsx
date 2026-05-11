@@ -1,6 +1,6 @@
 import QuestBoard from "@/app/ui/QuestBoard/QuestBoard";
-import getQuests from "@/app/queries/server/getQuests";
 import getUsername from "@/app/queries/server/getUsername";
+import getDailyQuests from "@/app/queries/server/getDailyQuests";
 
 /**
  * DailyQuests component
@@ -13,7 +13,7 @@ import getUsername from "@/app/queries/server/getUsername";
 export default async function DailyQuests() {
   // TODO: Implement loading skeleton (possibly in parent component Profile)
   try {
-    const [quests, username] = await Promise.all([getQuests(), getUsername()]);
+    const [quests, username] = await Promise.all([getDailyQuests(), getUsername()]);
     return (
       <div>
         <h1>Welcome, {username || "adventurer"}.</h1>
