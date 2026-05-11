@@ -63,7 +63,8 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     .order("completed_at", {
       ascending: false,
       referencedTable: "quest_completions",
-    });
+    })
+    .limit(1, { referencedTable: "quest_completions" });
 
   if (error) {
     console.error("Error fetching quests:", error);
