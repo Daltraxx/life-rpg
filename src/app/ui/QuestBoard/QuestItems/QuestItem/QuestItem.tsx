@@ -7,33 +7,24 @@ import { sortAffectedAttributes } from "@/utils/helpers/sortAffectedAttributes";
 import { getAttributeDisplayString } from "@/utils/helpers/getAttributeDisplayString";
 import clsx from "clsx";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { DailyQuest } from "@/utils/types/DailyQuest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem } from "@fortawesome/free-regular-svg-icons";
 
 interface QuestItemProps {
-  quest: SetupQuest;
+  quest: DailyQuest;
   className?: string;
 }
 
-export default function QuestItem({
-  quest,
-  className,
-}: QuestItemProps) {
-
+export default function QuestItem({ quest, className }: QuestItemProps) {
   const attributesString = sortAffectedAttributes(quest.affectedAttributes)
     .map((attr) => getAttributeDisplayString(attr))
     .join(", ");
-  
-  
 
   // TODO: Consider rendering table on larger screens for better accessibility
   return (
     <div
-      className={clsx(
-        styles.questItem, styles.questItemViewOnly,
-        className,
-      )}
+      className={clsx(styles.questItem, styles.questItemViewOnly, className)}
     >
       {/* QUEST NAME */}
       <div className={styles.questDetails}>

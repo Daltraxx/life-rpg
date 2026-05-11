@@ -1,12 +1,12 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { Quest } from "@/utils/types/Quest";
+import { DailyQuest } from "@/utils/types/DailyQuest";
 import QuestItem from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
 
 interface QuestItemsProps {
   className?: string;
-  quests: Quest[];
+  quests: DailyQuest[];
 }
 
 /**
