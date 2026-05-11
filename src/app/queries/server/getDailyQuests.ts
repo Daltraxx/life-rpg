@@ -5,7 +5,16 @@ import {
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { DailyQuest } from "@/utils/types/DailyQuest";
 
-
+/**
+ * Fetches all daily quests for the authenticated user from the Supabase database.
+ *
+ * @returns {Promise<DailyQuest[]>} An array of daily quests with their associated attributes and completion status.
+ * @throws {Error} If the user is not authenticated or if there is an error fetching quests from the database.
+ *
+ * @example
+ * const quests = await getDailyQuests();
+ * console.log(quests); // Array of DailyQuest objects
+ */
 export default async function getDailyQuests(): Promise<DailyQuest[]> {
   const supabase = await createSupabaseServerClient();
 
@@ -61,7 +70,7 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     throw new Error(error.message);
   }
 
-  const isCompletedToday = (completedAt: string | null): boolean => { 
+  const isCompletedToday = (completedAt: string | null): boolean => {
     if (!completedAt) return false;
     const completedDate = new Date(completedAt);
     const today = new Date();
@@ -76,7 +85,9 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     id: quest.id,
     name: quest.name,
     description: quest.description,
-    isCompleted: isCompletedToday(quest.latestCompletion?.[0]?.completed_at ?? false),
+    isCompleted: isCompletedToday(
+      quest.latestCompletion?.[0]?.completed_at ?? false,
+    ),
     experienceShare: quest.experienceShare,
     frequency: quest.frequency,
     restFrequency: quest.restFrequency,
