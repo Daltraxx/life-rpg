@@ -1,4 +1,3 @@
-import { AffectedAttribute } from "./AffectedAttribute";
 import { SetupQuest } from "./accountSetup/SetupAttributesAndQuests";
 
 /**
