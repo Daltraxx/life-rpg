@@ -1,0 +1,22 @@
+import { Quest } from "./Quest";
+
+/**
+ * Represents a quest for viewing on the daily quest board in the life RPG system.
+ *
+ * @shape
+ * - `id`: number - Unique identifier
+ * - `name`: string - Quest name
+ * - `isCompleted`: boolean - Whether the quest is completed for the day
+ * - `description`: string | null - Optional description
+ * - `affectedAttributes`: AffectedAttribute[] - Attributes modified by quest
+ * - `experienceShare`: number - Experience percentage (0-100)
+ * - `frequency`: number - Completion frequency
+ * - `restFrequency`: number - Rest period between completions
+ * - `streak`: number - Current completion streak
+ * - `strengthPoints`: number - Points earned
+ * - `strengthLevel`: QuestStrengthLevel - Difficulty level (S-E)
+ * - `position`: number - Display position
+ */
+export type DailyQuest = Quest & {
+  isCompleted: boolean;
+};
