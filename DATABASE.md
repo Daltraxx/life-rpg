@@ -78,19 +78,19 @@ Full table can be found on the Supabase dashboard.
   - Optional quest description
 - `created_at`: TIMESTAMP DEFAULT NOW()
   - Creation timestamp
-- `frequency`: INT DEFAULT 1 CHECK (frequency >= 0)
+- `frequency`: INT NOT NULL DEFAULT 1 CHECK (frequency >= 0)
   - Interval in days between required completions (1 = daily, 7 = weekly, etc.)
-- `rest_frequency`: INT DEFAULT 0 CHECK (rest_frequency >= 0)
+- `rest_frequency`: INT NOT NULL DEFAULT 0 CHECK (rest_frequency >= 0)
   - Allowed rest days without streak reset
 - `last_rest_date`: DATE
   - Date of last rest day
 - `experience_share`: INT NOT NULL CHECK (experience_share BETWEEN 0 AND 100)
   - Percentage share (0–100) of daily experience points allocated to this quest based on user-defined priority or difficulty
-- `streak`: INT DEFAULT 0
+- `streak`: INT NOT NULL DEFAULT 0
   - Current streak count
-- `strength_points`: INT DEFAULT 0
+- `strength_points`: INT NOT NULL DEFAULT 0
   - Accumulated strength points
-- `strength_level`: strength_rank REFERENCES strength_levels(level) DEFAULT 'E'
+- `strength_level`: strength_rank REFERENCES strength_levels(level) NOT NULL DEFAULT 'E'
   - Current strength rank (E-S)
 - `last_completed_date`: DATE
   - Date of last completion
