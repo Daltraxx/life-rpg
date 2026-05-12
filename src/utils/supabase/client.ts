@@ -1,7 +1,8 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createBrowserClient } from "@supabase/ssr";
+import type { Database } from "../generatedTypes/supabase";
 
-let client: SupabaseClient | undefined;
+let client: SupabaseClient<Database> | undefined;
 
 /**
  * Creates or returns the cached Supabase browser client.
@@ -9,7 +10,7 @@ let client: SupabaseClient | undefined;
  * @returns {SupabaseClient} The Supabase client instance
  * @throws {Error} If required environment variables are not set
  */
-export function createSupabaseBrowserClient(): SupabaseClient {
+export function createSupabaseBrowserClient(): SupabaseClient<Database> {
   if (client) return client;
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -17,10 +18,10 @@ export function createSupabaseBrowserClient(): SupabaseClient {
 
   if (!supabaseUrl || !supabaseKey) {
     throw new Error(
-      "Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set."
+      "Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set.",
     );
   }
 
-  client = createBrowserClient(supabaseUrl, supabaseKey);
+  client = createBrowserClient<Database>(supabaseUrl, supabaseKey);
   return client;
 }

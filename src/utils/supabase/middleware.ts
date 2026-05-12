@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { AuthError, AuthSessionMissingError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
+import type { Database } from "../generatedTypes/supabase";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -45,14 +46,14 @@ const getUserErrorLog = (error: AuthError, request: NextRequest) => {
  * ```
  */
 export async function updateSession(
-  request: NextRequest
+  request: NextRequest,
 ): Promise<NextResponse> {
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
   if (!supabaseUrl || !supabaseKey) {
     if (process.env.NODE_ENV === "development") {
       throw new Error(
-        "Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set."
+        "Missing Supabase environment variables. Please check NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY are set.",
       );
     } else {
       console.error("Missing Supabase environment variables");
@@ -64,18 +65,18 @@ export async function updateSession(
 
   let supabaseResponse = NextResponse.next({ request });
 
-  const supabase = createServerClient(supabaseUrl, supabaseKey, {
+  const supabase = createServerClient<Database>(supabaseUrl, supabaseKey, {
     cookies: {
       getAll() {
         return request.cookies.getAll();
       },
       setAll(cookiesToSet) {
         cookiesToSet.forEach(({ name, value }) =>
-          request.cookies.set(name, value)
+          request.cookies.set(name, value),
         );
         supabaseResponse = NextResponse.next({ request });
         cookiesToSet.forEach(({ name, value, options }) =>
-          supabaseResponse.cookies.set(name, value, options)
+          supabaseResponse.cookies.set(name, value, options),
         );
       },
     },
@@ -109,7 +110,7 @@ export async function updateSession(
   const pathname = request.nextUrl.pathname;
   const isUnauthenticatedPath = unauthenticatedPaths.some(
     (path) =>
-      pathname === path || (path !== "/" && pathname.startsWith(`${path}/`))
+      pathname === path || (path !== "/" && pathname.startsWith(`${path}/`)),
   );
 
   if (error) {
@@ -132,9 +133,14 @@ export async function updateSession(
   }
 
   // Paths accessible to authenticated (email-verified) users
-  const authenticatedUserPaths = ["/account-setup", "/profile", "/error", "/auth"];
+  const authenticatedUserPaths = [
+    "/account-setup",
+    "/profile",
+    "/error",
+    "/auth",
+  ];
   const isAuthenticatedUserPath = authenticatedUserPaths.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`)
+    (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
 
   if (user && !isAuthenticatedUserPath) {

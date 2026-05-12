@@ -1,0 +1,535 @@
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
+
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: "13.0.5";
+  };
+  graphql_public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json;
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+        };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  public: {
+    Tables: {
+      attributes: {
+        Row: {
+          created_at: string | null;
+          experience: number | null;
+          id: number;
+          level: number | null;
+          name: string;
+          position: number;
+          updated_at: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          experience?: number | null;
+          id?: number;
+          level?: number | null;
+          name: string;
+          position: number;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          experience?: number | null;
+          id?: number;
+          level?: number | null;
+          name?: string;
+          position?: number;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "user_attributes_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_progress";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "user_attributes_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      experience_log: {
+        Row: {
+          created_at: string | null;
+          experience_amount: number;
+          id: number;
+          quest_id: number | null;
+          reason: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          experience_amount: number;
+          id?: number;
+          quest_id?: number | null;
+          reason?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          experience_amount?: number;
+          id?: number;
+          quest_id?: number | null;
+          reason?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "experience_log_task_id_fkey";
+            columns: ["quest_id"];
+            isOneToOne: false;
+            referencedRelation: "quests";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "experience_log_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_progress";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "experience_log_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      quest_completions: {
+        Row: {
+          completed_at: string | null;
+          experience_earned: number | null;
+          id: number;
+          quest_id: number | null;
+          streak: number | null;
+          updated_at: string | null;
+        };
+        Insert: {
+          completed_at?: string | null;
+          experience_earned?: number | null;
+          id?: number;
+          quest_id?: number | null;
+          streak?: number | null;
+          updated_at?: string | null;
+        };
+        Update: {
+          completed_at?: string | null;
+          experience_earned?: number | null;
+          id?: number;
+          quest_id?: number | null;
+          streak?: number | null;
+          updated_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "task_completions_task_id_fkey";
+            columns: ["quest_id"];
+            isOneToOne: false;
+            referencedRelation: "quests";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      quests: {
+        Row: {
+          created_at: string | null;
+          description: string | null;
+          experience_share: number;
+          frequency: number;
+          id: number;
+          last_completed_date: string | null;
+          last_rest_date: string | null;
+          name: string;
+          position: number;
+          rest_frequency: number;
+          streak: number;
+          strength_level: Database["public"]["Enums"]["strength_rank"];
+          strength_points: number;
+          updated_at: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          description?: string | null;
+          experience_share: number;
+          frequency?: number;
+          id?: number;
+          last_completed_date?: string | null;
+          last_rest_date?: string | null;
+          name: string;
+          position: number;
+          rest_frequency?: number;
+          streak?: number;
+          strength_level?: Database["public"]["Enums"]["strength_rank"];
+          strength_points?: number;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          description?: string | null;
+          experience_share?: number;
+          frequency?: number;
+          id?: number;
+          last_completed_date?: string | null;
+          last_rest_date?: string | null;
+          name?: string;
+          position?: number;
+          rest_frequency?: number;
+          streak?: number;
+          strength_level?: Database["public"]["Enums"]["strength_rank"];
+          strength_points?: number;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "tasks_strength_level_fkey";
+            columns: ["strength_level"];
+            isOneToOne: false;
+            referencedRelation: "strength_levels";
+            referencedColumns: ["level"];
+          },
+          {
+            foreignKeyName: "tasks_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_progress";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "tasks_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      quests_attributes: {
+        Row: {
+          attribute_id: number | null;
+          attribute_power: number | null;
+          id: number;
+          quest_id: number | null;
+          updated_at: string | null;
+          user_id: string | null;
+        };
+        Insert: {
+          attribute_id?: number | null;
+          attribute_power?: number | null;
+          id?: number;
+          quest_id?: number | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Update: {
+          attribute_id?: number | null;
+          attribute_power?: number | null;
+          id?: number;
+          quest_id?: number | null;
+          updated_at?: string | null;
+          user_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "tasks_attributes_attribute_id_fkey";
+            columns: ["attribute_id"];
+            isOneToOne: false;
+            referencedRelation: "attributes";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tasks_attributes_task_id_fkey";
+            columns: ["quest_id"];
+            isOneToOne: false;
+            referencedRelation: "quests";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "tasks_attributes_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "user_progress";
+            referencedColumns: ["user_id"];
+          },
+          {
+            foreignKeyName: "tasks_attributes_user_id_fkey";
+            columns: ["user_id"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
+      strength_levels: {
+        Row: {
+          level: Database["public"]["Enums"]["strength_rank"];
+          max_points: number | null;
+          min_points: number;
+          multiplier: number;
+          updated_at: string | null;
+        };
+        Insert: {
+          level: Database["public"]["Enums"]["strength_rank"];
+          max_points?: number | null;
+          min_points: number;
+          multiplier: number;
+          updated_at?: string | null;
+        };
+        Update: {
+          level?: Database["public"]["Enums"]["strength_rank"];
+          max_points?: number | null;
+          min_points?: number;
+          multiplier?: number;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
+      users: {
+        Row: {
+          created_at: string | null;
+          email: string;
+          experience: number | null;
+          id: string;
+          last_login: string | null;
+          level: number | null;
+          profile_complete: boolean | null;
+          updated_at: string | null;
+          username: string;
+          usertag: string;
+          verified: boolean | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          email: string;
+          experience?: number | null;
+          id: string;
+          last_login?: string | null;
+          level?: number | null;
+          profile_complete?: boolean | null;
+          updated_at?: string | null;
+          username: string;
+          usertag: string;
+          verified?: boolean | null;
+        };
+        Update: {
+          created_at?: string | null;
+          email?: string;
+          experience?: number | null;
+          id?: string;
+          last_login?: string | null;
+          level?: number | null;
+          profile_complete?: boolean | null;
+          updated_at?: string | null;
+          username?: string;
+          usertag?: string;
+          verified?: boolean | null;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      user_progress: {
+        Row: {
+          experience: number | null;
+          level: number | null;
+          total_strength: number | null;
+          total_tasks: number | null;
+          user_id: string | null;
+          username: string | null;
+        };
+        Relationships: [];
+      };
+    };
+    Functions: {
+      create_profile_transaction: {
+        Args: {
+          p_attributes: Json;
+          p_quests: Json;
+          p_quests_attributes: Json;
+          p_user_id: string;
+        };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      strength_rank: "E" | "D" | "C" | "B" | "A" | "S";
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+};
+
+type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">;
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<
+  keyof Database,
+  "public"
+>];
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])
+    ? (DefaultSchema["Tables"] &
+        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
+
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
+
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema["Tables"]
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
+    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
+
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema["Enums"]
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
+    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
+    : never;
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema["CompositeTypes"]
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
+    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
+    : never;
+
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {
+      strength_rank: ["E", "D", "C", "B", "A", "S"],
+    },
+  },
+} as const;
