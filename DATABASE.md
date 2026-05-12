@@ -112,7 +112,7 @@ Full table can be found on the Supabase dashboard.
   - Reference to completed quest
 - `completed_at`: TIMESTAMP DEFAULT NOW()
   - Completion timestamp
-- `streak_count`: INT DEFAULT 1
+- `streak`: INT DEFAULT 1
   - Streak at time of completion
 - `experience_earned`: DECIMAL(8, 2) DEFAULT 0
   - Experience points awarded
