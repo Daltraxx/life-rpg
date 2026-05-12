@@ -23,6 +23,7 @@ export default async function completeQuest(questId: number): Promise<void> {
   } = await supabase.auth.getUser();
 
   if (authError || !user) {
+    console.error("User authentication error:", authError);
     throw new Error("User not authenticated");
   }
 
@@ -49,13 +50,13 @@ export default async function completeQuest(questId: number): Promise<void> {
   // Calculate experience earned
   const experienceEarned = getExperienceEarned(
     questData.experience_share,
-    questData.strength_levels[0].multiplier,
+    questData.strength_levels.multiplier,
   );
 
   // Insert completion record
   const { error } = await supabase.from("quest_completions").insert({
     quest_id: questId,
-    completed_at: new Date(),
+    completed_at: new Date().toISOString(),
     streak: questData.streak,
     experience_earned: experienceEarned,
   });
