@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import { DailyQuest } from '../types/DailyQuest';
+import completeQuest from '@/app/queries/client/completeQuest';
 
 interface DailyQuestState {
   dailyQuests: DailyQuest[];
@@ -16,7 +17,11 @@ function dailyQuestReducer(
   switch (action.type) {
     case "completeQuest": {
       const { questId } = action;
-      // Write to database to mark quest as completed for the day (TODO: implement)
+      // Write to database to mark quest as completed for the day
+      // TODO: alert user if there's an error completing the quest (e.g. network error, database error, etc.)
+      completeQuest(questId).catch((error) => {
+        console.error("Error completing quest:", error);
+      });
       return {
         ...state,
         dailyQuests: state.dailyQuests.map((quest) =>
