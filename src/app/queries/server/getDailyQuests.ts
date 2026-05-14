@@ -40,7 +40,6 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     streak,
     strengthPoints:strength_points,
     strengthLevel:strength_level,
-    lastCompletedDate:last_completed_date,
     position,
     updated_at,
 
@@ -87,7 +86,7 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     name: quest.name,
     description: quest.description,
     isCompleted: isCompletedToday(
-      quest.latestCompletion?.[0]?.completed_at ?? false,
+      quest.latestCompletion[0]?.completed_at ?? null,
     ),
     experienceShare: quest.experienceShare,
     frequency: quest.frequency,
