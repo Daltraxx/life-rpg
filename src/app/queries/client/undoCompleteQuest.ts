@@ -2,12 +2,11 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 
 /**
  * Undoes the completion of a quest by deleting the associated quest completion record.
- * @param questId - The ID of the quest
  * @param completedQuestId - The ID of the quest completion record to delete
  * @throws {Error} If the user is not authenticated
  * @throws {Error} If the delete operation fails
  */
-export default async function undoCompleteQuest(questId: number, completedQuestId: number): Promise<void> { 
+export default async function undoCompleteQuest(completedQuestId: number): Promise<void> { 
   const supabase = createSupabaseBrowserClient();
 
   const { data: { user }, error: authError } = await supabase.auth.getUser();

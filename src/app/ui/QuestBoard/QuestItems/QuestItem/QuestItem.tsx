@@ -35,7 +35,12 @@ export default function QuestItem({
   const { completeQuest, undoCompleteQuest } = dailyQuestManager.actions;
   const handleCompletionToggle = () => {
     if (quest.isCompleted) {
-      undoCompleteQuest(quest.id);
+      if (!quest.completedQuestId) {
+        console.error(
+          `Cannot undo completion for quest "${quest.name}" because completedQuestId is null.`,);
+        return;
+      }
+      undoCompleteQuest(quest.id, quest.completedQuestId);
     } else {
       completeQuest(quest.id);
     }

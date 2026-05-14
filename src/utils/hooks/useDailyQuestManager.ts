@@ -12,7 +12,7 @@ type DailyQuestAction =
   | { type: "submitCompleteQuest"; questId: number }
   | { type: "completeQuestSuccess"; questId: number; completedQuestId: number }
   | { type: "completeQuestFailure"; questId: number }
-  | { type: "undoCompleteQuest"; questId: number }
+  | { type: "undoCompleteQuest"; questId: number; }
   | { type: "undoCompleteQuestSuccess"; questId: number }
   | { type: "undoCompleteQuestFailure"; questId: number };
 
@@ -112,7 +112,7 @@ export interface DailyQuestManager {
   dailyQuests: DailyQuest[];
   actions: {
     completeQuest: (questId: number) => void;
-    undoCompleteQuest: (questId: number) => void;
+    undoCompleteQuest: (questId: number, completedQuestId: number) => void;
   };
   errors: string[];
 }
@@ -136,18 +136,12 @@ export default function useDailyQuestManager(
       dispatch({ type: "completeQuestFailure", questId });
     }
   };
-  const undoCompleteQuest = async (questId: number) => {
+  const undoCompleteQuest = async (questId: number, completedQuestId: number) => {
     // Update local state to pending immediately for better UX,
     // then write to database to undo quest completion for the day
     dispatch({ type: "undoCompleteQuest", questId });
     try {
-      const completedQuestId = state.dailyQuests.find(
-        (quest) => quest.id === questId,
-      )?.completedQuestId;
-      if (!completedQuestId) {
-        throw new Error("No completed quest record found to undo.");
-      }
-      await undoCompleteQuestDB(questId, completedQuestId);
+      await undoCompleteQuestDB(completedQuestId);
       dispatch({ type: "undoCompleteQuestSuccess", questId });
     } catch (error) {
       console.error("Error undoing quest completion:", error);
