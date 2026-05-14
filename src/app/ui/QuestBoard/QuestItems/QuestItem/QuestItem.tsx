@@ -10,7 +10,11 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { DailyQuest } from "@/utils/types/DailyQuest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem } from "@fortawesome/free-regular-svg-icons";
-import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
+import {
+  faRotateLeft,
+  faEllipsis,
+  faR,
+} from "@fortawesome/free-solid-svg-icons";
 import type { DailyQuestManager } from "@/utils/hooks/useDailyQuestManager";
 
 interface QuestItemProps {
@@ -36,6 +40,26 @@ export default function QuestItem({
       completeQuest(quest.id);
     }
   };
+
+  const getQuestActionIcon = () => {
+    if (quest.isCompleted === "pending") {
+      return faEllipsis;
+    } else if (quest.isCompleted) {
+      return faRotateLeft;
+    } else {
+      return faGem;
+    }
+  };
+
+  const getQuestActionText = () => {
+    if (quest.isCompleted === "pending") {
+      return "Updating...";
+    } else if (quest.isCompleted) {
+      return "UNDO COMPLETE QUEST";
+    }
+    return "COMPLETE QUEST";
+  };
+
   // TODO: Render different styling for completed vs incomplete quests (e.g. grayed out, strikethrough, etc.)
   // TODO: Consider rendering table on larger screens for better accessibility
   return (
@@ -99,19 +123,27 @@ export default function QuestItem({
           className={clsx(styles.completeQuestButton, styles.smallScreenOnly)}
           color="background"
           onClick={() => handleCompletionToggle()}
-          aria-label={quest.isCompleted ? `Undo complete quest ${quest.name}` : `Complete quest ${quest.name}`}
+          aria-label={
+            quest.isCompleted
+              ? `Undo complete quest ${quest.name}`
+              : `Complete quest ${quest.name}`
+          }
         >
-          {quest.isCompleted ? "UNDO COMPLETE QUEST" : "COMPLETE QUEST"}
+          {getQuestActionText()}
         </ButtonWrapper>
         {/* larger screens */}
         <button
           type="button"
           onClick={() => handleCompletionToggle()}
           className={clsx(styles.completeQuestButton, styles.largerScreenOnly)}
-          aria-label={quest.isCompleted ? `Undo complete quest ${quest.name}` : `Complete quest ${quest.name}`}
+          aria-label={
+            quest.isCompleted
+              ? `Undo complete quest ${quest.name}`
+              : `Complete quest ${quest.name}`
+          }
         >
           <FontAwesomeIcon
-            icon={quest.isCompleted ? faRotateLeft : faGem}
+            icon={getQuestActionIcon()}
             className={styles.completeQuestIcon}
             aria-hidden="true"
           />
