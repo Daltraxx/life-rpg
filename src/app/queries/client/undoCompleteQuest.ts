@@ -1,6 +1,13 @@
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 
-export default async function undoCompleteQuest(questId: number): Promise<void> { 
+/**
+ * Undoes the completion of a quest by deleting the associated quest completion record.
+ * @param questId - The ID of the quest
+ * @param completedQuestId - The ID of the quest completion record to delete
+ * @throws {Error} If the user is not authenticated
+ * @throws {Error} If the delete operation fails
+ */
+export default async function undoCompleteQuest(questId: number, completedQuestId: number): Promise<void> { 
   const supabase = createSupabaseBrowserClient();
 
   const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -8,11 +15,12 @@ export default async function undoCompleteQuest(questId: number): Promise<void> 
     throw new Error("User not authenticated");
   }
 
+  // Add additional check that completed quest record is from the current date
+  // User ownership is ensured through RLS policies.
   const { error } = await supabase
     .from("quest_completions")
     .delete()
-    .eq("quest_id", questId)
-    .eq("user_id", user.id);
+    .eq("id", completedQuestId);
 
   if (error) {
     console.error("Error undoing quest completion:", error);
