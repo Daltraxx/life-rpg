@@ -10,6 +10,7 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { DailyQuest } from "@/utils/types/DailyQuest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem } from "@fortawesome/free-regular-svg-icons";
+import { faRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import type { DailyQuestManager } from "@/utils/hooks/useDailyQuestManager";
 
 interface QuestItemProps {
@@ -110,7 +111,7 @@ export default function QuestItem({
           aria-label={quest.isCompleted ? `Undo complete quest ${quest.name}` : `Complete quest ${quest.name}`}
         >
           <FontAwesomeIcon
-            icon={faGem}
+            icon={quest.isCompleted ? faRotateLeft : faGem}
             className={styles.completeQuestIcon}
             aria-hidden="true"
           />
