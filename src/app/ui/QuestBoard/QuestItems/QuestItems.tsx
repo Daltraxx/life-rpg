@@ -20,6 +20,7 @@ interface QuestItemsProps {
  */
 export default function QuestItems({ className, quests }: QuestItemsProps) {
   const dailyQuestManager = useDailyQuestManager(quests);
+  const { dailyQuests } = dailyQuestManager;
   return (
     <div className={clsx(styles.container, className)}>
       <div className={clsx(styles.headerRow, styles.largerScreenOnly)}>
@@ -42,7 +43,7 @@ export default function QuestItems({ className, quests }: QuestItemsProps) {
         </div>
       </div>
 
-      {quests.map((quest) => (
+      {dailyQuests.map((quest) => (
         <QuestItem
           key={quest.id}
           quest={quest}
