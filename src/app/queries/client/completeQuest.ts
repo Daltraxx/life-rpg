@@ -56,7 +56,6 @@ export default async function completeQuest(questId: number): Promise<void> {
   // Insert completion record
   const { error } = await supabase.from("quest_completions").insert({
     quest_id: questId,
-    completed_at: new Date().toISOString(),
     streak: questData.streak,
     experience_earned: experienceEarned,
   });
