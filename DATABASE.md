@@ -14,7 +14,7 @@ Full table can be found on the Supabase dashboard.
   - Minimum strength points required for this rank
 - `max_points`: INT
   - Maximum strength points for this rank (null for S)
-- `updated_at`: TIMESTAMP DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
   - Timestamp of last update
 
 **users**: Core user accounts with level and experience tracking
@@ -27,9 +27,11 @@ Full table can be found on the Supabase dashboard.
   - Unique usertag for potential social features
 - `email`: VARCHAR(255) UNIQUE NOT NULL
   - User email address
-- `created_at`: TIMESTAMP DEFAULT NOW()
+- `timezone`: TEXT NOT NULL DEFAULT 'UTC'
+  - User's timezone for scheduling and timestamps
+- `created_at`: TIMESTAMPTZ DEFAULT NOW()
   - Account creation timestamp
-- `last_login`: TIMESTAMP
+- `last_login`: TIMESTAMPTZ
   - Last login timestamp
 - `verified`: BOOLEAN DEFAULT FALSE
   - Account verification status
@@ -39,7 +41,7 @@ Full table can be found on the Supabase dashboard.
   - Overall player level
 - `experience`: DECIMAL(10, 2) DEFAULT 0
   - Total experience points
-- `updated_at`: TIMESTAMP DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
   - Timestamp of last update
 
 **attributes**: Player-defined attributes that level independently
@@ -57,9 +59,9 @@ Full table can be found on the Supabase dashboard.
 - `position`: INT NOT NULL CHECK (position >= 0)
   - Display order for attribute list (unique per user)
   - Position is zero-indexed and handled before insertion in application logic
-- `created_at`: TIMESTAMP DEFAULT NOW()
+- `created_at`: TIMESTAMPTZ DEFAULT NOW()
   - Creation timestamp
-- `updated_at`: TIMESTAMP DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
   - Timestamp of last update
 - UNIQUE (user_id, name)
   - Ensures attribute names are unique per user
@@ -76,7 +78,7 @@ Full table can be found on the Supabase dashboard.
   - Quest name (max 200 chars)
 - `description`: TEXT
   - Optional quest description
-- `created_at`: TIMESTAMP DEFAULT NOW()
+- `created_at`: TIMESTAMPTZ DEFAULT NOW()
   - Creation timestamp
 - `frequency`: INT NOT NULL DEFAULT 1 CHECK (frequency >= 0)
   - Interval in days between required completions (1 = daily, 7 = weekly, etc.)
@@ -92,12 +94,12 @@ Full table can be found on the Supabase dashboard.
   - Accumulated strength points
 - `strength_level`: strength_rank REFERENCES strength_levels(level) NOT NULL DEFAULT 'E'
   - Current strength rank (E-S)
-- `last_completed_date`: DATE
+- `last_completed_at`: TIMESTAMPTZ
   - Date of last completion
 - `position`: INT NOT NULL CHECK (position >= 0)
   - Display order for quest list (unique per user)
   - Position is zero-indexed and handled before insertion
-- `updated_at`: TIMESTAMP DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
   - Timestamp of last update
 - UNIQUE (user_id, position)
   - Ensures each user has unique quest ordering
@@ -110,13 +112,13 @@ Full table can be found on the Supabase dashboard.
   - Unique completion record identifier
 - `quest_id`: INT REFERENCES quests(id) ON DELETE CASCADE
   - Reference to completed quest
-- `completed_at`: TIMESTAMP DEFAULT NOW()
+- `completed_at`: TIMESTAMPTZ DEFAULT NOW()
   - Completion timestamp
 - `streak`: INT DEFAULT 1
   - Streak at time of completion
 - `experience_earned`: DECIMAL(8, 2) DEFAULT 0
   - Experience points awarded
-- `updated_at`: TIMESTAMP DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
   - Timestamp of last update
 
 **experience_log**: Audit trail of all experience transactions
@@ -131,7 +133,7 @@ Full table can be found on the Supabase dashboard.
   - Experience points in transaction
 - `reason`: TEXT
   - Description of transaction
-- `created_at`: TIMESTAMP DEFAULT NOW()
+- `created_at`: TIMESTAMPTZ DEFAULT NOW()
   - Transaction timestamp
 
 **quests_attributes**: Junction table linking quests to attributes with power multipliers
@@ -146,7 +148,7 @@ Full table can be found on the Supabase dashboard.
   - Reference to attribute
 - `attribute_power`: INT DEFAULT 1
   - Power multiplier for this attribute
-- `updated_at`: TIMESTAMP DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
   - Timestamp of last update
 - UNIQUE (quest_id, attribute_id)
   - Ensures each quest-attribute pair is unique
