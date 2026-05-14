@@ -71,6 +71,9 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
   }
 
   const isCompletedToday = (completedAt: string | null): boolean => {
+    // TODO: Use the user's timezone (possibly stored in their profile)
+    // to determine if the quest was completed "today" rather than relying on server time.
+    // This will likely involve fetching the user's timezone from their profile and using a library like `date-fns-tz`
     if (!completedAt) return false;
     const completedDate = new Date(completedAt);
     const today = new Date();
