@@ -12,9 +12,9 @@ import getExperienceEarned from "@/utils/helpers/getExperienceEarned";
  * @throws {Error} If user is not authenticated
  * @throws {Error} If quest data cannot be fetched
  * @throws {Error} If the completion record cannot be inserted
- * @returns Promise that resolves when the quest completion is recorded
+ * @returns Promise that resolves to the ID of the new quest completion record
  */
-export default async function completeQuest(questId: number): Promise<void> {
+export default async function completeQuest(questId: number): Promise<number> {
   const supabase = createSupabaseBrowserClient();
 
   const {
@@ -53,14 +53,16 @@ export default async function completeQuest(questId: number): Promise<void> {
     questData.strength_levels.multiplier,
   );
 
-  // Insert completion record
-  const { error } = await supabase.from("quest_completions").insert({
+  // Insert completion record and get id of the new record in case we need it for undoing the completion later
+  const { data, error } = await supabase.from("quest_completions").insert({
     quest_id: questId,
     streak: questData.streak,
     experience_earned: experienceEarned,
-  });
+  }).select().single();
   if (error) {
     console.error("Error inserting quest completion:", error);
     throw new Error(error.message);
   }
+
+  return data.id;
 }
