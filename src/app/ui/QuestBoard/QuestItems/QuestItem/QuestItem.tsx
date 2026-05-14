@@ -98,16 +98,16 @@ export default function QuestItem({
           className={clsx(styles.completeQuestButton, styles.smallScreenOnly)}
           color="background"
           onClick={() => handleCompletionToggle()}
-          aria-label={`Complete quest ${quest.name}`}
+          aria-label={quest.isCompleted ? `Undo complete quest ${quest.name}` : `Complete quest ${quest.name}`}
         >
-          COMPLETE QUEST
+          {quest.isCompleted ? "UNDO COMPLETE QUEST" : "COMPLETE QUEST"}
         </ButtonWrapper>
         {/* larger screens */}
         <button
           type="button"
           onClick={() => handleCompletionToggle()}
           className={clsx(styles.completeQuestButton, styles.largerScreenOnly)}
-          aria-label={`Complete quest ${quest.name}`}
+          aria-label={quest.isCompleted ? `Undo complete quest ${quest.name}` : `Complete quest ${quest.name}`}
         >
           <FontAwesomeIcon
             icon={faGem}
