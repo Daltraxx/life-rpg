@@ -39,7 +39,7 @@ export default async function getQuests(): Promise<Quest[]> {
     streak,
     strengthPoints:strength_points,
     strengthLevel:strength_level,
-    lastCompletedDate:last_completed_date,
+    lastCompletedAt:last_completed_at,
     position,
     updated_at,
 
