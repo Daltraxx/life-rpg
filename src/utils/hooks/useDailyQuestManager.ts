@@ -1,17 +1,20 @@
 import { useReducer } from "react";
 import { DailyQuest } from "../types/DailyQuest";
 import completeQuestDB from "@/app/queries/client/completeQuest";
+import undoCompleteQuestDB from "@/app/queries/client/undoCompleteQuest";
 
 interface DailyQuestState {
   dailyQuests: DailyQuest[];
-  errors: String[]; // Consider more robust error handling strategy in the future (e.g. mapping questId to error message, etc.)
+  errors: string[]; // Consider more robust error handling strategy in the future (e.g. mapping questId to error message, etc.)
 }
 
 type DailyQuestAction =
   | { type: "submitCompleteQuest"; questId: number }
   | { type: "completeQuestSuccess"; questId: number; completedQuestId: number }
   | { type: "completeQuestFailure"; questId: number }
-  | { type: "undoCompleteQuest"; questId: number };
+  | { type: "undoCompleteQuest"; questId: number }
+  | { type: "undoCompleteQuestSuccess"; questId: number }
+  | { type: "undoCompleteQuestFailure"; questId: number };
 
 function dailyQuestReducer(
   state: DailyQuestState,
@@ -37,6 +40,7 @@ function dailyQuestReducer(
             ? { ...quest, isCompleted: true, completedQuestId }
             : quest,
         ),
+        errors: [],
       };
     }
     case "completeQuestFailure": {
@@ -64,8 +68,39 @@ function dailyQuestReducer(
       return {
         ...state,
         dailyQuests: state.dailyQuests.map((quest) =>
-          quest.id === questId ? { ...quest, isCompleted: false } : quest,
+          quest.id === questId ? { ...quest, isCompleted: "pending" } : quest,
         ),
+      };
+    }
+    case "undoCompleteQuestSuccess": {
+      const { questId } = action;
+      return {
+        ...state,
+        dailyQuests: state.dailyQuests.map((quest) =>
+          quest.id === questId
+            ? { ...quest, isCompleted: false, completedQuestId: null }
+            : quest,
+        ),
+        errors: [],
+      };
+    }
+    case "undoCompleteQuestFailure": {
+      const { questId } = action;
+      let questName;
+      return {
+        ...state,
+        dailyQuests: state.dailyQuests.map((quest) => {
+          if (quest.id === questId) {
+            questName = quest.name;
+            return { ...quest, isCompleted: true };
+          } else {
+            return quest;
+          }
+        }),
+        errors: [
+          ...state.errors,
+          `Failed to undo completion of quest "${questName}". Please try again.`,
+        ],
       };
     }
     default:
@@ -79,7 +114,7 @@ export interface DailyQuestManager {
     completeQuest: (questId: number) => void;
     undoCompleteQuest: (questId: number) => void;
   };
-  errors: String[];
+  errors: string[];
 }
 
 export default function useDailyQuestManager(
@@ -101,8 +136,23 @@ export default function useDailyQuestManager(
       dispatch({ type: "completeQuestFailure", questId });
     }
   };
-  const undoCompleteQuest = (questId: number) => {
+  const undoCompleteQuest = async (questId: number) => {
+    // Update local state to pending immediately for better UX,
+    // then write to database to undo quest completion for the day
     dispatch({ type: "undoCompleteQuest", questId });
+    try {
+      const completedQuestId = state.dailyQuests.find(
+        (quest) => quest.id === questId,
+      )?.completedQuestId;
+      if (!completedQuestId) {
+        throw new Error("No completed quest record found to undo.");
+      }
+      await undoCompleteQuestDB(questId, completedQuestId);
+      dispatch({ type: "undoCompleteQuestSuccess", questId });
+    } catch (error) {
+      console.error("Error undoing quest completion:", error);
+      dispatch({ type: "undoCompleteQuestFailure", questId });
+    }
   };
 
   return {
