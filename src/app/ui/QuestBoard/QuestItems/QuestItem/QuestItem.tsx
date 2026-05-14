@@ -123,6 +123,7 @@ export default function QuestItem({
           className={clsx(styles.completeQuestButton, styles.smallScreenOnly)}
           color="background"
           onClick={() => handleCompletionToggle()}
+          disabled={quest.isCompleted === "pending"}
           aria-label={
             quest.isCompleted
               ? `Undo complete quest ${quest.name}`
@@ -136,6 +137,7 @@ export default function QuestItem({
           type="button"
           onClick={() => handleCompletionToggle()}
           className={clsx(styles.completeQuestButton, styles.largerScreenOnly)}
+          disabled={quest.isCompleted === "pending"}
           aria-label={
             quest.isCompleted
               ? `Undo complete quest ${quest.name}`
