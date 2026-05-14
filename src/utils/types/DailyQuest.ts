@@ -21,5 +21,4 @@ import { Quest } from "./Quest";
 export type DailyQuest = Quest & {
   isCompleted: boolean | "pending";
   completedQuestId: number | null;
-
 };
