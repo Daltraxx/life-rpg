@@ -12,10 +12,26 @@ type DailyQuestAction =
   | { type: "submitCompleteQuest"; questId: number }
   | { type: "completeQuestSuccess"; questId: number; completedQuestId: number }
   | { type: "completeQuestFailure"; questId: number }
-  | { type: "undoCompleteQuest"; questId: number; }
+  | { type: "undoCompleteQuest"; questId: number }
   | { type: "undoCompleteQuestSuccess"; questId: number }
   | { type: "undoCompleteQuestFailure"; questId: number };
 
+/**
+ * Reducer function for managing daily quest state.
+ *
+ * @param state - The current daily quest state
+ * @param action - The action to be processed
+ * @returns {DailyQuestState} The updated daily quest state
+ *
+ * @remarks
+ * Handles the following actions:
+ * - `submitCompleteQuest`: Marks a quest as pending while submission is in progress
+ * - `completeQuestSuccess`: Marks a quest as completed and stores the completed quest ID
+ * - `completeQuestFailure`: Reverts quest to uncompleted state and adds error message
+ * - `undoCompleteQuest`: Marks a quest as pending while undo is in progress
+ * - `undoCompleteQuestSuccess`: Reverts a completed quest back to uncompleted state
+ * - `undoCompleteQuestFailure`: Reverts quest to completed state and adds error message
+ */
 function dailyQuestReducer(
   state: DailyQuestState,
   action: DailyQuestAction,
@@ -117,6 +133,23 @@ export interface DailyQuestManager {
   errors: string[];
 }
 
+/**
+ * Manages daily quest state and operations.
+ *
+ * @param dailyQuests - Array of daily quests to initialize the hook with
+ * @returns {DailyQuestManager} Object containing the current quests, action handlers, and any errors
+ *
+ * @example
+ * ```tsx
+ * const { dailyQuests, actions, errors } = useDailyQuestManager(quests);
+ *
+ * // Complete a quest
+ * await actions.completeQuest(questId);
+ *
+ * // Undo a quest completion
+ * await actions.undoCompleteQuest(questId, completedQuestId);
+ * ```
+ */
 export default function useDailyQuestManager(
   dailyQuests: DailyQuest[],
 ): DailyQuestManager {
@@ -136,7 +169,10 @@ export default function useDailyQuestManager(
       dispatch({ type: "completeQuestFailure", questId });
     }
   };
-  const undoCompleteQuest = async (questId: number, completedQuestId: number) => {
+  const undoCompleteQuest = async (
+    questId: number,
+    completedQuestId: number,
+  ) => {
     // Update local state to pending immediately for better UX,
     // then write to database to undo quest completion for the day
     dispatch({ type: "undoCompleteQuest", questId });
