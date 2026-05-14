@@ -10,19 +10,39 @@ import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { DailyQuest } from "@/utils/types/DailyQuest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGem } from "@fortawesome/free-regular-svg-icons";
-import {
-  faRotateLeft,
-  faEllipsis,
-  faR,
-} from "@fortawesome/free-solid-svg-icons";
+import { faRotateLeft, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import type { DailyQuestManager } from "@/utils/hooks/useDailyQuestManager";
 
+/**
+ * Props for the QuestItem component.
+ * @interface QuestItemProps
+ */
 interface QuestItemProps {
+  /** The daily quest to display */
   quest: DailyQuest;
+  /** Manager for quest actions and state */
   dailyQuestManager: DailyQuestManager;
+  /** Optional CSS class name for styling */
   className?: string;
 }
 
+/**
+ * Displays a single daily quest item with its details and completion button.
+ *
+ * @component
+ * @param {QuestItemProps} props - The component props
+ * @param {DailyQuest} props.quest - The quest to render
+ * @param {DailyQuestManager} props.dailyQuestManager - Manager for quest actions
+ * @param {string} [props.className] - Optional additional CSS classes
+ * @returns {JSX.Element} The rendered quest item
+ *
+ * @example
+ * <QuestItem
+ *   quest={myQuest}
+ *   dailyQuestManager={questManager}
+ *   className="custom-class"
+ * />
+ */
 export default function QuestItem({
   quest,
   dailyQuestManager,
@@ -33,11 +53,17 @@ export default function QuestItem({
     .join(", ");
 
   const { completeQuest, undoCompleteQuest } = dailyQuestManager.actions;
+
+  /**
+   * Handles toggling the quest completion state.
+   * Completes or undoes completion based on current state.
+   */
   const handleCompletionToggle = () => {
     if (quest.isCompleted) {
       if (!quest.completedQuestId) {
         console.error(
-          `Cannot undo completion for quest "${quest.name}" because completedQuestId is null.`,);
+          `Cannot undo completion for quest "${quest.name}" because completedQuestId is null.`,
+        );
         return;
       }
       undoCompleteQuest(quest.id, quest.completedQuestId);
@@ -46,6 +72,10 @@ export default function QuestItem({
     }
   };
 
+  /**
+   * Gets the appropriate icon for the quest action button.
+   * @returns {IconDefinition} The Font Awesome icon to display
+   */
   const getQuestActionIcon = () => {
     if (quest.isCompleted === "pending") {
       return faEllipsis;
@@ -56,6 +86,10 @@ export default function QuestItem({
     }
   };
 
+  /**
+   * Gets the appropriate text for the quest action button.
+   * @returns {string} The button text to display
+   */
   const getQuestActionText = () => {
     if (quest.isCompleted === "pending") {
       return "Updating...";
