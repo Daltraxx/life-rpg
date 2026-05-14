@@ -19,6 +19,7 @@ import { Quest } from "./Quest";
  * - `completedQuestId`: number | null - ID of the quest completion record if completed, otherwise null
  */
 export type DailyQuest = Quest & {
-  isCompleted: boolean;
+  isCompleted: boolean | "pending";
   completedQuestId: number | null;
+
 };
