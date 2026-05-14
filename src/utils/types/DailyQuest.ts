@@ -16,7 +16,9 @@ import { Quest } from "./Quest";
  * - `strengthPoints`: number - Points earned
  * - `strengthLevel`: QuestStrengthLevel - Difficulty level (S-E)
  * - `position`: number - Display position
+ * - `completedQuestId`: number | null - ID of the quest completion record if completed, otherwise null
  */
 export type DailyQuest = Quest & {
   isCompleted: boolean;
+  completedQuestId: number | null;
 };

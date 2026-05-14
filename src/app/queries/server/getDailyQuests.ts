@@ -53,7 +53,8 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
       )
     ),
     latestCompletion:quest_completions (
-    completed_at
+      id,
+      completed_at
     )
   `,
     )
@@ -84,45 +85,47 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     );
   };
 
-  const quests = (data ?? []).map((quest) => ({
-    id: quest.id,
-    name: quest.name,
-    description: quest.description,
-    isCompleted: isCompletedToday(
-      quest.latestCompletion[0]?.completed_at ?? null,
-    ),
-    experienceShare: quest.experienceShare,
-    frequency: quest.frequency,
-    restFrequency: quest.restFrequency,
-    streak: quest.streak,
-    strengthPoints: quest.strengthPoints,
-    strengthLevel: quest.strengthLevel,
-    position: quest.position,
-    affectedAttributes:
-      quest.affectedAttributes?.map((questAttr) => {
-        // Ternary to handle both array and single object cases for attributes
-        // due to the way Supabase returns related data when using .select with nested relationships
-        const attribute = Array.isArray(questAttr.attributes)
-          ? questAttr.attributes[0]
-          : questAttr.attributes;
+  const quests = (data ?? []).map((quest) => {
+    const isCompleted = isCompletedToday(quest.latestCompletion[0]?.completed_at ?? null);
+    return {
+      id: quest.id,
+      name: quest.name,
+      description: quest.description,
+      isCompleted: isCompleted,
+      completedQuestId: isCompleted ? quest.latestCompletion[0]?.id ?? null : null,
+      experienceShare: quest.experienceShare,
+      frequency: quest.frequency,
+      restFrequency: quest.restFrequency,
+      streak: quest.streak,
+      strengthPoints: quest.strengthPoints,
+      strengthLevel: quest.strengthLevel,
+      position: quest.position,
+      affectedAttributes:
+        quest.affectedAttributes?.map((questAttr) => {
+          // Ternary to handle both array and single object cases for attributes
+          // due to the way Supabase returns related data when using .select with nested relationships
+          const attribute = Array.isArray(questAttr.attributes)
+            ? questAttr.attributes[0]
+            : questAttr.attributes;
 
-        if (!attribute) {
-          throw new Error(`Missing attribute data for quest ID ${quest.id}`);
-        }
+          if (!attribute) {
+            throw new Error(`Missing attribute data for quest ID ${quest.id}`);
+          }
 
-        const { strength } = questAttr;
-        if (!isStrengthKey(strength)) {
-          throw new Error(
-            `Invalid strength value for quest attribute: ${strength}`,
-          );
-        }
-        return {
-          id: Number(attribute.id),
-          name: attribute.name,
-          strength: intToStrengthMap[strength],
-        };
-      }) ?? [],
-  }));
+          const { strength } = questAttr;
+          if (!isStrengthKey(strength)) {
+            throw new Error(
+              `Invalid strength value for quest attribute: ${strength}`,
+            );
+          }
+          return {
+            id: Number(attribute.id),
+            name: attribute.name,
+            strength: intToStrengthMap[strength],
+          };
+        }) ?? [],
+    };
+  });
   // TODO: Remove this log after confirming quests are being fetched with correct attributes in development environment
   if (process.env.NODE_ENV === "development") {
     console.log("Fetched quests with attributes:", quests);
