@@ -178,7 +178,7 @@ export type Database = {
           experience_share: number;
           frequency: number;
           id: number;
-          last_completed_date: string | null;
+          last_completed_at: string | null;
           last_rest_date: string | null;
           name: string;
           position: number;
@@ -195,7 +195,7 @@ export type Database = {
           experience_share: number;
           frequency?: number;
           id?: number;
-          last_completed_date?: string | null;
+          last_completed_at?: string | null;
           last_rest_date?: string | null;
           name: string;
           position: number;
@@ -212,7 +212,7 @@ export type Database = {
           experience_share?: number;
           frequency?: number;
           id?: number;
-          last_completed_date?: string | null;
+          last_completed_at?: string | null;
           last_rest_date?: string | null;
           name?: string;
           position?: number;
@@ -336,6 +336,7 @@ export type Database = {
           last_login: string | null;
           level: number | null;
           profile_complete: boolean | null;
+          timezone: string;
           updated_at: string | null;
           username: string;
           usertag: string;
@@ -349,6 +350,7 @@ export type Database = {
           last_login?: string | null;
           level?: number | null;
           profile_complete?: boolean | null;
+          timezone?: string;
           updated_at?: string | null;
           username: string;
           usertag: string;
@@ -362,6 +364,7 @@ export type Database = {
           last_login?: string | null;
           level?: number | null;
           profile_complete?: boolean | null;
+          timezone?: string;
           updated_at?: string | null;
           username?: string;
           usertag?: string;
