@@ -53,7 +53,7 @@ function dailyQuestReducer(
         ...state,
         dailyQuests: state.dailyQuests.map((quest) =>
           quest.id === questId
-            ? { ...quest, isCompleted: true, completedQuestId }
+            ? { ...quest, isCompleted: "true", completedQuestId }
             : quest,
         ),
         errors: [],
@@ -67,7 +67,7 @@ function dailyQuestReducer(
         dailyQuests: state.dailyQuests.map((quest) => {
           if (quest.id === questId) {
             questName = quest.name;
-            return { ...quest, isCompleted: false };
+            return { ...quest, isCompleted: "false" };
           } else {
             return quest;
           }
@@ -80,7 +80,6 @@ function dailyQuestReducer(
     }
     case "undoCompleteQuest": {
       const { questId } = action;
-      // Write to database to undo quest completion for the day (TODO: implement)
       return {
         ...state,
         dailyQuests: state.dailyQuests.map((quest) =>
@@ -94,7 +93,7 @@ function dailyQuestReducer(
         ...state,
         dailyQuests: state.dailyQuests.map((quest) =>
           quest.id === questId
-            ? { ...quest, isCompleted: false, completedQuestId: null }
+            ? { ...quest, isCompleted: "false", completedQuestId: null }
             : quest,
         ),
         errors: [],
@@ -108,7 +107,7 @@ function dailyQuestReducer(
         dailyQuests: state.dailyQuests.map((quest) => {
           if (quest.id === questId) {
             questName = quest.name;
-            return { ...quest, isCompleted: true };
+            return { ...quest, isCompleted: "true" };
           } else {
             return quest;
           }
