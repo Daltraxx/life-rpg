@@ -6,7 +6,7 @@ import { Quest } from "./Quest";
  * @shape
  * - `id`: number - Unique identifier
  * - `name`: string - Quest name
- * - `isCompleted`: boolean - Whether the quest is completed for the day
+ * - `isCompleted`: "true" | "false" | "pending" - Whether the quest is completed for the day
  * - `description`: string | null - Optional description
  * - `affectedAttributes`: AffectedAttribute[] - Attributes modified by quest
  * - `experienceShare`: number - Experience percentage (0-100)
@@ -19,6 +19,6 @@ import { Quest } from "./Quest";
  * - `completedQuestId`: number | null - ID of the quest completion record if completed, otherwise null
  */
 export type DailyQuest = Quest & {
-  isCompleted: boolean | "pending";
+  isCompleted: "true" | "false" | "pending";
   completedQuestId: number | null;
 };

@@ -59,7 +59,7 @@ export default function QuestItem({
    * Completes or undoes completion based on current state.
    */
   const handleCompletionToggle = () => {
-    if (quest.isCompleted) {
+    if (quest.isCompleted === "true") {
       if (!quest.completedQuestId) {
         console.error(
           `Cannot undo completion for quest "${quest.name}" because completedQuestId is null.`,
@@ -79,7 +79,7 @@ export default function QuestItem({
   const getQuestActionIcon = () => {
     if (quest.isCompleted === "pending") {
       return faEllipsis;
-    } else if (quest.isCompleted) {
+    } else if (quest.isCompleted === "true") {
       return faRotateLeft;
     } else {
       return faGem;
@@ -93,7 +93,7 @@ export default function QuestItem({
   const getQuestActionText = () => {
     if (quest.isCompleted === "pending") {
       return "Updating...";
-    } else if (quest.isCompleted) {
+    } else if (quest.isCompleted === "true") {
       return "UNDO COMPLETE QUEST";
     }
     return "COMPLETE QUEST";
@@ -164,7 +164,7 @@ export default function QuestItem({
           onClick={() => handleCompletionToggle()}
           disabled={quest.isCompleted === "pending"}
           aria-label={
-            quest.isCompleted
+            quest.isCompleted === "true"
               ? `Undo complete quest ${quest.name}`
               : `Complete quest ${quest.name}`
           }
@@ -178,7 +178,7 @@ export default function QuestItem({
           className={clsx(styles.completeQuestButton, styles.largerScreenOnly)}
           disabled={quest.isCompleted === "pending"}
           aria-label={
-            quest.isCompleted
+            quest.isCompleted === "true"
               ? `Undo complete quest ${quest.name}`
               : `Complete quest ${quest.name}`
           }

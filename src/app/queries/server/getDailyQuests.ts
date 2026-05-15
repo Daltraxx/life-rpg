@@ -84,11 +84,13 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
         userId: user.id,
         latestCompletion: quest.latestCompletion[0],
       });
+
+      const completionStatus: DailyQuest["isCompleted"] = isCompleted ? "true" : "false";
       return {
         id: quest.id,
         name: quest.name,
         description: quest.description,
-        isCompleted: isCompleted,
+        isCompleted: completionStatus,
         completedQuestId: isCompleted
           ? (quest.latestCompletion[0]?.id ?? null)
           : null,
