@@ -1,7 +1,6 @@
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import getUserTimezone from "./getUserTimezone";
-import { startOfDay, endOfDay } from "date-fns";
-import { TZDate } from "@date-fns/tz";
+import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayUTC";
 
 /**
  * Undoes a completed quest by deleting its completion record from the database.
@@ -30,15 +29,8 @@ export default async function undoCompleteQuest(
 
   // Ensure quest being undone is from the current date by comparing the completion timestamp with the user's timezone.
   const userTimezone = await getUserTimezone(user.id);
-  const nowInUserTZ = new TZDate(new Date(), userTimezone);
-
-  // Start/end of the current day in the user's timezone
-  const beginningOfDayUserTZ = startOfDay(nowInUserTZ);
-  const endOfDayUserTZ = endOfDay(nowInUserTZ);
-
-  // UTC timestamps for the start and end of the day in the user's timezone
-  const beginningOfDayUTC = beginningOfDayUserTZ.toISOString();
-  const endOfDayUTC = endOfDayUserTZ.toISOString();
+  const { beginningOfDayUTC, endOfDayUTC } =
+    getBeginningAndEndOfDayUTC(userTimezone);
 
   // User ownership is ensured through RLS policies.
   const { error } = await supabase
