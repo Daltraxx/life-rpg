@@ -114,6 +114,8 @@ Full table can be found on the Supabase dashboard.
   - Reference to completed quest
 - `completed_at`: TIMESTAMPTZ DEFAULT NOW()
   - Completion timestamp
+- `is_resolved`: BOOLEAN DEFAULT FALSE
+  - Whether this completion has been processed for experience and streak updates
 - `streak`: INT DEFAULT 1
   - Streak at time of completion
 - `experience_earned`: DECIMAL(8, 2) DEFAULT 0
