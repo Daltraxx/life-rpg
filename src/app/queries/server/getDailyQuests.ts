@@ -82,7 +82,7 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     (data ?? []).map(async (quest) => {
       const isCompleted = await isQuestCompletedToday({
         userId: user.id,
-        latestCompletion: quest.latestCompletion[0] ?? null,
+        latestCompletion: quest.latestCompletion[0],
       });
       return {
         id: quest.id,
