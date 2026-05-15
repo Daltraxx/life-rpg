@@ -94,5 +94,8 @@ export function createSetupQuest(
   if (experienceShare < 0) {
     throw new Error("Experience share cannot be negative");
   }
+  if (experienceShare > 100) {
+    throw new Error("Experience share cannot exceed 100");
+  }
   return { name, affectedAttributes, experienceShare };
 }
