@@ -4,8 +4,7 @@ import {
 } from "@/utils/helpers/strengthToIntMap";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { DailyQuest } from "@/utils/types/DailyQuest";
-import getUserTimezone from "./getUserTimezone";
-import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayUTC";
+import isQuestCompletedToday from "./helpers/isQuestCompletedToday";
 
 /**
  * Fetches all daily quests for the authenticated user.
@@ -79,40 +78,12 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     throw new Error(error.message);
   }
 
-  type LatestCompletion = {
-    id: number;
-    completed_at: string | null;
-    is_resolved: boolean;
-  } | null;
-
-  /**
-   * Determines if a quest completion occurred today in the user's timezone.
-   *
-   * @param {LatestCompletion} latestCompletion - The latest completion record for a quest, or null if no completion exists.
-   * @returns {Promise<boolean>} True if the quest was completed today and not resolved, false otherwise.
-   *
-   * @remarks
-   * - Returns false if latestCompletion is null or if the completion is marked as resolved.
-   * - Completion date is compared against the user's timezone-adjusted day boundaries.
-   */
-  const isCompletedToday = async (
-    latestCompletion: LatestCompletion,
-  ): Promise<boolean> => {
-    if (!latestCompletion || latestCompletion.is_resolved) {
-      return false;
-    }
-    const userTimezone = await getUserTimezone(user.id);
-    const { beginningOfDayUTC, endOfDayUTC } =
-      getBeginningAndEndOfDayUTC(userTimezone);
-    return (
-      latestCompletion.completed_at! >= beginningOfDayUTC &&
-      latestCompletion.completed_at! < endOfDayUTC
-    );
-  };
-
   const quests = await Promise.all(
     (data ?? []).map(async (quest) => {
-      const isCompleted = await isCompletedToday(quest.latestCompletion[0]);
+      const isCompleted = await isQuestCompletedToday({
+        userId: user.id,
+        latestCompletion: quest.latestCompletion[0] ?? null,
+      });
       return {
         id: quest.id,
         name: quest.name,
