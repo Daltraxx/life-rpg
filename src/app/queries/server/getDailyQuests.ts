@@ -4,16 +4,23 @@ import {
 } from "@/utils/helpers/strengthToIntMap";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { DailyQuest } from "@/utils/types/DailyQuest";
+import getUserTimezone from "./getUserTimezone";
+import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayUTC";
 
 /**
- * Fetches all daily quests for the authenticated user from the Supabase database.
+ * Fetches all daily quests for the authenticated user.
  *
- * @returns {Promise<DailyQuest[]>} An array of daily quests with their associated attributes and completion status.
- * @throws {Error} If the user is not authenticated or if there is an error fetching quests from the database.
+ * @returns {Promise<DailyQuest[]>} An array of daily quests with their completion status and affected attributes.
  *
- * @example
- * const quests = await getDailyQuests();
- * console.log(quests); // Array of DailyQuest objects
+ * @throws {Error} If the user is not authenticated.
+ * @throws {Error} If there is an error fetching quests from the database.
+ * @throws {Error} If quest attribute data is missing or contains invalid strength values.
+ *
+ * @remarks
+ * - Quests are ordered by position ascending, then by completion date descending.
+ * - Completion status is determined by checking if the latest completion occurred today in the user's timezone.
+ * - Affected attributes are mapped with their strength levels.
+ * - In development mode, fetched quests are logged to the console.
  */
 export default async function getDailyQuests(): Promise<DailyQuest[]> {
   const supabase = await createSupabaseServerClient();
@@ -54,7 +61,8 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     ),
     latestCompletion:quest_completions (
       id,
-      completed_at
+      completed_at,
+      is_resolved
     )
   `,
     )
@@ -71,61 +79,84 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     throw new Error(error.message);
   }
 
-  const isCompletedToday = (completedAt: string | null): boolean => {
-    // TODO: Use the user's timezone (possibly stored in their profile)
-    // to determine if the quest was completed "today" rather than relying on server time.
-    // This will likely involve fetching the user's timezone from their profile and using a library like `date-fns-tz`
-    if (!completedAt) return false;
-    const completedDate = new Date(completedAt);
-    const today = new Date();
+  type LatestCompletion = {
+    id: number;
+    completed_at: string | null;
+    is_resolved: boolean;
+  } | null;
+
+  /**
+   * Determines if a quest completion occurred today in the user's timezone.
+   *
+   * @param {LatestCompletion} latestCompletion - The latest completion record for a quest, or null if no completion exists.
+   * @returns {Promise<boolean>} True if the quest was completed today and not resolved, false otherwise.
+   *
+   * @remarks
+   * - Returns false if latestCompletion is null or if the completion is marked as resolved.
+   * - Completion date is compared against the user's timezone-adjusted day boundaries.
+   */
+  const isCompletedToday = async (
+    latestCompletion: LatestCompletion,
+  ): Promise<boolean> => {
+    if (!latestCompletion || latestCompletion.is_resolved) {
+      return false;
+    }
+    const userTimezone = await getUserTimezone(user.id);
+    const { beginningOfDayUTC, endOfDayUTC } =
+      getBeginningAndEndOfDayUTC(userTimezone);
     return (
-      completedDate.getFullYear() === today.getFullYear() &&
-      completedDate.getMonth() === today.getMonth() &&
-      completedDate.getDate() === today.getDate()
+      latestCompletion.completed_at! >= beginningOfDayUTC &&
+      latestCompletion.completed_at! < endOfDayUTC
     );
   };
 
-  const quests = (data ?? []).map((quest) => {
-    const isCompleted = isCompletedToday(quest.latestCompletion[0]?.completed_at ?? null);
-    return {
-      id: quest.id,
-      name: quest.name,
-      description: quest.description,
-      isCompleted: isCompleted,
-      completedQuestId: isCompleted ? quest.latestCompletion[0]?.id ?? null : null,
-      experienceShare: quest.experienceShare,
-      frequency: quest.frequency,
-      restFrequency: quest.restFrequency,
-      streak: quest.streak,
-      strengthPoints: quest.strengthPoints,
-      strengthLevel: quest.strengthLevel,
-      position: quest.position,
-      affectedAttributes:
-        quest.affectedAttributes?.map((questAttr) => {
-          // Ternary to handle both array and single object cases for attributes
-          // due to the way Supabase returns related data when using .select with nested relationships
-          const attribute = Array.isArray(questAttr.attributes)
-            ? questAttr.attributes[0]
-            : questAttr.attributes;
+  const quests = await Promise.all(
+    (data ?? []).map(async (quest) => {
+      const isCompleted = await isCompletedToday(quest.latestCompletion[0]);
+      return {
+        id: quest.id,
+        name: quest.name,
+        description: quest.description,
+        isCompleted: isCompleted,
+        completedQuestId: isCompleted
+          ? (quest.latestCompletion[0]?.id ?? null)
+          : null,
+        experienceShare: quest.experienceShare,
+        frequency: quest.frequency,
+        restFrequency: quest.restFrequency,
+        streak: quest.streak,
+        strengthPoints: quest.strengthPoints,
+        strengthLevel: quest.strengthLevel,
+        position: quest.position,
+        affectedAttributes:
+          quest.affectedAttributes?.map((questAttr) => {
+            // Ternary to handle both array and single object cases for attributes
+            // due to the way Supabase returns related data when using .select with nested relationships
+            const attribute = Array.isArray(questAttr.attributes)
+              ? questAttr.attributes[0]
+              : questAttr.attributes;
 
-          if (!attribute) {
-            throw new Error(`Missing attribute data for quest ID ${quest.id}`);
-          }
+            if (!attribute) {
+              throw new Error(
+                `Missing attribute data for quest ID ${quest.id}`,
+              );
+            }
 
-          const { strength } = questAttr;
-          if (!isStrengthKey(strength)) {
-            throw new Error(
-              `Invalid strength value for quest attribute: ${strength}`,
-            );
-          }
-          return {
-            id: Number(attribute.id),
-            name: attribute.name,
-            strength: intToStrengthMap[strength],
-          };
-        }) ?? [],
-    };
-  });
+            const { strength } = questAttr;
+            if (!isStrengthKey(strength)) {
+              throw new Error(
+                `Invalid strength value for quest attribute: ${strength}`,
+              );
+            }
+            return {
+              id: Number(attribute.id),
+              name: attribute.name,
+              strength: intToStrengthMap[strength],
+            };
+          }) ?? [],
+      };
+    }),
+  );
   // TODO: Remove this log after confirming quests are being fetched with correct attributes in development environment
   if (process.env.NODE_ENV === "development") {
     console.log("Fetched quests with attributes:", quests);
