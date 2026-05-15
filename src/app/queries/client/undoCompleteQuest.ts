@@ -1,24 +1,44 @@
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
+import getUserTimezone from "./getUserTimezone";
+import { startOfDay, endOfDay } from "date-fns";
+import { TZDate } from "@date-fns/tz";
 
 /**
- * Undoes the completion of a quest by deleting the associated quest completion record.
- * @param completedQuestId - The ID of the quest completion record to delete
- * @throws {Error} If the user is not authenticated
- * @throws {Error} If the delete operation fails
+ * Undoes a completed quest by deleting its completion record from the database.
+ *
+ * This function validates that:
+ * - The user is authenticated
+ * - The quest completion occurred on the current day (in the user's timezone)
+ * - The quest completion has not been resolved (i.e., experience not yet processed)
+ *
+ * @param completedQuestId - The ID of the quest completion record to undo
+ * @returns A promise that resolves when the quest completion has been deleted
+ * @throws {Error} If the user is not authenticated or if the database operation fails
  */
-export default async function undoCompleteQuest(completedQuestId: number): Promise<void> { 
+export default async function undoCompleteQuest(
+  completedQuestId: number,
+): Promise<void> {
   const supabase = createSupabaseBrowserClient();
 
-  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
   if (authError || !user) {
     throw new Error("User not authenticated");
   }
 
   // Ensure quest being undone is from the current date by comparing the completion timestamp with the user's timezone.
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0); // Start of today in UTC
-  const tomorrow = new Date(today);
-  tomorrow.setUTCDate(tomorrow.getUTCDate() + 1);
+  const userTimezone = await getUserTimezone(user.id);
+  const nowInUserTZ = new TZDate(new Date(), userTimezone);
+
+  // Start/end of the current day in the user's timezone
+  const beginningOfDayUserTZ = startOfDay(nowInUserTZ);
+  const endOfDayUserTZ = endOfDay(nowInUserTZ);
+
+  // UTC timestamps for the start and end of the day in the user's timezone
+  const beginningOfDayUTC = beginningOfDayUserTZ.toISOString();
+  const endOfDayUTC = endOfDayUserTZ.toISOString();
 
   // User ownership is ensured through RLS policies.
   const { error } = await supabase
@@ -26,8 +46,8 @@ export default async function undoCompleteQuest(completedQuestId: number): Promi
     .delete()
     .eq("id", completedQuestId)
     .eq("is_resolved", false) // Only allow undoing if the quest completion has not been resolved (i.e. not yet processed for experience)
-    .gte("completed_at", today.toISOString())
-    .lt("completed_at", tomorrow.toISOString());
+    .gte("completed_at", beginningOfDayUTC)
+    .lt("completed_at", endOfDayUTC);
 
   if (error) {
     console.error("Error undoing quest completion:", error);
