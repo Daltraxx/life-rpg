@@ -2,7 +2,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 import isQuestCompletedToday from "./helpers/isQuestCompletedToday";
 
 /**
- * Retrieves the completion status of a quest for the current user.
+ * Retrieves the completion status of a quest for the current user (server-side).
  *
  * @param questId - The ID of the quest to check
  * @param userID - Optional user ID. If not provided, the current authenticated user is used
