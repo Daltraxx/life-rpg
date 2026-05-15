@@ -141,6 +141,7 @@ export type Database = {
           completed_at: string | null;
           experience_earned: number | null;
           id: number;
+          is_resolved: boolean;
           quest_id: number | null;
           streak: number | null;
           updated_at: string | null;
@@ -149,6 +150,7 @@ export type Database = {
           completed_at?: string | null;
           experience_earned?: number | null;
           id?: number;
+          is_resolved?: boolean;
           quest_id?: number | null;
           streak?: number | null;
           updated_at?: string | null;
@@ -157,6 +159,7 @@ export type Database = {
           completed_at?: string | null;
           experience_earned?: number | null;
           id?: number;
+          is_resolved?: boolean;
           quest_id?: number | null;
           streak?: number | null;
           updated_at?: string | null;
