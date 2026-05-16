@@ -1,25 +1,21 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import { cache } from "react";
 
 /**
- * Retrieves the timezone for a given user.
+ * Fetches the timezone for a specific user from the database.
  *
- * This function attempts to read the user's timezone from a cookie first to minimize
- * database queries. If not found in cookies, it fetches the timezone from the database
- * and caches it in a cookie for 6 hours.
+ * @param userId - The unique identifier of the user
+ * @returns A promise that resolves to the user's timezone string
+ * @throws {Error} If the database query fails or returns an error
+ * @throws {Error} If the user's timezone is not found in the database
  *
- * @param userId - The unique identifier of the user.
- * @returns A promise that resolves to the user's timezone string.
- * @throws {Error} If the timezone cannot be fetched from the database or is not found.
+ * @remarks
+ * This function is wrapped with React's `cache()` to memoize results during a single server render,
+ * preventing duplicate database queries for the same user within the same render cycle.
  */
-export default async function getUserTimezone(userId: string): Promise<string> {
-  // Attempt to read the user's timezone from a cookie first to minimize database queries.
-  const cookieStore = await cookies();
-  let timezone = cookieStore.get("user_timezone")?.value;
-  if (timezone) {
-    return timezone;
-  }
-
+const getUserTimezone = cache(async function getUserTimezone(
+  userId: string,
+): Promise<string> {
   // If not found in cookies, fetch from the database and cache it in a cookie for 6 hours.
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
@@ -33,12 +29,12 @@ export default async function getUserTimezone(userId: string): Promise<string> {
     throw new Error(error.message);
   }
 
-  timezone = data?.timezone;
+  const timezone = data?.timezone;
   if (!timezone) {
     throw new Error("User timezone not found in database");
   }
 
-  // Cache the timezone in a cookie for 6 hours.
-  cookieStore.set("user_timezone", timezone, { maxAge: 6 * 60 * 60 });
   return timezone;
-}
+});
+
+export default getUserTimezone;
