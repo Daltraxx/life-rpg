@@ -129,18 +129,18 @@ export default function QuestItem({
         <Paragraph
           size="24-responsive"
           color="background"
-          aria-label="Quest streak: 0"
+          aria-label={`Quest streak: ${quest.streak}`}
         >
-          <span className={styles.smallScreenOnly}>Streak: </span>0
+          <span className={styles.smallScreenOnly}>Streak: </span>{quest.streak}
         </Paragraph>
 
         {/* STRENGTH */}
         <Paragraph
           size="24-responsive"
           color="background"
-          aria-label="Quest strength: 0 — E"
+          aria-label={`Quest strength: ${quest.strengthPoints} — ${quest.strengthLevel}`}
         >
-          <span className={styles.smallScreenOnly}>Strength: </span>0 — E
+          <span className={styles.smallScreenOnly}>Strength: </span>{`${quest.strengthPoints} — ${quest.strengthLevel}`}
         </Paragraph>
 
         {/* EXPERIENCE */}
