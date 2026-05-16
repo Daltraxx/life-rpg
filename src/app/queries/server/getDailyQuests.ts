@@ -5,6 +5,7 @@ import {
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { DailyQuest } from "@/utils/types/DailyQuest";
 import isQuestCompletedToday from "./helpers/isQuestCompletedToday";
+import getQuestBonusPoints from "@/utils/helpers/getQuestBonusPoints";
 
 /**
  * Fetches all daily quests for the authenticated user.
@@ -62,6 +63,9 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
       id,
       completed_at,
       is_resolved
+    ),
+    strength_levels (
+      multiplier
     )
   `,
     )
@@ -72,6 +76,8 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
       referencedTable: "quest_completions",
     })
     .limit(1, { referencedTable: "quest_completions" });
+
+  console.log("Raw quest data from database:", data); // Debug log to inspect raw data structure
 
   if (error) {
     console.error("Error fetching quests:", error);
@@ -84,8 +90,14 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
         userId: user.id,
         latestCompletion: quest.latestCompletion[0],
       });
+      const completionStatus: DailyQuest["isCompleted"] = isCompleted
+        ? "true"
+        : "false";
+      const bonusExperiencePoints = getQuestBonusPoints(
+        quest.experienceShare,
+        quest.strength_levels.multiplier,
+      );
 
-      const completionStatus: DailyQuest["isCompleted"] = isCompleted ? "true" : "false";
       return {
         id: quest.id,
         name: quest.name,
@@ -100,6 +112,7 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
         streak: quest.streak,
         strengthPoints: quest.strengthPoints,
         strengthLevel: quest.strengthLevel,
+        bonusExperiencePoints: bonusExperiencePoints,
         position: quest.position,
         affectedAttributes:
           quest.affectedAttributes?.map((questAttr) => {
