@@ -38,7 +38,7 @@ export default async function getQuestCompletionStatus(
 
   const isCompletedToday = await isQuestCompletedToday({
     userId: userId,
-    latestCompletion: data[0],
+    latestCompletion: data[0] ?? null,
   });
 
   return isCompletedToday;
