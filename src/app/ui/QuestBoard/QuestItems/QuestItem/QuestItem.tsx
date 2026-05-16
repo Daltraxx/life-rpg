@@ -131,7 +131,8 @@ export default function QuestItem({
           color="background"
           aria-label={`Quest streak: ${quest.streak}`}
         >
-          <span className={styles.smallScreenOnly}>Streak: </span>{quest.streak}
+          <span className={styles.smallScreenOnly}>Streak: </span>
+          {quest.streak}
         </Paragraph>
 
         {/* STRENGTH */}
@@ -140,7 +141,8 @@ export default function QuestItem({
           color="background"
           aria-label={`Quest strength: ${quest.strengthPoints} — ${quest.strengthLevel}`}
         >
-          <span className={styles.smallScreenOnly}>Strength: </span>{`${quest.strengthPoints} — ${quest.strengthLevel}`}
+          <span className={styles.smallScreenOnly}>Strength: </span>
+          {`${quest.strengthPoints} — ${quest.strengthLevel}`}
         </Paragraph>
 
         {/* EXPERIENCE */}
@@ -152,7 +154,9 @@ export default function QuestItem({
             aria-label={`Experience gained: ${quest.experienceShare}`}
           >
             <span className={styles.smallScreenOnly}>Exp. Gained: </span>
-            {quest.experienceShare}
+            {quest.bonusExperiencePoints > 0
+              ? `${quest.experienceShare} + ${quest.bonusExperiencePoints}`
+              : `${quest.experienceShare}`}
           </Paragraph>
         </div>
 
