@@ -15,6 +15,7 @@ export default async function getQuestCompletionStatus(
 ): Promise<boolean> {
   const supabase = createSupabaseBrowserClient();
 
+  // User ownership of quest is enforced via Supabase RLS policy
   const { data, error } = await supabase
     .from("quest_completions")
     .select("completed_at, is_resolved")
