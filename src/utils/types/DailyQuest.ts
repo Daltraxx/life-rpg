@@ -10,6 +10,7 @@ import { Quest } from "./Quest";
  * - `description`: string | null - Optional description
  * - `affectedAttributes`: AffectedAttribute[] - Attributes modified by quest
  * - `experienceShare`: number - Experience percentage (0-100)
+ * - `bonusExperiencePoints`: number - Additional experience points awarded on completion
  * - `frequency`: number - Completion frequency
  * - `restFrequency`: number - Rest period between completions
  * - `streak`: number - Current completion streak
@@ -21,4 +22,5 @@ import { Quest } from "./Quest";
 export type DailyQuest = Quest & {
   isCompleted: "true" | "false" | "pending";
   completedQuestId: number | null;
+  bonusExperiencePoints: number;
 };
