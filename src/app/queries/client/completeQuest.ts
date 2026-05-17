@@ -48,17 +48,26 @@ export default async function completeQuest(questId: number): Promise<number> {
   }
 
   // Calculate experience earned
+  const { experience_share, strength_levels } = questData;
+  const experienceMultiplier = Array.isArray(strength_levels)
+    ? strength_levels[0]?.multiplier
+    : strength_levels?.multiplier;
+  
   const experienceEarned = getExperienceEarned(
-    questData.experience_share,
-    questData.strength_levels.multiplier,
+    experience_share,
+    experienceMultiplier,
   );
 
   // Insert completion record and get id of the new record in case we need it for undoing the completion later
-  const { data, error } = await supabase.from("quest_completions").insert({
-    quest_id: questId,
-    streak: questData.streak,
-    experience_earned: experienceEarned,
-  }).select().single();
+  const { data, error } = await supabase
+    .from("quest_completions")
+    .insert({
+      quest_id: questId,
+      streak: questData.streak,
+      experience_earned: experienceEarned,
+    })
+    .select()
+    .single();
   if (error) {
     console.error("Error inserting quest completion:", error);
     throw new Error(error.message);
