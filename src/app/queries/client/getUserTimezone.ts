@@ -17,8 +17,9 @@ export default async function getUserTimezone(userId: string): Promise<string> {
     return timezone;
   }
 
-  // If not found in cookies, fetch from the database and cache it in a cookie for 6 hours.
+  // If not found in cookies, fetch from the database and cache it in a cookie for 2 hours.
   const supabase = createSupabaseBrowserClient();
+  // User ownership is enforced by RLS policies
   const { data, error } = await supabase
     .from("users")
     .select("timezone")
@@ -29,6 +30,6 @@ export default async function getUserTimezone(userId: string): Promise<string> {
     throw new Error("Failed to fetch user timezone");
   }
   
-  Cookies.set("user_timezone", data.timezone, { expires: 6 / 24 }); // Cache for 6 hours
+  Cookies.set("user_timezone", data.timezone, { expires: 2 / 24 }); // Cache for 2 hours
   return data.timezone;
 }
