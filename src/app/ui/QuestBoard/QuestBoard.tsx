@@ -35,7 +35,7 @@ export default function QuestBoard({ quests }: QuestBoardProps) {
             color="background"
             className={styles.noQuestsMessage}
           >
-            Complete the setup process so we can start completing quests!
+            No quests available. Create some quests to get started!
           </Paragraph>
         )}
       </div>
