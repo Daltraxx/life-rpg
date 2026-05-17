@@ -6,6 +6,7 @@ import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import QuestItems from "./QuestItems/QuestItems";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import useDailyQuestManager from "@/utils/hooks/useDailyQuestManager";
+import DailyExperienceDisplay from "./DailyExperienceDisplay/DailyExperienceDisplay";
 
 export interface QuestBoardProps {
   /** Array of quests to display on the board */
@@ -30,10 +31,13 @@ export default function QuestBoard({ quests }: QuestBoardProps) {
       </Heading>
       <div className={styles.questBoard}>
         {quests.length > 0 ? (
-          <QuestItems
-            dailyQuestManager={dailyQuestManager}
-            className={gridVars.gridVars}
-          />
+          <>
+            <QuestItems
+              dailyQuestManager={dailyQuestManager}
+              className={gridVars.gridVars}
+            />
+            <DailyExperienceDisplay dailyQuestManager={dailyQuestManager} />
+          </>
         ) : (
           <Paragraph
             size="30"
