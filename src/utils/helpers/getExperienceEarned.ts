@@ -8,5 +8,11 @@ export default function getExperienceEarned(
   experienceShare: number,
   multiplier: number,
 ): number {
+  if (!Number.isFinite(experienceShare) || experienceShare < 0) {
+    throw new Error('experienceShare must be a non-negative finite number');
+  }
+  if (!Number.isFinite(multiplier) || multiplier < 0) {
+    throw new Error('multiplier must be a non-negative finite number');
+  }
   return Math.floor(experienceShare + experienceShare * multiplier);
 }
