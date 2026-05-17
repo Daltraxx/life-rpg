@@ -1,13 +1,12 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { DailyQuest } from "@/utils/types/DailyQuest";
 import QuestItem from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItem";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
-import useDailyQuestManager from "@/utils/hooks/useDailyQuestManager";
+import { DailyQuestManager } from '@/utils/hooks/useDailyQuestManager';
 
 interface QuestItemsProps {
   className?: string;
-  quests: DailyQuest[];
+  dailyQuestManager: DailyQuestManager;
 }
 
 /**
@@ -15,11 +14,11 @@ interface QuestItemsProps {
  *
  * @param props - Component props
  * @param props.className - Optional additional class name for styling
- * @param props.quests - Array of quest objects to display
+ * @param props.dailyQuestManager - The daily quest manager instance
  * @returns The rendered quest items section
  */
-export default function QuestItems({ className, quests }: QuestItemsProps) {
-  const dailyQuestManager = useDailyQuestManager(quests);
+export default function QuestItems({ className, dailyQuestManager }: QuestItemsProps) {
+  
   const { dailyQuests } = dailyQuestManager;
   return (
     <div className={clsx(styles.container, className)}>
