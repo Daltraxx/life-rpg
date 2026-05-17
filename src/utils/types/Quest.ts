@@ -1,4 +1,5 @@
 import { SetupQuest } from "./accountSetup/SetupAttributesAndQuests";
+import { AffectedAttribute } from "./AffectedAttribute";
 
 /**
  * Represents a quest in the life RPG system.
@@ -16,8 +17,9 @@ import { SetupQuest } from "./accountSetup/SetupAttributesAndQuests";
  * - `strengthLevel`: QuestStrengthLevel - Difficulty level (S-E)
  * - `position`: number - Display position
  */
-export type Quest = SetupQuest & {
+export type Quest = Omit<SetupQuest, "affectedAttributes"> & {
   id: number;
+  affectedAttributes: AffectedAttribute[];
   description: string | null;
   frequency: number;
   restFrequency: number;
