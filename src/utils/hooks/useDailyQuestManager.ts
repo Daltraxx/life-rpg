@@ -61,7 +61,7 @@ function dailyQuestReducer(
     }
     case "completeQuestFailure": {
       const { questId } = action;
-      let questName;
+      let questName = "Unknown Quest";
       return {
         ...state,
         dailyQuests: state.dailyQuests.map((quest) => {
@@ -101,7 +101,7 @@ function dailyQuestReducer(
     }
     case "undoCompleteQuestFailure": {
       const { questId } = action;
-      let questName;
+      let questName = "Unknown Quest";
       return {
         ...state,
         dailyQuests: state.dailyQuests.map((quest) => {
