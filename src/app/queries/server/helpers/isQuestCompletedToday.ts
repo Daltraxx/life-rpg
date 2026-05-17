@@ -2,7 +2,7 @@ import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayU
 import getUserTimezone from "../getUserTimezone";
 
 type QuestCompletionRecordItems = {
-  completed_at: string | null;
+  completed_at: string;
   is_resolved: boolean;
 } | null;
 
@@ -34,7 +34,7 @@ export default async function isQuestCompletedToday({
   const { beginningOfDayUTC, endOfDayUTC } =
     getBeginningAndEndOfDayUTC(userTimezone);
   return (
-    latestCompletion.completed_at! >= beginningOfDayUTC &&
-    latestCompletion.completed_at! < endOfDayUTC
+    latestCompletion.completed_at >= beginningOfDayUTC &&
+    latestCompletion.completed_at < endOfDayUTC
   );
 };
