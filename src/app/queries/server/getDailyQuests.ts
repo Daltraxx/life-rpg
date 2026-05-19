@@ -93,6 +93,11 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
       const completionStatus: DailyQuest["isCompleted"] = isCompleted
         ? "true"
         : "false";
+      if (!quest.strength_levels) {
+        throw new Error(
+          `Missing strength_levels data for quest ID ${quest.id}`,
+        );
+      }
       const bonusExperiencePoints = getQuestBonusPoints(
         quest.experienceShare,
         quest.strength_levels.multiplier,
