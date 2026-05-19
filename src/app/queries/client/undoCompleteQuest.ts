@@ -19,6 +19,8 @@ import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayU
  * - Only quest completions that have not been resolved (i.e., experience not yet awarded) can be undone to prevent inconsistencies in experience points.
  * - If no row exists that matches the criteria (e.g., already resolved, not from today, or does not belong to the user), 
  * - the function will complete without error but no changes will be made to the database.
+ * - TODO: In the future, consider returning a status indicating whether the undo was successful, 
+ * - failed due to resolution status, or failed due to date validation for better user feedback.
  */
 export default async function undoCompleteQuest(
   completedQuestId: number,
