@@ -22,6 +22,6 @@ export default function getBeginningAndEndOfDayUTC(
     return { beginningOfDayUTC, endOfDayUTC };
   } catch (error) {
     console.error("Error calculating day boundaries:", error);
-    throw new Error("Failed to calculate day boundaries");
+    throw new Error("Failed to calculate day boundaries", { cause: error });
   }
 }
