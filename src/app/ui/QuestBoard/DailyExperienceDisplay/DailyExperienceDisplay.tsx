@@ -14,7 +14,7 @@ export default function DailyExperienceDisplay({
         Total Experience Earned Today:
       </Heading>
       <div>
-        <div></div>
+        <div><p>{dailyQuestManager.totalExperience} + </p></div>
         <div></div>
       </div>
     </section>

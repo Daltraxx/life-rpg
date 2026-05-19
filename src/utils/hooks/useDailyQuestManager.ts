@@ -164,6 +164,18 @@ const createInitialManagerState = (
   };
 };
 
+/**
+ * Represents the return value of the useDailyQuestManager hook.
+ *
+ * @interface DailyQuestManager
+ * @property {DailyQuest[]} dailyQuests - Array of daily quests with their current state
+ * @property {Object} actions - Object containing action handlers for quest operations
+ * @property {(questId: number) => Promise<void>} actions.completeQuest - Marks a quest as completed
+ * @property {(questId: number, completedQuestId: number) => Promise<void>} actions.undoCompleteQuest - Reverts a completed quest back to uncompleted
+ * @property {string[]} errors - Array of error messages from failed operations
+ * @property {number} totalPoints - Total experience points from completed quests
+ * @property {number} totalBonusPoints - Total bonus experience points from completed quests
+ */
 export interface DailyQuestManager {
   dailyQuests: DailyQuest[];
   actions: {
