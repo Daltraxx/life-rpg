@@ -11,7 +11,7 @@ import Cookies from "js-cookie";
  */
 export default async function getUserTimezone(userId: string): Promise<string> {
   // Attempt to read the user's timezone from a cookie first to minimize database queries.
-  let timezone = Cookies.get("user_timezone");
+  const timezone = Cookies.get("user_timezone");
 
   if (timezone) {
     return timezone;
