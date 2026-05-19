@@ -37,4 +37,4 @@ export default async function isQuestCompletedToday({
     latestCompletion.completed_at >= beginningOfDayUTC &&
     latestCompletion.completed_at < endOfDayUTC
   );
-};
+}

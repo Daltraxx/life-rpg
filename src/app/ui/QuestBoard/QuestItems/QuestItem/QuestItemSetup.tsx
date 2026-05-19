@@ -19,11 +19,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
 import useButtonHold from "@/utils/hooks/useButtonHold";
+import {
+  MIN_EXPERIENCE_POINTS_PER_QUEST,
+  MAX_EXPERIENCE_POINTS_PER_QUEST,
+} from "@/utils/constants/gameConstants";
 
 const DELETE_ANIMATION_DURATION_MS = 500;
 
-const MIN_EXPERIENCE_POINTS = 0;
-const MAX_EXPERIENCE_POINTS = 100;
+const MIN_EXPERIENCE_POINTS = MIN_EXPERIENCE_POINTS_PER_QUEST;
+const MAX_EXPERIENCE_POINTS = MAX_EXPERIENCE_POINTS_PER_QUEST;
 
 const HOLD_INITIAL_DELAY_MS = 300;
 const HOLD_INTERVAL_MS = 100;
@@ -43,16 +47,16 @@ interface QuestItemSetupProps {
 
 /**
  * A setup component for displaying and managing an individual quest in the Quest Board setup screen.
- * 
+ *
  * Provides UI controls for:
  * - Reordering quests with up/down chevron buttons
  * - Viewing quest details (name, affected attributes, streak, strength)
  * - Adjusting experience share with mouse hold or keyboard support
  * - Deleting the quest with a smooth removal animation
- * 
+ *
  * The component handles responsive layout with different button styles for small vs larger screens.
  * Experience adjustment buttons support continuous increments via mouse hold or keyboard hold.
- * 
+ *
  * @param {QuestItemSetupProps} props - Component props
  * @param {SetupQuest} props.quest - The quest data to display and manage
  * @param {number} props.index - The index of the quest in the list (for ordering)
@@ -62,7 +66,7 @@ interface QuestItemSetupProps {
  * @param {(quest: SetupQuest, direction: "up" | "down") => void} props.onExperienceShareChange - Callback for changing experience share
  * @param {string} [props.className] - Optional additional class name for styling
  * @returns {JSX.Element} The rendered quest item setup component
- * 
+ *
  * @example
  * ```tsx
  * <QuestItemSetup
