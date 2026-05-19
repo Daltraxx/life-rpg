@@ -14,7 +14,7 @@ export default async function getUsername(): Promise<string> {
   } = await supabase.auth.getUser();
 
   if (authError || !user) {
-    throw new Error("User not authenticated");
+    throw new Error(authError?.message || "User not authenticated");
   }
   const { data, error } = await supabase
     .from("users")
