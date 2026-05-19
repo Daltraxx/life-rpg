@@ -13,6 +13,12 @@ import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayU
  * @param completedQuestId - The ID of the quest completion record to undo
  * @returns A promise that resolves when the quest completion has been deleted
  * @throws {Error} If the user is not authenticated or if the database operation fails
+ * @remarks
+ * - User ownership of the quest completion record is enforced through RLS policies in the database.
+ * - The function checks the completion timestamp against the user's timezone to ensure only today's quests can be undone.
+ * - Only quest completions that have not been resolved (i.e., experience not yet awarded) can be undone to prevent inconsistencies in experience points.
+ * - If no row exists that matches the criteria (e.g., already resolved, not from today, or does not belong to the user), 
+ * - the function will complete without error but no changes will be made to the database.
  */
 export default async function undoCompleteQuest(
   completedQuestId: number,
