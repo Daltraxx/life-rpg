@@ -77,8 +77,6 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     })
     .limit(1, { referencedTable: "quest_completions" });
 
-  console.log("Raw quest data from database:", data); // Debug log to inspect raw data structure
-
   if (error) {
     console.error("Error fetching quests:", error);
     throw new Error(error.message);
