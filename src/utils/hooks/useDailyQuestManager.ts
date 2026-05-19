@@ -5,6 +5,8 @@ import undoCompleteQuestDB from "@/app/queries/client/undoCompleteQuest";
 
 interface DailyQuestState {
   dailyQuests: DailyQuest[];
+  totalPoints: number;
+  totalBonusPoints: number;
   errors: string[]; // Consider more robust error handling strategy in the future (e.g. mapping questId to error message, etc.)
 }
 
@@ -49,14 +51,24 @@ function dailyQuestReducer(
     }
     case "completeQuestSuccess": {
       const { questId, completedQuestId } = action;
+      let totalPoints = 0;
+      let totalBonusPoints = 0;
       return {
         ...state,
-        dailyQuests: state.dailyQuests.map((quest) =>
-          quest.id === questId
-            ? { ...quest, isCompleted: "true", completedQuestId }
-            : quest,
-        ),
+        dailyQuests: state.dailyQuests.map((quest) => {
+          if (quest.isCompleted === "true" || quest.id === questId) {
+            totalPoints += quest.experienceShare;
+            totalBonusPoints += quest.bonusExperiencePoints;
+          }
+          if (quest.id === questId) {
+            return { ...quest, isCompleted: "true", completedQuestId };
+          } else {
+            return quest;
+          }
+        }),
         errors: [],
+        totalPoints,
+        totalBonusPoints,
       };
     }
     case "completeQuestFailure": {
@@ -89,14 +101,24 @@ function dailyQuestReducer(
     }
     case "undoCompleteQuestSuccess": {
       const { questId } = action;
+      let totalPoints = 0;
+      let totalBonusPoints = 0;
       return {
         ...state,
-        dailyQuests: state.dailyQuests.map((quest) =>
-          quest.id === questId
-            ? { ...quest, isCompleted: "false", completedQuestId: null }
-            : quest,
-        ),
+        dailyQuests: state.dailyQuests.map((quest) => {
+          if (quest.isCompleted === "true" && quest.id !== questId) {
+            totalPoints += quest.experienceShare;
+            totalBonusPoints += quest.bonusExperiencePoints;
+          }
+          if (quest.id === questId) {
+            return { ...quest, isCompleted: "false", completedQuestId: null };
+          } else {
+            return quest;
+          }
+        }),
         errors: [],
+        totalPoints,
+        totalBonusPoints,
       };
     }
     case "undoCompleteQuestFailure": {
@@ -123,6 +145,25 @@ function dailyQuestReducer(
   }
 }
 
+const createInitialManagerState = (
+  dailyQuests: DailyQuest[],
+): DailyQuestState => {
+  let totalPoints = 0;
+  let totalBonusPoints = 0;
+  dailyQuests.forEach((quest) => {
+    if (quest.isCompleted === "true") {
+      totalPoints += quest.experienceShare;
+      totalBonusPoints += quest.bonusExperiencePoints;
+    }
+  });
+  return {
+    dailyQuests,
+    totalPoints,
+    totalBonusPoints,
+    errors: [],
+  };
+};
+
 export interface DailyQuestManager {
   dailyQuests: DailyQuest[];
   actions: {
@@ -130,6 +171,8 @@ export interface DailyQuestManager {
     undoCompleteQuest: (questId: number, completedQuestId: number) => void;
   };
   errors: string[];
+  totalPoints: number;
+  totalBonusPoints: number;
 }
 
 /**
@@ -152,10 +195,11 @@ export interface DailyQuestManager {
 export default function useDailyQuestManager(
   dailyQuests: DailyQuest[],
 ): DailyQuestManager {
-  const [state, dispatch] = useReducer(dailyQuestReducer, {
+  const [state, dispatch] = useReducer(
+    dailyQuestReducer,
     dailyQuests,
-    errors: [],
-  });
+    createInitialManagerState,
+  );
 
   const completeQuest = async (questId: number) => {
     // Update local state with pending status immediately
@@ -190,6 +234,8 @@ export default function useDailyQuestManager(
       completeQuest,
       undoCompleteQuest,
     },
+    totalPoints: state.totalPoints,
+    totalBonusPoints: state.totalBonusPoints,
     errors: state.errors,
   };
 }
