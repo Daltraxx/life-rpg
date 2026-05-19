@@ -27,7 +27,9 @@ export default async function getUserTimezone(userId: string): Promise<string> {
     .single();
 
   if (error || !data) {
-    throw new Error("Failed to fetch user timezone");
+    throw new Error(
+      `Failed to fetch user timezone: ${error?.message ?? "No data returned"}`,
+    );
   }
   
   Cookies.set("user_timezone", data.timezone, { expires: 2 / 24 }); // Cache for 2 hours
