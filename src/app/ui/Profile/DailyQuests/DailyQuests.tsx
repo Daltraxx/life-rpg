@@ -2,6 +2,7 @@ import QuestBoard from "@/app/ui/QuestBoard/QuestBoard";
 import getUsername from "@/app/queries/server/getUsername";
 import getDailyQuests from "@/app/queries/server/getDailyQuests";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
+import styles from "./styles.module.css";
 
 /**
  * DailyQuests component
@@ -16,8 +17,8 @@ export default async function DailyQuests() {
   try {
     const [quests, username] = await Promise.all([getDailyQuests(), getUsername()]);
     return (
-      <div>
-        <Heading as="h1" color="brown-600">Welcome, {username || "quester"}.</Heading>
+      <div className={styles.container}>
+        <Heading as="h1" color="brown-600" size="48-responsive">Welcome, {username || "quester"}.</Heading>
         <QuestBoard quests={quests} />
       </div>
     );
