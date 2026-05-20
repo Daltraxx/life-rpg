@@ -12,6 +12,8 @@ export default function DailyExperienceDisplay({
   dailyQuestManager,
 }: DailyExperienceDisplayProps) {
   const { totalPoints, totalBonusPoints } = dailyQuestManager;
+  dailyQuestManager.totalPoints = 100;
+  dailyQuestManager.totalBonusPoints = 66;
   return (
     <section className={styles.container}>
       <Heading
@@ -26,7 +28,7 @@ export default function DailyExperienceDisplay({
       <div className={styles.pointsContainer}>
         <Span size="24" color="background" className={styles.points}>
           {totalBonusPoints > 0
-            ? `${totalPoints} + ${totalBonusPoints}`
+            ? `${totalPoints} + ${totalBonusPoints} = ${totalPoints + totalBonusPoints}`
             : `${totalPoints}`}
         </Span>
         <span className={clsx(styles.points, styles.fractionBar)}></span>
