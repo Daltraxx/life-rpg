@@ -153,7 +153,7 @@ export default function QuestItem({
             className={styles.experienceValue}
             aria-label={`Experience gained: ${quest.experienceShare}`}
           >
-            <span className={styles.smallScreenOnly}>Exp. Gained: </span>
+            <span className={styles.smallScreenOnly}>EXP: </span>
             {quest.bonusExperiencePoints > 0
               ? `${quest.experienceShare} + ${quest.bonusExperiencePoints}`
               : `${quest.experienceShare}`}

@@ -243,7 +243,7 @@ export default function QuestItemSetup({
             className={styles.experienceValue}
             aria-label={`Experience share: ${quest.experienceShare}`}
           >
-            <span className={styles.smallScreenOnly}>Exp. Gained: </span>
+            <span className={styles.smallScreenOnly}>EXP: </span>
             {quest.experienceShare}
           </Paragraph>
           <div className={styles.experienceButtons}>
