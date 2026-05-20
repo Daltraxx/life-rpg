@@ -1,6 +1,7 @@
 import QuestBoard from "@/app/ui/QuestBoard/QuestBoard";
 import getUsername from "@/app/queries/server/getUsername";
 import getDailyQuests from "@/app/queries/server/getDailyQuests";
+import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 
 /**
  * DailyQuests component
@@ -16,7 +17,7 @@ export default async function DailyQuests() {
     const [quests, username] = await Promise.all([getDailyQuests(), getUsername()]);
     return (
       <div>
-        <h1>Welcome, {username || "adventurer"}.</h1>
+        <Heading as="h1" color="brown-600">Welcome, {username || "quester"}.</Heading>
         <QuestBoard quests={quests} />
       </div>
     );
@@ -25,7 +26,7 @@ export default async function DailyQuests() {
     // TODO: Implement more fleshed-out error state component (with retry option?)
     return (
       <div>
-        <h1>Welcome, adventurer.</h1>
+        <Heading as="h1">Oh no.</Heading>
         <p>Sorry, we couldn't load your quests. Please try again later.</p>
       </div>
     );
