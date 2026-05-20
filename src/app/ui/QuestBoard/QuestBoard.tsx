@@ -26,7 +26,7 @@ export default function QuestBoard({ quests }: QuestBoardProps) {
   const dailyQuestManager = useDailyQuestManager(quests);
   return (
     <section className={styles.container}>
-      <div className={styles.questBoard}>
+      <div className={styles.dailyQuestBoard}>
         <Heading as="h2" color="background" size="36" className={styles.heading}>
           Quests for today:
         </Heading>

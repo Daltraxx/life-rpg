@@ -6,19 +6,23 @@
   gap: 1rem;
 }
 
-.questBoard {
+.setupQuestBoard,
+.dailyQuestBoard {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: 8.25rem;
   background-color: var(--brown-600, #362009);
-  border: 3px solid var(--gold-400, #ffb800);
   border-radius: var(--border-radius-xs, 2px);
   width: 100%;
   padding: 1.5rem;
   gap: 2rem;
   box-shadow: var(--shadow-md, rgba(0, 0, 0, 0.24) 0px 3px 8px);
+}
+
+.setupQuestBoard {
+  border: 3px solid var(--gold-400, #ffb800);
 }
 
 .pointsRemaining {

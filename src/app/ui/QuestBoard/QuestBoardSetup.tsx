@@ -44,7 +44,7 @@ export default function QuestBoardSetup({
       <Heading as="h2" color="blue-700" size="36">
         Current Quest Board:
       </Heading>
-      <div className={styles.questBoard}>
+      <div className={styles.setupQuestBoard}>
         {quests.length > 0 ? (
           <>
             <QuestBoardItems
