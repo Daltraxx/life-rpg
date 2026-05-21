@@ -1,0 +1,11 @@
+.container {
+  background-color: var(--gray-200);
+  height: 1.5rem;
+  width: 100%;
+}
+/* TODO: remove hardcoded width and set with props */
+.progress {
+  background-color: var(--blue-300);
+  height: 100%;
+  width: 40%;
+}
