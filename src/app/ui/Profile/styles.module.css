@@ -1,0 +1,9 @@
+.dailyQuestsContainer {
+  background-color: var(--beige-300);
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.levelSummaryContainer {
+  background-color: var(--background);
+}

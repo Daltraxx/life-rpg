@@ -19,6 +19,8 @@
   --brown-500: hsl(31, 71%, 16%); /* #462a0c */
   --brown-600: hsl(31, 71%, 12%); /* #362009 - secondary font color against white backgrounds */
 
+  --beige-300: 	hsl(50, 45%, 87%); /* #ede8d0 */
+
   --orange-200: hsl(31, 61%, 77%); /* #e8c6a1 */
   --orange-300: hsl(31, 61%, 70%); /* #e1b382 */
   --orange-500: hsl(31, 93%, 50%); /* #f68309 */
