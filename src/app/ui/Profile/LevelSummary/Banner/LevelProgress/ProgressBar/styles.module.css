@@ -3,11 +3,14 @@
   height: 1.5rem;
   width: 100%;
   position: relative;
+  border-radius: var(--border-radius-xs);
 }
 
 .progress {
   background-color: var(--blue-300);
   height: 100%;
+  border-top-left-radius: var(--border-radius-xs);
+  border-bottom-left-radius: var(--border-radius-xs);
 }
 
 .leftBound,
