@@ -1,3 +1,9 @@
+import Banner from "./Banner/Banner";
+
 export default function LevelSummary() {
-  return <div>LevelSummary</div>;
+  return (
+    <div>
+      <Banner />
+    </div>
+  );
 }
