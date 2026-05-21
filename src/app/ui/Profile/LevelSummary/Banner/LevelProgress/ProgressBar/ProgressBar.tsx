@@ -1,5 +1,6 @@
 "use client";
 
+import { Span } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css"
 
 export default function ProgressBar() {
@@ -11,6 +12,9 @@ export default function ProgressBar() {
     <div className={styles.container}>
       <div className={styles.progress} style={{ width: `${progressWidth}%` }}>
       </div>
+      <Span className={styles.leftBound}>{left}</Span>
+      <Span className={styles.value} style={{ left: `${progressWidth}%` }}>{value}</Span>
+      <Span className={styles.rightBound}>{right}</Span>
     </div>
   );
 }

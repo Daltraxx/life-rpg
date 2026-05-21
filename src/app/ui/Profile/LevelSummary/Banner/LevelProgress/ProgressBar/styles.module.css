@@ -2,9 +2,30 @@
   background-color: var(--gray-200);
   height: 1.5rem;
   width: 100%;
+  position: relative;
 }
-/* TODO: remove hardcoded width and set with props */
+
 .progress {
   background-color: var(--blue-300);
   height: 100%;
+}
+
+.leftBound,
+.rightBound,
+.value {
+  position: absolute;
+  top: 1.5rem;
+}
+
+.leftBound {
+  left: 0;
+}
+
+.rightBound {
+  right: 0;
+}
+
+.value {
+  left: 50%;
+  transform: translateX(-50%);
 }
