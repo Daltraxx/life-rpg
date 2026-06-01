@@ -19,6 +19,15 @@ export const SAFE_CHARACTERS_REGEX = /^[-a-zA-Z0-9 _:!'"\(\)$@%&*=+./—]*$/;
 
 // ------------------------------------------------------------------------
 
+/** The base experience points required to reach level 2.
+ */
+export const BASE_EXPERIENCE_FOR_LEVEL_2 = 300;
+/** The factor by which the experience required for each subsequent level increases.
+ */
+export const EXPERIENCE_INCREASE_FACTOR = 1.2;
+
+// ------------------------------------------------------------------------
+
 /** Typical maximum length for user-facing names (e.g., usernames, attribute names).
  */
 export const REGULAR_NAME_MAX_LENGTH = 30;
