@@ -12,8 +12,6 @@ export default function DailyExperienceDisplay({
   dailyQuestManager,
 }: DailyExperienceDisplayProps) {
   const { totalPoints, totalBonusPoints } = dailyQuestManager;
-  dailyQuestManager.totalPoints = 100;
-  dailyQuestManager.totalBonusPoints = 66;
   return (
     <section className={styles.container}>
       <Heading
