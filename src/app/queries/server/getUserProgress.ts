@@ -1,16 +1,7 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 
-export default async function getUserProgress() {
+export default async function getUserProgress(userId: string) {
   const supabase = await createSupabaseServerClient();
-
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError || !user) {
-    throw new Error("User not authenticated");
-  }
 
   const { data, error } = await supabase
     .from("users")
@@ -26,7 +17,7 @@ export default async function getUserProgress() {
     )
     `,
     )
-    .eq("id", user.id)
+    .eq("id", userId)
     .order("position", {
       ascending: true,
       referencedTable: "attributes",

@@ -8,11 +8,11 @@ import isQuestCompletedToday from "./helpers/isQuestCompletedToday";
 import getQuestBonusPoints from "@/utils/helpers/getQuestBonusPoints";
 
 /**
- * Fetches all daily quests for the authenticated user.
+ * Fetches all daily quests for the specified user.
  *
+ * @param {string} userId - The ID of the user whose daily quests to fetch.
  * @returns {Promise<DailyQuest[]>} An array of daily quests with their completion status and affected attributes.
  *
- * @throws {Error} If the user is not authenticated.
  * @throws {Error} If there is an error fetching quests from the database.
  * @throws {Error} If quest attribute data is missing or contains invalid strength values.
  *
@@ -22,17 +22,10 @@ import getQuestBonusPoints from "@/utils/helpers/getQuestBonusPoints";
  * - Affected attributes are mapped with their strength levels.
  * - In development mode, fetched quests are logged to the console.
  */
-export default async function getDailyQuests(): Promise<DailyQuest[]> {
+export default async function getDailyQuests(
+  userId: string,
+): Promise<DailyQuest[]> {
   const supabase = await createSupabaseServerClient();
-
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError || !user) {
-    throw new Error("User not authenticated");
-  }
 
   const { data, error } = await supabase
     .from("quests")
@@ -69,7 +62,7 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
     )
   `,
     )
-    .eq("user_id", user.id)
+    .eq("user_id", userId)
     .order("position", { ascending: true })
     .order("completed_at", {
       ascending: false,
@@ -85,7 +78,7 @@ export default async function getDailyQuests(): Promise<DailyQuest[]> {
   const quests = await Promise.all(
     (data ?? []).map(async (quest) => {
       const isCompleted = await isQuestCompletedToday({
-        userId: user.id,
+        userId,
         latestCompletion: quest.latestCompletion[0] ?? null,
       });
       const completionStatus: DailyQuest["isCompleted"] = isCompleted

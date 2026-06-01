@@ -12,10 +12,10 @@ import styles from "./styles.module.css";
  *
  * @returns {JSX.Element} A welcome section with the quest board
  */
-export default async function DailyQuests() {
+export default async function DailyQuests({ userId }: { userId: string }) {
   // TODO: Implement loading skeleton (possibly in parent component Profile)
   try {
-    const [quests, username] = await Promise.all([getDailyQuests(), getUsername()]);
+    const [quests, username] = await Promise.all([getDailyQuests(userId), getUsername(userId)]);
     return (
       <div className={styles.container}>
         <Heading as="h1" color="brown-600" size="48-responsive">Welcome, {username || "quester"}.</Heading>
