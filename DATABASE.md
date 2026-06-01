@@ -41,7 +41,7 @@ Full table can be found on the Supabase dashboard.
   - Whether user has defined their quests and attributes
 - `level`: INT DEFAULT 1
   - Overall player level
-- `experience`: DECIMAL(10, 2) DEFAULT 0
+- `experience`: DECIMAL(10, 2) NOT NULL DEFAULT 0
   - Total experience points
 - `updated_at`: TIMESTAMPTZ DEFAULT NOW()
   - Timestamp of last update

@@ -334,7 +334,7 @@ export type Database = {
         Row: {
           created_at: string | null;
           email: string;
-          experience: number | null;
+          experience: number;
           id: string;
           last_login: string | null;
           level: number | null;
@@ -349,7 +349,7 @@ export type Database = {
         Insert: {
           created_at?: string | null;
           email: string;
-          experience?: number | null;
+          experience?: number;
           id: string;
           last_login?: string | null;
           level?: number | null;
@@ -364,7 +364,7 @@ export type Database = {
         Update: {
           created_at?: string | null;
           email?: string;
-          experience?: number | null;
+          experience?: number;
           id?: string;
           last_login?: string | null;
           level?: number | null;
