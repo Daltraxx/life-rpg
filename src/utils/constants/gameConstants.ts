@@ -19,12 +19,18 @@ export const SAFE_CHARACTERS_REGEX = /^[-a-zA-Z0-9 _:!'"\(\)$@%&*=+./—]*$/;
 
 // ------------------------------------------------------------------------
 
-/** The base experience points required to reach level 2.
+/** The base experience points required to reach user level 2.
  */
-export const BASE_EXPERIENCE_FOR_LEVEL_2 = 300;
-/** The factor by which the experience required for each subsequent level increases.
+export const BASE_EXPERIENCE_FOR_USER_LEVEL_2 = 300;
+/** The factor by which the experience required for each subsequent user level increases.
  */
-export const EXPERIENCE_INCREASE_FACTOR = 1.2;
+export const USER_LEVEL_EXPERIENCE_INCREASE_FACTOR = 1.2;
+/** The base experience to reach attribute level 2
+ */
+export const BASE_EXPERIENCE_FOR_ATTRIBUTE_LEVEL_2 = 10;
+/** The factor by which the experience required for each subsequent attribute level increases.
+ */
+export const ATTRIBUTE_LEVEL_EXPERIENCE_INCREASE_FACTOR = 1.2;
 
 // ------------------------------------------------------------------------
 
