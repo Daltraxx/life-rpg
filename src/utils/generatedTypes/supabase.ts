@@ -339,6 +339,7 @@ export type Database = {
           last_login: string | null;
           level: number | null;
           profile_complete: boolean | null;
+          purpose: string | null;
           timezone: string;
           updated_at: string | null;
           username: string;
@@ -353,6 +354,7 @@ export type Database = {
           last_login?: string | null;
           level?: number | null;
           profile_complete?: boolean | null;
+          purpose?: string | null;
           timezone?: string;
           updated_at?: string | null;
           username: string;
@@ -367,6 +369,7 @@ export type Database = {
           last_login?: string | null;
           level?: number | null;
           profile_complete?: boolean | null;
+          purpose?: string | null;
           timezone?: string;
           updated_at?: string | null;
           username?: string;
