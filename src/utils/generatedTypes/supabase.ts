@@ -42,7 +42,7 @@ export type Database = {
       attributes: {
         Row: {
           created_at: string | null;
-          experience: number | null;
+          experience: number;
           id: number;
           level: number | null;
           name: string;
@@ -52,7 +52,7 @@ export type Database = {
         };
         Insert: {
           created_at?: string | null;
-          experience?: number | null;
+          experience?: number;
           id?: number;
           level?: number | null;
           name: string;
@@ -62,7 +62,7 @@ export type Database = {
         };
         Update: {
           created_at?: string | null;
-          experience?: number | null;
+          experience?: number;
           id?: number;
           level?: number | null;
           name?: string;

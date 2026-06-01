@@ -56,7 +56,7 @@ Full table can be found on the Supabase dashboard.
   - Attribute name (max 50 chars, unique per user)
 - `level`: INT DEFAULT 1
   - Current attribute level
-- `experience`: DECIMAL(10, 2) DEFAULT 0
+- `experience`: DECIMAL(10, 2) NOT NULL DEFAULT 0
   - Attribute experience points
 - `position`: INT NOT NULL CHECK (position >= 0)
   - Display order for attribute list (unique per user)
