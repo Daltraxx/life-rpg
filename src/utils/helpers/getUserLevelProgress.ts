@@ -1,6 +1,6 @@
 import {
-  BASE_EXPERIENCE_FOR_LEVEL_2,
-  EXPERIENCE_INCREASE_FACTOR,
+  BASE_EXPERIENCE_FOR_USER_LEVEL_2,
+  USER_LEVEL_EXPERIENCE_INCREASE_FACTOR,
 } from "../constants/gameConstants";
 
 /**
@@ -31,11 +31,11 @@ export default function getUserLevelProgress(
 
   let level = 1;
   let levelStart = 0;
-  let xpToNext = BASE_EXPERIENCE_FOR_LEVEL_2;
+  let xpToNext = BASE_EXPERIENCE_FOR_USER_LEVEL_2;
   while (experience >= levelStart + xpToNext) {
     levelStart += xpToNext;
     level++;
-    xpToNext = Math.floor(xpToNext * EXPERIENCE_INCREASE_FACTOR);
+    xpToNext = Math.floor(xpToNext * USER_LEVEL_EXPERIENCE_INCREASE_FACTOR);
   }
 
   return {
