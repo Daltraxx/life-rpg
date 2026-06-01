@@ -27,6 +27,8 @@ Full table can be found on the Supabase dashboard.
   - Unique usertag for potential social features
 - `email`: VARCHAR(255) UNIQUE NOT NULL
   - User email address
+- `purpose`: VARCHAR(500)
+  - Optional user-defined purpose statement (max 500 chars)
 - `timezone`: TEXT NOT NULL DEFAULT 'UTC'
   - User's timezone for scheduling and timestamps
 - `created_at`: TIMESTAMPTZ DEFAULT NOW()
