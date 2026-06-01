@@ -1,4 +1,7 @@
-import { BASE_EXPERIENCE_FOR_LEVEL_2, EXPERIENCE_INCREASE_FACTOR } from "../constants/gameConstants";
+import {
+  BASE_EXPERIENCE_FOR_LEVEL_2,
+  EXPERIENCE_INCREASE_FACTOR,
+} from "../constants/gameConstants";
 
 /**
  * Represents the current level progress of a user.
@@ -14,37 +17,30 @@ export interface UserLevelProgress {
 
 /**
  * Calculates the user's current level and experience progress.
- *
- * Each level requires 20% more experience than the previous level.
- * Level 1 starts at 0 XP, and level 2 requires 300 XP.
+ * The experience required for each level increases by a factor defined in game constants.
  *
  * @param experience - The total experience points of the user.
  * @returns The user's current level and experience thresholds.
+ * @remarks This iterative computation is adequate for typical user experience values,
+ * as levels will not exceed reasonable limits in a life RPG context. If performance becomes a concern,
+ * we can optimize with a closed-form solution, caching, or binary search.
  */
 export default function getUserLevelProgress(
   experience: number,
 ): UserLevelProgress {
-  if (experience < BASE_EXPERIENCE_FOR_LEVEL_2) {
-    return {
-      level: 1,
-      levelExperienceStart: 0,
-      levelExperienceEnd: BASE_EXPERIENCE_FOR_LEVEL_2,
-    };
-  }
 
   let level = 1;
-  let xpForNextLevel = BASE_EXPERIENCE_FOR_LEVEL_2; // Each level requires 20% more XP than the previous
-  while (experience >= xpForNextLevel) {
+  let levelStart = 0;
+  let xpToNext = BASE_EXPERIENCE_FOR_LEVEL_2;
+  while (experience >= levelStart + xpToNext) {
+    levelStart += xpToNext;
     level++;
-    xpForNextLevel +=
-      BASE_EXPERIENCE_FOR_LEVEL_2 * Math.pow(EXPERIENCE_INCREASE_FACTOR, level - 1); // Increase XP requirement for next level
+    xpToNext = Math.floor(xpToNext * EXPERIENCE_INCREASE_FACTOR);
   }
-  
+
   return {
     level,
-    levelExperienceStart:
-      xpForNextLevel -
-      BASE_EXPERIENCE_FOR_LEVEL_2 * Math.pow(EXPERIENCE_INCREASE_FACTOR, level - 1),
-    levelExperienceEnd: xpForNextLevel,
+    levelExperienceStart: levelStart,
+    levelExperienceEnd: levelStart + xpToNext,
   };
 }
