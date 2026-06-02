@@ -1,9 +1,18 @@
 .container {
   background-color: var(--gray-200);
-  height: 1.5rem;
   width: 100%;
   position: relative;
   border-radius: var(--border-radius-xs);
+}
+
+.largeContainer {
+  height: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.smallContainer {
+  height: 1rem;
+  margin-bottom: 2rem;
 }
 
 .progress {
@@ -13,11 +22,16 @@
   border-bottom-left-radius: var(--border-radius-xs);
 }
 
-.leftBound,
-.rightBound,
-.value {
+.smallVal, .largeVal {
   position: absolute;
-  top: 1.5rem;
+}
+
+.smallVal {
+  font-size: 1rem;
+}
+
+.largeVal {
+  font-size: 1.25rem;
 }
 
 .leftBound {

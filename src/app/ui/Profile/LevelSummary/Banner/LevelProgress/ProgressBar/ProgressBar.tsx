@@ -2,6 +2,7 @@
 
 import { Span } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
+import clsx from "clsx";
 
 /**
  * Properties for the ProgressBar component.
@@ -10,6 +11,7 @@ import styles from "./styles.module.css";
  * @property {number} current - The current progress value between start and end
  */
 type ProgressBarProps = {
+  size: "small" | "large";
   start: number;
   end: number;
   current: number;
@@ -28,20 +30,44 @@ export default function ProgressBar({
   start,
   end,
   current,
+  size,
 }: ProgressBarProps) {
   const progressWidth = ((current - start) / (end - start)) * 100;
   return (
-    <div className={styles.container}>
+    <div className={clsx(styles.container, size === "small" ? styles.smallContainer : styles.largeContainer)}>
       <div
         className={styles.progress}
         style={{ width: `${progressWidth}%` }}
       ></div>
-      <Span className={styles.leftBound}>{start}</Span>
+      <Span
+        className={clsx(
+          styles.leftBound,
+          clsx(size === "small" ? styles.smallVal : styles.largeVal),
+        )}
+        size="custom"
+      >
+        {start}
+      </Span>
       {/* TODO: Account for cases where current is so close to start or end that it overlaps with the bounds */}
-      <Span className={styles.value} style={{ left: `${progressWidth}%` }}>
+      <Span
+        className={clsx(
+          styles.value,
+          clsx(size === "small" ? styles.smallVal : styles.largeVal),
+        )}
+        style={{ left: `${progressWidth}%` }}
+        size="custom"
+      >
         {current !== start ? current : ""}
       </Span>
-      <Span className={styles.rightBound}>{end}</Span>
+      <Span
+        className={clsx(
+          styles.rightBound,
+          clsx(size === "small" ? styles.smallVal : styles.largeVal),
+        )}
+        size="custom"
+      >
+        {end}
+      </Span>
     </div>
   );
 }
