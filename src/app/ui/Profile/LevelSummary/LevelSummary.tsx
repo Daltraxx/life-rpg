@@ -1,3 +1,4 @@
+import AttributeSummary from "./AttributeSummary/AttributeSummary";
 import Banner from "./Banner/Banner";
 import getUserProgress from "@/app/queries/server/getUserProgress";
 
@@ -7,6 +8,7 @@ export default async function LevelSummary({ userId }: { userId: string }) {
     return (
       <div>
         <Banner userProgress={userProgress} />
+        <AttributeSummary userProgress={userProgress} />
       </div>
     );
   } catch (error) {
