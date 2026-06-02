@@ -3,6 +3,7 @@
   width: 100%;
   position: relative;
   border-radius: var(--border-radius-xs);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .largeContainer {
