@@ -12,7 +12,7 @@ export default function AttributeSummary({
   const { attributes } = userProgress;
   return (
     <section className={styles.container}>
-      <Heading as="h2" size="30-responsive" color="blue-700">
+      <Heading as="h2" size="30" color="blue-700">
         Attributes
       </Heading>
       <ul className={styles.list}>
@@ -21,7 +21,7 @@ export default function AttributeSummary({
             <Span
               className={styles.attributeName}
               color="blue-700"
-              size="20-responsive"
+              size="20"
             >
               {attr.attributeName} - {attr.level}
             </Span>
