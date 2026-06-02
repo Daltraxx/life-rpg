@@ -11,7 +11,7 @@ export default async function LevelSummary({ userId }: { userId: string }) {
       <div className={styles.container}>
         <Banner userProgress={userProgress} />
         <div className={styles.contentContainer}>
-          <AttributeSummary userProgress={userProgress} />
+          <AttributeSummary userProgress={userProgress}/>
           <PurposeStatement
             purposeText={userProgress.purpose}
             className={styles.purposeStatement}

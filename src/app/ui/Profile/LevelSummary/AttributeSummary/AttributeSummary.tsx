@@ -3,15 +3,20 @@ import { Span } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { UserProgress } from "@/utils/types/UserProgress";
 import ProgressBar from "../../../ProgressBar/ProgressBar";
 import styles from "./styles.module.css";
+import clsx from "clsx";
+
+type AttributeSummaryProps = {
+  userProgress: UserProgress;
+  className?: string;
+};
 
 export default function AttributeSummary({
   userProgress,
-}: {
-  userProgress: UserProgress;
-}) {
+  className,
+}: AttributeSummaryProps) {
   const { attributes } = userProgress;
   return (
-    <section className={styles.container}>
+    <section className={clsx(styles.container, className)}>
       <Heading as="h2" size="30" color="blue-700">
         Attributes
       </Heading>
