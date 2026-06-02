@@ -13,3 +13,18 @@
 .purposeStatement {
   text-align: center;
 }
+
+@media (min-width: 768px) {
+  .contentContainer {
+    flex-direction: row;
+    gap: 3rem;
+  }
+
+  .attributeSummary {
+    flex-basis: 40%;
+  }
+
+  .purposeStatement {
+    flex-basis: 60%;
+  }
+}
