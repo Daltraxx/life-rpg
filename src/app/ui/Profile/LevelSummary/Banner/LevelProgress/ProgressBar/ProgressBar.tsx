@@ -7,12 +7,12 @@ import styles from "./styles.module.css";
  * Properties for the ProgressBar component.
  * @property {number} start - The minimum value in the progress range
  * @property {number} end - The maximum value in the progress range
- * @property {number} currentValue - The current progress value between start and end
+ * @property {number} current - The current progress value between start and end
  */
 type ProgressBarProps = {
   start: number;
   end: number;
-  currentValue: number;
+  current: number;
 };
 
 /**
@@ -21,15 +21,15 @@ type ProgressBarProps = {
  * @param props - The progress bar properties
  * @param props.start - The minimum value in the range
  * @param props.end - The maximum value in the range
- * @param props.currentValue - The current progress value between start and end
+ * @param props.current - The current progress value between start and end
  * @returns A progress bar element with left bound, progress indicator, current value label, and right bound
  */
 export default function ProgressBar({
   start,
   end,
-  currentValue,
+  current,
 }: ProgressBarProps) {
-  const progressWidth = ((currentValue - start) / (end - start)) * 100;
+  const progressWidth = ((current - start) / (end - start)) * 100;
   return (
     <div className={styles.container}>
       <div
@@ -37,9 +37,9 @@ export default function ProgressBar({
         style={{ width: `${progressWidth}%` }}
       ></div>
       <Span className={styles.leftBound}>{start}</Span>
-      {/* TODO: Account for cases where currentValue is so close to start or end that it overlaps with the bounds */}
+      {/* TODO: Account for cases where current is so close to start or end that it overlaps with the bounds */}
       <Span className={styles.value} style={{ left: `${progressWidth}%` }}>
-        {currentValue !== start ? currentValue : ""}
+        {current !== start ? current : ""}
       </Span>
       <Span className={styles.rightBound}>{end}</Span>
     </div>

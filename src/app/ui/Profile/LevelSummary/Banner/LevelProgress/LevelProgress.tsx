@@ -16,7 +16,7 @@ export default function LevelProgress({
       <ProgressBar
         start={userProgress.levelStart}
         end={userProgress.levelEnd}
-        currentValue={userProgress.experience}
+        current={userProgress.experience}
       />
     </div>
   );
