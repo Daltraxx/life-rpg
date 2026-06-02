@@ -1,7 +1,7 @@
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import { Span } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { UserProgress } from "@/utils/types/UserProgress";
-import ProgressBar from "../Banner/LevelProgress/ProgressBar/ProgressBar";
+import ProgressBar from "../../../ProgressBar/ProgressBar";
 import styles from "./styles.module.css";
 
 export default function AttributeSummary({
@@ -18,11 +18,7 @@ export default function AttributeSummary({
       <ul className={styles.list}>
         {attributes.map((attr) => (
           <li key={attr.attributeId} className={styles.listItem}>
-            <Span
-              className={styles.attributeName}
-              color="blue-700"
-              size="20"
-            >
+            <Span className={styles.attributeName} color="blue-700" size="20">
               {attr.attributeName} - {attr.level}
             </Span>
             <ProgressBar

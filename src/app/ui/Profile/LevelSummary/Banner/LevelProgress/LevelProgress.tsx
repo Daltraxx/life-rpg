@@ -1,5 +1,5 @@
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
-import ProgressBar from "./ProgressBar/ProgressBar";
+import ProgressBar from "../../../../ProgressBar/ProgressBar";
 import styles from "./styles.module.css";
 import { UserProgress } from "@/utils/types/UserProgress";
 
