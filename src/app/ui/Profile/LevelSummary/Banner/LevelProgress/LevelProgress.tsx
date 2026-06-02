@@ -14,6 +14,7 @@ export default function LevelProgress({
         Level {userProgress.level}
       </Heading>
       <ProgressBar
+        size="large"
         start={userProgress.levelStart}
         end={userProgress.levelEnd}
         current={userProgress.experience}
