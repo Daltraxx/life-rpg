@@ -9,7 +9,10 @@ type PurposeStatementProps = {
 };
 
 export default function PurposeStatement({ purposeText, className }: PurposeStatementProps) {
-  const displayText = purposeText ?? "Add your purpose statement in your profile!";
+  // TODO: Make link to edit purpose statement once that functionality is implemented
+  const displayText =
+    purposeText ??
+    "\"First say to yourself what you would be; and then do what you have to do.\" - Epictetus";
   return (
     <section className={clsx(styles.container, className)}>
       <Heading as="h3" size="30" color="blue-700">
