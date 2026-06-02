@@ -22,7 +22,8 @@
   border-bottom-left-radius: var(--border-radius-xs);
 }
 
-.smallVal, .largeVal {
+.smallVal,
+.largeVal {
   position: absolute;
 }
 
