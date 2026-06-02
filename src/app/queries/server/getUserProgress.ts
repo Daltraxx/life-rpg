@@ -27,6 +27,7 @@ export default async function getUserProgress(
     experience,
     purpose,
     attributes (
+      id,
       name,
       experience,
       position
@@ -51,6 +52,7 @@ export default async function getUserProgress(
 
   const userProgress: UserProgress = {
     level: userLevelProgress.level,
+    userId: data.id,
     experience: data.experience,
     purpose: data.purpose ?? "Add your purpose statement in your profile!",
     levelStart: userLevelProgress.levelExperienceStart,
@@ -59,6 +61,7 @@ export default async function getUserProgress(
       const attributeLevelProgress: AttributeLevelProgress =
         getAttributeLevelProgress(attr.experience);
       return {
+        attributeId: attr.id,
         attributeName: attr.name,
         experience: attr.experience,
         level: attributeLevelProgress.level,

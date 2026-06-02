@@ -12,6 +12,7 @@ import { AttributeProgress } from "./AttributeProgress";
  */
 export interface UserProgress {
   level: number;
+  userId: string;
   experience: number;
   purpose: string;
   attributes: AttributeProgress[];
