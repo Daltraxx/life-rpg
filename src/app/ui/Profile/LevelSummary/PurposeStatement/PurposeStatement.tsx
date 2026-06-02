@@ -1,7 +1,7 @@
 import Heading from "../../../JSXWrappers/Heading/Heading";
 import { Paragraph } from "../../../JSXWrappers/TextWrappers/TextWrappers";
 
-export default function Purpose({ purposeText }: { purposeText: string }) {
+export default function PurposeStatement({ purposeText }: { purposeText: string }) {
   return (
     <section>
       <Heading as="h3" size="30" color="blue-700">
