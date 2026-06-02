@@ -54,7 +54,7 @@ export default async function getUserProgress(
     level: userLevelProgress.level,
     userId: data.id,
     experience: data.experience,
-    purpose: data.purpose ?? "Add your purpose statement in your profile!",
+    purpose: data.purpose,
     levelStart: userLevelProgress.levelExperienceStart,
     levelEnd: userLevelProgress.levelExperienceEnd,
     attributes: data.attributes.map((attr) => {
