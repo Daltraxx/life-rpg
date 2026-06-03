@@ -170,8 +170,8 @@ const createInitialManagerState = (
  * @interface DailyQuestManager
  * @property {DailyQuest[]} dailyQuests - Array of daily quests with their current state
  * @property {Object} actions - Object containing action handlers for quest operations
- * @property {(questId: number) => Promise<void>} actions.completeQuest - Marks a quest as completed
- * @property {(questId: number, completedQuestId: number) => Promise<void>} actions.undoCompleteQuest - Reverts a completed quest back to uncompleted
+ * @property {(questId: number) => void} actions.completeQuest - Marks a quest as completed
+ * @property {(questId: number, completedQuestId: number) => void} actions.undoCompleteQuest - Reverts a completed quest back to uncompleted
  * @property {string[]} errors - Array of error messages from failed operations
  * @property {number} totalPoints - Total experience points from completed quests
  * @property {number} totalBonusPoints - Total bonus experience points from completed quests
@@ -198,10 +198,10 @@ export interface DailyQuestManager {
  * const { dailyQuests, actions, errors } = useDailyQuestManager(quests);
  *
  * // Complete a quest
- * await actions.completeQuest(questId);
+ * actions.completeQuest(questId);
  *
  * // Undo a quest completion
- * await actions.undoCompleteQuest(questId, completedQuestId);
+ * actions.undoCompleteQuest(questId, completedQuestId);
  * ```
  */
 export default function useDailyQuestManager(
