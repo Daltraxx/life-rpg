@@ -36,8 +36,12 @@ export default function OptionsMenu({
       });
       if (!response.ok) {
         console.error("Failed to sign out:", response.statusText);
-        const { redirectUrl } = await response.json();
-        window.location.href = redirectUrl || "/"; // Redirect to provided URL or fallback to home page
+        try {
+          const { redirectUrl } = await response.json();
+          window.location.href = redirectUrl || "/"; // Redirect to provided URL or fallback to home page
+        } catch {
+          window.location.href = "/"; // Fallback redirect to home page if JSON parsing fails
+        }
       } else {
         window.location.href = "/"; // Redirect to home page on successful sign out
       }
