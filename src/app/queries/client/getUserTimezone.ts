@@ -2,7 +2,7 @@ import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import Cookies from "js-cookie";
 
 /**
- * Retrieves the authenticated user's timezone, using a short-lived cookie as a
+ * Retrieves the authenticated user's timezone, using a short-lived cookie keyed by user ID as a
  * cache to avoid redundant database reads.
  *
  * @param userId - The ID of the user whose timezone to fetch.
