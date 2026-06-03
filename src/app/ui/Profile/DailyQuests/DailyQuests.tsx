@@ -5,15 +5,23 @@ import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import styles from "./styles.module.css";
 
 /**
- * DailyQuests component
- *
- * Renders the daily quests interface for the user profile.
- * Fetches quests from the server and displays them in a QuestBoard component.
- *
- * @returns {JSX.Element} A welcome section with the quest board
+ * Renders the Daily Quests component for a user's profile.
+ * 
+ * Fetches the user's daily quests and username in parallel, then displays
+ * them in a quest board layout with a personalized welcome greeting.
+ * 
+ * @param {Object} props - Component props
+ * @param {string} props.userId - The unique identifier of the user
+ * @returns {Promise<JSX.Element>} The rendered Daily Quests component or error state
+ * 
+ * @remarks
+ * This is a server component that uses Promise.all to fetch data concurrently.
+ * If either data fetch fails, an error message is displayed to the user.
+ * 
+ * @todo Implement loading skeleton (possibly in parent component Profile)
+ * @todo Implement more fleshed-out error state component (with retry option?)
  */
 export default async function DailyQuests({ userId }: { userId: string }) {
-  // TODO: Implement loading skeleton (possibly in parent component Profile)
   try {
     const [quests, username] = await Promise.all([getDailyQuests(userId), getUsername(userId)]);
     return (
@@ -24,7 +32,6 @@ export default async function DailyQuests({ userId }: { userId: string }) {
     );
   } catch (error) {
     console.error("Error loading daily quests:", error);
-    // TODO: Implement more fleshed-out error state component (with retry option?)
     return (
       <div>
         <Heading as="h1">Oh no.</Heading>
