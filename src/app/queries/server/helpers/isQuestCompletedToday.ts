@@ -30,11 +30,18 @@ export default async function isQuestCompletedToday({
   if (!latestCompletion || latestCompletion.is_resolved) {
     return false;
   }
-  const userTimezone = await getUserTimezone(userId);
-  const { beginningOfDayUTC, endOfDayUTC } =
-    getBeginningAndEndOfDayUTC(userTimezone);
-  return (
-    latestCompletion.completed_at >= beginningOfDayUTC &&
-    latestCompletion.completed_at < endOfDayUTC
-  );
+  try {
+    const userTimezone = await getUserTimezone(userId);
+    const { beginningOfDayUTC, endOfDayUTC } =
+      getBeginningAndEndOfDayUTC(userTimezone);
+    return (
+      latestCompletion.completed_at >= beginningOfDayUTC &&
+      latestCompletion.completed_at < endOfDayUTC
+    );
+  } catch (error) {
+    console.error("Error checking quest completion status:", error);
+    throw new Error("Failed to check if quest was completed today", {
+      cause: error,
+    });
+  }
 }
