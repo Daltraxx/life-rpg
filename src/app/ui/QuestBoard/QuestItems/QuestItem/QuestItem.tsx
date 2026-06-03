@@ -99,6 +99,20 @@ export default function QuestItem({
     return "COMPLETE QUEST";
   };
 
+  /**
+   * Gets the appropriate ARIA label for the quest action button.
+   * @returns {string} The ARIA label to display
+   */
+  const getAriaLabelForActionButton = () => {
+    if (quest.isCompleted === "pending") {
+      return `Updating status for quest ${quest.name}`;
+    } else if (quest.isCompleted === "true") {
+      return `Undo complete quest ${quest.name}`;
+    } else {
+      return `Complete quest ${quest.name}`;
+    }
+  };
+
   // TODO: Render different styling for completed vs incomplete quests (e.g. grayed out, strikethrough, etc.)
   // TODO: Consider rendering table on larger screens for better accessibility
   return (
@@ -167,11 +181,7 @@ export default function QuestItem({
           color="background"
           onClick={() => handleCompletionToggle()}
           disabled={quest.isCompleted === "pending"}
-          aria-label={
-            quest.isCompleted === "true"
-              ? `Undo complete quest ${quest.name}`
-              : `Complete quest ${quest.name}`
-          }
+          aria-label={getAriaLabelForActionButton()}
         >
           {getQuestActionText()}
         </ButtonWrapper>
@@ -181,11 +191,7 @@ export default function QuestItem({
           onClick={() => handleCompletionToggle()}
           className={clsx(styles.completeQuestButton, styles.largerScreenOnly)}
           disabled={quest.isCompleted === "pending"}
-          aria-label={
-            quest.isCompleted === "true"
-              ? `Undo complete quest ${quest.name}`
-              : `Complete quest ${quest.name}`
-          }
+          aria-label={getAriaLabelForActionButton()}
         >
           <FontAwesomeIcon
             icon={getQuestActionIcon()}
