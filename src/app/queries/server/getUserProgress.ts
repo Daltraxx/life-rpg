@@ -24,6 +24,7 @@ export default async function getUserProgress(
     .select(
       `
     id,
+    username,
     experience,
     purpose,
     attributes (
@@ -53,6 +54,7 @@ export default async function getUserProgress(
   const userProgress: UserProgress = {
     level: userLevelProgress.level,
     userId: data.id,
+    username: data.username,
     experience: data.experience,
     purpose: data.purpose,
     levelStart: userLevelProgress.levelExperienceStart,

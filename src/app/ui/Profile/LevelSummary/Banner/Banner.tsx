@@ -6,7 +6,8 @@ import styles from "./styles.module.css";
 export default function Banner({ userProgress }: { userProgress: UserProgress }) {
   return (
     <div className={styles.container}>
-      <Avatar />
+      {/* TODO: pass src to Avatar once implemented */}
+      <Avatar username={userProgress.username} />
       <LevelProgress userProgress={userProgress} />
     </div>
   );
