@@ -20,7 +20,7 @@ export default async function getUsername(userId: string): Promise<string> {
     throw new Error(error.message);
   }
   if (!data || !data.username) {
-    throw new Error("Username not found for the authenticated user");
+    throw new Error(`Username not found for user ID: ${userId}`);
   }
 
   return data.username;
