@@ -16,7 +16,6 @@ import { cache } from "react";
 const getUserTimezone = cache(async function getUserTimezone(
   userId: string,
 ): Promise<string> {
-  // If not found in cookies, fetch from the database and cache it in a cookie for 6 hours.
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
     .from("users")
