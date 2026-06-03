@@ -3,7 +3,7 @@ import type { AttributeStrength } from "@/utils/types/AttributeStrength";
 /**
  * Represents an attribute with a name.
  *
- * @interface Attribute
+ * @interface SetupAttribute
  * @property {string} name - The name of the attribute.
  */
 export interface SetupAttribute {
@@ -11,10 +11,10 @@ export interface SetupAttribute {
 }
 
 /**
- * Creates a new Attribute object with the specified name.
+ * Creates a new SetupAttribute object with the specified name.
  *
  * @param name - The name of the attribute. Must be a non-empty string after trimming whitespace.
- * @returns A new Attribute object containing the provided name.
+ * @returns A new SetupAttribute object containing the provided name.
  * @throws {Error} Throws an error if the name parameter is empty, null, undefined, or contains only whitespace
  */
 export function createSetupAttribute(name: string): SetupAttribute {
@@ -37,11 +37,11 @@ export interface SetupAffectedAttribute {
 }
 
 /**
- * Creates an affected attribute object with validation.
+ * Creates a new SetupAffectedAttribute object with the specified name and strength.
  *
  * @param name - The name of the attribute. Must not be empty or contain only whitespace.
  * @param strength - The strength level of the attribute effect.
- * @returns An object representing the affected attribute.
+ * @returns A new SetupAffectedAttribute object containing the provided name and strength.
  * @throws {Error} If the attribute name is empty or contains only whitespace.
  *
  * @example
@@ -78,7 +78,7 @@ export interface SetupQuest {
  * @param affectedAttributes - An array of attributes that are affected by the quest.
  * @param experienceShare - The percentage of experience points awarded for completing the quest. Defaults to 0.
  * @throws {Error} Throws an error if the quest name is empty or only whitespace.
- * @returns A SetupQuest object containing the name and affected attributes.
+ * @returns A new SetupQuest object containing the name and affected attributes.
  */
 export function createSetupQuest(
   name: string,
@@ -87,14 +87,13 @@ export function createSetupQuest(
 ): SetupQuest {
   if (!name?.trim()) {
     throw new Error("Quest name cannot be empty");
-  }
-  if (!Number.isFinite(experienceShare)) {
+  } else if (!Number.isFinite(experienceShare)) {
     throw new Error("Experience share must be a finite number");
-  }
-  if (experienceShare < 0) {
+  } else if (!Number.isInteger(experienceShare)) {
+    throw new Error("Experience share must be an integer");
+  } else if (experienceShare < 0) {
     throw new Error("Experience share cannot be negative");
-  }
-  if (experienceShare > 100) {
+  } else if (experienceShare > 100) {
     throw new Error("Experience share cannot exceed 100");
   }
   return { name, affectedAttributes, experienceShare };
