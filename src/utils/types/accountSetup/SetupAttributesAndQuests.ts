@@ -18,10 +18,11 @@ export interface SetupAttribute {
  * @throws {Error} Throws an error if the name parameter is empty, null, undefined, or contains only whitespace
  */
 export function createSetupAttribute(name: string): SetupAttribute {
-  if (!name?.trim()) {
+  const trimmedName = name?.trim();
+  if (!trimmedName) {
     throw new Error("Attribute name cannot be empty");
   }
-  return { name };
+  return { name: trimmedName };
 }
 
 /**
@@ -51,10 +52,11 @@ export function createSetupAffectedAttribute(
   name: string,
   strength: AttributeStrength,
 ): SetupAffectedAttribute {
-  if (!name?.trim()) {
+  const trimmedName = name?.trim();
+  if (!trimmedName) {
     throw new Error("Attribute name cannot be empty");
   }
-  return { name, strength };
+  return { name: trimmedName, strength };
 }
 
 /**
@@ -85,7 +87,8 @@ export function createSetupQuest(
   affectedAttributes: SetupAffectedAttribute[],
   experienceShare: number = 0,
 ): SetupQuest {
-  if (!name?.trim()) {
+  const trimmedName = name?.trim();
+  if (!trimmedName) {
     throw new Error("Quest name cannot be empty");
   } else if (!Number.isFinite(experienceShare)) {
     throw new Error("Experience share must be a finite number");
@@ -96,5 +99,5 @@ export function createSetupQuest(
   } else if (experienceShare > 100) {
     throw new Error("Experience share cannot exceed 100");
   }
-  return { name, affectedAttributes, experienceShare };
+  return { name: trimmedName, affectedAttributes, experienceShare };
 }
