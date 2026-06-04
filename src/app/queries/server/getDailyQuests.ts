@@ -79,8 +79,8 @@ export default async function getDailyQuests(
         latestCompletion: quest.latestCompletion[0] ?? null,
       });
       const completionStatus: DailyQuest["isCompleted"] = isCompleted
-        ? "true"
-        : "false";
+        ? "completed"
+        : "incomplete";
       if (!quest.strength_levels) {
         throw new Error(
           `Missing strength_levels data for quest ID ${quest.id}`,

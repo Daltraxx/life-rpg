@@ -56,12 +56,12 @@ function dailyQuestReducer(
       return {
         ...state,
         dailyQuests: state.dailyQuests.map((quest) => {
-          if (quest.isCompleted === "true" || quest.id === questId) {
+          if (quest.isCompleted === "completed" || quest.id === questId) {
             totalPoints += quest.experienceShare;
             totalBonusPoints += quest.bonusExperiencePoints;
           }
           if (quest.id === questId) {
-            return { ...quest, isCompleted: "true", completedQuestId };
+            return { ...quest, isCompleted: "completed", completedQuestId };
           } else {
             return quest;
           }
@@ -79,7 +79,7 @@ function dailyQuestReducer(
         dailyQuests: state.dailyQuests.map((quest) => {
           if (quest.id === questId) {
             questName = quest.name;
-            return { ...quest, isCompleted: "false" };
+            return { ...quest, isCompleted: "incomplete" };
           } else {
             return quest;
           }
@@ -106,12 +106,12 @@ function dailyQuestReducer(
       return {
         ...state,
         dailyQuests: state.dailyQuests.map((quest) => {
-          if (quest.isCompleted === "true" && quest.id !== questId) {
+          if (quest.isCompleted === "completed" && quest.id !== questId) {
             totalPoints += quest.experienceShare;
             totalBonusPoints += quest.bonusExperiencePoints;
           }
           if (quest.id === questId) {
-            return { ...quest, isCompleted: "false", completedQuestId: null };
+            return { ...quest, isCompleted: "incomplete", completedQuestId: null };
           } else {
             return quest;
           }
@@ -129,7 +129,7 @@ function dailyQuestReducer(
         dailyQuests: state.dailyQuests.map((quest) => {
           if (quest.id === questId) {
             questName = quest.name;
-            return { ...quest, isCompleted: "true" };
+            return { ...quest, isCompleted: "completed" };
           } else {
             return quest;
           }
@@ -151,7 +151,7 @@ const createInitialManagerState = (
   let totalPoints = 0;
   let totalBonusPoints = 0;
   dailyQuests.forEach((quest) => {
-    if (quest.isCompleted === "true") {
+    if (quest.isCompleted === "completed") {
       totalPoints += quest.experienceShare;
       totalBonusPoints += quest.bonusExperiencePoints;
     }
