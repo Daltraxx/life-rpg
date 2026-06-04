@@ -14,7 +14,7 @@ export type AffectedAttributesQueryResult = {
 }[];
 
 /**
- * Maps affected attributes from a query result to a standardized format.
+ * Maps affected attributes from a query result to a standardized format to be attached to a quest.
  *
  * @param questId - The ID of the quest being processed (used for error messages)
  * @param affectedAttributes - The raw query result containing strength and attribute data
