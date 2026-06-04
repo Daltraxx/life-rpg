@@ -8,6 +8,7 @@ import { z } from "zod";
 import { redirect } from "next/navigation";
 import type {
   CreateProfileTransactionAttributes,
+  CreateProfileTransactionDataShape,
   CreateProfileTransactionQuests,
   CreateProfileTransactionQuestsAttributes,
 } from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
@@ -119,12 +120,17 @@ export default async function createProfile(
   }
 
   // Insert data into the database within a transaction
-  const { error } = await supabase.rpc("create_profile_transaction", {
+  const createProfileTransactionData: CreateProfileTransactionDataShape = {
     p_user_id: user.id,
     p_attributes: attributesData,
     p_quests: questsData,
     p_quests_attributes: questsAttributesData,
-  });
+  };
+  
+  const { error } = await supabase.rpc(
+    "create_profile_transaction",
+    createProfileTransactionData,
+  );
 
   if (error) {
     // TODO: Consider structured logging solution
