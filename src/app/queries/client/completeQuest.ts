@@ -14,7 +14,10 @@ import getExperienceEarned from "@/utils/helpers/getExperienceEarned";
  * @throws {Error} If the completion record cannot be inserted
  * @returns Promise that resolves to the ID of the new quest completion record
  */
-export default async function completeQuest(userId: string, questId: number): Promise<number> {
+export default async function completeQuest(
+  userId: string,
+  questId: number,
+): Promise<number> {
   const supabase = createSupabaseBrowserClient();
 
   // Get quest info for calculating experience gain, streak
@@ -43,7 +46,11 @@ export default async function completeQuest(userId: string, questId: number): Pr
   const experienceMultiplier = Array.isArray(strength_levels)
     ? strength_levels[0]?.multiplier
     : strength_levels?.multiplier;
-  
+
+  if (experienceMultiplier === undefined) {
+    throw new Error("Quest strength level data is missing");
+  }
+
   const experienceEarned = getExperienceEarned(
     experience_share,
     experienceMultiplier,
