@@ -89,7 +89,7 @@ Full table can be found on the Supabase dashboard.
 - `last_rest_date`: DATE
   - Date of last rest day
 - `experience_share`: INT NOT NULL CHECK (experience_share BETWEEN 0 AND 100)
-  - Percentage share (0–100) of daily experience points allocated to this quest based on user-defined priority or difficulty
+  - Amount (0–100) of daily experience points allocated to this quest as determined by the user
 - `streak`: INT NOT NULL DEFAULT 0
   - Current streak count
 - `strength_points`: INT NOT NULL DEFAULT 0
