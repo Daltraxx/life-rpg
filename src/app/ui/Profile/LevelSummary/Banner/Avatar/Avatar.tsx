@@ -24,10 +24,10 @@ export type AvatarProps = {
  * @returns {JSX.Element} The Avatar component.
  */
 export default function Avatar({ src, username }: AvatarProps) {
-  src = src || "/dsAvatar200-200.webp"; // Fallback to a default avatar image if src is not provided
+  const avatarSrc = src || "/dsAvatar200-200.webp"; // Fallback to a default avatar image if src is not provided
   return (
     <Image
-      src={src}
+      src={avatarSrc}
       alt={`${username}'s avatar`}
       width={200}
       height={200}
