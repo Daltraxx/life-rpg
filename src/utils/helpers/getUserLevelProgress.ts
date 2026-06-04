@@ -28,6 +28,9 @@ export interface UserLevelProgress {
 export default function getUserLevelProgress(
   experience: number,
 ): UserLevelProgress {
+  if (!Number.isFinite(experience) || experience < 0) {
+    throw new Error("experience must be a non-negative finite number");
+  }
 
   let level = 1;
   let levelStart = 0;
