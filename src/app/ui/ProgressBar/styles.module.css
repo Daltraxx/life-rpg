@@ -44,7 +44,6 @@
   right: 0;
 }
 
-.value {
-  left: 50%;
+.currentValue {
   transform: translateX(-50%);
 }

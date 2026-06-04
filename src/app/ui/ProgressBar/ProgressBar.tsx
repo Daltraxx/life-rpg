@@ -51,7 +51,7 @@ export default function ProgressBar({
       {/* TODO: Account for cases where current is so close to start or end that it overlaps with the bounds */}
       <Span
         className={clsx(
-          styles.value,
+          styles.currentValue,
           clsx(size === "small" ? styles.smallVal : styles.largeVal),
         )}
         style={{ left: `${progressWidth}%` }}
