@@ -27,7 +27,7 @@ export default async function DailyQuests({ userId }: { userId: string }) {
     return (
       <div className={styles.container}>
         <Heading as="h1" color="brown-600" size="48-responsive">Welcome, {username || "quester"}.</Heading>
-        <QuestBoard quests={quests} />
+        <QuestBoard quests={quests} userId={userId} />
       </div>
     );
   } catch (error) {

@@ -11,6 +11,8 @@ import DailyExperienceDisplay from "./DailyExperienceDisplay/DailyExperienceDisp
 export interface QuestBoardProps {
   /** Array of quests to display on the board */
   quests: DailyQuest[];
+  /** The ID of the authenticated user, used for quest actions */
+  userId: string;
 }
 
 /**
@@ -20,10 +22,11 @@ export interface QuestBoardProps {
  *
  * @param props - Component props
  * @param props.quests - Array of quest objects to display
+ * @param props.userId - The ID of the authenticated user, used for quest actions
  * @returns The rendered quest board section
  */
-export default function QuestBoard({ quests }: QuestBoardProps) {
-  const dailyQuestManager = useDailyQuestManager(quests);
+export default function QuestBoard({ quests, userId }: QuestBoardProps) {
+  const dailyQuestManager = useDailyQuestManager(quests, userId);
   return (
     <section className={styles.container}>
       <div className={styles.dailyQuestBoard}>

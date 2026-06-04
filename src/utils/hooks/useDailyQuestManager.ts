@@ -206,6 +206,7 @@ export interface DailyQuestManager {
  */
 export default function useDailyQuestManager(
   dailyQuests: DailyQuest[],
+  userId: string,
 ): DailyQuestManager {
   const [state, dispatch] = useReducer(
     dailyQuestReducer,
@@ -217,7 +218,7 @@ export default function useDailyQuestManager(
     // Update local state with pending status immediately
     dispatch({ type: "submitCompleteQuest", questId });
     try {
-      const completedQuestId = await completeQuestDB(questId);
+      const completedQuestId = await completeQuestDB(userId, questId);
       dispatch({ type: "completeQuestSuccess", questId, completedQuestId });
     } catch (error) {
       console.error("Error completing quest:", error);

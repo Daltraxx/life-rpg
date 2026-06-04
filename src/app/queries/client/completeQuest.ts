@@ -8,24 +8,14 @@ import getExperienceEarned from "@/utils/helpers/getExperienceEarned";
  * experience share and strength level multiplier, and inserts a completion record
  * into the database.
  *
+ * @param userId - The ID of the authenticated user completing the quest
  * @param questId - The ID of the quest to complete
- * @throws {Error} If user is not authenticated
  * @throws {Error} If quest data cannot be fetched
  * @throws {Error} If the completion record cannot be inserted
  * @returns Promise that resolves to the ID of the new quest completion record
  */
-export default async function completeQuest(questId: number): Promise<number> {
+export default async function completeQuest(userId: string, questId: number): Promise<number> {
   const supabase = createSupabaseBrowserClient();
-
-  const {
-    data: { user },
-    error: authError,
-  } = await supabase.auth.getUser();
-
-  if (authError || !user) {
-    console.error("User authentication error:", authError);
-    throw new Error("User not authenticated");
-  }
 
   // Get quest info for calculating experience gain, streak
   const { data: questData, error: questError } = await supabase
@@ -40,6 +30,7 @@ export default async function completeQuest(questId: number): Promise<number> {
       )`,
     )
     .eq("id", questId)
+    .eq("user_id", userId)
     .single();
 
   if (questError || !questData) {
