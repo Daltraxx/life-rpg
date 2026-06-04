@@ -4,17 +4,17 @@ import clsx from "clsx";
 import { ListItem } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
 import { JSX, useCallback } from "react";
-import { type Attribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import type { SetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import {
   ChevronDownButton,
   ChevronUpButton,
 } from "@/app/ui/Buttons/ChevronButtons/ChevronButtons";
 
 interface AttributeListItemProps {
-  attribute: Attribute;
-  onDelete: (attribute: Attribute) => void;
-  handleMoveUp: (attribute: Attribute) => void;
-  handleMoveDown: (attribute: Attribute) => void;
+  attribute: SetupAttribute;
+  onDelete: (attribute: SetupAttribute) => void;
+  handleMoveUp: (attribute: SetupAttribute) => void;
+  handleMoveDown: (attribute: SetupAttribute) => void;
   attributesLength: number;
   index: number;
 }
