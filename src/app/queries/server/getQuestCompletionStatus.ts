@@ -16,6 +16,8 @@ export default async function getQuestCompletionStatus(
   const supabase = await createSupabaseServerClient();
 
   // User ownership of quest is enforced via Supabase RLS policy
+  // Directly checking for userId equals user_id would require a join with the quests table,
+  // since user_id is not stored in the quest_completions table.
   const { data, error } = await supabase
     .from("quest_completions")
     .select("completed_at, is_resolved")
