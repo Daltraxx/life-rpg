@@ -1,9 +1,6 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import type { Quest } from "@/utils/types/Quest";
-import {
-  intToStrengthMap,
-  isStrengthKey,
-} from "@/utils/helpers/strengthToIntMap";
+import mapAffectedAttributes from "./helpers/mapAffectedAttributes";
 
 /**
  * Fetches all quests for the authenticated user from the database.
@@ -73,32 +70,11 @@ export default async function getQuests(): Promise<Quest[]> {
     strengthPoints: quest.strengthPoints,
     strengthLevel: quest.strengthLevel,
     position: quest.position,
-    affectedAttributes:
-      quest.affectedAttributes?.map((questAttr) => {
-        // Ternary to handle both array and single object cases for attributes
-        // due to the way Supabase returns related data when using .select with nested relationships
-        const attribute = Array.isArray(questAttr.attributes)
-          ? questAttr.attributes[0]
-          : questAttr.attributes;
-        
-        if (!attribute) {
-          throw new Error(
-            `Missing attribute data for quest ID ${quest.id}`,
-          );
-        }
-
-        const { strength } = questAttr;
-        if (!isStrengthKey(strength)) {
-          throw new Error(
-            `Invalid strength value for quest attribute: ${strength}`,
-          );
-        }
-        return {
-          id: Number(attribute.id),
-          name: attribute.name,
-          strength: intToStrengthMap[strength],
-        };
-      }) ?? [],
+    affectedAttributes: mapAffectedAttributes(
+      quest.id,
+      quest.affectedAttributes,
+    ),
   }));
+
   return quests;
 }

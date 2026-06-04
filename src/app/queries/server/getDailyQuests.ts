@@ -1,11 +1,8 @@
-import {
-  intToStrengthMap,
-  isStrengthKey,
-} from "@/utils/helpers/strengthToIntMap";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { DailyQuest } from "@/utils/types/DailyQuest";
 import isQuestCompletedToday from "./helpers/isQuestCompletedToday";
 import getQuestBonusPoints from "@/utils/helpers/getQuestBonusPoints";
+import mapAffectedAttributes from "./helpers/mapAffectedAttributes";
 
 /**
  * Fetches all daily quests for the specified user.
@@ -110,38 +107,16 @@ export default async function getDailyQuests(
         strengthLevel: quest.strengthLevel,
         bonusExperiencePoints: bonusExperiencePoints,
         position: quest.position,
-        affectedAttributes:
-          quest.affectedAttributes?.map((questAttr) => {
-            // Ternary to handle both array and single object cases for attributes
-            // due to the way Supabase returns related data when using .select with nested relationships
-            const attribute = Array.isArray(questAttr.attributes)
-              ? questAttr.attributes[0]
-              : questAttr.attributes;
-
-            if (!attribute) {
-              throw new Error(
-                `Missing attribute data for quest ID ${quest.id}`,
-              );
-            }
-
-            const { strength } = questAttr;
-            if (!isStrengthKey(strength)) {
-              throw new Error(
-                `Invalid strength value for quest attribute: ${strength}`,
-              );
-            }
-            return {
-              id: Number(attribute.id),
-              name: attribute.name,
-              strength: intToStrengthMap[strength],
-            };
-          }) ?? [],
+        affectedAttributes: mapAffectedAttributes(
+          quest.id,
+          quest.affectedAttributes,
+        ),
       };
     }),
   );
   // TODO: Remove this log after confirming quests are being fetched with correct attributes in development environment
   if (process.env.NODE_ENV === "development") {
-    console.log("Fetched quests with attributes:", quests);
+    console.log("Fetched quests with attributes:", quests[0].affectedAttributes);
   }
   return quests;
 }
