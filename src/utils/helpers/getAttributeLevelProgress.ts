@@ -28,14 +28,18 @@ export interface AttributeLevelProgress {
  * console.log(progress.levelExperienceStart); // XP needed to reach current level
  * console.log(progress.levelExperienceEnd); // XP needed to reach next level
  * ```
- * @remarks This function uses an iterative approach to calculate the level, 
- * which is efficient for typical experience values in a life RPG context. 
- * If performance becomes a concern with very high experience values, 
+ * @remarks This function uses an iterative approach to calculate the level,
+ * which is efficient for typical experience values in a life RPG context.
+ * If performance becomes a concern with very high experience values,
  * we can optimize using a closed-form solution, caching, or binary search with generated thresholds.
  */
 export default function getAttributeLevelProgress(
   experience: number,
 ): AttributeLevelProgress {
+  if (!Number.isFinite(experience) || experience < 0) {
+    throw new Error("experience must be a non-negative finite number");
+  }
+
   let level = 1;
   let levelStart = 0;
   let xpToNext = BASE_EXPERIENCE_FOR_ATTRIBUTE_LEVEL_2;
