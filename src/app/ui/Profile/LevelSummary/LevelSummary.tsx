@@ -27,7 +27,8 @@ export default async function LevelSummary({ userId }: { userId: string }) {
     // TODO: Handle error more gracefully, maybe with a dedicated error component
     return (
       <div>
-        <p>Error loading user information.</p>
+        <p>Unable to load your profile information.</p>
+        <p>Please refresh the page or contact support if the issue persists.</p>
       </div>
     );
   }
