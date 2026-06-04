@@ -1,11 +1,9 @@
-import getUserLevelProgress, {
-  UserLevelProgress,
-} from "@/utils/helpers/getUserLevelProgress";
-import getAttributeLevelProgress, {
-  AttributeLevelProgress,
-} from "@/utils/helpers/getAttributeLevelProgress";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { UserProgress } from "@/utils/types/UserProgress";
+import {
+  calculateLevelProgress,
+  type LevelProgress,
+} from "@/utils/helpers/calculateLevelProgress";
 
 /**
  * Fetches and calculates the progress data for a user.
@@ -50,8 +48,9 @@ export default async function getUserProgress(
     throw new Error("Error fetching user progress");
   }
 
-  const userLevelProgress: UserLevelProgress = getUserLevelProgress(
+  const userLevelProgress: LevelProgress = calculateLevelProgress(
     data.experience,
+    "user",
   );
 
   const userProgress: UserProgress = {
@@ -60,18 +59,20 @@ export default async function getUserProgress(
     username: data.username,
     experience: data.experience,
     purpose: data.purpose,
-    levelStart: userLevelProgress.levelExperienceStart,
-    levelEnd: userLevelProgress.levelExperienceEnd,
+    levelStart: userLevelProgress.levelStart,
+    levelEnd: userLevelProgress.levelEnd,
     attributes: data.attributes.map((attr) => {
-      const attributeLevelProgress: AttributeLevelProgress =
-        getAttributeLevelProgress(attr.experience);
+      const attributeLevelProgress: LevelProgress = calculateLevelProgress(
+        attr.experience,
+        "attribute",
+      );
       return {
         attributeId: attr.id,
         attributeName: attr.name,
         experience: attr.experience,
         level: attributeLevelProgress.level,
-        levelStart: attributeLevelProgress.levelExperienceStart,
-        levelEnd: attributeLevelProgress.levelExperienceEnd,
+        levelStart: attributeLevelProgress.levelStart,
+        levelEnd: attributeLevelProgress.levelEnd,
       };
     }),
   };
