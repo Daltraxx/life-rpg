@@ -32,9 +32,26 @@ export default function ProgressBar({
   current,
   size,
 }: ProgressBarProps) {
+  // Validate inputs
+  if (start >= end) {
+    throw new Error(
+      `Invalid range: start (${start}) must be less than end (${end})`,
+    );
+  }
+  if (current < start || current > end) {
+    throw new Error(
+      `Current value (${current}) must be between start (${start}) and end (${end})`,
+    );
+  }
+  
   const progressWidth = ((current - start) / (end - start)) * 100;
   return (
-    <div className={clsx(styles.container, size === "small" ? styles.smallContainer : styles.largeContainer)}>
+    <div
+      className={clsx(
+        styles.container,
+        size === "small" ? styles.smallContainer : styles.largeContainer,
+      )}
+    >
       <div
         className={styles.progress}
         style={{ width: `${progressWidth}%` }}
