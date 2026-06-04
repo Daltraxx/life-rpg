@@ -4,6 +4,7 @@ import { JSX, useCallback } from "react";
 import { DropdownMenu } from "radix-ui";
 import styles from "./styles.module.css";
 import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import { useRouter } from "next/navigation";
 
 /**
  * OptionsMenu component that provides a dropdown menu for user options.
@@ -28,7 +29,8 @@ export default function OptionsMenu({
   className,
 }: {
   className: string;
-}): JSX.Element {
+  }): JSX.Element {
+  const router = useRouter();
   const handleSignOut = useCallback(async () => {
     try {
       const response = await fetch("/auth/signout", {
@@ -38,18 +40,18 @@ export default function OptionsMenu({
         console.error("Failed to sign out:", response.statusText);
         try {
           const { redirectUrl } = await response.json();
-          window.location.href = redirectUrl || "/"; // Redirect to provided URL or fallback to home page
+          router.push(redirectUrl || "/"); // Redirect to provided URL or fallback to home page
         } catch {
-          window.location.href = "/"; // Fallback redirect to home page if JSON parsing fails
+          router.push("/"); // Fallback redirect to home page if JSON parsing fails
         }
       } else {
-        window.location.href = "/"; // Redirect to home page on successful sign out
+        router.push("/"); // Redirect to home page on successful sign out
       }
     } catch (error) {
       console.error("Error signing out:", error);
-      window.location.href = "/error";
+      router.push("/error"); // Redirect to a generic error page on network or unexpected errors
     }
-  }, []);
+  }, [router]);
   return (
     <section className={`${styles.optionsMenu} ${className}`}>
       <DropdownMenu.Root>
