@@ -23,19 +23,40 @@ export default function DailyExperienceDisplay({
         Total Experience Earned Today:
       </Heading>
 
-      <div className={styles.pointsContainer}>
-        <Span size="24" color="background" className={styles.points}>
+      <div
+        className={styles.pointsContainer}
+        aria-label={`${totalPoints} experience points earned today out of 100 with ${totalBonusPoints} bonus points`}
+      >
+        <Span
+          size="24"
+          color="background"
+          className={styles.points}
+          aria-hidden="true"
+        >
           {totalBonusPoints > 0
             ? `${totalPoints} + ${totalBonusPoints} = ${totalPoints + totalBonusPoints}`
             : `${totalPoints}`}
         </Span>
-        <span className={clsx(styles.points, styles.fractionBar)}></span>
-        <Span size="24" color="background" className={styles.points}>
+        <span
+          className={clsx(styles.points, styles.fractionBar)}
+          aria-hidden="true"
+        ></span>
+        <Span
+          size="24"
+          color="background"
+          className={styles.points}
+          aria-hidden="true"
+        >
           100
         </Span>
       </div>
 
-      <Span size="24" color="background" className={styles.expLabel}>
+      <Span
+        size="24"
+        color="background"
+        className={styles.expLabel}
+        aria-hidden="true"
+      >
         EXP!
       </Span>
     </section>
