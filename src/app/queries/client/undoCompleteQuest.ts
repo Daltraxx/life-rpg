@@ -41,6 +41,8 @@ export default async function undoCompleteQuest(
     getBeginningAndEndOfDayUTC(userTimezone);
 
   // User ownership is ensured through RLS policies.
+  // Additional check of user.id equals user_id would require join with quests table 
+  // which would add unnecessary complexity and overhead since RLS already guarantees ownership.
   const { error } = await supabase
     .from("quest_completions")
     .delete()
