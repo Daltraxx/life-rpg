@@ -13,7 +13,7 @@ export default async function getAuthenticatedUserId(): Promise<string> {
     error,
   } = await supabase.auth.getUser();
   if (error || !user) {
-    throw new Error("User not authenticated");
+    throw new Error("User not authenticated", { cause: error });
   }
   return user.id;
 }
