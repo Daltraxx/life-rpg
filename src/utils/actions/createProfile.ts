@@ -10,7 +10,6 @@ import type {
   CreateProfileTransactionAttributes,
   CreateProfileTransactionQuests,
   CreateProfileTransactionQuestsAttributes,
-  CreateProfileTransactionDataShapes,
 } from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
@@ -119,18 +118,13 @@ export default async function createProfile(
     }
   }
 
-  const createProfileTransactionData: CreateProfileTransactionDataShapes = {
+  // Insert data into the database within a transaction
+  const { error } = await supabase.rpc("create_profile_transaction", {
     p_user_id: user.id,
     p_attributes: attributesData,
     p_quests: questsData,
     p_quests_attributes: questsAttributesData,
-  };
-
-  // Insert data into the database within a transaction
-  const { error } = await supabase.rpc(
-    "create_profile_transaction",
-    createProfileTransactionData,
-  );
+  });
 
   if (error) {
     // TODO: Consider structured logging solution
