@@ -1,5 +1,5 @@
 import { useCallback, useMemo, useState } from "react";
-import { Attribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import type { SetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import swapArrayElements from "@/utils/helpers/swapArrayElements";
 
 /**
@@ -8,18 +8,18 @@ import swapArrayElements from "@/utils/helpers/swapArrayElements";
  * @interface AttributeManager
  * @property {Attribute[]} availableAttributes - Array of attributes that are currently available for use.
  * @property {Object} actions - Object containing attribute manipulation functions.
- * @property {(attribute: Attribute) => void} actions.addAttribute - Function to add a new attribute to the setup.
- * @property {(attribute: Attribute) => void} actions.deleteAttribute - Function to remove an attribute from the setup.
- * @property {(attribute: Attribute) => void} actions.swapAttributeUp - Function to move an attribute up in the order.
- * @property {(attribute: Attribute) => void} actions.swapAttributeDown - Function to move an attribute down in the order.
+ * @property {(attribute: SetupAttribute) => void} actions.addAttribute - Function to add a new attribute to the setup.
+ * @property {(attribute: SetupAttribute) => void} actions.deleteAttribute - Function to remove an attribute from the setup.
+ * @property {(attribute: SetupAttribute) => void} actions.swapAttributeUp - Function to move an attribute up in the order.
+ * @property {(attribute: SetupAttribute) => void} actions.swapAttributeDown - Function to move an attribute down in the order.
  */
 export interface AttributeManager {
-  availableAttributes: Attribute[];
+  availableAttributes: SetupAttribute[];
   actions: {
-    addAttribute: (attribute: Attribute) => void;
-    deleteAttribute: (attribute: Attribute) => void;
-    swapAttributeUp: (attribute: Attribute) => void;
-    swapAttributeDown: (attribute: Attribute) => void;
+    addAttribute: (attribute: SetupAttribute) => void;
+    deleteAttribute: (attribute: SetupAttribute) => void;
+    swapAttributeUp: (attribute: SetupAttribute) => void;
+    swapAttributeDown: (attribute: SetupAttribute) => void;
   };
 }
 
@@ -44,22 +44,22 @@ export interface AttributeManager {
  * actions.deleteAttribute(attributeToRemove);
  */
 export default function useAttributeManager(
-  initialAttributes: Attribute[],
+  initialAttributes: SetupAttribute[],
 ): AttributeManager {
   const [availableAttributes, setAvailableAttributes] =
-    useState<Attribute[]>(initialAttributes);
+    useState<SetupAttribute[]>(initialAttributes);
 
-  const handleAddAttribute = useCallback((attribute: Attribute) => {
+  const handleAddAttribute = useCallback((attribute: SetupAttribute) => {
     setAvailableAttributes((prev) => [...prev, attribute]);
   }, []);
 
-  const handleDeleteAttribute = useCallback((attribute: Attribute) => {
+  const handleDeleteAttribute = useCallback((attribute: SetupAttribute) => {
     setAvailableAttributes((prev) =>
       prev.filter((attr) => attr.name !== attribute.name),
     );
   }, []);
 
-  const swapAttributeUp = useCallback((attribute: Attribute) => {
+  const swapAttributeUp = useCallback((attribute: SetupAttribute) => {
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
       if (index === -1 || index === 0) {
@@ -73,7 +73,7 @@ export default function useAttributeManager(
     });
   }, []);
 
-  const swapAttributeDown = useCallback((attribute: Attribute) => {
+  const swapAttributeDown = useCallback((attribute: SetupAttribute) => {
     setAvailableAttributes((prev) => {
       const index = prev.findIndex((attr) => attr.name === attribute.name);
       if (index === -1 || index === prev.length - 1) {
