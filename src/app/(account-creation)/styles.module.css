@@ -1,5 +1,6 @@
 .mainContent {
   /* Ensures content fills viewport minus header and footer height */
+  /* CSS Vars defined in globals.css file */
   min-height: calc(
     100dvh - var(--create-account-header-height-mobile, 10.75rem) -
       var(--create-account-footer-height-mobile, 10.75rem)
