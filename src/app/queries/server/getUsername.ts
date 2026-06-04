@@ -9,6 +9,9 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 export default async function getUsername(userId: string): Promise<string> {
   const supabase = await createSupabaseServerClient();
   
+  // RLS policies further restrict access to only user data belonging to the authenticated user,
+  // so combined with this function only being called on the server,
+  // we can be confident that users cannot access data that doesn't belong to them.
   const { data, error } = await supabase
     .from("users")
     .select("username")
