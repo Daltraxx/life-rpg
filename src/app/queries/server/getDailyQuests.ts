@@ -24,6 +24,9 @@ export default async function getDailyQuests(
 ): Promise<DailyQuest[]> {
   const supabase = await createSupabaseServerClient();
 
+  // RLS policies further restrict access to only quests belonging to the authenticated user, 
+  // so combined with this function only being called on the server, 
+  // we can be confident that users cannot access quests that don't belong to them.
   const { data, error } = await supabase
     .from("quests")
     .select(
