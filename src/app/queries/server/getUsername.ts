@@ -20,7 +20,7 @@ export default async function getUsername(userId: string): Promise<string> {
 
   if (error) {
     console.error("Error fetching username:", error);
-    throw new Error(error.message);
+    throw new Error("Failed to fetch username", { cause: error });
   }
   if (!data || !data.username) {
     throw new Error(`Username not found for user ID: ${userId}`);
