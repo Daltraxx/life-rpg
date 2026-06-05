@@ -55,7 +55,7 @@ export default async function getDailyQuests(
     latestCompletion:quest_completions (
       id,
       completed_at,
-      is_resolved
+      processed_at
     ),
     strength_levels (
       multiplier

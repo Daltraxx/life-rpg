@@ -3,7 +3,7 @@ import getUserTimezone from "../getUserTimezone";
 
 type QuestCompletionRecordItems = {
   completed_at: string;
-  is_resolved: boolean;
+  processed_at: string | null;
 } | null;
 
 type isCompletedTodayParams = {
@@ -17,17 +17,17 @@ type isCompletedTodayParams = {
  * @param {isCompletedTodayParams} params - The parameters for checking if a quest was completed today.
  * @param {string} params.userId - The unique identifier of the user.
  * @param {QuestCompletionRecordItems} params.latestCompletion - The latest completion record for a quest, or null if no completion exists.
- * @returns {Promise<boolean>} True if the quest was completed today and not resolved, false otherwise.
+ * @returns {Promise<boolean>} True if the quest was completed today and not processed, false otherwise.
  *
  * @remarks
- * - Returns false if latestCompletion is null or if the completion is marked as resolved.
+ * - Returns false if latestCompletion is null or if the completion has been processed.
  * - Completion date is compared against the user's timezone-adjusted day boundaries.
  */
 export default async function isQuestCompletedToday({
   userId,
   latestCompletion,
 }: isCompletedTodayParams): Promise<boolean> {
-  if (!latestCompletion || latestCompletion.is_resolved) {
+  if (!latestCompletion || latestCompletion.processed_at) {
     return false;
   }
   try {

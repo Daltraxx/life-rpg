@@ -18,7 +18,7 @@ export default async function getQuestCompletionStatus(
   // since user_id is not stored in the quest_completions table.
   const { data, error } = await supabase
     .from("quest_completions")
-    .select("completed_at, is_resolved")
+    .select("completed_at, processed_at")
     .eq("quest_id", questId)
     .order("completed_at", { ascending: false })
     .limit(1);

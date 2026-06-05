@@ -47,7 +47,7 @@ export default async function undoCompleteQuest(
     .from("quest_completions")
     .delete()
     .eq("id", completedQuestId)
-    .eq("is_resolved", false) // Only allow undoing if the quest completion has not been resolved (i.e. not yet processed for experience)
+    .is("processed_at", null) // Only allow undoing if the quest completion has not been processed/resolved to prevent inconsistencies in experience points
     .gte("completed_at", beginningOfDayUTC)
     .lt("completed_at", endOfDayUTC);
 
