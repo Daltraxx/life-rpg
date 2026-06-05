@@ -92,7 +92,7 @@ export type Database = {
           created_at: string;
           experience_amount: number;
           id: number;
-          quest_id: number;
+          quest_id: number | null;
           reason: string | null;
           user_id: string;
         };
@@ -100,7 +100,7 @@ export type Database = {
           created_at?: string;
           experience_amount: number;
           id?: number;
-          quest_id: number;
+          quest_id?: number | null;
           reason?: string | null;
           user_id: string;
         };
@@ -108,7 +108,7 @@ export type Database = {
           created_at?: string;
           experience_amount?: number;
           id?: number;
-          quest_id?: number;
+          quest_id?: number | null;
           reason?: string | null;
           user_id?: string;
         };
