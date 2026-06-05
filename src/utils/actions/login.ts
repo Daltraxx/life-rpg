@@ -69,9 +69,16 @@ export async function login(
   );
 
   if (error) {
-    console.error("Login failed:", error.message);
+    console.error("Login failed:", { cause: error });
+    if (error.status === 400) {
+      return {
+        message: "Invalid email or password. Please try again.", // Avoid exposing specific failure reasons for security
+      };
+    }
+
     return {
-      message: "Authentication failed. Please check your credentials.",
+      message:
+        "An unexpected error occurred during login. Please try again later.",
     };
   }
 

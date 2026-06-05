@@ -62,6 +62,11 @@ export default function LoginForm() {
           fontSize="16"
         />
 
+        {/* ERROR MESSAGE */}
+        {errorState.message && (
+          <div className={styles.errorMessage}>{errorState.message}</div>
+        )}
+
         {/* SUBMIT */}
         <ButtonWrapper
           type="submit"
