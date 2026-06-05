@@ -18,7 +18,7 @@ export interface SetupAttribute {
  * @throws {Error} Throws an error if the name parameter is empty, null, undefined, or contains only whitespace
  */
 export function createSetupAttribute(name: string): SetupAttribute {
-  const trimmedName = name?.trim();
+  const trimmedName = name.trim();
   if (!trimmedName) {
     throw new Error("Attribute name cannot be empty");
   }
@@ -52,7 +52,7 @@ export function createSetupAffectedAttribute(
   name: string,
   strength: AttributeStrength,
 ): SetupAffectedAttribute {
-  const trimmedName = name?.trim();
+  const trimmedName = name.trim();
   if (!trimmedName) {
     throw new Error("Attribute name cannot be empty");
   }
@@ -87,7 +87,7 @@ export function createSetupQuest(
   affectedAttributes: SetupAffectedAttribute[],
   experienceShare: number = 0,
 ): SetupQuest {
-  const trimmedName = name?.trim();
+  const trimmedName = name.trim();
   if (!trimmedName) {
     throw new Error("Quest name cannot be empty");
   } else if (!Number.isFinite(experienceShare)) {
