@@ -98,7 +98,7 @@
 }
 
 .errorMessage p:first-child {
-  margin-top: 0.2rem;
+  margin-top: 0.5rem;
 }
 
 .errorMessage p:last-child {
