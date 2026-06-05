@@ -35,35 +35,35 @@ Full table can be found on the Supabase dashboard.
   - Account creation timestamp
 - `last_login`: TIMESTAMPTZ
   - Last login timestamp
-- `verified`: BOOLEAN DEFAULT FALSE
+- `verified`: BOOLEAN DEFAULT FALSE NOT NULL
   - Account verification status
-- `profile_complete`: BOOLEAN DEFAULT FALSE
+- `profile_complete`: BOOLEAN DEFAULT FALSE NOT NULL
   - Whether user has defined their quests and attributes
-- `level`: INT DEFAULT 1
+- `level`: INT DEFAULT 1 NOT NULL
   - Overall player level
 - `experience`: DECIMAL(10, 2) NOT NULL DEFAULT 0
   - Total experience points
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 
 **attributes**: Player-defined attributes that level independently
 
 - `id`: SERIAL PRIMARY KEY
   - Unique attribute identifier
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL
   - Owner of the attribute
 - `name`: VARCHAR(50) NOT NULL
   - Attribute name (max 50 chars, unique per user)
-- `level`: INT DEFAULT 1
+- `level`: INT DEFAULT 1 NOT NULL
   - Current attribute level
 - `experience`: DECIMAL(10, 2) NOT NULL DEFAULT 0
   - Attribute experience points
 - `position`: INT NOT NULL CHECK (position >= 0)
   - Display order for attribute list (unique per user)
   - Position is zero-indexed and handled before insertion in application logic
-- `created_at`: TIMESTAMPTZ DEFAULT NOW()
+- `created_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Creation timestamp
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 - UNIQUE (user_id, name)
   - Ensures attribute names are unique per user
@@ -74,13 +74,13 @@ Full table can be found on the Supabase dashboard.
 
 - `id`: SERIAL PRIMARY KEY
   - Unique quest identifier
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL
   - Owner of the quest
 - `name`: VARCHAR(200) NOT NULL
   - Quest name (max 200 chars)
 - `description`: TEXT
   - Optional quest description
-- `created_at`: TIMESTAMPTZ DEFAULT NOW()
+- `created_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Creation timestamp
 - `frequency`: INT NOT NULL DEFAULT 1 CHECK (frequency >= 0)
   - Interval in days between required completions (1 = daily, 7 = weekly, etc.)
@@ -101,7 +101,7 @@ Full table can be found on the Supabase dashboard.
 - `position`: INT NOT NULL CHECK (position >= 0)
   - Display order for quest list (unique per user)
   - Position is zero-indexed and handled before insertion
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 - UNIQUE (user_id, position)
   - Ensures each user has unique quest ordering
@@ -112,47 +112,48 @@ Full table can be found on the Supabase dashboard.
 
 - `id`: SERIAL PRIMARY KEY
   - Unique completion record identifier
-- `quest_id`: INT REFERENCES quests(id) ON DELETE CASCADE
+- `quest_id`: INT REFERENCES quests(id) ON DELETE CASCADE NOT NULL
   - Reference to completed quest
-- `completed_at`: TIMESTAMPTZ DEFAULT NOW()
+- `completed_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Completion timestamp
-- `is_resolved`: BOOLEAN DEFAULT FALSE
-  - Whether this completion has been processed for experience and streak updates
-- `streak`: INT DEFAULT 1
+- `processed_at`: TIMESTAMPTZ
+  - Timestamp when this completion was processed for experience and streak updates
+- `streak`: INT DEFAULT 1 NOT NULL
   - Streak at time of completion
-- `experience_earned`: DECIMAL(8, 2) DEFAULT 0
+- `experience_earned`: DECIMAL(8, 2) DEFAULT 0 NOT NULL
   - Experience points awarded
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 
 **experience_log**: Audit trail of all experience transactions
 
 - `id`: SERIAL PRIMARY KEY
   - Unique log entry identifier
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL
   - User who earned/lost experience
 - `quest_id`: INT REFERENCES quests(id) ON DELETE SET NULL
   - Related quest (nullable)
 - `experience_amount`: DECIMAL(8, 2) NOT NULL
   - Experience points in transaction
-- `reason`: TEXT
+- `reason`: TEXT 
   - Description of transaction
-- `created_at`: TIMESTAMPTZ DEFAULT NOW()
+  - TODO: Consider if necessary
+- `created_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Transaction timestamp
 
 **quests_attributes**: Junction table linking quests to attributes with power multipliers
 
 - `id`: SERIAL PRIMARY KEY
   - Unique junction record identifier
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE
+- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
   - Owner of the quest-attribute relationship
-- `quest_id`: INT REFERENCES quests(id) ON DELETE CASCADE
+- `quest_id`: INT NOT NULL REFERENCES quests(id) ON DELETE CASCADE
   - Reference to quest
-- `attribute_id`: INT REFERENCES attributes(id) ON DELETE CASCADE
+- `attribute_id`: INT NOT NULL REFERENCES attributes(id) ON DELETE CASCADE
   - Reference to attribute
-- `attribute_power`: INT DEFAULT 1
+- `attribute_power`: INT DEFAULT 1 NOT NULL
   - Power multiplier for this attribute
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 - UNIQUE (quest_id, attribute_id)
   - Ensures each quest-attribute pair is unique
