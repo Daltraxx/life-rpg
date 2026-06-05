@@ -54,7 +54,7 @@ export default async function getQuests(): Promise<Quest[]> {
 
   if (error) {
     console.error("Error fetching quests:", error);
-    throw new Error(error.message);
+    throw new Error("Failed to fetch quests", { cause: error });
   }
 
   const quests = (data ?? []).map((quest) => ({
