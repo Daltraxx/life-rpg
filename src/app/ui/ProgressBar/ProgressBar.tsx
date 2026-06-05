@@ -95,6 +95,7 @@ export default function ProgressBar({
     );
   } catch (error) {
     return (
+      // TODO: This error handling is very basic - consider creating a dedicated error component that fits the app's design better
       <div className={styles.container}>
         <Span size="custom" className={styles.error}>
           {error instanceof Error
