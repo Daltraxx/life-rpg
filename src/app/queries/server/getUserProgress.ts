@@ -45,7 +45,7 @@ export default async function getUserProgress(
 
   if (error) {
     console.error("Error fetching user progress:", error);
-    throw new Error("Error fetching user progress");
+    throw new Error("Failed to fetch user progress", { cause: error });
   }
 
   const userLevelProgress: LevelProgress = calculateLevelProgress(
