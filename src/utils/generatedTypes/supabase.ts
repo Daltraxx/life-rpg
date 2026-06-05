@@ -41,34 +41,34 @@ export type Database = {
     Tables: {
       attributes: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           experience: number;
           id: number;
-          level: number | null;
+          level: number;
           name: string;
           position: number;
-          updated_at: string | null;
-          user_id: string | null;
+          updated_at: string;
+          user_id: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           experience?: number;
           id?: number;
-          level?: number | null;
+          level?: number;
           name: string;
           position: number;
-          updated_at?: string | null;
-          user_id?: string | null;
+          updated_at?: string;
+          user_id: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           experience?: number;
           id?: number;
-          level?: number | null;
+          level?: number;
           name?: string;
           position?: number;
-          updated_at?: string | null;
-          user_id?: string | null;
+          updated_at?: string;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -89,28 +89,28 @@ export type Database = {
       };
       experience_log: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           experience_amount: number;
           id: number;
-          quest_id: number | null;
+          quest_id: number;
           reason: string | null;
-          user_id: string | null;
+          user_id: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           experience_amount: number;
           id?: number;
-          quest_id?: number | null;
+          quest_id: number;
           reason?: string | null;
-          user_id?: string | null;
+          user_id: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           experience_amount?: number;
           id?: number;
-          quest_id?: number | null;
+          quest_id?: number;
           reason?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -138,30 +138,30 @@ export type Database = {
       };
       quest_completions: {
         Row: {
-          completed_at: string;
-          experience_earned: number | null;
+          completed_at: string | null;
+          experience_earned: number;
           id: number;
-          is_resolved: boolean;
-          quest_id: number | null;
-          streak: number | null;
+          processed_at: string | null;
+          quest_id: number;
+          streak: number;
           updated_at: string | null;
         };
         Insert: {
-          completed_at?: string;
-          experience_earned?: number | null;
+          completed_at?: string | null;
+          experience_earned?: number;
           id?: number;
-          is_resolved?: boolean;
-          quest_id?: number | null;
-          streak?: number | null;
+          processed_at?: string | null;
+          quest_id: number;
+          streak?: number;
           updated_at?: string | null;
         };
         Update: {
-          completed_at?: string;
-          experience_earned?: number | null;
+          completed_at?: string | null;
+          experience_earned?: number;
           id?: number;
-          is_resolved?: boolean;
-          quest_id?: number | null;
-          streak?: number | null;
+          processed_at?: string | null;
+          quest_id?: number;
+          streak?: number;
           updated_at?: string | null;
         };
         Relationships: [
@@ -176,7 +176,7 @@ export type Database = {
       };
       quests: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           description: string | null;
           experience_share: number;
           frequency: number;
@@ -189,11 +189,11 @@ export type Database = {
           streak: number;
           strength_level: Database["public"]["Enums"]["strength_rank"];
           strength_points: number;
-          updated_at: string | null;
-          user_id: string | null;
+          updated_at: string;
+          user_id: string;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           description?: string | null;
           experience_share: number;
           frequency?: number;
@@ -206,11 +206,11 @@ export type Database = {
           streak?: number;
           strength_level?: Database["public"]["Enums"]["strength_rank"];
           strength_points?: number;
-          updated_at?: string | null;
-          user_id?: string | null;
+          updated_at?: string;
+          user_id: string;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           description?: string | null;
           experience_share?: number;
           frequency?: number;
@@ -223,8 +223,8 @@ export type Database = {
           streak?: number;
           strength_level?: Database["public"]["Enums"]["strength_rank"];
           strength_points?: number;
-          updated_at?: string | null;
-          user_id?: string | null;
+          updated_at?: string;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -252,28 +252,28 @@ export type Database = {
       };
       quests_attributes: {
         Row: {
-          attribute_id: number | null;
-          attribute_power: number | null;
+          attribute_id: number;
+          attribute_power: number;
           id: number;
-          quest_id: number | null;
+          quest_id: number;
           updated_at: string | null;
-          user_id: string | null;
+          user_id: string;
         };
         Insert: {
-          attribute_id?: number | null;
-          attribute_power?: number | null;
+          attribute_id: number;
+          attribute_power?: number;
           id?: number;
-          quest_id?: number | null;
+          quest_id: number;
           updated_at?: string | null;
-          user_id?: string | null;
+          user_id: string;
         };
         Update: {
-          attribute_id?: number | null;
-          attribute_power?: number | null;
+          attribute_id?: number;
+          attribute_power?: number;
           id?: number;
-          quest_id?: number | null;
+          quest_id?: number;
           updated_at?: string | null;
-          user_id?: string | null;
+          user_id?: string;
         };
         Relationships: [
           {
@@ -332,49 +332,49 @@ export type Database = {
       };
       users: {
         Row: {
-          created_at: string | null;
+          created_at: string;
           email: string;
           experience: number;
           id: string;
           last_login: string | null;
-          level: number | null;
-          profile_complete: boolean | null;
+          level: number;
+          profile_complete: boolean;
           purpose: string | null;
           timezone: string;
-          updated_at: string | null;
+          updated_at: string;
           username: string;
           usertag: string;
-          verified: boolean | null;
+          verified: boolean;
         };
         Insert: {
-          created_at?: string | null;
+          created_at?: string;
           email: string;
           experience?: number;
           id: string;
           last_login?: string | null;
-          level?: number | null;
-          profile_complete?: boolean | null;
+          level?: number;
+          profile_complete?: boolean;
           purpose?: string | null;
           timezone?: string;
-          updated_at?: string | null;
+          updated_at?: string;
           username: string;
           usertag: string;
-          verified?: boolean | null;
+          verified?: boolean;
         };
         Update: {
-          created_at?: string | null;
+          created_at?: string;
           email?: string;
           experience?: number;
           id?: string;
           last_login?: string | null;
-          level?: number | null;
-          profile_complete?: boolean | null;
+          level?: number;
+          profile_complete?: boolean;
           purpose?: string | null;
           timezone?: string;
-          updated_at?: string | null;
+          updated_at?: string;
           username?: string;
           usertag?: string;
-          verified?: boolean | null;
+          verified?: boolean;
         };
         Relationships: [];
       };
