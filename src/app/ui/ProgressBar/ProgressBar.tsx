@@ -32,59 +32,72 @@ export default function ProgressBar({
   current,
   size,
 }: ProgressBarProps) {
-  // Validate inputs
-  if (start >= end) {
-    throw new Error(
-      `Invalid range: start (${start}) must be less than end (${end})`,
-    );
-  }
-  if (current < start || current > end) {
-    throw new Error(
-      `Current value (${current}) must be between start (${start}) and end (${end})`,
-    );
-  }
-  
-  const progressWidth = ((current - start) / (end - start)) * 100;
-  return (
-    <div
-      className={clsx(
-        styles.container,
-        size === "small" ? styles.smallContainer : styles.largeContainer,
-      )}
-    >
+  try {
+    // Validate inputs
+    if (start >= end) {
+      throw new Error(
+        `Invalid range: start (${start}) must be less than end (${end})`,
+      );
+    }
+    if (current < start || current > end) {
+      throw new Error(
+        `Current value (${current}) must be between start (${start}) and end (${end})`,
+      );
+    }
+
+    const progressWidth = ((current - start) / (end - start)) * 100;
+    return (
       <div
-        className={styles.progress}
-        style={{ width: `${progressWidth}%` }}
-      ></div>
-      <Span
         className={clsx(
-          styles.leftBound,
-          clsx(size === "small" ? styles.smallVal : styles.largeVal),
+          styles.container,
+          size === "small" ? styles.smallContainer : styles.largeContainer,
         )}
-        size="custom"
       >
-        {start}
-      </Span>
-      {/* TODO: Account for cases where current is so close to start or end that it overlaps with the bounds */}
-      <Span
-        className={clsx(
-          styles.currentValue,
-          clsx(size === "small" ? styles.smallVal : styles.largeVal),
-        )}
-        style={{ left: `${progressWidth}%` }}
-        size="custom"
-      >
-        {current !== start ? current : ""}
-      </Span>
-      <Span
-        className={clsx(
-          styles.rightBound,
-          clsx(size === "small" ? styles.smallVal : styles.largeVal),
-        )}
-        size="custom"
-      >
-        {end}
-      </Span>
-    </div>
-  );
+        <div
+          className={styles.progress}
+          style={{ width: `${progressWidth}%` }}
+        ></div>
+        <Span
+          className={clsx(
+            styles.leftBound,
+            clsx(size === "small" ? styles.smallVal : styles.largeVal),
+          )}
+          size="custom"
+        >
+          {start}
+        </Span>
+        {/* TODO: Account for cases where current is so close to start or end that it overlaps with the bounds */}
+        <Span
+          className={clsx(
+            styles.currentValue,
+            clsx(size === "small" ? styles.smallVal : styles.largeVal),
+          )}
+          style={{ left: `${progressWidth}%` }}
+          size="custom"
+        >
+          {current !== start ? current : ""}
+        </Span>
+        <Span
+          className={clsx(
+            styles.rightBound,
+            clsx(size === "small" ? styles.smallVal : styles.largeVal),
+          )}
+          size="custom"
+        >
+          {end}
+        </Span>
+      </div>
+    );
+
+  } catch (error) {
+    return (
+      <div className={styles.container}>
+        <Span size="custom" className={styles.error}>
+          {error instanceof Error
+            ? error.message
+            : "Invalid progress bar configuration"}
+        </Span>
+      </div>
+    );
+  }
 }
