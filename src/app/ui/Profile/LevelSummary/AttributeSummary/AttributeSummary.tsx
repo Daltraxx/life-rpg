@@ -23,7 +23,7 @@ export default function AttributeSummary({
       <ul className={styles.list}>
         {attributes.map((attr) => (
           <li key={attr.attributeId} className={styles.listItem}>
-            <Span className={styles.attributeName} color="blue-700" size="20">
+            <Span color="blue-700" size="20">
               {attr.attributeName} - {attr.level}
             </Span>
             <ProgressBar
