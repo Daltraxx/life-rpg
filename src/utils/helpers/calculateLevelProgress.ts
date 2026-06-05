@@ -34,6 +34,10 @@ export const calculateLevelProgress = (
   currentExperience: number,
   levelType: "user" | "attribute",
 ): LevelProgress => {
+  if (!Number.isFinite(currentExperience) || currentExperience < 0) {
+    throw new Error("currentExperience must be a non-negative finite number");
+  }
+  
   let baseExperience: number;
   let increaseFactor: number;
   if (levelType === "user") {
