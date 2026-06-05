@@ -28,7 +28,7 @@ const getUserTimezone = cache(async function getUserTimezone(
 
   if (error) {
     console.error("Error fetching user timezone:", error);
-    throw new Error(error.message);
+    throw new Error("Failed to fetch user timezone", { cause: error });
   }
 
   const timezone = data?.timezone;
