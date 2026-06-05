@@ -7,7 +7,10 @@ import {
   LinkWrapper,
 } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import { BasicLinkWrapper } from "@/app/ui/JSXWrappers/BasicLinkWrapper/BasicLinkWrapper";
-import { Label } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
+import {
+  Label,
+  Paragraph,
+} from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { login } from "@/utils/actions/login";
 import { useActionState } from "react";
 import { LoginState } from "@/utils/validations/login";
@@ -25,7 +28,11 @@ export default function LoginForm() {
   );
   return (
     <Bounded innerClassName={styles.loginContainer}>
-      <form className={styles.loginForm} action={formAction}>
+      <form
+        className={styles.loginForm}
+        action={formAction}
+        aria-describedby="login-error"
+      >
         {/* EMAIL */}
         <Label htmlFor="email-field" size="20">
           Email:
@@ -63,9 +70,17 @@ export default function LoginForm() {
         />
 
         {/* ERROR MESSAGE */}
-        {errorState.message && (
-          <div className={styles.errorMessage}>{errorState.message}</div>
-        )}
+        <div
+          id="login-error"
+          aria-live="polite"
+          className={styles.errorMessage}
+        >
+          {errorState.message && (
+            <Paragraph size="20" color="red-500">
+              {errorState.message}
+            </Paragraph>
+          )}
+        </div>
 
         {/* SUBMIT */}
         <ButtonWrapper
