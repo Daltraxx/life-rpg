@@ -147,7 +147,7 @@ export type Database = {
           updated_at: string | null;
         };
         Insert: {
-          completed_at: string;
+          completed_at?: string;
           experience_earned?: number;
           id?: number;
           processed_at?: string | null;
