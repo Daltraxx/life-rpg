@@ -30,7 +30,7 @@ type Field = keyof ValidationErrorMessages;
 export const FIELDS: Field[] = ["email", "username", "usertag", "password"];
 export type InteractedFields = Record<Field, boolean>;
 export const INITIAL_INTERACTED_FIELDS: InteractedFields = Object.fromEntries(
-  FIELDS.map((field) => [field, false])
+  FIELDS.map((field) => [field, false]),
 ) as InteractedFields;
 
 export type SignupFormData = {
@@ -49,7 +49,7 @@ export const INITIAL_FORM_DATA: SignupFormData = {
 const getSubmitButtonText = (
   querying: boolean,
   allFieldsValid: boolean,
-  isPending: boolean
+  isPending: boolean,
 ): string => {
   if (querying) return "Checking availability...";
   if (!allFieldsValid) return "Waiting Patiently...";
@@ -88,7 +88,7 @@ export default function CreateAccountForm(): ReactElement {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
   const [interactedFields, setInteractedFields] = useState(
-    INITIAL_INTERACTED_FIELDS
+    INITIAL_INTERACTED_FIELDS,
   );
 
   const [showPassword, setShowPassword] = useState(false);
@@ -104,7 +104,7 @@ export default function CreateAccountForm(): ReactElement {
 
   const { errors, allFieldsValid, querying } = useSignupValidation(
     formData,
-    interactedFields
+    interactedFields,
   );
 
   // Dynamic username display logic designed to prevent layout overflow
@@ -116,12 +116,12 @@ export default function CreateAccountForm(): ReactElement {
     USERNAME_PLACEHOLDER,
     HEADING_FONT_FAMILY,
     36,
-    48
+    48,
   );
 
   const [errorState, formAction, isPending] = useActionState(
     createAccount,
-    INITIAL_SIGNUP_STATE
+    INITIAL_SIGNUP_STATE,
   );
 
   return (
@@ -149,6 +149,7 @@ export default function CreateAccountForm(): ReactElement {
         aria-describedby={errorState.message ? "server-error" : undefined}
       >
         <div className={styles.inputContainer}>
+          {/* EMAIL FIELD */}
           <Label htmlFor="email" size="24-responsive">
             Email:
           </Label>
@@ -167,9 +168,11 @@ export default function CreateAccountForm(): ReactElement {
             id="email-error"
             fontSize="20-responsive"
             className={styles.errorMessage}
+            color="orange-600"
           />
         </div>
-
+    
+        {/* USERNAME FIELD */}
         <div className={styles.inputContainer}>
           <Label htmlFor="username" size="24-responsive">
             Display Name:
@@ -189,9 +192,11 @@ export default function CreateAccountForm(): ReactElement {
             id="username-error"
             fontSize="20-responsive"
             className={styles.errorMessage}
+            color="orange-600"
           />
         </div>
 
+        {/* USER TAG FIELD */}
         {/*Autocomplete off to prevent browser overwriting during password autofill (google specifically) */}
         <div className={styles.inputContainer}>
           <Label htmlFor="handle" size="24-responsive">
@@ -221,9 +226,11 @@ export default function CreateAccountForm(): ReactElement {
             id="handle-error"
             fontSize="20-responsive"
             className={styles.errorMessage}
+            color="orange-600"
           />
         </div>
 
+        {/* PASSWORD FIELD */}
         <div className={styles.inputContainer}>
           <Label htmlFor="password" size="24-responsive">
             Password:
@@ -258,17 +265,20 @@ export default function CreateAccountForm(): ReactElement {
             id="password-error"
             fontSize="20-responsive"
             className={styles.errorMessage}
+            color="orange-600"
           />
         </div>
 
-        {/* TODO: test below error messaging*/}
+        {/* ERRORS RETURNED FROM SERVER */}
         {errorState.message && (
           <div
             id="server-error"
             className={styles.serverErrorContainer}
             role="alert"
           >
-            <Paragraph size="20-responsive">{errorState.message}</Paragraph>
+            <Paragraph size="20-responsive" color="orange-600">
+              {errorState.message}
+            </Paragraph>
           </div>
         )}
 

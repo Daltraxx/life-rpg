@@ -93,7 +93,6 @@
 }
 
 .errorMessage p {
-  color: var(--orange-600, #cd6d07);
   line-height: 1.1;
 }
 
@@ -104,6 +103,13 @@
 .errorMessage p:last-child {
   margin-bottom: -0.5rem;
 }
+
+.serverErrorContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+  }
 
 @media only screen and (min-width: 768px) {
   .formContainer {
