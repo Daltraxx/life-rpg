@@ -8,6 +8,7 @@ const textColorMap = {
   background: styles.textBackground,
   "blue-700": styles.textBlue700,
   "red-500": styles.textRed500,
+  "orange-600": styles.textOrange600,
 } satisfies Record<string, string>;
 
 export type TextColor = keyof typeof textColorMap;

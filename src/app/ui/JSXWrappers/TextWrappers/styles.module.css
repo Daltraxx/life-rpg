@@ -9,3 +9,7 @@
 .textRed500 {
   color: var(--red-500, #ef2101);
 }
+
+.textOrange600 {
+  color: var(--orange-600, #cd6d07);
+}
