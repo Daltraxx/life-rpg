@@ -5,3 +5,7 @@
 .textBlue700 {
   color: var(--blue-700, #091f36);
 }
+
+.textRed500 {
+  color: var(--red-500, #ef2101);
+}
