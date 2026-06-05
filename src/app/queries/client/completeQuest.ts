@@ -1,5 +1,6 @@
 import { createSupabaseBrowserClient } from "@/utils/supabase/client";
 import getExperienceEarned from "@/utils/helpers/getExperienceEarned";
+import getQuestCompletionStatus from "./getQuestCompletionStatus";
 
 /**
  * Completes a quest for the authenticated user.
@@ -13,11 +14,18 @@ import getExperienceEarned from "@/utils/helpers/getExperienceEarned";
  * @throws {Error} If quest data cannot be fetched
  * @throws {Error} If the completion record cannot be inserted
  * @returns Promise that resolves to the ID of the new quest completion record
+ * @todo Use database transactions and remote procedure calls to accomplish the below steps atomically and securely
  */
 export default async function completeQuest(
   userId: string,
   questId: number,
 ): Promise<number> {
+  // Check if quest has already been completed today to prevent multiple completions in the same day
+  const questCompletionStatus = await getQuestCompletionStatus(questId);
+  if (questCompletionStatus) {
+    throw new Error("Quest has already been completed today");
+  }
+
   const supabase = createSupabaseBrowserClient();
 
   // Get quest info for calculating experience gain, streak
