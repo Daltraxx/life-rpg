@@ -138,7 +138,7 @@ export type Database = {
       };
       quest_completions: {
         Row: {
-          completed_at: string | null;
+          completed_at: string;
           experience_earned: number;
           id: number;
           processed_at: string | null;
@@ -147,7 +147,7 @@ export type Database = {
           updated_at: string | null;
         };
         Insert: {
-          completed_at?: string | null;
+          completed_at: string;
           experience_earned?: number;
           id?: number;
           processed_at?: string | null;
@@ -156,7 +156,7 @@ export type Database = {
           updated_at?: string | null;
         };
         Update: {
-          completed_at?: string | null;
+          completed_at?: string;
           experience_earned?: number;
           id?: number;
           processed_at?: string | null;
