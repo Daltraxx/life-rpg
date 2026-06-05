@@ -7,7 +7,7 @@ interface DailyQuestState {
   dailyQuests: DailyQuest[];
   totalPoints: number;
   totalBonusPoints: number;
-  errors: string[]; // Consider more robust error handling strategy in the future (e.g. mapping questId to error message, etc.)
+  errors: string[]; // TODO: Consider more robust error handling strategy in the future (e.g. mapping questId to error message, etc.)
 }
 
 type DailyQuestAction =
