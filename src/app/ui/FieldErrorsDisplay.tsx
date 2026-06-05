@@ -40,7 +40,7 @@ export default function FieldErrorsDisplay({
   return (
     <div {...restProps} id={id} aria-live="polite">
       {errors.map((error) => (
-        <Paragraph key={error} size={fontSize}>
+        <Paragraph key={error} size={fontSize} color="red-500">
           - {error}
         </Paragraph>
       ))}
