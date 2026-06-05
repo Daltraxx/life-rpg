@@ -20,12 +20,6 @@ export default async function completeQuest(
   userId: string,
   questId: number,
 ): Promise<number> {
-  // Check if quest has already been completed today to prevent multiple completions in the same day
-  const questCompletionStatus = await getQuestCompletionStatus(questId);
-  if (questCompletionStatus) {
-    throw new Error("Quest has already been completed today");
-  }
-
   const supabase = createSupabaseBrowserClient();
 
   // Get quest info for calculating experience gain, streak
@@ -47,6 +41,12 @@ export default async function completeQuest(
   if (questError || !questData) {
     console.error("Error fetching quest data:", questError);
     throw new Error(questError ? questError.message : "Quest not found");
+  }
+
+  // Check if quest has already been completed today to prevent multiple completions in the same day
+  const questCompletionStatus = await getQuestCompletionStatus(questId);
+  if (questCompletionStatus) {
+    throw new Error("Quest has already been completed today");
   }
 
   // Calculate experience earned
