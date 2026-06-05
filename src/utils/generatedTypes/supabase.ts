@@ -256,7 +256,7 @@ export type Database = {
           attribute_power: number;
           id: number;
           quest_id: number;
-          updated_at: string | null;
+          updated_at: string;
           user_id: string;
         };
         Insert: {
@@ -264,7 +264,7 @@ export type Database = {
           attribute_power?: number;
           id?: number;
           quest_id: number;
-          updated_at?: string | null;
+          updated_at?: string;
           user_id: string;
         };
         Update: {
@@ -272,7 +272,7 @@ export type Database = {
           attribute_power?: number;
           id?: number;
           quest_id?: number;
-          updated_at?: string | null;
+          updated_at?: string;
           user_id?: string;
         };
         Relationships: [
