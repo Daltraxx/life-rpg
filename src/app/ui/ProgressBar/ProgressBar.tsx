@@ -52,6 +52,11 @@ export default function ProgressBar({
           styles.container,
           size === "small" ? styles.smallContainer : styles.largeContainer,
         )}
+        role="progressbar"
+        aria-valuenow={current}
+        aria-valuemin={start}
+        aria-valuemax={end}
+        aria-label="Experience progress"
       >
         <div
           className={styles.progress}
@@ -88,7 +93,6 @@ export default function ProgressBar({
         </Span>
       </div>
     );
-
   } catch (error) {
     return (
       <div className={styles.container}>
