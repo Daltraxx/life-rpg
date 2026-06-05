@@ -29,7 +29,7 @@ import setPendingVerificationEmail from "@/utils/cookies/setPendingVerificationE
  * Time-of-Check to Time-of-Use (TOCTOU) race condition. Another user could register
  * with the same usertag between our check and the actual signup call. This is
  * acceptable because:
- * 1. Supabase will ultimately reject duplicate emails with proper error codes
+ * 1. Supabase will ultimately reject duplicate usertags due to uniqueness constraints, ensuring data integrity
  * 2. The pre-check provides better UX by giving specific feedback earlier
  * 3. The race condition window is very small in practice
  * 4. Usertag uniqueness is enforced by database constraints as a final safeguard
