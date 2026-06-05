@@ -39,7 +39,7 @@ import setPendingVerificationEmail from "@/utils/cookies/setPendingVerificationE
  */
 export async function createAccount(
   prevState: SignupState,
-  formData: FormData
+  formData: FormData,
 ): Promise<SignupState> {
   //TODO: add rate limiting to prevent abuse
   const supabase = await createSupabaseServerClient();
@@ -100,7 +100,8 @@ export async function createAccount(
         };
       case "user_already_exists":
         return {
-          message: "An account with this email already exists.",
+          message:
+            "An account with this email already exists. Please try logging in or use a different email to sign up.",
         };
       case "invalid_password":
         return {
@@ -125,6 +126,15 @@ export async function createAccount(
           message: "Account creation failed. Please try again.",
         };
     }
+  }
+
+  // Supabase may intentionally return no error for an existing email to avoid account enumeration.
+  // In that case, `identities` is an empty array and we should surface a duplicate-email message.
+  if (data?.user?.identities?.length === 0) {
+    return {
+      message:
+        "An account with this email already exists. Please try logging in or use a different email to sign up.",
+    };
   }
 
   // If signup succeeded but user data is missing, return error, should not happen
