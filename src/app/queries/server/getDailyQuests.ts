@@ -72,7 +72,7 @@ export default async function getDailyQuests(
 
   if (error) {
     console.error("Error fetching quests:", error);
-    throw new Error(error.message);
+    throw new Error("Failed to fetch daily quests", { cause: error });
   }
 
   const quests = await Promise.all(
