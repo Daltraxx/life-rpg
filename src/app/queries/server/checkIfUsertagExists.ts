@@ -3,7 +3,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 /**
  * Checks whether a user record exists for the given usertag using `maybeSingle()`.
  *
- * Queries the "users" table for a single row selecting only "usertag" where "usertag" equals the input (case-sensitive).
+ * Queries the "users" table for a single row selecting only "usertag" where "usertag" equals the input (case-insensitive).
  * - If a row exists, returns true.
  * - If no row exists, returns false (because `maybeSingle()` returns null).
  * - If multiple rows match, Supabase returns an error and this function throws.
