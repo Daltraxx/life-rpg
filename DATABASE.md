@@ -18,6 +18,12 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **users**: Core user accounts with level and experience tracking
+- Note: This is separate from the Supabase auth.users table, which handles authentication. 
+- The users table in our schema is for application-specific user data and links to auth.users via the id field.
+
+- RLS Policies:
+  - Users can only SELECT, UPDATE, DELETE their own record (WHERE id = auth.uid())
+  - Anon users only have access to reading the usertag field for uniqueness checks during account creation (SELECT usertag WHERE usertag = $1)
 
 - `id`: UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE
   - User identifier linked to authentication
