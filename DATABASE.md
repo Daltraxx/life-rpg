@@ -200,7 +200,7 @@ Full table can be found on the Supabase dashboard.
 - CHECK constraint: (quest_id IS NULL OR quest_name IS NOT NULL) AND (attribute_id IS NULL OR attribute_name IS NOT NULL)
   - Ensures quest_name exists when quest_id is set, and attribute_name exists when attribute_id is set
 
-**Progression Log Indexes**:
+**progression_log Indexes**:
 
 - `idx_progression_log_user_id` ON (user_id)
   - Fast lookups by user
