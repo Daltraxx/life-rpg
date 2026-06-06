@@ -150,6 +150,31 @@ Full table can be found on the Supabase dashboard.
 - `idx_quest_completions_completed_at` ON (completed_at)
   - Fast lookups by completion date
 
+**quests_attributes**: Junction table linking quests to attributes with power multipliers
+
+- `id`: SERIAL PRIMARY KEY
+  - Unique junction record identifier
+- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
+  - Owner of the quest-attribute relationship
+- `quest_id`: INT NOT NULL REFERENCES quests(id) ON DELETE CASCADE
+  - Reference to quest
+- `attribute_id`: INT NOT NULL REFERENCES attributes(id) ON DELETE CASCADE
+  - Reference to attribute
+- `attribute_power`: INT DEFAULT 1 NOT NULL
+  - Power multiplier for this attribute
+- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
+  - Timestamp of last update
+- UNIQUE (quest_id, attribute_id)
+  - Ensures each quest-attribute pair is unique
+
+**quests_attributes indexes**:
+- `idx_quests_attributes_user_id` ON (user_id)
+  - Fast lookups by user
+- `idx_quests_attributes_quest_id` ON (quest_id)
+  - Fast lookups by quest
+- `idx_quests_attributes_attribute_id` ON (attribute_id)
+  - Fast lookups by attribute
+
 **progression_log**: Audit trail of all experience transactions from daily settlement pipeline
 
 - `id`: SERIAL PRIMARY KEY
@@ -183,31 +208,6 @@ Full table can be found on the Supabase dashboard.
   - Fast lookups by timestamp
 - `idx_progression_log_user_created_at` ON (user_id, created_at)
   - Fast lookups by user and timestamp range
-
-**quests_attributes**: Junction table linking quests to attributes with power multipliers
-
-- `id`: SERIAL PRIMARY KEY
-  - Unique junction record identifier
-- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
-  - Owner of the quest-attribute relationship
-- `quest_id`: INT NOT NULL REFERENCES quests(id) ON DELETE CASCADE
-  - Reference to quest
-- `attribute_id`: INT NOT NULL REFERENCES attributes(id) ON DELETE CASCADE
-  - Reference to attribute
-- `attribute_power`: INT DEFAULT 1 NOT NULL
-  - Power multiplier for this attribute
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Timestamp of last update
-- UNIQUE (quest_id, attribute_id)
-  - Ensures each quest-attribute pair is unique
-
-**quests_attributes indexes**:
-- `idx_quests_attributes_user_id` ON (user_id)
-  - Fast lookups by user
-- `idx_quests_attributes_quest_id` ON (quest_id)
-  - Fast lookups by quest
-- `idx_quests_attributes_attribute_id` ON (attribute_id)
-  - Fast lookups by attribute
 
 ### Key Features
 
