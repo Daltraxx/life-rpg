@@ -85,13 +85,6 @@ export type Database = {
             referencedRelation: "users";
             referencedColumns: ["id"];
           },
-          {
-            foreignKeyName: "user_attributes_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "usertag_lookup";
-            referencedColumns: ["user_id"];
-          },
         ];
       };
       experience_log: {
@@ -140,13 +133,6 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "experience_log_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "usertag_lookup";
-            referencedColumns: ["user_id"];
           },
         ];
       };
@@ -262,13 +248,6 @@ export type Database = {
             referencedRelation: "users";
             referencedColumns: ["id"];
           },
-          {
-            foreignKeyName: "tasks_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "usertag_lookup";
-            referencedColumns: ["user_id"];
-          },
         ];
       };
       quests_attributes: {
@@ -324,13 +303,6 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "users";
             referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "tasks_attributes_user_id_fkey";
-            columns: ["user_id"];
-            isOneToOne: false;
-            referencedRelation: "usertag_lookup";
-            referencedColumns: ["user_id"];
           },
         ];
       };
@@ -416,21 +388,6 @@ export type Database = {
           total_tasks: number | null;
           user_id: string | null;
           username: string | null;
-        };
-        Relationships: [];
-      };
-      usertag_lookup: {
-        Row: {
-          user_id: string | null;
-          usertag: string | null;
-        };
-        Insert: {
-          user_id?: string | null;
-          usertag?: string | null;
-        };
-        Update: {
-          user_id?: string | null;
-          usertag?: string | null;
         };
         Relationships: [];
       };

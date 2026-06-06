@@ -72,9 +72,7 @@ export async function createAccount(
 
   if (usertagExists) {
     return {
-      errors: {
-        usertag: ["User Tag already exists. Please choose another."],
-      },
+      message: "User Tag already in use. Please choose a different one.",
     };
   }
 
@@ -90,7 +88,7 @@ export async function createAccount(
 
   // TODO: Add logic for other specific error cases if necessary.
   if (error) {
-    console.error("Error creating account:", error.code);
+    console.error("Error creating account:", { cause: error });
     // Handle specific error cases
     switch (error.code) {
       // research ways to make password validation match supabase rules
