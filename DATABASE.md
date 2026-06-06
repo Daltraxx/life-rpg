@@ -18,7 +18,8 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **users**: Core user accounts with level and experience tracking
-- Note: This is separate from the Supabase auth.users table, which handles authentication. 
+
+- Note: This is separate from the Supabase auth.users table, which handles authentication.
 - The users table in our schema is for application-specific user data and links to auth.users via the id field.
 
 - RLS Policies:
@@ -131,21 +132,39 @@ Full table can be found on the Supabase dashboard.
 - `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 
-**experience_log**: Audit trail of all experience transactions
+**progression_log**: Audit trail of all experience transactions from daily settlement pipeline
 
 - `id`: SERIAL PRIMARY KEY
   - Unique log entry identifier
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL
+- `target`: TEXT NOT NULL CHECK (target IN ('user', 'quest_strength', 'attribute'))
+  - What the experience change applies to (overall user, quest strength, or attribute)
+- `reason`: TEXT NOT NULL
+  - Description of transaction
+- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
   - User who earned/lost experience
 - `quest_id`: INT REFERENCES quests(id) ON DELETE SET NULL
   - Related quest (nullable)
-- `experience_amount`: DECIMAL(8, 2) NOT NULL
-  - Experience points in transaction
-- `reason`: TEXT 
-  - Description of transaction
-  - TODO: Consider if necessary
-- `created_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
+- `quest_name`: TEXT
+  - Name of related quest (nullable, paired with quest_id via CHECK constraint)
+- `attribute_id`: INT REFERENCES attributes(id) ON DELETE SET NULL
+  - Related attribute (nullable)
+- `attribute_name`: TEXT
+  - Name of related attribute (nullable, paired with attribute_id via CHECK constraint)
+- `points`: INT NOT NULL
+  - Points in transaction
+- `created_at`: TIMESTAMPTZ NOT NULL DEFAULT NOW()
   - Transaction timestamp
+- CHECK constraint: (quest_id IS NULL OR quest_name IS NOT NULL) AND (attribute_id IS NULL OR attribute_name IS NOT NULL)
+  - Ensures quest_name exists when quest_id is set, and attribute_name exists when attribute_id is set
+
+**Progression Log Indexes**:
+
+- `idx_progression_log_user_id` ON (user_id)
+  - Fast lookups by user
+- `idx_progression_log_created_at` ON (created_at)
+  - Fast lookups by timestamp
+- `idx_progression_log_user_created_at` ON (user_id, created_at)
+  - Fast lookups by user and timestamp range
 
 **quests_attributes**: Junction table linking quests to attributes with power multipliers
 
