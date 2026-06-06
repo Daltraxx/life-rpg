@@ -53,6 +53,10 @@ Full table can be found on the Supabase dashboard.
 - `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 
+**users indexes**:
+- `idx_users_usertag` ON (usertag)
+  - Fast lookups by usertag for uniqueness checks
+
 **attributes**: Player-defined attributes that level independently
 
 - `id`: SERIAL PRIMARY KEY
@@ -76,6 +80,10 @@ Full table can be found on the Supabase dashboard.
   - Ensures attribute names are unique per user
 - UNIQUE (user_id, position)
   - Ensures each user has unique attribute ordering
+
+**attributes indexes**:
+- `idx_attributes_user_id` ON (user_id)
+  - Fast lookups by user
 
 **quests**: Quests assigned by users with frequency, streak, and strength mechanics
 
@@ -115,6 +123,10 @@ Full table can be found on the Supabase dashboard.
 - UNIQUE (user_id, name)
   - Ensures quest names are unique per user
 
+**quests indexes**:
+- `idx_quests_user_id` ON (user_id)
+  - Fast lookups by user
+
 **quest_completions**: Records each quest completion with streak and experience earned
 
 - `id`: SERIAL PRIMARY KEY
@@ -131,6 +143,12 @@ Full table can be found on the Supabase dashboard.
   - Experience points awarded
 - `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
+
+**quest_completions indexes**:
+- `idx_quest_completions_quest_id` ON (quest_id)
+  - Fast lookups by quest
+- `idx_quest_completions_completed_at` ON (completed_at)
+  - Fast lookups by completion date
 
 **progression_log**: Audit trail of all experience transactions from daily settlement pipeline
 
@@ -183,6 +201,14 @@ Full table can be found on the Supabase dashboard.
 - UNIQUE (quest_id, attribute_id)
   - Ensures each quest-attribute pair is unique
 
+**quests_attributes indexes**:
+- `idx_quests_attributes_user_id` ON (user_id)
+  - Fast lookups by user
+- `idx_quests_attributes_quest_id` ON (quest_id)
+  - Fast lookups by quest
+- `idx_quests_attributes_attribute_id` ON (attribute_id)
+  - Fast lookups by attribute
+
 ### Key Features
 
 - Strength rank system (E-S) applies experience multipliers to quest rewards
@@ -201,19 +227,6 @@ INSERT INTO strength_levels (level, multiplier, min_points, max_points) VALUES
 ('B', 0.60, 300, 399),
 ('A', 0.80, 400, 499),
 ('S', 1.00, 500, NULL);
-
-### Indexes Reference
-
-CREATE INDEX idx_attributes_user_id ON attributes(user_id);
-CREATE INDEX idx_quests_user_id ON quests(user_id);
-CREATE INDEX idx_quest_completions_quest_id ON quest_completions(quest_id);
-CREATE INDEX idx_experience_log_user_id ON experience_log(user_id);
-CREATE INDEX idx_quests_attributes_user_id ON quests_attributes(user_id);
-CREATE INDEX idx_quest_completions_completed_at ON quest_completions(completed_at);
-CREATE INDEX idx_experience_log_quest_id ON experience_log(quest_id);
-CREATE INDEX idx_users_usertag ON users (usertag);
-CREATE INDEX idx_quests_attributes_quest_id ON quests_attributes (quest_id);
-CREATE INDEX idx_quests_attributes_attribute_id ON quests_attributes (attribute_id);
 
 ### Functions and Triggers Reference
 
