@@ -190,6 +190,9 @@ Full table can be found on the Supabase dashboard.
     - If inserting with target of attribute, all ids (user_id, quest_id, attribute_id) must be provided
     - If inserting with target of quest_strength, user_id and quest_id must be provided, but attribute_id must be null 
       (quest strength progression is not related to a specific attribute)
+    - TODO: Document rules on format for for reason field 
+      (e.g. "Completed quest: {quest_name} with streak {streak}", "Leveled up attribute: {attribute_name} due to completion of {quest_name}", 
+      "Completed quest: {quest_name} and earned {points} + {bonus_points} from strength level {strength_level}")
 
 - `id`: SERIAL PRIMARY KEY
   - Unique log entry identifier
