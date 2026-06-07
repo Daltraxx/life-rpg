@@ -54,6 +54,7 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **users indexes**:
+
 - `idx_users_usertag` ON (usertag)
   - Fast lookups by usertag for uniqueness checks
 
@@ -82,6 +83,7 @@ Full table can be found on the Supabase dashboard.
   - Ensures each user has unique attribute ordering
 
 **attributes indexes**:
+
 - `idx_attributes_user_id` ON (user_id)
   - Fast lookups by user
 
@@ -124,6 +126,7 @@ Full table can be found on the Supabase dashboard.
   - Ensures quest names are unique per user
 
 **quests indexes**:
+
 - `idx_quests_user_id` ON (user_id)
   - Fast lookups by user
 
@@ -145,6 +148,7 @@ Full table can be found on the Supabase dashboard.
   - Timestamp of last update
 
 **quest_completions indexes**:
+
 - `idx_quest_completions_quest_id` ON (quest_id)
   - Fast lookups by quest
 - `idx_quest_completions_completed_at` ON (completed_at)
@@ -170,6 +174,7 @@ Full table can be found on the Supabase dashboard.
   - Ensures each quest-attribute pair is unique
 
 **quests_attributes indexes**:
+
 - `idx_quests_attributes_user_id` ON (user_id)
   - Fast lookups by user
 - `idx_quests_attributes_quest_id` ON (quest_id)
@@ -178,6 +183,7 @@ Full table can be found on the Supabase dashboard.
   - Fast lookups by attribute
 
 **progression_log**: Audit trail of all experience transactions from daily settlement pipeline
+
 - Notes on insertions:
   - Each record represents a single experience change event, whether from quest completion, level up, or attribute progression
   - target indicates where the points are applied (users(experience), quests(quest_strength_points), or attributes(experience))
@@ -185,15 +191,15 @@ Full table can be found on the Supabase dashboard.
   - quest_id is always required upon insert due to all experience being the result of quest completions
   - quest_id is only nullable in case the quest is deleted in the future, but quest_name is stored for reference.
   - attribute_id is required if target is attribute, but must otherwise be null.
-  - attribute_name, like quest_name, is stored for reference in case the related attribute is deleted in the future, 
+  - attribute_name, like quest_name, is stored for reference in case the related attribute is deleted in the future,
     but is not required upon insertion if attribute_id is null.
   - When inserting records:
     - If inserting with target of user, quest_id must be provided (users earn experience from quests) and attribute_id must be null
     - If inserting with target of attribute, all ids (user_id, quest_id, attribute_id) must be provided
-    - If inserting with target of quest_strength, user_id and quest_id must be provided, but attribute_id must be null 
+    - If inserting with target of quest_strength, user_id and quest_id must be provided, but attribute_id must be null
       (quest strength progression is not related to a specific attribute)
-    - TODO: Document rules on format for for reason field 
-      (e.g. "Completed quest: {quest_name} with streak {streak}", "Leveled up attribute: {attribute_name} due to completion of {quest_name}", 
+    - TODO: Document rules on format for for reason field
+      (e.g. "Completed quest: {quest_name} with streak {streak}", "Leveled up attribute: {attribute_name} due to completion of {quest_name}",
       "Completed quest: {quest_name} and earned {points} + {bonus_points} from strength level {strength_level}")
 
 - `id`: SERIAL PRIMARY KEY
@@ -214,6 +220,8 @@ Full table can be found on the Supabase dashboard.
   - Name of related attribute (nullable, paired with attribute_id via CHECK constraint)
 - `points`: INT NOT NULL
   - Points in transaction
+- `daily_batch_id`: INT NOT NULL REFERENCES daily_progression_batches(id) ON DELETE CASCADE
+  - Reference to daily batch for this transaction
 - `created_at`: TIMESTAMPTZ NOT NULL DEFAULT NOW()
   - Transaction timestamp
 - CHECK constraint: (quest_id IS NULL OR quest_name IS NOT NULL) AND (attribute_id IS NULL OR attribute_name IS NOT NULL)
@@ -227,6 +235,32 @@ Full table can be found on the Supabase dashboard.
   - Fast lookups by timestamp
 - `idx_progression_log_user_created_at` ON (user_id, created_at)
   - Fast lookups by user and timestamp range
+
+**daily_progression_batches**: Tracks execution of daily progression batch job for auditing and debugging
+
+- `id`: SERIAL PRIMARY KEY
+  - Unique batch record identifier
+- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
+  - User associated with the batch
+- `processed_at`: TIMESTAMPTZ NOT NULL
+  - Timestamp when batch was processed
+- `activity_date`: DATE NOT NULL
+  - Date for which daily progression was calculated
+- `user_timezone`: TEXT NOT NULL
+  - User's timezone used for daily boundary calculation
+- `created_at`: TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  - Record creation timestamp
+- UNIQUE (user_id, activity_date)
+  - Ensures only one batch per user per day
+
+**daily_progression_batches Indexes**:
+
+- `idx_daily_progression_batches_user_id` ON (user_id)
+  - Fast lookups by user
+- `idx_daily_progression_batches_activity_date` ON (activity_date)
+  - Fast lookups by activity date
+- `idx_daily_progression_batches_user_activity_date` ON (user_id, activity_date)
+  - Fast lookups by user and activity date
 
 ### Key Features
 
