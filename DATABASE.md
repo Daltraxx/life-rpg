@@ -176,6 +176,17 @@ Full table can be found on the Supabase dashboard.
   - Fast lookups by attribute
 
 **progression_log**: Audit trail of all experience transactions from daily settlement pipeline
+- Notes on insertions:
+  - Each record represents a single experience change event, whether from quest completion, level up, or attribute progression
+  - user_id is always required to link the transaction to a user, but attribute_id may be null if the transaction is not related to a specific attribute
+  - quest_id should always be provided upon insert due to all experience being the result of quest completions
+  - quest_id is nullable in case the quest is deleted in the future, but quest_name is stored for reference.
+  - attribute_id may be null for transactions that are not related to a specific attribute 
+    (e.g. quest strength progression or overall user experience changes)
+  - If inserting with target of user, quest_id should be provided (users earn experience from quests) and attribute_id should be null
+  - If inserting with target of attribute, all ids (user_id, quest_id, attribute_id) should be provided
+  - If inserting with target of quest_strength, user_id and quest_id should be provided, but attribute_id should be null 
+    (quest strength progression is not related to a specific attribute)
 
 - `id`: SERIAL PRIMARY KEY
   - Unique log entry identifier
