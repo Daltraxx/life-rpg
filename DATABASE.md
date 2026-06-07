@@ -149,6 +149,8 @@ Full table can be found on the Supabase dashboard.
   - Fast lookups by quest
 - `idx_quest_completions_completed_at` ON (completed_at)
   - Fast lookups by completion date
+- `idx_quest_completions_unprocessed` ON (processed_at) WHERE processed_at IS NULL
+  - Fast lookups by processing date for daily batch job
 
 **quests_attributes**: Junction table linking quests to attributes with power multipliers
 
