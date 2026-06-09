@@ -69,6 +69,7 @@ export default async function completeQuest(
     .from("quest_completions")
     .insert({
       quest_id: questId,
+      user_id: userId,
       streak: questData.streak,
       experience_earned: experienceEarned,
     })
