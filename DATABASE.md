@@ -482,7 +482,8 @@ as $$
       'user', jsonb_build_object(
         'id', u.id,
         'experience', u.experience,
-        'level', u.level
+        'level', u.level,
+        'timezone', u.timezone
       ),
 
       'quests', coalesce(q.quests, '[]'::jsonb),
@@ -496,6 +497,7 @@ as $$
       select jsonb_agg(
         jsonb_build_object(
           'id', q.id,
+          'name', q.name,
           'strength_level', q.strength_level,
           'strength_points', q.strength_points,
           'last_rest_date', q.last_rest_date,
@@ -513,6 +515,7 @@ as $$
       select jsonb_agg(
         jsonb_build_object(
           'id', a.id,
+          'name', a.name,
           'experience', a.experience,
           'level', a.level
         )
@@ -539,7 +542,8 @@ as $$
           'id', qc.id,
           'quest_id', qc.quest_id,
           'experience_earned', qc.experience_earned,
-          'processed_at', qc.processed_at
+          'processed_at', qc.processed_at,
+          'completed_at', qc.completed_at
         )
       ) as quest_completions
       from quest_completions qc
