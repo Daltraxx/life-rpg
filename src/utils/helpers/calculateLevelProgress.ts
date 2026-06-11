@@ -7,8 +7,18 @@ import {
 
 const STARTING_LEVEL = 1;
 
+/**
+ * Represents the type of entity for which experience is being calculated.
+ * @typedef {("user" | "attribute")} LevelType
+ */
 type LevelType = "user" | "attribute";
 
+/**
+ * Calculates the experience required to reach a specific level.
+ * @param {number} level - The level for which to calculate required experience.
+ * @param {LevelType} levelType - The type of entity ("user" or "attribute").
+ * @returns {number} The experience points required to reach the specified level.
+ */
 export const caluculateExperienceForLevel = (
   level: number,
   levelType: LevelType,
@@ -31,6 +41,12 @@ export const caluculateExperienceForLevel = (
   );
 };
 
+/**
+ * Calculates the current level based on experience points.
+ * @param {number} experience - The total experience points.
+ * @param {LevelType} levelType - The type of entity ("user" or "attribute").
+ * @returns {number} The current level of the entity.
+ */
 export const calculateLevel = (
   experience: number,
   levelType: LevelType,
@@ -61,18 +77,6 @@ export interface LevelProgress {
   levelEnd: number;
 }
 
-/**
- * Calculates level progression based on accumulated experience.
- * @param {number} currentExperience - The current amount of experience accumulated
- * @param {LevelType} levelType - The type of level to calculate (user or attribute)
- * @returns {LevelProgress} The current level and experience thresholds
- * @example
- * const progress = calculateLevelProgress(5000, "user");
- * console.log(progress.level); // e.g., 3
- * @remarks This iterative computation is adequate for typical user experience values,
- * as levels will not exceed reasonable limits in a life RPG context. If performance becomes a concern,
- * we can optimize with a closed-form solution, caching, or binary search.
- */
 export const calculateLevelProgress = (
   currentExperience: number,
   levelType: LevelType,
