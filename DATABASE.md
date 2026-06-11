@@ -1,561 +1,640 @@
-## Database Overview
+export type Json =
+  | string
+  | number
+  | boolean
+  | null
+  | { [key: string]: Json | undefined }
+  | Json[];
 
-### Tables
-
-Full table can be found on the Supabase dashboard.
-
-**strength_levels**: Lookup table for strength rank multipliers (E-S)
-
-- `level`: strength_rank PRIMARY KEY
-  - Strength rank enum (E, D, C, B, A, S)
-- `multiplier`: DECIMAL(4, 2) NOT NULL
-  - Multiplier for experience calculation
-- `min_points`: INT NOT NULL
-  - Minimum strength points required for this rank
-- `max_points`: INT
-  - Maximum strength points for this rank (null for S)
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW()
-  - Timestamp of last update
-
-**users**: Core user accounts with level and experience tracking
-
-- Note: This is separate from the Supabase auth.users table, which handles authentication.
-- The users table in our schema is for application-specific user data and links to auth.users via the id field.
-
-- RLS Policies:
-  - Users can only SELECT, UPDATE, DELETE their own record (WHERE id = auth.uid())
-  - Anon users only have access to reading the usertag field for uniqueness checks during account creation (SELECT usertag WHERE usertag = $1)
-
-- `id`: UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE
-  - User identifier linked to authentication
-- `username`: VARCHAR(50) NOT NULL
-  - Username (max 50 chars)
-- `usertag`: VARCHAR(50) UNIQUE NOT NULL
-  - Unique usertag for potential social features
-- `email`: VARCHAR(255) UNIQUE NOT NULL
-  - User email address
-- `purpose`: VARCHAR(500)
-  - Optional user-defined purpose statement (max 500 chars)
-- `timezone`: TEXT NOT NULL DEFAULT 'UTC'
-  - User's timezone for scheduling and timestamps
-- `created_at`: TIMESTAMPTZ DEFAULT NOW()
-  - Account creation timestamp
-- `last_login`: TIMESTAMPTZ
-  - Last login timestamp
-- `verified`: BOOLEAN DEFAULT FALSE NOT NULL
-  - Account verification status
-- `profile_complete`: BOOLEAN DEFAULT FALSE NOT NULL
-  - Whether user has defined their quests and attributes
-- `level`: INT DEFAULT 1 NOT NULL
-  - Overall player level
-- `experience`: DECIMAL(10, 2) NOT NULL DEFAULT 0
-  - Total experience points
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Timestamp of last update
-
-**users indexes**:
-
-- `idx_users_usertag` ON (usertag)
-  - Fast lookups by usertag for uniqueness checks
-- `idx_users_timezone` ON (timezone)
-  - Fast lookups by timezone for batch processing
-
-**attributes**: Player-defined attributes that level independently
-
-- `id`: SERIAL PRIMARY KEY
-  - Unique attribute identifier
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL
-  - Owner of the attribute
-- `name`: VARCHAR(50) NOT NULL
-  - Attribute name (max 50 chars, unique per user)
-- `level`: INT DEFAULT 1 NOT NULL
-  - Current attribute level
-- `experience`: DECIMAL(10, 2) NOT NULL DEFAULT 0
-  - Attribute experience points
-- `position`: INT NOT NULL CHECK (position >= 0)
-  - Display order for attribute list (unique per user)
-  - Position is zero-indexed and handled before insertion in application logic
-- `created_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Creation timestamp
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Timestamp of last update
-- UNIQUE (user_id, name)
-  - Ensures attribute names are unique per user
-- UNIQUE (user_id, position)
-  - Ensures each user has unique attribute ordering
-
-**attributes indexes**:
-
-- `idx_attributes_user_id` ON (user_id)
-  - Fast lookups by user
-
-**quests**: Quests assigned by users with frequency, streak, and strength mechanics
-
-- `id`: SERIAL PRIMARY KEY
-  - Unique quest identifier
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL
-  - Owner of the quest
-- `name`: VARCHAR(200) NOT NULL
-  - Quest name (max 200 chars)
-- `description`: TEXT
-  - Optional quest description
-- `created_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Creation timestamp
-- `frequency`: INT NOT NULL DEFAULT 1 CHECK (frequency >= 0)
-  - Interval in days between required completions (1 = daily, 7 = weekly, etc.)
-- `rest_frequency`: INT NOT NULL DEFAULT 0 CHECK (rest_frequency >= 0)
-  - How many sequential quest completions are required before a rest day is earned (0 = no rest days, 1 = rest day after every completion, etc.)
-- `rest_progress`: INT NOT NULL DEFAULT 0
-  - Represents progress towards next rest day where not completing required quest does not result in penalties
-- `last_rest_date`: DATE
-  - Date of last rest day
-- `experience_share`: INT NOT NULL CHECK (experience_share BETWEEN 0 AND 100)
-  - Amount (0–100) of daily experience points allocated to this quest as determined by the user
-- `streak`: INT NOT NULL DEFAULT 0
-  - Current streak count
-- `strength_points`: INT NOT NULL DEFAULT 0
-  - Accumulated strength points
-- `strength_level`: strength_rank REFERENCES strength_levels(level) NOT NULL DEFAULT 'E'
-  - Current strength rank (E-S)
-- `last_completed_date`: DATE
-  - Activity date of last completion (the date the completion belongs to, even if completed after midnight but before the user's daily boundary)
-- `position`: INT NOT NULL CHECK (position >= 0)
-  - Display order for quest list (unique per user)
-  - Position is zero-indexed and handled before insertion
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Timestamp of last update
-- UNIQUE (user_id, position)
-  - Ensures each user has unique quest ordering
-- UNIQUE (user_id, name)
-  - Ensures quest names are unique per user
-
-**quests indexes**:
-
-- `idx_quests_user_id` ON (user_id)
-  - Fast lookups by user
-
-**quest_completions**: Records each quest completion with streak and experience earned
-
-- `id`: SERIAL PRIMARY KEY
-  - Unique completion record identifier
-- `quest_id`: INT REFERENCES quests(id) ON DELETE CASCADE NOT NULL
-  - Reference to completed quest
-- `user_id`: UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL
-  - User who completed the quest
-- `completed_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Completion timestamp
-- `processed_at`: TIMESTAMPTZ
-  - Timestamp when this completion was processed for experience and streak updates
-- `streak`: INT DEFAULT 1 NOT NULL
-  - Streak at time of completion
-- `experience_earned`: DECIMAL(8, 2) DEFAULT 0 NOT NULL
-  - Experience points awarded
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Timestamp of last update
-
-**quest_completions indexes**:
-
-- `idx_quest_completions_quest_id` ON (quest_id)
-  - Fast lookups by quest
-- `idx_quest_completions_completed_at` ON (completed_at)
-  - Fast lookups by completion date
-- `idx_quest_completions_user_unprocessed` ON (user_id) WHERE processed_at IS NULL
-  - Fast lookups for unprocessed completions by user
-
-**quests_attributes**: Junction table linking quests to attributes with power multipliers
-
-- `id`: SERIAL PRIMARY KEY
-  - Unique junction record identifier
-- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
-  - Owner of the quest-attribute relationship
-- `quest_id`: INT NOT NULL REFERENCES quests(id) ON DELETE CASCADE
-  - Reference to quest
-- `attribute_id`: INT NOT NULL REFERENCES attributes(id) ON DELETE CASCADE
-  - Reference to attribute
-- `attribute_power`: INT DEFAULT 1 NOT NULL
-  - Power multiplier for this attribute
-- `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
-  - Timestamp of last update
-- UNIQUE (quest_id, attribute_id)
-  - Ensures each quest-attribute pair is unique
-
-**quests_attributes indexes**:
-
-- `idx_quests_attributes_user_id` ON (user_id)
-  - Fast lookups by user
-- `idx_quests_attributes_quest_id` ON (quest_id)
-  - Fast lookups by quest
-- `idx_quests_attributes_attribute_id` ON (attribute_id)
-  - Fast lookups by attribute
-
-**progression_log**: Audit trail of all experience transactions from daily settlement pipeline
-
-- Notes on insertions:
-  - Each record represents a single experience change event, whether from quest completion, level up, or attribute progression
-  - target indicates where the points are applied (users(experience), quests(quest_strength_points), or attributes(experience))
-  - user_id is always required to link the transaction to a user, but attribute_id may be null if the transaction is not related to a specific attribute
-  - quest_id is always required upon insert due to all experience being the result of quest completions
-  - quest_id is only nullable in case the quest is deleted in the future, but quest_name is stored for reference.
-  - attribute_id is required if target is attribute, but must otherwise be null.
-  - attribute_name, like quest_name, is stored for reference in case the related attribute is deleted in the future,
-    but is not required upon insertion if attribute_id is null.
-  - When inserting records:
-    - If inserting with target of user, quest_id must be provided (users earn experience from quests) and attribute_id must be null
-    - If inserting with target of attribute, all ids (user_id, quest_id, attribute_id) must be provided
-    - If inserting with target of quest_strength, user_id and quest_id must be provided, but attribute_id must be null
-      (quest strength progression is not related to a specific attribute)
-    - TODO: Document rules on format for for reason field
-      (e.g. "Completed quest: {quest_name} with streak {streak}", "Leveled up attribute: {attribute_name} due to completion of {quest_name}",
-      "Completed quest: {quest_name} and earned {points} + {bonus_points} from strength level {strength_level}")
-
-- `id`: SERIAL PRIMARY KEY
-  - Unique log entry identifier
-- `target`: TEXT NOT NULL CHECK (target IN ('user', 'quest_strength', 'attribute'))
-  - What the experience change applies to (overall user, quest strength, or attribute)
-- `reason`: TEXT NOT NULL
-  - Description of transaction
-- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
-  - User who earned/lost experience
-- `quest_id`: INT REFERENCES quests(id) ON DELETE SET NULL
-  - Related quest (nullable)
-- `quest_name`: TEXT
-  - Name of related quest (nullable, paired with quest_id via CHECK constraint)
-- `attribute_id`: INT REFERENCES attributes(id) ON DELETE SET NULL
-  - Related attribute (nullable)
-- `attribute_name`: TEXT
-  - Name of related attribute (nullable, paired with attribute_id via CHECK constraint)
-- `points`: INT NOT NULL
-  - Points in transaction
-- `daily_batch_id`: INT NOT NULL REFERENCES daily_progression_batches(id) ON DELETE CASCADE
-  - Reference to daily batch for this transaction
-- `created_at`: TIMESTAMPTZ NOT NULL DEFAULT NOW()
-  - Transaction timestamp
-- CHECK constraint: (quest_id IS NULL OR quest_name IS NOT NULL) AND (attribute_id IS NULL OR attribute_name IS NOT NULL)
-  - Ensures quest_name exists when quest_id is set, and attribute_name exists when attribute_id is set
-
-**progression_log Indexes**:
-
-- `idx_progression_log_user_id` ON (user_id)
-  - Fast lookups by user
-- `idx_progression_log_created_at` ON (created_at)
-  - Fast lookups by timestamp
-- `idx_progression_log_user_created_at` ON (user_id, created_at)
-  - Fast lookups by user and timestamp range
-
-**daily_progression_batches**: Tracks execution of daily progression batch job for auditing and debugging
-
-- `id`: SERIAL PRIMARY KEY
-  - Unique batch record identifier
-- `user_id`: UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE
-  - User associated with the batch
-- `processed_at`: TIMESTAMPTZ NOT NULL
-  - Timestamp when batch was processed
-- `activity_date`: DATE NOT NULL
-  - Date for which daily progression was calculated
-- `user_timezone`: TEXT NOT NULL
-  - User's timezone used for daily boundary calculation
-- `created_at`: TIMESTAMPTZ NOT NULL DEFAULT NOW()
-  - Record creation timestamp
-- UNIQUE (user_id, activity_date)
-  - Ensures only one batch per user per day
-
-**daily_progression_batches Indexes**:
-
-- `idx_daily_progression_batches_user_id` ON (user_id)
-  - Fast lookups by user
-- `idx_daily_progression_batches_activity_date` ON (activity_date)
-  - Fast lookups by activity date
-- `idx_daily_progression_batches_user_activity_date` ON (user_id, activity_date)
-  - Fast lookups by user and activity date
-
-### Key Features
-
-- Strength rank system (E-S) applies experience multipliers to quest rewards
-- Frequency and rest_frequency fields support flexible habit scheduling
-- Experience shared across user level, individual attributes, and quest streaks
-- Cascading deletes maintain referential integrity when users or quests are removed
-- Trigger upon insertion to Supabase auth.users that inserts user to project users table
-- Function to create user profile with attributes and quests in single atomic transaction
-
-### Strength Levels Reference (from setup)
-
-INSERT INTO strength_levels (level, multiplier, min_points, max_points) VALUES
-('E', 0, 0, 99),
-('D', 0.20, 100, 199),
-('C', 0.40, 200, 299),
-('B', 0.60, 300, 399),
-('A', 0.80, 400, 499),
-('S', 1.00, 500, NULL);
-
----------------------------------------------------------------------------------------
-
-## Functions and Triggers Reference
-
-### Handle New User Signup (Trigger)
-
-```sql
--- Trigger Function
-CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
-RETURNS TRIGGER AS
-$$
-BEGIN
-  INSERT INTO public.users (id, email, username, usertag)
-  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username', NEW.raw_user_meta_data ->> 'usertag');
-  RETURN NEW;
-END;
-$$
-LANGUAGE plpgsql SECURITY DEFINER SET search_path = '';
-
--- Trigger
-CREATE TRIGGER after_user_signup_create_user
-AFTER INSERT ON auth.users
-FOR EACH ROW EXECUTE FUNCTION public.handle_new_user_signup();
-```
-
-### Atomic Profile Creation Function
-
-#### Example Call
-
-```typescript
-// Prepare data for insertion
-const attributesData: CreateProfileTransactionAttributes[] =
-  validatedAttributes.map((attribute) => ({
-    name: attribute.name,
-    position: attribute.order,
-  }));
-
-const questsData: CreateProfileTransactionQuests[] = [];
-const questsAttributesData: CreateProfileTransactionQuestsAttributes[] = [];
-for (const quest of validatedQuests) {
-  questsData.push({
-    name: quest.name,
-    experience_share: quest.experienceShare,
-    position: quest.order,
-  });
-  for (const affectedAttribute of quest.affectedAttributes) {
-    const attributePower = strengthToIntMap[affectedAttribute.strength];
-    if (attributePower === undefined) {
-      return {
-        message: `Invalid strength value: ${affectedAttribute.strength}`,
+export type Database = {
+  // Allows to automatically instantiate createClient with right options
+  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
+  __InternalSupabase: {
+    PostgrestVersion: '13.0.5';
+  };
+  graphql_public: {
+    Tables: {
+      [_ in never]: never;
+    };
+    Views: {
+      [_ in never]: never;
+    };
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json;
+          operationName?: string;
+          query?: string;
+          variables?: Json;
+        };
+        Returns: Json;
       };
-    }
-    // Duplicate names are restricted by DB constraints and validation schema
-    questsAttributesData.push({
-      quest_name: quest.name,
-      attribute_name: affectedAttribute.name,
-      attribute_power: attributePower,
-    });
+    };
+    Enums: {
+      [_ in never]: never;
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+  public: {
+    Tables: {
+      attributes: {
+        Row: {
+          created_at: string;
+          experience: number;
+          id: number;
+          level: number;
+          name: string;
+          position: number;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          experience?: number;
+          id?: number;
+          level?: number;
+          name: string;
+          position: number;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          experience?: number;
+          id?: number;
+          level?: number;
+          name?: string;
+          position?: number;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'user_attributes_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_progress';
+            referencedColumns: ['user_id'];
+          },
+          {
+            foreignKeyName: 'user_attributes_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      daily_progression_batches: {
+        Row: {
+          activity_date: string;
+          created_at: string;
+          id: number;
+          processed_at: string;
+          user_id: string;
+          user_timezone: string;
+        };
+        Insert: {
+          activity_date: string;
+          created_at?: string;
+          id?: number;
+          processed_at: string;
+          user_id: string;
+          user_timezone: string;
+        };
+        Update: {
+          activity_date?: string;
+          created_at?: string;
+          id?: number;
+          processed_at?: string;
+          user_id?: string;
+          user_timezone?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'daily_progression_batches_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_progress';
+            referencedColumns: ['user_id'];
+          },
+          {
+            foreignKeyName: 'daily_progression_batches_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      progression_log: {
+        Row: {
+          attribute_id: number | null;
+          attribute_name: string | null;
+          created_at: string;
+          daily_batch_id: number;
+          id: number;
+          points: number;
+          quest_id: number | null;
+          quest_name: string | null;
+          reason: string;
+          target: string;
+          user_id: string;
+        };
+        Insert: {
+          attribute_id?: number | null;
+          attribute_name?: string | null;
+          created_at?: string;
+          daily_batch_id: number;
+          id?: number;
+          points: number;
+          quest_id?: number | null;
+          quest_name?: string | null;
+          reason: string;
+          target: string;
+          user_id: string;
+        };
+        Update: {
+          attribute_id?: number | null;
+          attribute_name?: string | null;
+          created_at?: string;
+          daily_batch_id?: number;
+          id?: number;
+          points?: number;
+          quest_id?: number | null;
+          quest_name?: string | null;
+          reason?: string;
+          target?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'progression_log_attribute_id_fkey';
+            columns: ['attribute_id'];
+            isOneToOne: false;
+            referencedRelation: 'attributes';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'progression_log_daily_batch_id_fkey';
+            columns: ['daily_batch_id'];
+            isOneToOne: false;
+            referencedRelation: 'daily_progression_batches';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'progression_log_quest_id_fkey';
+            columns: ['quest_id'];
+            isOneToOne: false;
+            referencedRelation: 'quests';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'progression_log_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_progress';
+            referencedColumns: ['user_id'];
+          },
+          {
+            foreignKeyName: 'progression_log_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      quest_completions: {
+        Row: {
+          completed_at: string;
+          experience_earned: number;
+          id: number;
+          processed_at: string | null;
+          quest_id: number;
+          streak: number;
+          updated_at: string | null;
+          user_id: string;
+        };
+        Insert: {
+          completed_at?: string;
+          experience_earned?: number;
+          id?: number;
+          processed_at?: string | null;
+          quest_id: number;
+          streak?: number;
+          updated_at?: string | null;
+          user_id: string;
+        };
+        Update: {
+          completed_at?: string;
+          experience_earned?: number;
+          id?: number;
+          processed_at?: string | null;
+          quest_id?: number;
+          streak?: number;
+          updated_at?: string | null;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'quest_completions_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_progress';
+            referencedColumns: ['user_id'];
+          },
+          {
+            foreignKeyName: 'quest_completions_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'task_completions_task_id_fkey';
+            columns: ['quest_id'];
+            isOneToOne: false;
+            referencedRelation: 'quests';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      quests: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          experience_share: number;
+          frequency: number;
+          id: number;
+          last_completed_date: string | null;
+          name: string;
+          position: number;
+          rest_frequency: number;
+          rest_progress: number;
+          streak: number;
+          strength_level: Database['public']['Enums']['strength_rank'];
+          strength_points: number;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          experience_share: number;
+          frequency?: number;
+          id?: number;
+          last_completed_date?: string | null;
+          name: string;
+          position: number;
+          rest_frequency?: number;
+          rest_progress?: number;
+          streak?: number;
+          strength_level?: Database['public']['Enums']['strength_rank'];
+          strength_points?: number;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          experience_share?: number;
+          frequency?: number;
+          id?: number;
+          last_completed_date?: string | null;
+          name?: string;
+          position?: number;
+          rest_frequency?: number;
+          rest_progress?: number;
+          streak?: number;
+          strength_level?: Database['public']['Enums']['strength_rank'];
+          strength_points?: number;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'tasks_strength_level_fkey';
+            columns: ['strength_level'];
+            isOneToOne: false;
+            referencedRelation: 'strength_levels';
+            referencedColumns: ['level'];
+          },
+          {
+            foreignKeyName: 'tasks_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_progress';
+            referencedColumns: ['user_id'];
+          },
+          {
+            foreignKeyName: 'tasks_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      quests_attributes: {
+        Row: {
+          attribute_id: number;
+          attribute_power: number;
+          id: number;
+          quest_id: number;
+          updated_at: string;
+          user_id: string;
+        };
+        Insert: {
+          attribute_id: number;
+          attribute_power?: number;
+          id?: number;
+          quest_id: number;
+          updated_at?: string;
+          user_id: string;
+        };
+        Update: {
+          attribute_id?: number;
+          attribute_power?: number;
+          id?: number;
+          quest_id?: number;
+          updated_at?: string;
+          user_id?: string;
+        };
+        Relationships: [
+          {
+            foreignKeyName: 'tasks_attributes_attribute_id_fkey';
+            columns: ['attribute_id'];
+            isOneToOne: false;
+            referencedRelation: 'attributes';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'tasks_attributes_task_id_fkey';
+            columns: ['quest_id'];
+            isOneToOne: false;
+            referencedRelation: 'quests';
+            referencedColumns: ['id'];
+          },
+          {
+            foreignKeyName: 'tasks_attributes_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'user_progress';
+            referencedColumns: ['user_id'];
+          },
+          {
+            foreignKeyName: 'tasks_attributes_user_id_fkey';
+            columns: ['user_id'];
+            isOneToOne: false;
+            referencedRelation: 'users';
+            referencedColumns: ['id'];
+          },
+        ];
+      };
+      strength_levels: {
+        Row: {
+          level: Database['public']['Enums']['strength_rank'];
+          max_points: number | null;
+          min_points: number;
+          multiplier: number;
+          updated_at: string | null;
+        };
+        Insert: {
+          level: Database['public']['Enums']['strength_rank'];
+          max_points?: number | null;
+          min_points: number;
+          multiplier: number;
+          updated_at?: string | null;
+        };
+        Update: {
+          level?: Database['public']['Enums']['strength_rank'];
+          max_points?: number | null;
+          min_points?: number;
+          multiplier?: number;
+          updated_at?: string | null;
+        };
+        Relationships: [];
+      };
+      users: {
+        Row: {
+          created_at: string;
+          email: string;
+          experience: number;
+          id: string;
+          last_login: string | null;
+          level: number;
+          profile_complete: boolean;
+          purpose: string | null;
+          timezone: string;
+          updated_at: string;
+          username: string;
+          usertag: string;
+          verified: boolean;
+        };
+        Insert: {
+          created_at?: string;
+          email: string;
+          experience?: number;
+          id: string;
+          last_login?: string | null;
+          level?: number;
+          profile_complete?: boolean;
+          purpose?: string | null;
+          timezone?: string;
+          updated_at?: string;
+          username: string;
+          usertag: string;
+          verified?: boolean;
+        };
+        Update: {
+          created_at?: string;
+          email?: string;
+          experience?: number;
+          id?: string;
+          last_login?: string | null;
+          level?: number;
+          profile_complete?: boolean;
+          purpose?: string | null;
+          timezone?: string;
+          updated_at?: string;
+          username?: string;
+          usertag?: string;
+          verified?: boolean;
+        };
+        Relationships: [];
+      };
+    };
+    Views: {
+      user_progress: {
+        Row: {
+          experience: number | null;
+          level: number | null;
+          total_strength: number | null;
+          total_tasks: number | null;
+          user_id: string | null;
+          username: string | null;
+        };
+        Relationships: [];
+      };
+    };
+    Functions: {
+      before_user_created_check_usertag: {
+        Args: { event: Json };
+        Returns: Json;
+      };
+      create_profile_transaction: {
+        Args: {
+          p_attributes: Json;
+          p_quests: Json;
+          p_quests_attributes: Json;
+          p_user_id: string;
+        };
+        Returns: Json;
+      };
+      get_settlement_users_data: {
+        Args: { p_timezones: string[] };
+        Returns: Json;
+      };
+    };
+    Enums: {
+      strength_rank: 'E' | 'D' | 'C' | 'B' | 'A' | 'S';
+    };
+    CompositeTypes: {
+      [_ in never]: never;
+    };
+  };
+};
+
+type DatabaseWithoutInternals = Omit<Database, '__InternalSupabase'>;
+
+type DefaultSchema = DatabaseWithoutInternals[Extract<
+  keyof Database,
+  'public'
+>];
+
+export type Tables<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof (DefaultSchema['Tables'] & DefaultSchema['Views'])
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
   }
+    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
 }
+  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'] &
+      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Views'])[TableName] extends {
+      Row: infer R;
+    }
+    ? R
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])
+    ? (DefaultSchema['Tables'] &
+        DefaultSchema['Views'])[DefaultSchemaTableNameOrOptions] extends {
+        Row: infer R;
+      }
+      ? R
+      : never
+    : never;
 
-// Insert data into the database within a transaction
-const { error } = await supabase.rpc("create_profile_transaction", {
-  p_user_id: validatedUserId,
-  p_attributes: attributesData,
-  p_quests: questsData,
-  p_quests_attributes: questsAttributesData,
-});
-```
+export type TablesInsert<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema['Tables']
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Insert: infer I;
+    }
+    ? I
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+        Insert: infer I;
+      }
+      ? I
+      : never
+    : never;
 
-### Create Profile Transaction Function
+export type TablesUpdate<
+  DefaultSchemaTableNameOrOptions extends
+    | keyof DefaultSchema['Tables']
+    | { schema: keyof DatabaseWithoutInternals },
+  TableName extends DefaultSchemaTableNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables']
+    : never = never,
+> = DefaultSchemaTableNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions['schema']]['Tables'][TableName] extends {
+      Update: infer U;
+    }
+    ? U
+    : never
+  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema['Tables']
+    ? DefaultSchema['Tables'][DefaultSchemaTableNameOrOptions] extends {
+        Update: infer U;
+      }
+      ? U
+      : never
+    : never;
 
--- Defines function that takes user_id, array of attribute objects,
--- array of quest objects, and array of quests_attributes
--- for insertion into respective tables in single atomic transaction.
--- Conflicting names or positions should be handled before calling this function.
--- Existing records should not be an issue (this is intended for new users),
--- but is handled just in case.
--- Descriptions are not handled here but can be added once their support is added.
--- Uses SECURITY DEFINER to ensure proper permissioning.
+export type Enums<
+  DefaultSchemaEnumNameOrOptions extends
+    | keyof DefaultSchema['Enums']
+    | { schema: keyof DatabaseWithoutInternals },
+  EnumName extends DefaultSchemaEnumNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums']
+    : never = never,
+> = DefaultSchemaEnumNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions['schema']]['Enums'][EnumName]
+  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema['Enums']
+    ? DefaultSchema['Enums'][DefaultSchemaEnumNameOrOptions]
+    : never;
 
-```sql
-CREATE OR REPLACE FUNCTION create_profile_transaction(
-  p_user_id UUID,
-  p_attributes JSONB,
-  p_quests JSONB,
-  p_quests_attributes JSONB
-)
-RETURNS jsonb
-LANGUAGE plpgsql
-SECURITY DEFINER
-SET search_path = public
-AS $$
-DECLARE
-  v_result jsonb;
-BEGIN
-  -- SECURITY CHECK: Ensure the authenticated user can only modify their own data
-  IF p_user_id IS NULL OR p_user_id <> auth.uid() THEN
-    RAISE EXCEPTION 'Unauthorized: User ID mismatch' USING ERRCODE = '42501';
-  END IF;
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof DefaultSchema['CompositeTypes']
+    | { schema: keyof DatabaseWithoutInternals },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof DatabaseWithoutInternals;
+  }
+    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes']
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends {
+  schema: keyof DatabaseWithoutInternals;
+}
+  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions['schema']]['CompositeTypes'][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema['CompositeTypes']
+    ? DefaultSchema['CompositeTypes'][PublicCompositeTypeNameOrOptions]
+    : never;
 
-  -- Validate inputs are not NULL
-  IF p_attributes IS NULL OR p_quests IS NULL OR p_quests_attributes IS NULL THEN
-    RAISE EXCEPTION 'Input parameters cannot be NULL';
-  END IF;
-
-  WITH
-  -- Parse and deduplicate attribute inputs
-  attr_input AS (
-    SELECT DISTINCT name, position
-    FROM jsonb_to_recordset(p_attributes) AS x(name text, position int)
-  ),
-
-  -- Insert attributes and handle existing ones
-  inserted_attrs AS (
-    INSERT INTO attributes (user_id, name, position)
-    SELECT p_user_id, name, position FROM attr_input
-    ON CONFLICT (user_id, name) DO UPDATE SET position = EXCLUDED.position
-    RETURNING id, name
-  ),
-
-  -- Parse and deduplicate quest inputs
-  quest_input AS (
-    SELECT DISTINCT name, experience_share, position
-    FROM jsonb_to_recordset(p_quests) AS x(name text, experience_share int, position int)
-  ),
-
-  -- Insert quests and handle existing ones
-  inserted_quests AS (
-    INSERT INTO quests (user_id, name, experience_share, position)
-    SELECT p_user_id, name, experience_share, position FROM quest_input
-    ON CONFLICT (user_id, name) DO UPDATE SET position = EXCLUDED.position
-    RETURNING id, name
-  ),
-
-  -- Final insert into junction table using results from above CTEs
-  final_insert AS (
-    INSERT INTO quests_attributes (user_id, quest_id, attribute_id, attribute_power)
-    SELECT
-      p_user_id,
-      iq.id,
-      ia.id,
-      qa.attribute_power
-    FROM jsonb_to_recordset(p_quests_attributes) AS qa(quest_name text, attribute_name text, attribute_power int)
-    JOIN inserted_quests iq ON qa.quest_name = iq.name
-    JOIN inserted_attrs ia ON qa.attribute_name = ia.name
-    ON CONFLICT (quest_id, attribute_id) DO UPDATE SET attribute_power = EXCLUDED.attribute_power
-    RETURNING quest_id
-  ),
-
-  -- Mark profile as complete
-  update_profile AS (
-    UPDATE users
-    SET profile_complete = TRUE, updated_at = NOW()
-    WHERE id = p_user_id
-    RETURNING id
-  )
-
-  -- Build the response with the newly created IDs
-  SELECT jsonb_build_object(
-    'success', true,
-    'attribute_ids', (SELECT jsonb_agg(id) FROM inserted_attrs),
-    'quest_ids', (SELECT jsonb_agg(id) FROM inserted_quests),
-    'junction_records_inserted', (SELECT count(*) FROM final_insert),
-    'profile_marked_complete', (SELECT count(*) > 0 FROM update_profile)
-  ) INTO v_result;
-
-  RETURN v_result;
-
-EXCEPTION
-  WHEN OTHERS THEN
-    -- Re-raise with a custom message while preserving the internal SQLSTATE
-    RAISE EXCEPTION 'Transaction failed: % (SQLSTATE: %)', SQLERRM, SQLSTATE;
-END;
-$$;
-```
-### Get Settlement Data Function
--- Function to fetch all necessary data for settlement pipeline in a single call
--- Takes array of timezone strings to filter users for batch processing and optimize data retrieval
--- Returns JSON with users, quests, attributes, quests_attributes, and quest_completions for relevant users
--- This function is intended to reduce the number of round trips between the application and database during the daily settlement batch job, improving performance and efficiency. By filtering users based on timezone, we can ensure that we are only retrieving data for users who are due for settlement processing, which is determined by their local date and time. This function should be called at the beginning of the batch job to gather all necessary data before performing calculations and updates.
-
-```sql
-create or replace function public.get_settlement_users_data(
-  p_timezones text[]
-)
-returns jsonb
-language sql
-security definer
-set search_path = public
-as $$
-  select coalesce(jsonb_agg(user_data), '[]'::jsonb)
-  from (
-    select jsonb_build_object(
-      'user', jsonb_build_object(
-        'id', u.id,
-        'experience', u.experience,
-        'level', u.level,
-        'timezone', u.timezone
-      ),
-
-      'quests', coalesce(q.quests, '[]'::jsonb),
-      'attributes', coalesce(a.attributes, '[]'::jsonb),
-      'quests_attributes', coalesce(qa.quests_attributes, '[]'::jsonb),
-      'quest_completions', coalesce(qc.quest_completions, '[]'::jsonb)
-    ) as user_data
-    from users u
-
-    left join lateral (
-      select jsonb_agg(
-        jsonb_build_object(
-          'id', q.id,
-          'name', q.name,
-          'strength_level', q.strength_level,
-          'strength_points', q.strength_points,
-          'last_rest_date', q.last_rest_date,
-          'frequency', q.frequency,
-          'rest_frequency', q.rest_frequency,
-          'rest_progress', q.rest_progress,
-          'streak', q.streak,
-          'last_completed_at', q.last_completed_at
-        )
-      ) as quests
-      from quests q
-      where q.user_id = u.id
-    ) q on true
-
-    left join lateral (
-      select jsonb_agg(
-        jsonb_build_object(
-          'id', a.id,
-          'name', a.name,
-          'experience', a.experience,
-          'level', a.level
-        )
-      ) as attributes
-      from attributes a
-      where a.user_id = u.id
-    ) a on true
-
-    left join lateral (
-      select jsonb_agg(
-        jsonb_build_object(
-          'quest_id', qa.quest_id,
-          'attribute_id', qa.attribute_id,
-          'attribute_power', qa.attribute_power
-        )
-      ) as quests_attributes
-      from quests_attributes qa
-      where qa.user_id = u.id
-    ) qa on true
-
-    left join lateral (
-      select jsonb_agg(
-        jsonb_build_object(
-          'id', qc.id,
-          'quest_id', qc.quest_id,
-          'experience_earned', qc.experience_earned,
-          'processed_at', qc.processed_at,
-          'completed_at', qc.completed_at
-        )
-      ) as quest_completions
-      from quest_completions qc
-      where qc.user_id = u.id
-        and qc.processed_at is null
-    ) qc on true
-
-    where u.timezone = any(p_timezones)
-      and u.profile_complete = true
-  ) user_data;
-$$;
-```
+export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
+  public: {
+    Enums: {
+      strength_rank: ['E', 'D', 'C', 'B', 'A', 'S'],
+    },
+  },
+} as const;
