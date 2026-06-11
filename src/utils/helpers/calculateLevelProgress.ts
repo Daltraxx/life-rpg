@@ -43,6 +43,8 @@ export const caluculateExperienceForLevel = (
 
 /**
  * Calculates the current level based on experience points.
+ * Uses the inverse of the experience calculation 
+ * to determine the level corresponding to the given experience.
  * @param {number} experience - The total experience points.
  * @param {LevelType} levelType - The type of entity ("user" or "attribute").
  * @returns {number} The current level of the entity.
@@ -51,16 +53,18 @@ export const calculateLevel = (
   experience: number,
   levelType: LevelType,
 ): number => {
-  const { baseXP } =
+  const { baseXP, exponentSteepness } =
     levelType === "user"
       ? {
           baseXP: USER_LEVEL_BASE_XP,
+          exponentSteepness: USER_LEVEL_EXPONENT_STEEPNESS,
         }
       : {
           baseXP: ATTRIBUTE_LEVEL_BASE_XP,
+          exponentSteepness: ATTRIBUTE_LEVEL_EXPONENT_STEEPNESS,
         };
   if (experience < baseXP) return STARTING_LEVEL;
-  const rawLevel = Math.cbrt(experience / baseXP) + STARTING_LEVEL; // Cube root for exponent 3, adjust for starting level
+  const rawLevel = Math.pow(experience / baseXP, 1 / exponentSteepness) + STARTING_LEVEL;
   return Math.floor(rawLevel);
 };
 
