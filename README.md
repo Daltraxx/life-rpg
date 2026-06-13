@@ -1,50 +1,392 @@
-# LifeRPG
+# LifeRPG Progression Service
 
-LifeRPG is an application where users create accounts to define personal attributes they wish to hone and regular tasks ("quests") that earn experience points. These quests level both individual attributes and overall player level.
+The **LifeRPG Progression Service** is a standalone NestJS application responsible for executing the daily settlement pipeline for the LifeRPG platform.
 
-The leveling system rewards consistent quest completion to encourage habit formation. By emulating the feedback loop of RPGs, LifeRPG helps users feel more rewarded when accomplishing daily productivity goals.
+At the end of each user's day, the service evaluates quest completions, updates progression-related data, awards experience, calculates level gains, updates quest strength, distributes attribute experience, and records all progression events in an immutable audit log.
 
-The overarching goal is to help users who feel they'd benefit from such a system reap real-life progress towards their aspirational goals.
+---
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Overview
 
-## Database Overview
+LifeRPG uses a deferred progression model.
 
-The database schema uses a relational design to manage users, tasks, attributes, and experience points. Key features include a strength rank system (E–S) for task multipliers, shared experience across player and attribute levels, and flexible habit scheduling via frequency and rest_frequency fields.
+When a user completes a quest, a record is inserted into the `quest_completions` table immediately. Progression rewards are not awarded at that time.
 
-An overview of the database schema can be found in [DATABASE.md](DATABASE.md).
+Instead, an hourly settlement process determines which timezones have crossed their daily boundary and processes all outstanding quest completions for users within those timezones.
 
-## Getting Started
+This design provides:
 
-First, run the development server:
+* Consistent progression calculations
+* Timezone-aware daily processing
+* Reduced database write volume
+* Full auditability through progression logs
+* Transactional integrity across progression updates
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Responsibilities
+
+The Progression Service is responsible for:
+
+### User Progression
+
+* Awarding user experience
+* Calculating user level increases
+* Updating:
+
+  * `users.experience`
+  * `users.level`
+  * `users.updated_at`
+
+### Quest Progression
+
+* Updating quest streaks
+* Applying rest day logic
+* Awarding or deducting quest strength points
+* Determining quest strength rank changes
+* Updating:
+
+  * `quests.streak`
+  * `quests.rest_progress`
+  * `quests.strength_points`
+  * `quests.strength_level`
+  * `quests.last_completed_date`
+  * `quests.updated_at`
+
+### Attribute Progression
+
+* Awarding experience to affected attributes
+* Calculating attribute level increases
+* Updating:
+
+  * `attributes.experience`
+  * `attributes.level`
+  * `attributes.updated_at`
+
+### Audit Logging
+
+Creating immutable progression records in:
+
+* `progression_logs`
+
+Tracking execution batches in:
+
+* `daily_progression_batches`
+
+### Completion Processing
+
+Marking processed quest completions:
+
+* `quest_completions.processed_at`
+
+---
+
+## High-Level Pipeline Flow
+
+```text
+┌──────────────────────┐
+│ Hourly Cron Trigger  │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Determine Timezones  │
+│ Crossing 2:00 AM     │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Fetch Settlement     │
+│ Data from Supabase   │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Build Progression    │
+│ Updates In Memory    │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Execute Database     │
+│ Transaction          │
+└──────────┬───────────┘
+           │
+           ▼
+┌──────────────────────┐
+│ Write Logs & Batch   │
+│ Records              │
+└──────────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Settlement Process
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 1. Detect Eligible Timezones
 
-## Learn More
+The scheduler runs every hour.
 
-To learn more about Next.js, take a look at the following resources:
+It determines which user timezones have crossed the configured settlement boundary:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```text
+02:00 Local Time
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Only users within those timezones are processed.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Retrieve Settlement Data
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The service calls:
+
+```sql
+public.get_settlement_users_data()
+```
+
+This RPC returns all data required to calculate progression:
+
+* Users
+* Quests
+* Attributes
+* Quest completions
+* Quest ↔ Attribute relationships
+
+in a single database round trip.
+
+---
+
+### 3. Build Progression Updates
+
+For each user:
+
+#### Process Completed Quests
+
+Calculate:
+
+* User experience earned
+* Attribute experience earned
+* Quest strength gains
+* Streak increases
+* Rest progress increases
+
+#### Process Missing Required Quests
+
+Determine whether:
+
+* A streak should reset
+* A rest day should be consumed
+* Strength points should be deducted
+
+---
+
+### 4. Calculate Levels
+
+The service calculates:
+
+#### User Levels
+
+Based on accumulated experience.
+
+#### Quest Strength Levels
+
+Based on strength points.
+
+#### Attribute Levels
+
+Each attribute levels independently.
+
+---
+
+### 5. Generate Progression Logs
+
+Each progression event generates audit records.
+
+Examples:
+
+```text
+Completed quest "Workout"
++25 User Experience
+
+Completed quest "Workout"
++3 Strength Points
+
+Completed quest "Workout"
++10 Strength Experience (Fitness)
+
+Missed required quest "Read"
+-10 Strength Points
+```
+
+Logs are inserted into:
+
+```text
+progression_logs
+```
+
+---
+
+### 6. Execute Transaction
+
+Once calculations are complete:
+
+1. Create daily batch record
+2. Update users
+3. Update quests
+4. Update attributes
+5. Insert progression logs
+6. Mark quest completions processed
+
+All changes are committed atomically.
+
+If any operation fails, the entire transaction is rolled back.
+
+---
+
+## Architecture
+
+```text
+src/
+│
+├── progression/
+│   ├── progression.module.ts
+│   ├── progression.service.ts
+│
+├── settlement/
+│   ├── settlement.module.ts
+│   ├── settlement.service.ts
+│
+├── scheduler/
+│   ├── scheduler.module.ts
+│   ├── scheduler.service.ts
+│
+├── supabase/
+│   ├── supabase.module.ts
+│   ├── supabase.service.ts
+│
+├── common/
+│   ├── interfaces/
+│   ├── utils/
+│   └── constants/
+│
+└── main.ts
+```
+
+---
+
+## Core Technologies
+
+### Framework
+
+* NestJS
+
+### Database
+
+* Supabase
+* PostgreSQL
+
+### Scheduling
+
+* @nestjs/schedule
+
+### Testing
+
+* Jest
+
+### Language
+
+* TypeScript
+
+---
+
+## Key Design Principles
+
+### Timezone-Aware Processing
+
+Progression is calculated using the user's configured timezone rather than UTC.
+
+---
+
+### Auditability
+
+Every progression change is persisted to:
+
+```text
+progression_logs
+```
+
+allowing complete reconstruction of user progression history.
+
+---
+
+### Transaction Safety
+
+Progression updates are committed as a single transaction.
+
+This prevents partial progression updates.
+
+---
+
+### Batch Processing
+
+Users are processed in batches grouped by timezone.
+
+This minimizes database load while ensuring correct daily boundaries.
+
+---
+
+## Future Enhancements
+
+### Retry Queue
+
+Retry failed settlement batches automatically.
+
+### Dead Letter Handling
+
+Persist failed progression calculations for manual inspection.
+
+### Metrics & Monitoring
+
+Track:
+
+* Settlement duration
+* Users processed
+* Failed batches
+* Experience awarded
+
+### Distributed Processing
+
+Scale settlement processing across multiple workers.
+
+---
+
+## Related Database Tables
+
+| Table                     | Purpose                       |
+| ------------------------- | ----------------------------- |
+| users                     | User progression              |
+| attributes                | User-defined attributes       |
+| quests                    | Quest progression             |
+| quest_completions         | Raw completion events         |
+| quests_attributes         | Quest ↔ Attribute mapping     |
+| progression_logs          | Audit trail                   |
+| daily_progression_batches | Settlement execution tracking |
+| strength_levels           | Strength rank lookup          |
+
+---
+
+## Development Status
+
+Current Status: **Operational**
+
+The service currently targets:
+
+* Hourly execution
+* Timezone-based settlement detection
+* Full progression calculations
+* Transactional database updates
+* Audit logging
+* Batch tracking
+
+Part of the LifeRPG platform progression infrastructure.
