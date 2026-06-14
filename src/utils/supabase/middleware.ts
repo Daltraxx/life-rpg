@@ -149,8 +149,23 @@ export async function updateSession(
     // TODO: When completing profile setup, add claim to JWT that profile is complete
     // TODO: Upon user login, reset claim in JWT by querying profile completion status
     const profileComplete = user.user_metadata?.profile_complete ?? false;
+    console.log(user.user_metadata);
     const url = request.nextUrl.clone();
     url.pathname = profileComplete ? "/profile" : "/create-profile";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname === "/create-profile" && user?.user_metadata?.profile_complete) { 
+    // If user tries to access create-profile but they already have a complete profile, redirect to edit-profile
+    const url = request.nextUrl.clone();
+    url.pathname = "/edit-profile";
+    return NextResponse.redirect(url);
+  }
+
+  if (pathname === "/edit-profile" && !user?.user_metadata?.profile_complete) { 
+    // If user tries to access edit-profile but they don't have a complete profile, redirect to create-profile
+    const url = request.nextUrl.clone();
+    url.pathname = "/create-profile";
     return NextResponse.redirect(url);
   }
 
