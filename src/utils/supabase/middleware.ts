@@ -135,6 +135,7 @@ export async function updateSession(
   // Paths accessible to authenticated (email-verified) users
   const authenticatedUserPaths = [
     "/create-profile",
+    "/edit-profile",
     "/profile",
     "/error",
     "/auth",
