@@ -134,7 +134,7 @@ export async function updateSession(
 
   // Paths accessible to authenticated (email-verified) users
   const authenticatedUserPaths = [
-    "/account-setup",
+    "/create-profile",
     "/profile",
     "/error",
     "/auth",
@@ -150,7 +150,7 @@ export async function updateSession(
     const profileComplete = user.user_metadata?.profile_complete ?? false;
     // TODO: create profile page
     const url = request.nextUrl.clone();
-    url.pathname = profileComplete ? "/profile" : "/account-setup";
+    url.pathname = profileComplete ? "/profile" : "/create-profile";
     return NextResponse.redirect(url);
   }
 
