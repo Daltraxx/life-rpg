@@ -152,7 +152,15 @@ export default async function createProfile(
         };
     }
   }
-
+  // Set profile_complete to true in user metadata (not persisted in DB, just for JWT claim)
+  try {
+    await supabase.auth.updateUser({
+      data: { profile_complete: true },
+    });
+  } catch (error) {
+    console.warn("Error updating user metadata:", error);
+  }
+  
   // Redirect to dashboard upon successful profile creation
   redirect("/dashboard"); // TODO: Create page
 }
