@@ -149,7 +149,6 @@ export async function updateSession(
     // TODO: When completing profile setup, add claim to JWT that profile is complete
     // TODO: Upon user login, reset claim in JWT by querying profile completion status
     const profileComplete = user.user_metadata?.profile_complete ?? false;
-    // TODO: create profile page
     const url = request.nextUrl.clone();
     url.pathname = profileComplete ? "/profile" : "/create-profile";
     return NextResponse.redirect(url);
