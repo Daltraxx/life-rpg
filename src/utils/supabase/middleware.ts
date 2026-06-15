@@ -146,22 +146,28 @@ export async function updateSession(
   );
 
   // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
-  if (user && user.user_metadata?.profile_complete === undefined) {
-    try {
-      const isComplete = await isProfileComplete(user, supabase);
-      // Update user metadata with profile completion status to avoid db queries in middleware and client components
-      await supabase.auth.updateUser({
-        data: { profile_complete: isComplete },
-      });
-    } catch (error) {
-      console.warn("Error updating user metadata:", { cause: error });
+  let profileComplete = user?.user_metadata?.profile_complete; // Initialize here to track value since current request will not immediately reflect metadata updates
+  if (user && profileComplete === undefined) {
+    profileComplete = await isProfileComplete(user, supabase);
+    // Update user metadata with profile completion status to avoid db queries in middleware and client components
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: { profile_complete: profileComplete },
+    });
+    if (updateError) {
+      console.warn("Error updating user metadata:", { cause: updateError });
+      // Not critical enough to fail the whole operation, so we proceed without returning an error state
+      // Middleware will check profile completion status on next request and update metadata accordingly
     }
   }
 
   if (user && !isAuthenticatedUserPath) {
     // Redirect authenticated users to complete profile or profile page based on profile completion status in metadata
-    const profileComplete = user.user_metadata?.profile_complete ?? false;
     const url = request.nextUrl.clone();
+    if (profileComplete === undefined) {
+      // If unknown profile completion status due to missing metadata and failed query (edge case), default to redirecting to profile page
+      console.warn("Unknown profile completion status, redirecting to profile page");
+      profileComplete = true; // Temporarily treat as complete to redirect to profile page, middleware will update metadata on next request
+    }
     url.pathname = profileComplete ? "/profile" : "/create-profile";
     return NextResponse.redirect(url);
   }
