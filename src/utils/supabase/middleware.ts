@@ -148,7 +148,7 @@ export async function updateSession(
   // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
   if (user && user.user_metadata?.profile_complete === undefined) {
     try {
-      const isComplete = isProfileComplete(user, supabase);
+      const isComplete = await isProfileComplete(user, supabase);
       // Update user metadata with profile completion status to avoid db queries in middleware and client components
       await supabase.auth.updateUser({
         data: { profile_complete: isComplete },
