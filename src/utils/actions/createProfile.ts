@@ -158,7 +158,7 @@ export default async function createProfile(
       data: { profile_complete: true },
     });
   } catch (error) {
-    console.warn("Error updating user metadata:", error);
+    console.warn("Error updating user metadata:", { cause: error });
   }
   
   // Redirect to dashboard upon successful profile creation
