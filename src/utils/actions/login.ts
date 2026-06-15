@@ -75,13 +75,16 @@ export async function login(
       if (error.code === "email_not_confirmed") {
         try {
           await resendVerificationEmail(validatedFields.data.email, supabase);
-          redirect("/verify-email")
         } catch (resendError) {
-          console.error("Failed to resend verification email:", { cause: resendError });
+          console.error("Failed to resend verification email:", {
+            cause: resendError,
+          });
           return {
-            message: "Email not confirmed and failed to resend verification email. Please try again later.",
+            message:
+              "Email not confirmed and failed to resend verification email. Please try again later.",
           };
         }
+        redirect("/verify-email");
       }
       return {
         message: "Invalid email or password. Please try again.", // Avoid exposing specific failure reasons for security
