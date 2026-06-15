@@ -159,11 +159,8 @@ export async function updateSession(
   }
 
   if (user && !isAuthenticatedUserPath) {
-    // Redirect authenticated users to complete profile or profile page
-    // TODO: When completing profile setup, add claim to JWT that profile is complete
-    // TODO: Upon user login, reset claim in JWT by querying profile completion status
+    // Redirect authenticated users to complete profile or profile page based on profile completion status in metadata
     const profileComplete = user.user_metadata?.profile_complete ?? false;
-    console.log(user.user_metadata);
     const url = request.nextUrl.clone();
     url.pathname = profileComplete ? "/profile" : "/create-profile";
     return NextResponse.redirect(url);
