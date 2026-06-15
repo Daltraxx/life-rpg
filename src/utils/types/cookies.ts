@@ -1,12 +1,13 @@
-export type CookieOptions = {
-  maxAge?: number;
-  expires?: Date;
-  path?: string;
-  domain?: string;
-  secure?: boolean;
-  httpOnly?: boolean;
-  sameSite?: "strict" | "lax" | "none";
-};
+/**
+ * Type definitions for cookie management in the application.
+ *
+ * This file defines interfaces and types related to cookie operations, 
+ * including getting, setting, and deleting cookies. 
+ * It provides a structured way to handle cookie interactions across the application, 
+ * ensuring consistency and type safety when working with cookies in both server and client contexts.
+ *
+ * @module CookieTypes
+ */
 
 /**
  * Represents a store for managing browser cookies.
@@ -53,4 +54,54 @@ export interface CookieStore {
    * @param name - The name of the cookie to delete
    */
   delete(name: string): void;
+}
+
+/**
+ * Options for configuring cookie behavior when setting a cookie.
+ *
+ * @interface CookieOptions
+ * @property {number} [maxAge] - The maximum age of the cookie in seconds. After this time, the cookie will expire.
+ * @property {Date} [expires] - The exact date and time when the cookie should expire. Overrides maxAge if both are provided.
+ * @property {string} [path] - The URL path that must exist in the requested URL for the browser to send the cookie header.
+ * @property {string} [domain] - The domain that must be present in the requested URL for the browser to send the cookie header.
+ * @property {boolean} [secure] - If true, the cookie will only be sent over secure (HTTPS) connections.
+ * @property {"strict" | "lax" | "none"} [sameSite] - Controls whether the cookie is sent with cross-site requests. 
+ * "strict" means the cookie is not sent with any cross-site requests, 
+ * "lax" allows the cookie to be sent with top-level navigations and GET requests initiated by third-party websites, 
+ * and "none" means the cookie will be sent with all requests regardless of context (requires secure to be true).
+ */
+export type CookieOptions = {
+  maxAge?: number;
+  expires?: Date;
+  path?: string;
+  domain?: string;
+  secure?: boolean;
+  httpOnly?: boolean;
+  sameSite?: "strict" | "lax" | "none";
+};
+
+/**
+ * Represents the response from a cookie operation, indicating success or failure.
+ *
+ * @interface CookieResponse
+ * @property {boolean} ok - Indicates whether the cookie operation was successful.
+ * @property {string} cookieName - The name of the cookie that was set, retrieved, or deleted.
+ * @property {string} [error] - Optional error message if the operation failed.
+ */
+export interface CookieResponse {
+  ok: boolean;
+  cookieName: string;
+  error?: string;
+}
+
+/**
+ * Response object for cookie setting operations.
+ * @interface SetCookieResponse
+ * @property {boolean} ok - Indicates whether the cookie operation was successful.
+ * @property {string} cookieName - The name of the cookie that was set or attempted to be set.
+ * @property {number} expiresAt - Unix timestamp in milliseconds when the cookie expires.
+ * @property {string} [error] - Optional error message if the operation failed.
+ */
+export type SetCookieResponse = CookieResponse & {
+  expiresAt: number;
 }
