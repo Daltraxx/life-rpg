@@ -153,12 +153,13 @@ export default async function createProfile(
     }
   }
   // Set profile_complete to true in user metadata (to avoid db queries in middleware and client components)
-  try {
-    await supabase.auth.updateUser({
-      data: { profile_complete: true },
-    });
-  } catch (error) {
-    console.warn("Error updating user metadata:", { cause: error });
+  const { error: updateError } = await supabase.auth.updateUser({
+    data: { profile_complete: true },
+  });
+  if (updateError) {
+    console.warn("Error updating user metadata:", { cause: updateError });
+    // Not critical enough to fail the whole operation, so we proceed without returning an error state
+    // Middleware will check profile completion status on next request and update metadata accordingly
   }
   
   // Redirect to dashboard upon successful profile creation

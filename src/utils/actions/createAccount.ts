@@ -154,7 +154,7 @@ export async function createAccount(
   if (metadataError) {
     console.error("Error updating user metadata:", { cause: metadataError });
     // Not critical enough to fail the signup, so we continue without returning an error state
-    // profile_complete should eventually be updated correctly in the middleware
+    // Middleware will check profile completion status on next request and update metadata accordingly
   }
 
   // Set cookies for unverified signup and pending verification email
