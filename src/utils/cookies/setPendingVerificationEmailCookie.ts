@@ -1,6 +1,6 @@
 import { CookieStore } from "@/utils/types/cookies";
 import crypto from "crypto";
-import { CookieResponse } from "../types/CookieResponse";
+import { SetCookieResponse } from "../types/SetCookieResponse";
 
 export type CookiePayload = {
   email: string;
@@ -54,7 +54,7 @@ const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
 export default function setPendingVerificationEmailCookie(
   email: string,
   cookieStore: CookieStore,
-): CookieResponse {
+): SetCookieResponse {
   if (!email.trim())
     return {
       ok: false,

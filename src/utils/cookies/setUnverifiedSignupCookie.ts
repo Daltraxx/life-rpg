@@ -1,5 +1,5 @@
 import { CookieStore } from "@/utils/types/cookies";
-import { CookieResponse } from "../types/CookieResponse";
+import { SetCookieResponse } from "../types/SetCookieResponse";
 
 /**
  * Sets an "unverified_signup" HTTP-only cookie to flag that a user has begun (but not yet completed)
@@ -26,7 +26,7 @@ import { CookieResponse } from "../types/CookieResponse";
  *
  * @param cookieStore A readonly wrapper for the request cookie store (e.g., from Next.js App Router),
  *                    used here to set a server-managed session-scoped flag.
- * 
+ *
  * @returns An object indicating the success status, cookie name, expiration time, and any error message if applicable.
  *
  * @example
@@ -45,14 +45,14 @@ import { CookieResponse } from "../types/CookieResponse";
  */
 export default function setUnverifiedSignupCookie(
   cookieStore: CookieStore,
-): CookieResponse {
+): SetCookieResponse {
   const ttlSeconds = 60 * 60 * 2; // 2 hours
   try {
     cookieStore.set("unverified_signup", "true", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
-      maxAge: ttlSeconds, 
+      maxAge: ttlSeconds,
       path: "/",
     });
     return {
