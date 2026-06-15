@@ -1,8 +1,14 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { SupabaseClient } from "@supabase/supabase-js";
+import setPendingVerificationEmailCookie from "@/utils/cookies/setPendingVerificationEmailCookie";
+import { cookies } from "next/headers";
 
 /**
  * Resends a verification email to the specified email address.
+ * This function attempts to resend a verification email using the Supabase client. 
+ * If the `supabaseClient` parameter is not provided, it creates a new server client instance. 
+ * It also sets a pending verification email cookie with the provided email address
+ * for use on the verify-email page.
  * 
  * @param email - The email address to send the verification email to.
  * @param supabaseClient - Optional pre-configured Supabase client. If not provided, a new server client will be created.
@@ -20,9 +26,12 @@ export default async function resendVerificationEmail(email: string, supabaseCli
     type: "signup",
     email,
     options: {
-      emailRedirectTo: `${baseUrl}/verify-email`,
+      emailRedirectTo: `${baseUrl}/create-profile`,
     }
   });
+
+  const cookieStore = await cookies();
+  setPendingVerificationEmailCookie(email, cookieStore);
 
   if (error) {
     console.error("Error resending verification email:", { cause: error });
