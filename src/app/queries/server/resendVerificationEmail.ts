@@ -10,12 +10,17 @@ import { SupabaseClient } from "@supabase/supabase-js";
  * @returns {Promise<void>}
  */
 export default async function resendVerificationEmail(email: string, supabaseClient?: SupabaseClient) {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  if (!baseUrl) {
+    console.error("Missing NEXT_PUBLIC_BASE_URL environment variable");
+    throw new Error("Internal server error. Please try again later.");
+  }
   const supabase = supabaseClient || await createSupabaseServerClient();
   const { error } = await supabase.auth.resend({
     type: "signup",
     email,
     options: {
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/verify-email`,
+      emailRedirectTo: `${baseUrl}/verify-email`,
     }
   });
 
