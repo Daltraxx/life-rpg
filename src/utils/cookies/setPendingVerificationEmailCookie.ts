@@ -1,5 +1,6 @@
 import { CookieStore } from "@/utils/types/cookies";
 import crypto from "crypto";
+import { CookieResponse } from "../types/CookieResponse";
 
 export type CookiePayload = {
   email: string;
@@ -15,6 +16,8 @@ const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
  *
  * @param email - The email address to be verified.
  * @param cookieStore - The cookie store to set the cookie in, typically provided by the request context.
+ * @returns An object indicating the success status, cookie name, expiration time, and any error message if applicable.
+ *
  *
  * The payload includes:
  * - `email`: The email address being verified.
@@ -49,10 +52,16 @@ const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
  *   and avoid widening its path or domain to reduce exposure.
  */
 export default function setPendingVerificationEmailCookie(
-  email: string | undefined,
-  cookieStore: CookieStore
-): boolean {
-  if (!email) return false;
+  email: string,
+  cookieStore: CookieStore,
+): CookieResponse {
+  if (!email.trim())
+    return {
+      ok: false,
+      cookieName: "pending_verification",
+      expiresAt: 0,
+      error: "Email is empty",
+    };
 
   // Create the payload
   const payload: CookiePayload = {
@@ -72,7 +81,7 @@ export default function setPendingVerificationEmailCookie(
 
     // Combine payload and signature
     const value = `${Buffer.from(serialized).toString(
-      "base64url"
+      "base64url",
     )}.${signature}`;
 
     // HttpOnly, Secure, short-lived cookie
@@ -84,13 +93,26 @@ export default function setPendingVerificationEmailCookie(
         maxAge: COOKIE_MAX_AGE_SECONDS, // 5 minutes
         path: "/verify-email",
       });
-      return true;
+      return {
+        ok: true,
+        cookieName: "pending_verification",
+        expiresAt: payload.exp,
+      };
     } catch (error) {
       console.error("Failed to set pending verification cookie:", error);
-      return false;
+      return {
+        ok: false,
+        cookieName: "pending_verification",
+        expiresAt: 0,
+        error: "Failed to set cookie",
+      };
     }
   } else {
-    console.warn("COOKIE_SIGNING_SECRET is not set. Pending verification cookie not created.");
-    return false;
+    console.warn(
+      "COOKIE_SIGNING_SECRET is not set. Pending verification cookie not created.",
+    );
+    throw new Error(
+      "Server configuration error: Missing cookie signing secret.",
+    );
   }
 }

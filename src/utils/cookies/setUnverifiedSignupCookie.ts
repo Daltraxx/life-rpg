@@ -1,4 +1,5 @@
 import { CookieStore } from "@/utils/types/cookies";
+import { CookieResponse } from "../types/CookieResponse";
 
 /**
  * Sets an "unverified_signup" HTTP-only cookie to flag that a user has begun (but not yet completed)
@@ -25,6 +26,8 @@ import { CookieStore } from "@/utils/types/cookies";
  *
  * @param cookieStore A readonly wrapper for the request cookie store (e.g., from Next.js App Router),
  *                    used here to set a server-managed session-scoped flag.
+ * 
+ * @returns An object indicating the success status, cookie name, expiration time, and any error message if applicable.
  *
  * @example
  * // In a Next.js route handler:
@@ -40,12 +43,30 @@ import { CookieStore } from "@/utils/types/cookies";
  * @remarks If you later need to clear this cookie manually, set the same name with an immediate expiration
  * (e.g., maxAge: 0) or use a delete helper if available.
  */
-export default function setUnverifiedSignupCookie(cookieStore: CookieStore): void {
-  cookieStore.set("unverified_signup", "true", {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 60 * 60 * 2, // 2 hours
-    path: "/",
-  });
+export default function setUnverifiedSignupCookie(
+  cookieStore: CookieStore,
+): CookieResponse {
+  const ttlSeconds = 60 * 60 * 2; // 2 hours
+  try {
+    cookieStore.set("unverified_signup", "true", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: ttlSeconds, 
+      path: "/",
+    });
+    return {
+      ok: true,
+      cookieName: "unverified_signup",
+      expiresAt: Date.now() + ttlSeconds * 1000,
+    };
+  } catch (error) {
+    console.error("Failed to set unverified_signup cookie:", error);
+    return {
+      ok: false,
+      cookieName: "unverified_signup",
+      expiresAt: 0,
+      error: "Failed to set cookie",
+    };
+  }
 }
