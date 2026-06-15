@@ -148,12 +148,13 @@ export async function createAccount(
   }
 
   // Update user metadata with profile completion status for routing and to avoid db queries in middleware and client components
-  try {
-    await supabase.auth.updateUser({
-      data: { profile_complete: false },
-    });
-  } catch (error) {
-    console.warn("Error updating user metadata:", error);
+  const { error: metadataError } = await supabase.auth.updateUser({
+    data: { profile_complete: false },
+  });
+  if (metadataError) {
+    console.error("Error updating user metadata:", { cause: metadataError });
+    // Not critical enough to fail the signup, so we continue without returning an error state
+    // profile_complete should eventually be updated correctly in the middleware
   }
 
   // Set cookies for unverified signup and pending verification email
@@ -163,7 +164,7 @@ export async function createAccount(
     // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
     setPendingVerificationEmail(data.user.email, cookieStore);
   } catch (error) {
-    console.error("Error setting verification cookies:", error);
+    console.error("Error setting verification cookies:", { cause: error });
     return {
       message:
         "Account created successfully, but verification setup failed. Please try logging in.",
