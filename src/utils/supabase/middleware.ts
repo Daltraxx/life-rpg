@@ -2,6 +2,7 @@ import { createServerClient } from "@supabase/ssr";
 import { AuthError, AuthSessionMissingError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../generatedTypes/supabase";
+import isProfileComplete from "@/app/queries/server/isProfileComplete";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -153,6 +154,19 @@ export async function updateSession(
     const url = request.nextUrl.clone();
     url.pathname = profileComplete ? "/profile" : "/create-profile";
     return NextResponse.redirect(url);
+  }
+
+  // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
+  if (user && user.user_metadata?.profile_complete === undefined) {
+    try {
+      const isComplete = isProfileComplete(user, supabase);
+      // Update user metadata with profile completion status to avoid db queries in middleware and client components
+      await supabase.auth.updateUser({
+        data: { profile_complete: isComplete },
+      });
+    } catch (error) {
+      console.warn("Error updating user metadata:", error);
+    }
   }
 
   if (pathname === "/create-profile" && user?.user_metadata?.profile_complete) { 

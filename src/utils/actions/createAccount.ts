@@ -18,6 +18,9 @@ import setPendingVerificationEmail from "@/utils/cookies/setPendingVerificationE
  * - Validating form data against the signup schema
  * - Checking for existing usertag (note: subject to TOCTOU race condition)
  * - Creating the user account in Supabase Auth
+ * - Handling specific error cases for better user feedback
+ * - Setting cookies for unverified signup and pending verification email
+ * - Updating user metadata with profile completion status for routing and to avoid db queries in middleware and client components
  * - Redirecting to email verification page on success
  *
  * @param prevState - The previous state of the signup form
@@ -142,6 +145,15 @@ export async function createAccount(
       message:
         "Account creation succeeded but verification setup failed. Please try logging in.",
     };
+  }
+
+  // Update user metadata with profile completion status for routing and to avoid db queries in middleware and client components
+  try {
+    await supabase.auth.updateUser({
+      data: { profile_complete: false },
+    });
+  } catch (error) {
+    console.warn("Error updating user metadata:", error);
   }
 
   // Set cookies for unverified signup and pending verification email

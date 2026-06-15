@@ -152,7 +152,7 @@ export default async function createProfile(
         };
     }
   }
-  // Set profile_complete to true in user metadata (not persisted in DB, just for JWT claim)
+  // Set profile_complete to true in user metadata (to avoid db queries in middleware and client components)
   try {
     await supabase.auth.updateUser({
       data: { profile_complete: true },
