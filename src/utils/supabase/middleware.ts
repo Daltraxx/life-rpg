@@ -145,6 +145,19 @@ export async function updateSession(
     (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
 
+  // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
+  if (user && user.user_metadata?.profile_complete === undefined) {
+    try {
+      const isComplete = isProfileComplete(user, supabase);
+      // Update user metadata with profile completion status to avoid db queries in middleware and client components
+      await supabase.auth.updateUser({
+        data: { profile_complete: isComplete },
+      });
+    } catch (error) {
+      console.warn("Error updating user metadata:", { cause: error });
+    }
+  }
+
   if (user && !isAuthenticatedUserPath) {
     // Redirect authenticated users to complete profile or profile page
     // TODO: When completing profile setup, add claim to JWT that profile is complete
@@ -156,27 +169,14 @@ export async function updateSession(
     return NextResponse.redirect(url);
   }
 
-  // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
-  if (user && user.user_metadata?.profile_complete === undefined) {
-    try {
-      const isComplete = isProfileComplete(user, supabase);
-      // Update user metadata with profile completion status to avoid db queries in middleware and client components
-      await supabase.auth.updateUser({
-        data: { profile_complete: isComplete },
-      });
-    } catch (error) {
-      console.warn("Error updating user metadata:", error);
-    }
-  }
-
-  if (pathname === "/create-profile" && user?.user_metadata?.profile_complete) { 
+  if (pathname === "/create-profile" && user?.user_metadata?.profile_complete) {
     // If user tries to access create-profile but they already have a complete profile, redirect to edit-profile
     const url = request.nextUrl.clone();
     url.pathname = "/edit-profile";
     return NextResponse.redirect(url);
   }
 
-  if (pathname === "/edit-profile" && !user?.user_metadata?.profile_complete) { 
+  if (pathname === "/edit-profile" && !user?.user_metadata?.profile_complete) {
     // If user tries to access edit-profile but they don't have a complete profile, redirect to create-profile
     const url = request.nextUrl.clone();
     url.pathname = "/create-profile";
