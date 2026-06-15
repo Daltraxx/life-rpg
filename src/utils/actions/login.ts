@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 
 import { LoginSchema, LoginState } from "@/utils/validations/login";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import resendVerificationEmail from "@/app/queries/server/resendVerificationEmail";
 
 /**
  * Authenticates a user by processing login form data and establishing a session.
@@ -71,6 +72,20 @@ export async function login(
   if (error) {
     console.error("Login failed:", { cause: error });
     if (error.status === 400) {
+      if (error.code === "email_not_confirmed") {
+        try {
+          await resendVerificationEmail(validatedFields.data.email, supabase);
+        } catch (resendError) {
+          console.error("Failed to resend verification email:", { cause: resendError });
+          return {
+            message: "Email not confirmed and failed to resend verification email. Please try again later.",
+          };
+        }
+        return {
+          message:
+            "Email not confirmed. Please check your inbox for a confirmation email.",
+        };
+      }
       return {
         message: "Invalid email or password. Please try again.", // Avoid exposing specific failure reasons for security
       };
