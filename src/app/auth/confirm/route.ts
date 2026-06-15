@@ -2,6 +2,8 @@ import { type EmailOtpType } from "@supabase/supabase-js";
 import { type NextRequest, NextResponse } from "next/server";
 
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import deleteUnverifiedSignupCookie from "@/utils/cookies/deleteUnverifiedSignupCookie";
+import { cookies } from "next/headers";
 
 /**
  * Handles confirmation links for Supabase Auth by verifying a one-time password (OTP)
@@ -94,7 +96,9 @@ export async function GET(request: NextRequest) {
   }
 
   if (!error) {
-    // On success redirect to account setup page
+    // On success, clear unverified signup cookie and redirect to account setup page
+    const cookieStore = await cookies();
+    deleteUnverifiedSignupCookie(cookieStore);
     redirectTo.searchParams.delete("next"); // Clean up redirect URL per Supabase Auth best practices    
     redirectTo.pathname = "/create-profile";
     return NextResponse.redirect(redirectTo);
