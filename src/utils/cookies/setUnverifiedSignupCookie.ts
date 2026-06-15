@@ -29,18 +29,18 @@ import { CookieStore } from "@/utils/types/cookies";
  * @example
  * // In a Next.js route handler:
  * import { cookies } from "next/headers";
- * import setUnverifiedSignup from "@/utils/cookies/setUnverifiedSignup";
+ * import setUnverifiedSignupCookie from "@/utils/cookies/setUnverifiedSignupCookie";
  *
  * export async function POST() {
  *   const store = cookies();
- *   setUnverifiedSignup(store);
+ *   setUnverifiedSignupCookie(store);
  *   return new Response(null, { status: 204 });
  * }
  *
  * @remarks If you later need to clear this cookie manually, set the same name with an immediate expiration
  * (e.g., maxAge: 0) or use a delete helper if available.
  */
-export default function setUnverifiedSignup(cookieStore: CookieStore): void {
+export default function setUnverifiedSignupCookie(cookieStore: CookieStore): void {
   cookieStore.set("unverified_signup", "true", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",

@@ -48,7 +48,7 @@ const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
  * - The cookie is short-lived (5 minutes). Keep its scope narrow (`path=/verify-email`)
  *   and avoid widening its path or domain to reduce exposure.
  */
-export default function setPendingVerificationEmail(
+export default function setPendingVerificationEmailCookie(
   email: string | undefined,
   cookieStore: CookieStore
 ): boolean {

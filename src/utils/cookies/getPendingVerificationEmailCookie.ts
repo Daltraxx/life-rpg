@@ -1,4 +1,4 @@
-import { CookiePayload } from "./setPendingVerificationEmail";
+import { CookiePayload } from "./setPendingVerificationEmailCookie";
 import { CookieStore } from "../types/cookies";
 import crypto from "crypto";
 
@@ -41,7 +41,7 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  *
  * @example
  * // For use in a Next.js server component page:
- * const email = getPendingVerificationEmail(cookiesStore, user.email);
+ * const email = getPendingVerificationEmailCookie(cookiesStore, user.email);
  * return <VerifyEmail email={email} />;
  * }
  *
@@ -49,9 +49,9 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  * This helper is resilient: all internal errors are caught and logged. It never throws.
  * Prefer rotating the signing secret periodically; doing so will invalidate existing pending cookies.
  */
-export default function getPendingVerificationEmail(
+export default function getPendingVerificationEmailCookie(
   cookieStore: CookieStore,
-  fallback: string
+  fallback: string,
 ): string {
   let email = fallback;
   const pendingVerification = cookieStore.get("pending_verification");
@@ -76,7 +76,7 @@ export default function getPendingVerificationEmail(
       if (
         !crypto.timingSafeEqual(
           Buffer.from(signature, "base64url"),
-          Buffer.from(expectedSignature, "base64url")
+          Buffer.from(expectedSignature, "base64url"),
         )
       ) {
         throw new Error("Invalid signature");
@@ -95,7 +95,7 @@ export default function getPendingVerificationEmail(
     } catch (error) {
       console.error(
         "Invalid cookie:",
-        error instanceof Error ? error.message : "Unknown error"
+        error instanceof Error ? error.message : "Unknown error",
       );
     }
   }

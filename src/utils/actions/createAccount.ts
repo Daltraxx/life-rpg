@@ -8,8 +8,8 @@ import { cookies } from "next/headers";
 import { SignupSchema, SignupState } from "@/utils/validations/signup";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import checkIfUsertagExists from "@/app/queries/server/checkIfUsertagExists";
-import setUnverifiedSignup from "@/utils/cookies/setUnverifiedSignup";
-import setPendingVerificationEmail from "@/utils/cookies/setPendingVerificationEmail";
+import setUnverifiedSignupCookie from "@/utils/cookies/setUnverifiedSignupCookie";
+import setPendingVerificationEmailCookie from "@/utils/cookies/setPendingVerificationEmailCookie";
 
 /**
  * Server action to create a new user account.
@@ -160,9 +160,9 @@ export async function createAccount(
   // Set cookies for unverified signup and pending verification email
   const cookieStore = await cookies();
   try {
-    setUnverifiedSignup(cookieStore);
+    setUnverifiedSignupCookie(cookieStore);
     // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
-    setPendingVerificationEmail(data.user.email, cookieStore);
+    setPendingVerificationEmailCookie(data.user.email, cookieStore);
   } catch (error) {
     console.error("Error setting verification cookies:", { cause: error });
     return {

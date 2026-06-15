@@ -2,7 +2,7 @@ import VerifyEmail from "@/app/ui/account-creation/VerifyEmail/VerifyEmail";
 
 import { type Metadata } from "next";
 import { cookies } from "next/headers";
-import getPendingVerificationEmail from "@/utils/cookies/getPendingVerificationEmail";
+import getPendingVerificationEmailCookie from "@/utils/cookies/getPendingVerificationEmailCookie";
 
 export const metadata: Metadata = {
   title: "Verify Email",
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
 export default async function VerifyEmailPage() {
   // TODO: add loading state while verifying cookie
   const cookieStore = await cookies();
-  // Gets users pending verification email from cookie or returns placeholder text in case of failure
-  const email = getPendingVerificationEmail(cookieStore, "your email");
+  // Get user's email pending verification from cookie or placeholder text in case of failure
+  const email = getPendingVerificationEmailCookie(cookieStore, "your email");
 
   return <VerifyEmail email={email} />;
 }
