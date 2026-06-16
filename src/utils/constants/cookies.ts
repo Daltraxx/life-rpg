@@ -5,4 +5,4 @@
 export const COOKIES = {
   UNVERIFIED_SIGNUP: "unverified_signup",
   PENDING_EMAIL_VERIFICATION: "pending_verification",
-}
+} as const;
