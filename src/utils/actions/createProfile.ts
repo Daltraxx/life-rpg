@@ -16,7 +16,6 @@ import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
 import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
 import { ROUTES } from "@/utils/constants/routes";
-import { profile } from 'console';
 
 /**
  * Creates a user profile with associated quests and attributes.
