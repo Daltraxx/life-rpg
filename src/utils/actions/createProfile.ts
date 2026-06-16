@@ -15,6 +15,8 @@ import type {
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
 import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
+import { ROUTES } from "@/utils/constants/routes";
+import { profile } from 'console';
 
 /**
  * Creates a user profile with associated quests and attributes.
@@ -162,6 +164,6 @@ export default async function createProfile(
     // Middleware will check profile completion status on next request and update metadata accordingly
   }
   
-  // Redirect to dashboard upon successful profile creation
-  redirect("/dashboard"); // TODO: Create page
+  // Redirect to profile upon successful profile creation
+  redirect(ROUTES.PROFILE);
 }
