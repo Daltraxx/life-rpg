@@ -1,4 +1,5 @@
 import { CookieStore, SetCookieResponse } from "@/utils/types/cookies";
+import { COOKIES } from "@/utils/constants/cookies";
 
 /**
  * Sets an "unverified_signup" HTTP-only cookie to flag that a user has begun (but not yet completed)
@@ -47,7 +48,7 @@ export default function setUnverifiedSignupCookie(
 ): SetCookieResponse {
   const ttlSeconds = 60 * 60 * 2; // 2 hours
   try {
-    cookieStore.set("unverified_signup", "true", {
+    cookieStore.set(COOKIES.UNVERIFIED_SIGNUP, "true", {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -56,14 +57,14 @@ export default function setUnverifiedSignupCookie(
     });
     return {
       ok: true,
-      cookieName: "unverified_signup",
+      cookieName: COOKIES.UNVERIFIED_SIGNUP,
       expiresAt: Date.now() + ttlSeconds * 1000,
     };
   } catch (error) {
-    console.error("Failed to set unverified_signup cookie:", error);
+    console.error(`Failed to set ${COOKIES.UNVERIFIED_SIGNUP} cookie:`, error);
     return {
       ok: false,
-      cookieName: "unverified_signup",
+      cookieName: COOKIES.UNVERIFIED_SIGNUP,
       expiresAt: 0,
       error: "Failed to set cookie",
     };

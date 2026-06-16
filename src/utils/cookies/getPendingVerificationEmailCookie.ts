@@ -1,6 +1,7 @@
 import { isValidCookiePayload } from "@/utils/helpers/is-valid-cookie-payload";
 import { CookieStore } from "@/utils/types/cookies";
 import crypto from "crypto";
+import { COOKIES } from "@/utils/constants/cookies";
 
 /**
  * Derives the pending email address awaiting verification from a signed, expiring cookie,
@@ -43,7 +44,7 @@ export default function getPendingVerificationEmailCookie(
   fallback: string,
 ): string {
   let email = fallback;
-  const pendingVerification = cookieStore.get("pending_verification");
+  const pendingVerification = cookieStore.get(COOKIES.PENDING_EMAIL_VERIFICATION);
   if (pendingVerification) {
     try {
       const parts = pendingVerification.value.split(".");
@@ -83,7 +84,7 @@ export default function getPendingVerificationEmailCookie(
       email = payload.value;
     } catch (error) {
       console.error(
-        "Invalid cookie:",
+        `Invalid ${COOKIES.PENDING_EMAIL_VERIFICATION} cookie:`,
         error instanceof Error ? error.message : "Unknown error",
       );
     }

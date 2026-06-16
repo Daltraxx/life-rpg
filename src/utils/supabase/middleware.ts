@@ -4,6 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../generatedTypes/supabase";
 import isProfileComplete from "@/app/queries/server/isProfileComplete";
 import { ROUTES } from "@/utils/constants/routes";
+import { COOKIES } from "@/utils/constants/cookies";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -96,7 +97,7 @@ export async function updateSession(
     error,
   } = await supabase.auth.getUser();
 
-  const unverifiedSignupCookie = request.cookies.get("unverified_signup");
+  const unverifiedSignupCookie = request.cookies.get(COOKIES.UNVERIFIED_SIGNUP);
   const unauthenticatedPaths = [
     ROUTES.HOME,
     ROUTES.SIGNUP,
@@ -107,7 +108,7 @@ export async function updateSession(
 
   if (unverifiedSignupCookie && user?.email_confirmed_at) {
     // User has verified email - remove the cookie
-    supabaseResponse.cookies.delete("unverified_signup");
+    supabaseResponse.cookies.delete(COOKIES.UNVERIFIED_SIGNUP);
   }
 
   const pathname = request.nextUrl.pathname;

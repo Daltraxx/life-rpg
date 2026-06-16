@@ -3,6 +3,7 @@ import crypto from "crypto";
 import { SetCookieResponse } from "@/utils/types/cookies";
 import { SecureCookiePayload } from "@/utils/types/cookies";
 import { ROUTES } from "@/utils/constants/routes";
+import { COOKIES } from "@/utils/constants/cookies";
 
 const COOKIE_EXPIRATION_MS = 5 * 60 * 1000; // 5 minutes
 const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
@@ -54,7 +55,7 @@ export default function setPendingVerificationEmailCookie(
   if (!email.trim())
     return {
       ok: false,
-      cookieName: "pending_verification",
+      cookieName: COOKIES.PENDING_EMAIL_VERIFICATION,
       expiresAt: 0,
       error: "Email is empty",
     };
@@ -82,7 +83,7 @@ export default function setPendingVerificationEmailCookie(
 
     // HttpOnly, Secure, short-lived cookie
     try {
-      cookieStore.set("pending_verification", value, {
+      cookieStore.set(COOKIES.PENDING_EMAIL_VERIFICATION, value, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
@@ -91,25 +92,25 @@ export default function setPendingVerificationEmailCookie(
       });
       return {
         ok: true,
-        cookieName: "pending_verification",
+        cookieName: COOKIES.PENDING_EMAIL_VERIFICATION,
         expiresAt: payload.exp,
       };
     } catch (error) {
-      console.error("Failed to set pending verification cookie:", error);
+      console.error(`Failed to set ${COOKIES.PENDING_EMAIL_VERIFICATION} cookie:`, error);
       return {
         ok: false,
-        cookieName: "pending_verification",
+        cookieName: COOKIES.PENDING_EMAIL_VERIFICATION,
         expiresAt: 0,
         error: "Failed to set cookie",
       };
     }
   } else {
     console.warn(
-      "COOKIE_SIGNING_SECRET is not set. Pending verification cookie not created.",
+      `COOKIE_SIGNING_SECRET is not set. ${COOKIES.PENDING_EMAIL_VERIFICATION} cookie not created.`,
     );
     return {
       ok: false,
-      cookieName: "pending_verification",
+      cookieName: COOKIES.PENDING_EMAIL_VERIFICATION,
       expiresAt: 0,
       error: "Cookie signing secret not configured",
     };
