@@ -5,6 +5,7 @@ import { DropdownMenu } from "radix-ui";
 import styles from "./styles.module.css";
 import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/constants/routes";
 
 /**
  * OptionsMenu component that provides a dropdown menu for user options.
@@ -33,23 +34,23 @@ export default function OptionsMenu({
   const router = useRouter();
   const handleSignOut = useCallback(async () => {
     try {
-      const response = await fetch("/auth/signout", {
+      const response = await fetch(ROUTES.AUTH_SIGNOUT, {
         method: "POST",
       });
       if (!response.ok) {
         console.error("Failed to sign out:", response.statusText);
         try {
           const { redirectUrl } = await response.json();
-          router.push(redirectUrl || "/"); // Redirect to provided URL or fallback to home page
+          router.push(redirectUrl || ROUTES.HOME); // Redirect to provided URL or fallback to home page
         } catch {
-          router.push("/"); // Fallback redirect to home page if JSON parsing fails
+          router.push(ROUTES.HOME); // Fallback redirect to home page if JSON parsing fails
         }
       } else {
-        router.push("/"); // Redirect to home page on successful sign out
+        router.push(ROUTES.HOME); // Redirect to home page on successful sign out
       }
     } catch (error) {
       console.error("Error signing out:", error);
-      router.push("/error"); // Redirect to a generic error page on network or unexpected errors
+      router.push(ROUTES.ERROR); // Redirect to a generic error page on network or unexpected errors
     }
   }, [router]);
   return (

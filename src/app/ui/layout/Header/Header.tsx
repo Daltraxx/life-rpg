@@ -4,6 +4,7 @@ import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
 import styles from "./styles.module.css";
 import { JSX } from "react";
 import OptionsMenu from "./OptionsMenu/OptionsMenu";
+import { ROUTES } from "@/utils/constants/routes";
 
 export default function Header(): JSX.Element {
   return (
@@ -12,7 +13,7 @@ export default function Header(): JSX.Element {
       outerClassName={styles.boundedContainer}
       innerClassName={styles.contentContainer}
     >
-      <Link href="/" className={styles.brandingLink}>
+      <Link href={ROUTES.HOME} className={styles.brandingLink}>
         <Heading as="h2" size="72" className={styles.branding}>
           LifeRPG
         </Heading>

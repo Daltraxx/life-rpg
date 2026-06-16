@@ -7,6 +7,7 @@ import { redirect } from "next/navigation";
 import { LoginSchema, LoginState } from "@/utils/validations/login";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import resendVerificationEmail from "@/app/queries/server/resendVerificationEmail";
+import { ROUTES } from "@/utils/constants/routes";
 
 /**
  * Authenticates a user by processing login form data and establishing a session.
@@ -84,7 +85,7 @@ export async function login(
               "Email not confirmed and failed to resend verification email. Please try again later.",
           };
         }
-        redirect("/verify-email");
+        redirect(ROUTES.VERIFY_EMAIL);
       }
       return {
         message: "Invalid email or password. Please try again.", // Avoid exposing specific failure reasons for security
@@ -98,6 +99,6 @@ export async function login(
   }
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
-  revalidatePath("/");
-  redirect("/profile"); // Redirect to profile or desired page after login (need to create page)
+  revalidatePath("/"); // Revalidate home page or relevant pages to reflect authenticated state
+  redirect(ROUTES.PROFILE); // Redirect to profile or desired page after login (need to create page)
 }

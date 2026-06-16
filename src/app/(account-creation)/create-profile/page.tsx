@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import SetupUI from "@/app/ui/account-creation/account-setup/SetupUI/SetupUI";
+import { ROUTES } from "@/utils/constants/routes";
 
 export const metadata: Metadata = {
   title: "Account Setup",
@@ -19,11 +20,11 @@ export default async function AccountSetupPage() {
 
   if (error) {
     console.error("Error fetching authenticated user:", error.message);
-    redirect("/error?reason=auth_error");
+    redirect(`${ROUTES.ERROR}?reason=auth_error`);
   }
   if (!user) {
     console.warn("No authenticated user found.");
-    redirect("/error?reason=no_authenticated_user");
+    redirect(`${ROUTES.ERROR}?reason=no_authenticated_user`);
   }
 
   return (

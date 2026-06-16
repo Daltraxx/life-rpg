@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
+import { ROUTES } from "@/utils/constants/routes";
 
 export async function middleware(request: NextRequest): Promise<NextResponse> {
   try {
@@ -9,7 +10,7 @@ export async function middleware(request: NextRequest): Promise<NextResponse> {
     console.error("Unexpected middleware error:", error);
     const url = request.nextUrl.clone();
     url.searchParams.set("message", "An unexpected error occurred");
-    url.pathname = "/error"; // TODO: create error page
+    url.pathname = ROUTES.ERROR; // TODO: create error page
     return NextResponse.redirect(url);
   }
 }

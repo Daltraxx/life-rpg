@@ -1,6 +1,7 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { type NextRequest, NextResponse } from "next/server";
+import { ROUTES } from "@/utils/constants/routes";
 
 /**
  * Handles POST requests to sign out the current user.
@@ -25,7 +26,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           error: error.message,
-          redirectUrl: `/error?message=${encodeURIComponent(error.message)}&status=500`,
+          redirectUrl: `${ROUTES.ERROR}?message=${encodeURIComponent(error.message)}&status=500`,
         },
         { status: 500 },
       );
@@ -37,7 +38,7 @@ export async function POST(req: NextRequest) {
   // (this is handled in the client-side code),
   // but ensures that if the user tries to navigate anywhere after signing out, 
   // they will be treated as signed out and not get any cached content meant for authenticated users
-  return NextResponse.redirect(new URL("/", req.url), {
+  return NextResponse.redirect(new URL(ROUTES.HOME, req.url), {
     status: 302,
   });
 }

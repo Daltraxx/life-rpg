@@ -3,6 +3,7 @@ import { AuthError, AuthSessionMissingError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../generatedTypes/supabase";
 import isProfileComplete from "@/app/queries/server/isProfileComplete";
+import { ROUTES } from "@/utils/constants/routes";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -32,9 +33,10 @@ const getUserErrorLog = (error: AuthError, request: NextRequest) => {
  * @throws {Error} Throws an error in development mode if Supabase environment variables are missing
  *
  * @remarks
- * - In production, missing environment variables redirect to `/error` instead of throwing
- * - The function checks authentication and redirects unauthenticated users from protected routes to `/`
- * - Public paths that don't require authentication: `/`, `/create-account`, `/auth`, `/error`
+ * - In production, missing environment variables redirect to error page instead of throwing
+ * - The function checks authentication and redirects unauthenticated users from protected routes to the login page
+ * - Public paths that don't require authentication: home (login) page, signup page, authentication page, error page, 
+ *   and optionally the email verification page if the unverified signup cookie is present
  * - The returned `supabaseResponse` object must be returned as-is to prevent session termination
  * - Cookie synchronization between browser and server is critical for maintaining user sessions
  *
@@ -59,7 +61,7 @@ export async function updateSession(
     } else {
       console.error("Missing Supabase environment variables");
       const url = request.nextUrl.clone();
-      url.pathname = "/error"; // TODO: create error page
+      url.pathname = ROUTES.ERROR; // TODO: create error page
       return NextResponse.redirect(url);
     }
   }
@@ -96,11 +98,11 @@ export async function updateSession(
 
   const unverifiedSignupCookie = request.cookies.get("unverified_signup");
   const unauthenticatedPaths = [
-    "/",
-    "/create-account",
-    "/auth",
-    "/error",
-    ...(unverifiedSignupCookie ? ["/verify-email"] : []),
+    ROUTES.HOME,
+    ROUTES.SIGNUP,
+    ROUTES.AUTH,
+    ROUTES.ERROR,
+    ...(unverifiedSignupCookie ? [ROUTES.VERIFY_EMAIL] : []),
   ];
 
   if (unverifiedSignupCookie && user?.email_confirmed_at) {
@@ -135,11 +137,11 @@ export async function updateSession(
 
   // Paths accessible to authenticated (email-verified) users
   const authenticatedUserPaths = [
-    "/create-profile",
-    "/edit-profile",
-    "/profile",
-    "/error",
-    "/auth",
+    ROUTES.CREATE_PROFILE,
+    ROUTES.EDIT_PROFILE,
+    ROUTES.PROFILE,
+    ROUTES.ERROR,
+    ROUTES.AUTH,
   ];
   const isAuthenticatedUserPath = authenticatedUserPaths.some(
     (path) => pathname === path || pathname.startsWith(`${path}/`),
@@ -168,21 +170,21 @@ export async function updateSession(
       console.warn("Unknown profile completion status, redirecting to profile page");
       profileComplete = true; // Temporarily treat as complete to redirect to profile page, middleware will update metadata on next request
     }
-    url.pathname = profileComplete ? "/profile" : "/create-profile";
+    url.pathname = profileComplete ? ROUTES.PROFILE : ROUTES.CREATE_PROFILE;
     return NextResponse.redirect(url);
   }
 
-  if (pathname === "/create-profile" && user?.user_metadata?.profile_complete) {
+  if (pathname === ROUTES.CREATE_PROFILE && user?.user_metadata?.profile_complete) {
     // If user tries to access create-profile but they already have a complete profile, redirect to edit-profile
     const url = request.nextUrl.clone();
-    url.pathname = "/edit-profile";
+    url.pathname = ROUTES.EDIT_PROFILE;
     return NextResponse.redirect(url);
   }
 
-  if (pathname === "/edit-profile" && !user?.user_metadata?.profile_complete) {
+  if (pathname === ROUTES.EDIT_PROFILE && !user?.user_metadata?.profile_complete) {
     // If user tries to access edit-profile but they don't have a complete profile, redirect to create-profile
     const url = request.nextUrl.clone();
-    url.pathname = "/create-profile";
+    url.pathname = ROUTES.CREATE_PROFILE;
     return NextResponse.redirect(url);
   }
 

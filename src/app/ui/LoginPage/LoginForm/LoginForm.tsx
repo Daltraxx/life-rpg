@@ -15,6 +15,7 @@ import { login } from "@/utils/actions/login";
 import { useActionState } from "react";
 import { LoginState } from "@/utils/validations/login";
 import FieldErrorsDisplay from "@/app/ui/FieldErrorsDisplay";
+import { ROUTES } from "@/utils/constants/routes";
 
 const INITIAL_LOGIN_STATE: LoginState = {
   message: "",
@@ -93,7 +94,7 @@ export default function LoginForm() {
 
         {/* FORGOT PASSWORD */}
         <BasicLinkWrapper
-          href="/forgot-password"
+          href={ROUTES.FORGOT_PASSWORD}
           className={styles.forgotPasswordLink}
           fontSize="20"
         >
@@ -103,7 +104,7 @@ export default function LoginForm() {
       <div className={styles.divider}></div>
 
       {/* CREATE ACCOUNT */}
-      <LinkWrapper href="/create-account" className={styles.createAccountLink}>
+      <LinkWrapper href={ROUTES.SIGNUP} className={styles.createAccountLink}>
         Create an account
       </LinkWrapper>
     </Bounded>

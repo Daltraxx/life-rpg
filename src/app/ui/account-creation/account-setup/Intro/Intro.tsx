@@ -10,6 +10,7 @@ import type { User } from "@supabase/supabase-js";
 import { useEffect, useMemo, useState } from "react";
 import getUsername from "@/app/queries/client/getUsername";
 import { useRouter } from "next/navigation";
+import { ROUTES } from "@/utils/constants/routes";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index} className={styles.explainerSection}>
@@ -65,13 +66,13 @@ export default function Intro({ authUser }: { authUser: User }) {
           setLoading(false);
         } else {
           console.warn("Username not found for user");
-          router.push("/error?message=user%20not%20found");
+          router.push(`${ROUTES.ERROR}?message=user%20not%20found`);
           return;
         }
       } catch (error) {
         if (!isMounted) return;
         console.error("Error fetching user data:", error);
-        router.push("/error?message=database%20error");
+        router.push(`${ROUTES.ERROR}?message=database%20error`);
         return;
       }
     };

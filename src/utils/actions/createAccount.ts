@@ -10,6 +10,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 import checkIfUsertagExists from "@/app/queries/server/checkIfUsertagExists";
 import setUnverifiedSignupCookie from "@/utils/cookies/setUnverifiedSignupCookie";
 import setPendingVerificationEmailCookie from "@/utils/cookies/setPendingVerificationEmailCookie";
+import { ROUTES } from "@/utils/constants/routes";
 
 /**
  * Server action to create a new user account.
@@ -173,5 +174,5 @@ export async function createAccount(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
-  redirect("/verify-email"); // Redirect to verify email page (need to create page)
+  redirect(ROUTES.VERIFY_EMAIL); // Redirect to verify email page
 }

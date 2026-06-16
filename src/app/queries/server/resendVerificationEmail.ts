@@ -3,6 +3,7 @@ import { SupabaseClient } from "@supabase/supabase-js";
 import setPendingVerificationEmailCookie from "@/utils/cookies/setPendingVerificationEmailCookie";
 import { cookies } from "next/headers";
 import setUnverifiedSignupCookie from "@/utils/cookies/setUnverifiedSignupCookie";
+import { ROUTES } from "@/utils/constants/routes";
 
 /**
  * Resends a verification email to the specified email address.
@@ -28,7 +29,7 @@ export default async function resendVerificationEmail(email: string, supabaseCli
     type: "signup",
     email,
     options: {
-      emailRedirectTo: `${baseUrl}/create-profile`,
+      emailRedirectTo: `${baseUrl}${ROUTES.CREATE_PROFILE}`,
     }
   });
 

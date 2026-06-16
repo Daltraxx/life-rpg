@@ -4,6 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import deleteUnverifiedSignupCookie from "@/utils/cookies/deleteUnverifiedSignupCookie";
 import { cookies } from "next/headers";
+import { ROUTES } from "@/utils/constants/routes";
 
 /**
  * Handles confirmation links for Supabase Auth by verifying a one-time password (OTP)
@@ -24,8 +25,8 @@ import { cookies } from "next/headers";
  * - Strips `token_hash` from the redirect URL to prevent leaking secrets via browser history, logs, or referrers.
  *
  * Redirects:
- * - Success: `/create-profile`
- * - Failure: `/error?message=...`
+ * - Success: `/create-profile` (account setup page)
+ * - Failure: `/error?message=...` (generic error page with user-friendly message)
  *
  * Logging:
  * - Logs verification errors to the server console for observability without exposing details to the client.
@@ -58,7 +59,7 @@ export async function GET(request: NextRequest) {
   redirectTo.searchParams.delete("type");
 
   if (!token_hash || !type) {
-    redirectTo.pathname = "/error";
+    redirectTo.pathname = ROUTES.ERROR;
     redirectTo.searchParams.set(
       "message",
       "Invalid confirmation link. Please check your email for the correct link."
@@ -71,7 +72,7 @@ export async function GET(request: NextRequest) {
     supabase = await createSupabaseServerClient();
   } catch (error) {
     console.error("Error creating Supabase client:", error);
-    redirectTo.pathname = "/error";
+    redirectTo.pathname = ROUTES.ERROR;
     redirectTo.searchParams.set(
       "message",
       "An unexpected error occurred. Please try again."
@@ -87,7 +88,7 @@ export async function GET(request: NextRequest) {
     }));
   } catch (err) {
     console.error("Exception during OTP verification:", err);
-    redirectTo.pathname = "/error";
+    redirectTo.pathname = ROUTES.ERROR;
     redirectTo.searchParams.set(
       "message",
       "An unexpected error occurred during verification. Please try again."
@@ -100,7 +101,7 @@ export async function GET(request: NextRequest) {
     const cookieStore = await cookies();
     deleteUnverifiedSignupCookie(cookieStore);
     redirectTo.searchParams.delete("next"); // Clean up redirect URL per Supabase Auth best practices    
-    redirectTo.pathname = "/create-profile";
+    redirectTo.pathname = ROUTES.CREATE_PROFILE;
     return NextResponse.redirect(redirectTo);
   }
 
@@ -155,7 +156,7 @@ export async function GET(request: NextRequest) {
   }
 
   // On failure, redirect to error page with some instructions
-  redirectTo.pathname = "/error"; // TODO: create error page
+  redirectTo.pathname = ROUTES.ERROR; // TODO: create error page
   redirectTo.searchParams.set("message", errorMessage);
   return NextResponse.redirect(redirectTo);
 }
