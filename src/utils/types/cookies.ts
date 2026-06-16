@@ -65,6 +65,7 @@ export interface CookieStore {
  * @property {string} [path] - The URL path that must exist in the requested URL for the browser to send the cookie header.
  * @property {string} [domain] - The domain that must be present in the requested URL for the browser to send the cookie header.
  * @property {boolean} [secure] - If true, the cookie will only be sent over secure (HTTPS) connections.
+ * @property {boolean} [httpOnly] - If true, the cookie cannot be accessed via client-side JavaScript (e.g., document.cookie) and is only sent in HTTP requests.
  * @property {"strict" | "lax" | "none"} [sameSite] - Controls whether the cookie is sent with cross-site requests. 
  * "strict" means the cookie is not sent with any cross-site requests, 
  * "lax" allows the cookie to be sent with top-level navigations and GET requests initiated by third-party websites, 
