@@ -44,10 +44,10 @@ export default function getPendingVerificationEmailCookie(
   fallback: string,
 ): string {
   let email = fallback;
-  const pendingVerification = cookieStore.get(COOKIES.PENDING_EMAIL_VERIFICATION);
-  if (pendingVerification) {
+  const pendingVerificationCookie = cookieStore.get(COOKIES.PENDING_EMAIL_VERIFICATION);
+  if (pendingVerificationCookie) {
     try {
-      const parts = pendingVerification.value.split(".");
+      const parts = pendingVerificationCookie.value.split(".");
       if (parts.length !== 2) {
         throw new Error("Invalid cookie format");
       }
@@ -79,6 +79,7 @@ export default function getPendingVerificationEmailCookie(
 
       // Check expiration
       if (Date.now() >= payload.exp) {
+        cookieStore.delete(COOKIES.PENDING_EMAIL_VERIFICATION); // Clean up expired cookie
         return email; // Expired cookie, return fallback
       }
       email = payload.value;
