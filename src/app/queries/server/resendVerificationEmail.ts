@@ -4,6 +4,7 @@ import setPendingVerificationEmailCookie from "@/utils/cookies/setPendingVerific
 import { cookies } from "next/headers";
 import setUnverifiedSignupCookie from "@/utils/cookies/setUnverifiedSignupCookie";
 import { ROUTES } from "@/utils/constants/routes";
+import { EmailSchema } from "@/utils/validations/email";
 
 /**
  * Resends a verification email to the specified email address.
@@ -19,6 +20,13 @@ import { ROUTES } from "@/utils/constants/routes";
  * @returns {Promise<void>}
  */
 export default async function resendVerificationEmail(email: string, supabaseClient?: SupabaseClient) {
+  // Validate the email address before attempting to resend the verification email
+  const validatedEmail = EmailSchema.safeParse(email);
+  if (!validatedEmail.success) {
+    console.error("Invalid email address provided for resending verification email:", { email, error: validatedEmail.error });
+    throw new Error("Invalid email address. Please provide a valid email.", { cause: validatedEmail.error });
+  }
+  
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   if (!baseUrl) {
     console.error("Missing NEXT_PUBLIC_BASE_URL environment variable");
@@ -35,7 +43,7 @@ export default async function resendVerificationEmail(email: string, supabaseCli
 
   if (error) {
     console.error("Error resending verification email:", { cause: error });
-    throw new Error("Failed to resend verification email. Please try again later.");
+    throw new Error("Failed to resend verification email. Please try again later.", { cause: error });
   }
 
   const cookieStore = await cookies();
