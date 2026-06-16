@@ -6,6 +6,7 @@ import styles from "./styles.module.css";
 import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/constants/routes";
+import { isRelativePath } from "@/utils/helpers/is-relative-path";
 
 /**
  * OptionsMenu component that provides a dropdown menu for user options.
@@ -41,7 +42,9 @@ export default function OptionsMenu({
         console.error("Failed to sign out:", response.statusText);
         try {
           const { redirectUrl } = await response.json();
-          router.push(redirectUrl || ROUTES.HOME); // Redirect to provided URL or fallback to home page
+          // Only allow relative paths for redirection to prevent open redirect vulnerabilities
+          const redirectPath = isRelativePath(redirectUrl) ? redirectUrl : ROUTES.HOME;
+          router.push(redirectPath); // Redirect to provided URL or fallback to home page
         } catch {
           router.push(ROUTES.HOME); // Fallback redirect to home page if JSON parsing fails
         }
