@@ -1,5 +1,5 @@
 import { CookiePayload } from "./setPendingVerificationEmailCookie";
-import { CookieStore } from "../types/Cookies";
+import { CookieStore } from "../types/cookies";
 import crypto from "crypto";
 
 const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {

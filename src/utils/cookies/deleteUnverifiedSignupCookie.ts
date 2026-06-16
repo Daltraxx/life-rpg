@@ -1,4 +1,4 @@
-import { CookieResponse, CookieStore } from "@/utils/types/Cookies";
+import { CookieResponse, CookieStore } from "@/utils/types/cookies";
 
 /**
  * Deletes the unverified signup cookie from the cookie store.

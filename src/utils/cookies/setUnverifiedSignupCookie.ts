@@ -1,4 +1,4 @@
-import { CookieStore, SetCookieResponse } from "@/utils/types/Cookies";
+import { CookieStore, SetCookieResponse } from "@/utils/types/cookies";
 
 /**
  * Sets an "unverified_signup" HTTP-only cookie to flag that a user has begun (but not yet completed)

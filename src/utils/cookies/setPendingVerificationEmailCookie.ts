@@ -1,6 +1,6 @@
-import { CookieStore } from "@/utils/types/Cookies";
+import { CookieStore } from "@/utils/types/cookies";
 import crypto from "crypto";
-import { SetCookieResponse } from "@/utils/types/Cookies";
+import { SetCookieResponse } from "@/utils/types/cookies";
 
 export type CookiePayload = {
   email: string;
