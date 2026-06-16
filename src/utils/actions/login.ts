@@ -82,7 +82,9 @@ export async function login(
           });
           return {
             message:
-              "Email not confirmed and failed to resend verification email. Please try again later.",
+              resendError instanceof Error
+                ? resendError.message
+                : "Failed to resend verification email. Please try again later.",
           };
         }
         redirect(ROUTES.VERIFY_EMAIL);
