@@ -155,7 +155,7 @@ export async function createAccount(
     console.error("Failed to set unverified signup cookie");
     return {
       message:
-        "Account created successfully, but redirect failed. Please check your email for the verification link, or try logging in.",
+        "Account created successfully, but redirect failed. Please check your email for the confirmation link, or try logging in.",
     };
   }
   // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
