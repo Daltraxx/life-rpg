@@ -175,14 +175,14 @@ export async function updateSession(
     return NextResponse.redirect(url);
   }
 
-  if (pathname === ROUTES.CREATE_PROFILE && user?.user_metadata?.profile_complete) {
+  if (pathname === ROUTES.CREATE_PROFILE && profileComplete) {
     // If user tries to access create-profile but they already have a complete profile, redirect to edit-profile
     const url = request.nextUrl.clone();
     url.pathname = ROUTES.EDIT_PROFILE;
     return NextResponse.redirect(url);
   }
 
-  if (pathname === ROUTES.EDIT_PROFILE && !user?.user_metadata?.profile_complete) {
+  if (pathname === ROUTES.EDIT_PROFILE && !profileComplete) {
     // If user tries to access edit-profile but they don't have a complete profile, redirect to create-profile
     const url = request.nextUrl.clone();
     url.pathname = ROUTES.CREATE_PROFILE;
