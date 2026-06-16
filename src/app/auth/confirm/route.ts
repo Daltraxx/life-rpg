@@ -24,7 +24,7 @@ import { cookies } from "next/headers";
  * - Strips `token_hash` from the redirect URL to prevent leaking secrets via browser history, logs, or referrers.
  *
  * Redirects:
- * - Success: `/account-setup`
+ * - Success: `/create-profile`
  * - Failure: `/error?message=...`
  *
  * Logging:
