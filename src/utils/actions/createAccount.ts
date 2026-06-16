@@ -150,17 +150,16 @@ export async function createAccount(
 
   // Set cookies for unverified signup and pending verification email
   const cookieStore = await cookies();
-  try {
-    setUnverifiedSignupCookie(cookieStore);
-    // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
-    setPendingVerificationEmailCookie(data.user.email, cookieStore);
-  } catch (error) {
-    console.error("Error setting verification cookies:", { cause: error });
+  const unverifiedCookieResult = setUnverifiedSignupCookie(cookieStore);
+  if (!unverifiedCookieResult.ok) {
+    console.error("Failed to set unverified signup cookie");
     return {
       message:
-        "Account created successfully, but verification setup failed. Please try logging in.",
+        "Account created successfully, but redirect failed. Please check your email for the verification link, or try logging in.",
     };
   }
+  // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
+  setPendingVerificationEmailCookie(data.user.email, cookieStore);
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
   // revalidatePath("/"); // Confirm if this is necessary since user needs to verify email before logging in.
