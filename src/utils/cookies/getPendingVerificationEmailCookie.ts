@@ -9,7 +9,9 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
     "email" in payload &&
     typeof payload.email === "string" &&
     "exp" in payload &&
-    typeof payload.exp === "number"
+    typeof payload.exp === "number" && 
+    "nonce" in payload &&
+    typeof payload.nonce === "string"
   );
 };
 
@@ -18,7 +20,7 @@ const isValidCookiePayload = (payload: unknown): payload is CookiePayload => {
  * falling back to the provided value if the cookie is absent, invalid, expired, or unverifiable.
  *
  * The cookie (named "pending_verification") is expected to contain two dot-delimited parts:
- *   1. A Base64URL-encoded JSON payload: { email: string; exp: number }
+ *   1. A Base64URL-encoded JSON payload: { email: string; exp: number; nonce: string }
  *   2. An HMAC-SHA256 signature (Base64URL) over the UTF-8 JSON payload string.
  *
  * Validation steps:
