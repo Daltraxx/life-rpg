@@ -148,16 +148,6 @@ export async function createAccount(
     };
   }
 
-  // Update user metadata with profile completion status for routing and to avoid db queries in middleware and client components
-  const { error: metadataError } = await supabase.auth.updateUser({
-    data: { profile_complete: false },
-  });
-  if (metadataError) {
-    console.error("Error updating user metadata:", { cause: metadataError });
-    // Not critical enough to fail the signup, so we continue without returning an error state
-    // Middleware will check profile completion status on next request and update metadata accordingly
-  }
-
   // Set cookies for unverified signup and pending verification email
   const cookieStore = await cookies();
   try {
