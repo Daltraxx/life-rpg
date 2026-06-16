@@ -33,12 +33,12 @@ export default async function resendVerificationEmail(email: string, supabaseCli
     }
   });
 
-  const cookieStore = await cookies();
-  setUnverifiedSignupCookie(cookieStore);
-  setPendingVerificationEmailCookie(email, cookieStore);
-
   if (error) {
     console.error("Error resending verification email:", { cause: error });
     throw new Error("Failed to resend verification email. Please try again later.");
   }
+
+  const cookieStore = await cookies();
+  setUnverifiedSignupCookie(cookieStore);
+  setPendingVerificationEmailCookie(email, cookieStore);
 }
