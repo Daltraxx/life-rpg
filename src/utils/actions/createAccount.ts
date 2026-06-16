@@ -159,6 +159,7 @@ export async function createAccount(
     };
   }
   // Set a short-lived, HttpOnly, Secure signed cookie for server-side email lookup for display on verify-email page
+  // as well as retry functionality
   setPendingVerificationEmailCookie(data.user.email, cookieStore);
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance.
