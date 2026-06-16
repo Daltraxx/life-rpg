@@ -111,8 +111,11 @@ export default function setPendingVerificationEmailCookie(
     console.warn(
       "COOKIE_SIGNING_SECRET is not set. Pending verification cookie not created.",
     );
-    throw new Error(
-      "Server configuration error: Missing cookie signing secret.",
-    );
+    return {
+      ok: false,
+      cookieName: "pending_verification",
+      expiresAt: 0,
+      error: "Cookie signing secret not configured",
+    };
   }
 }
