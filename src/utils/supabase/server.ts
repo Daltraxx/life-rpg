@@ -7,6 +7,16 @@ export type ClientOptions = {
   admin?: boolean;
 };
 
+const isCookieWriteNotAllowedError = (error: unknown): boolean => {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  return error.message.includes(
+    "Cookies can only be modified in a Server Action or Route Handler",
+  );
+};
+
 /**
  * Creates and configures a Supabase client for server-side operations in Next.js.
  *
@@ -55,6 +65,15 @@ export async function createSupabaseServerClient(): Promise<
             cookieStore.set(name, value, options),
           );
         } catch (error) {
+          if (isCookieWriteNotAllowedError(error)) {
+            if (process.env.NODE_ENV === "development") {
+              console.debug(
+                "Skipping Supabase cookie write outside Server Action/Route Handler.",
+              );
+            }
+            return;
+          }
+
           console.error("Failed to set cookies:", error);
           throw error;
         }

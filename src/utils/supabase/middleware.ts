@@ -118,9 +118,16 @@ export async function updateSession(
   );
 
   if (error) {
-    if (error instanceof AuthSessionMissingError && isUnauthenticatedPath) {
+    if (error instanceof AuthSessionMissingError) {
+      // Treat as expected behavior, as this can occur when a user is not logged in or the session has expired. No action needed.
+      // Silenced in production to avoid noise in logs, 
+      // but (TODO) consider adding monitoring for unexpected spikes in these errors 
+      // which could indicate issues with cookie handling or session management.
       if (process.env.NODE_ENV === "development") {
-        console.debug("No session on public path:", pathname);
+        console.debug(
+          `No session on ${isUnauthenticatedPath ? "public" : "protected"} path:`,
+          pathname,
+        );
       }
     } else {
       const errorDetails = getUserErrorLog(error, request);
@@ -164,7 +171,7 @@ export async function updateSession(
       }
     } catch (error) {
       console.error("Error checking profile completion status:", error);
-      // Set profieComplete temporarily to true, safer than false which could redirect users to onboarding flow if there's an issue with the check. 
+      // Set profieComplete temporarily to true, safer than false which could redirect users to onboarding flow if there's an issue with the check.
       // Middleware will check profile completion status on next request and update metadata accordingly
       profileComplete = true;
     }
