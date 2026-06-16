@@ -1,12 +1,7 @@
 import { CookieStore } from "@/utils/types/cookies";
 import crypto from "crypto";
 import { SetCookieResponse } from "@/utils/types/cookies";
-
-export type CookiePayload = {
-  email: string;
-  exp: number;
-  nonce: string;
-};
+import { SecureCookiePayload } from "@/utils/types/cookies";
 
 const COOKIE_EXPIRATION_MS = 5 * 60 * 1000; // 5 minutes
 const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
@@ -20,7 +15,7 @@ const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
  *
  *
  * The payload includes:
- * - `email`: The email address being verified.
+ * - `value`: The email address being verified.
  * - `exp`: The expiration time of the cookie, set to 5 minutes from the current time.
  * - `nonce`: A unique identifier for the request, generated using `crypto.randomUUID()`, to prevent replay attacks.
  *
@@ -64,8 +59,8 @@ export default function setPendingVerificationEmailCookie(
     };
 
   // Create the payload
-  const payload: CookiePayload = {
-    email,
+  const payload: SecureCookiePayload = {
+    value: email,
     exp: Date.now() + COOKIE_EXPIRATION_MS, // 5 minutes
     nonce: crypto.randomUUID(),
   };

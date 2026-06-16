@@ -105,3 +105,18 @@ export interface CookieResponse {
 export type SetCookieResponse = CookieResponse & {
   expiresAt: number;
 }
+
+/**
+ * Defines the structure of the payload stored in an encoded, signed cookie.
+ * This payload is used for securely storing information such as pending verification email addresses.
+ *
+ * @interface SecureCookiePayload
+ * @property {string} value - The value associated with the cookie.
+ * @property {number} exp - The expiration time of the cookie in Unix milliseconds.
+ * @property {string} nonce - A unique identifier to prevent replay attacks.
+ */
+export interface SecureCookiePayload {
+  value: string;
+  exp: number;
+  nonce: string;
+}
