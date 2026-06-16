@@ -36,7 +36,7 @@ const getUserErrorLog = (error: AuthError, request: NextRequest) => {
  * @remarks
  * - In production, missing environment variables redirect to error page instead of throwing
  * - The function checks authentication and redirects unauthenticated users from protected routes to the login page
- * - Public paths that don't require authentication: home (login) page, signup page, authentication page, error page, 
+ * - Public paths that don't require authentication: home (login) page, signup page, authentication page, error page,
  *   and optionally the email verification page if the unverified signup cookie is present
  * - The returned `supabaseResponse` object must be returned as-is to prevent session termination
  * - Cookie synchronization between browser and server is critical for maintaining user sessions
@@ -151,26 +151,28 @@ export async function updateSession(
   // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
   let profileComplete = user?.user_metadata?.profile_complete; // Initialize here to track value since current request will not immediately reflect metadata updates
   if (user && profileComplete === undefined) {
-    profileComplete = await isProfileComplete(user, supabase);
-    // Update user metadata with profile completion status to avoid db queries in middleware and client components
-    const { error: updateError } = await supabase.auth.updateUser({
-      data: { profile_complete: profileComplete },
-    });
-    if (updateError) {
-      console.warn("Error updating user metadata:", { cause: updateError });
-      // Not critical enough to fail the whole operation, so we proceed without returning an error state
+    try {
+      profileComplete = await isProfileComplete(user, supabase);
+      // Update user metadata with profile completion status to avoid db queries in middleware and client components
+      const { error: updateError } = await supabase.auth.updateUser({
+        data: { profile_complete: profileComplete },
+      });
+      if (updateError) {
+        console.warn("Error updating user metadata:", { cause: updateError });
+        // Not critical enough to fail the whole operation, so we proceed without returning an error state
+        // Middleware will check profile completion status on next request and update metadata accordingly
+      }
+    } catch (error) {
+      console.error("Error checking profile completion status:", error);
+      // Set profieComplete temporarily to true, safer than false which could redirect users to onboarding flow if there's an issue with the check. 
       // Middleware will check profile completion status on next request and update metadata accordingly
+      profileComplete = true;
     }
   }
 
   if (user && !isAuthenticatedUserPath) {
     // Redirect authenticated users to complete profile or profile page based on profile completion status in metadata
     const url = request.nextUrl.clone();
-    if (profileComplete === undefined) {
-      // If unknown profile completion status due to missing metadata and failed query (edge case), default to redirecting to profile page
-      console.warn("Unknown profile completion status, redirecting to profile page");
-      profileComplete = true; // Temporarily treat as complete to redirect to profile page, middleware will update metadata on next request
-    }
     url.pathname = profileComplete ? ROUTES.PROFILE : ROUTES.CREATE_PROFILE;
     return NextResponse.redirect(url);
   }
