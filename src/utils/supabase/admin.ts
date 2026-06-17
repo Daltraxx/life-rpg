@@ -1,5 +1,6 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { createClient } from "@supabase/supabase-js";
+import type { Database } from "@/utils/generatedTypes/supabase";
 
 /**
  * Creates and returns a Supabase admin client using service role credentials.
@@ -30,7 +31,7 @@ import { createClient } from "@supabase/supabase-js";
  * await adminClient.from("users").select("*"); // RLS bypassed if using service role
  * ```
  */
-export function createSupabaseAdminClient(): SupabaseClient { 
+export function createSupabaseAdminClient(): SupabaseClient<Database> { 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
   if (!supabaseUrl || !supabaseKey) {
