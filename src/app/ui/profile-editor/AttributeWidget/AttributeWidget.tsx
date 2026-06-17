@@ -74,14 +74,15 @@ export default function AttributeWidget({
   const handleChangeAttributeName = (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    setNewAttributeName(e.target.value);
+    const value = e.target.value;
+    setNewAttributeName(value);
     if (addAttributeError.length > 0) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
       timeoutRef.current = setTimeout(() => {
         const schema = createAttributeNameSchema(attributes);
-        const parseResult = schema.safeParse(e.target.value);
+        const parseResult = schema.safeParse(value);
         if (!parseResult.success) {
           setAddAttributeError(
             parseResult.error.issues.map((err) => err.message),
