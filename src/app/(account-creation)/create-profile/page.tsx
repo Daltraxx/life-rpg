@@ -1,8 +1,8 @@
-import Intro from "@/app/ui/account-creation/account-setup/Intro/Intro";
+import Intro from "@/app/ui/rules-intro/Intro";
 import type { Metadata } from "next";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
-import SetupUI from "@/app/ui/account-creation/account-setup/SetupUI/SetupUI";
+import SetupUI from "@/app/ui/profile-editor/SetupUI";
 import { ROUTES } from "@/utils/constants/routes";
 
 export const metadata: Metadata = {
