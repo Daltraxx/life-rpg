@@ -22,7 +22,7 @@ export default function AttributeSummary({
       </Heading>
       <ul className={styles.list}>
         {attributes.map((attr) => (
-          <li key={attr.attributeId} className={styles.listItem}>
+          <li key={attr.id} className={styles.listItem}>
             <Span color="blue-700" size="20">
               {attr.attributeName} - {attr.level}
             </Span>

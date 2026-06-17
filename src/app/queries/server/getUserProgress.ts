@@ -67,7 +67,7 @@ export default async function getUserProgress(
         "attribute",
       );
       return {
-        attributeId: attr.id,
+        id: attr.id,
         attributeName: attr.name,
         experience: attr.experience,
         level: attributeLevelProgress.level,
