@@ -11,6 +11,7 @@ export const ROUTES = {
   PROFILE: "/profile",
   CREATE_PROFILE: "/create-profile",
   EDIT_PROFILE: "/edit-profile",
+  MANUAL: "/manual",
   ERROR: "/error",
   AUTH: "/auth",
   AUTH_CONFIRM_EMAIL: "/auth/confirm",
