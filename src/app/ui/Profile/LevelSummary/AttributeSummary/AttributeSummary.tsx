@@ -24,7 +24,7 @@ export default function AttributeSummary({
         {attributes.map((attr) => (
           <li key={attr.id} className={styles.listItem}>
             <Span color="blue-700" size="20">
-              {attr.attributeName} - {attr.level}
+              {attr.name} - {attr.level}
             </Span>
             <ProgressBar
               size="small"
