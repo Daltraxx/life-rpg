@@ -7,6 +7,7 @@ import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/constants/routes";
 import { isRelativePath } from "@/utils/helpers/is-relative-path";
+import Link from "next/link";
 
 /**
  * OptionsMenu component that provides a dropdown menu for user options.
@@ -29,9 +30,26 @@ import { isRelativePath } from "@/utils/helpers/is-relative-path";
  */
 export default function OptionsMenu({
   className,
+  profileComplete,
 }: {
   className: string;
-  }): JSX.Element {
+  profileComplete: boolean;
+}): JSX.Element {
+  const pages = [
+    {
+      name: "Manual",
+      href: ROUTES.MANUAL,
+    },
+    {
+      name: "Dashboard",
+      href: ROUTES.PROFILE,
+    },
+    {
+      name: profileComplete ? "Edit Profile" : "Create Profile",
+      href: profileComplete ? ROUTES.EDIT_PROFILE : ROUTES.CREATE_PROFILE,
+    },
+  ];
+
   const router = useRouter();
   const handleSignOut = useCallback(async () => {
     try {
@@ -43,7 +61,9 @@ export default function OptionsMenu({
         try {
           const { redirectUrl } = await response.json();
           // Only allow relative paths for redirection to prevent open redirect vulnerabilities
-          const redirectPath = isRelativePath(redirectUrl) ? redirectUrl : ROUTES.HOME;
+          const redirectPath = isRelativePath(redirectUrl)
+            ? redirectUrl
+            : ROUTES.HOME;
           router.push(redirectPath); // Redirect to provided URL or fallback to home page
         } catch {
           router.push(ROUTES.HOME); // Fallback redirect to home page if JSON parsing fails
@@ -56,6 +76,7 @@ export default function OptionsMenu({
       router.push(ROUTES.ERROR); // Redirect to a generic error page on network or unexpected errors
     }
   }, [router]);
+
   return (
     <section className={`${styles.optionsMenu} ${className}`}>
       <DropdownMenu.Root>
@@ -70,10 +91,16 @@ export default function OptionsMenu({
             className={styles.DropdownMenuContent}
             sideOffset={5}
           >
-            <DropdownMenu.Item className={styles.DropdownMenuItem}>
-              {/* TODO:  Build page(s)*/}
-              Rules
-            </DropdownMenu.Item>
+            {pages.map((page) => (
+              // TODO: Ensure accessibility and style current page differently in the dropdown menu
+              <DropdownMenu.Item
+                key={page.name}
+                className={styles.DropdownMenuItem}
+                asChild
+              >
+                <Link href={page.href}>{page.name}</Link>
+              </DropdownMenu.Item>
+            ))}
             <DropdownMenu.Item
               className={styles.DropdownMenuItem}
               onSelect={handleSignOut}
