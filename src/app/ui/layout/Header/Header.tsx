@@ -36,9 +36,11 @@ export default async function Header(): Promise<JSX.Element> {
         outerClassName={styles.boundedContainer}
         innerClassName={styles.contentContainer}
       >
-        <Heading as="h2" size="72" className={styles.branding}>
-          LifeRPG
-        </Heading>
+        <Link href={ROUTES.HOME} className={styles.brandingLink}>
+          <Heading as="h2" size="72" className={styles.branding}>
+            LifeRPG
+          </Heading>
+        </Link>
       </Bounded>
     );
   }
