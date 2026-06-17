@@ -16,6 +16,7 @@ import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
 import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
 import { ROUTES } from "@/utils/constants/routes";
+import { createSupabaseAdminClient } from "@/utils/supabase/admin";
 
 /**
  * Creates a user profile with associated quests and attributes.
@@ -153,10 +154,12 @@ export default async function createProfile(
         };
     }
   }
-  // Set profile_complete to true in user metadata (to avoid db queries in middleware and client components)
-  const { error: updateError } = await supabase.auth.updateUser({
-    data: { profile_complete: true },
+  // Set profile_complete to true in app metadata (to avoid db queries in middleware and client components)
+  const supabaseAdmin = createSupabaseAdminClient();
+  const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(user.id, {
+    app_metadata: { profile_complete: true },
   });
+
   if (updateError) {
     console.warn("Error updating user metadata:", { cause: updateError });
     // Not critical enough to fail the whole operation, so we proceed without returning an error state
