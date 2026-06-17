@@ -19,13 +19,13 @@ import {
 } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import { createQuestNameSchema } from "@/utils/validations/questName";
+import { QuestManager } from "@/utils/hooks/useQuestManager";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 
 interface QuestsWidgetProps {
   affectedAttributeManager: AffectedAttributeManager;
-  quests: SetupQuest[];
-  addQuest: (quest: SetupQuest) => void;
+  questManager: QuestManager;
   className?: string;
 }
 
@@ -39,8 +39,7 @@ interface QuestsWidgetProps {
  * @component
  * @param {QuestsWidgetProps} props - Component props
  * @param {AffectedAttributeManager} props.affectedAttributeManager - Manager for handling attribute selection and state
- * @param {SetupQuest[]} props.quests - Array of existing quests used for name validation
- * @param {(quest: SetupQuest) => void} props.addQuest - Callback function to add a new quest
+ * @param {QuestManager} props.questManager - Manager for handling quest state and actions
  * @param {string} [props.className] - Optional CSS class name for styling the container
  *
  * @returns {React.ReactElement} The rendered quests widget section
@@ -64,12 +63,13 @@ interface QuestsWidgetProps {
  */
 export default function QuestsWidget({
   affectedAttributeManager,
-  quests,
-  addQuest,
+  questManager,
   className,
 }: QuestsWidgetProps) {
   const [newQuestName, setNewQuestName] = useState<string>("");
   const [questErrors, setQuestErrors] = useState<string[]>([]);
+
+  const { quests, actions: { addQuest } } = questManager;
 
   const {
     selectedAttributes,
