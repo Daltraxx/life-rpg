@@ -148,7 +148,9 @@ export default function AttributeWidget({
                 handleAddAttribute(newAttributeName);
               }
             }}
-            aria-describedby={addAttributeError ? "attribute-error" : undefined}
+            aria-describedby={
+              addAttributeError.length > 0 ? "attribute-error" : undefined
+            }
           />
           <button
             type="button"
