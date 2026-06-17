@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     "Edit your LifeRPG profile, changing your quests and attributes.",
 };
 
-export default async function ProfilePage() {
+export default async function EditProfilePage() {
   const quests = await getQuests();
   const attributes = await getAttributes();
   return (
