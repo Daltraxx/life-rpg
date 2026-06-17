@@ -5,6 +5,7 @@ import type { Database } from "../generatedTypes/supabase";
 import isProfileComplete from "@/app/queries/server/isProfileComplete";
 import { ROUTES } from "@/utils/constants/routes";
 import { COOKIES } from "@/utils/constants/cookies";
+import { createSupabaseAdminClient } from "@/utils/supabase/admin";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -161,8 +162,9 @@ export async function updateSession(
     try {
       profileComplete = await isProfileComplete(user, supabase);
       // Update user metadata with profile completion status to avoid db queries in middleware and client components
-      const { error: updateError } = await supabase.auth.updateUser({
-        data: { profile_complete: profileComplete },
+      const supabaseAdmin = createSupabaseAdminClient();
+      const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(user.id, {
+        app_metadata: { profile_complete: profileComplete },
       });
       if (updateError) {
         console.warn("Error updating user metadata:", { cause: updateError });
