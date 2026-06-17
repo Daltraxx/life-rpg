@@ -206,7 +206,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
  * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.questOrderChange - Moves a quest up or down in the order
  * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.experienceShareChange - Adjusts the experience share of a quest
  */
-interface QuestManager {
+export interface QuestManager {
   quests: SetupQuest[];
   pointsRemaining: number;
   actions: {
