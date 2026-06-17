@@ -4,10 +4,11 @@ import { JSX, useCallback } from "react";
 import { DropdownMenu } from "radix-ui";
 import styles from "./styles.module.css";
 import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { ROUTES } from "@/utils/constants/routes";
 import { isRelativePath } from "@/utils/helpers/is-relative-path";
 import Link from "next/link";
+import clsx from "clsx";
 
 /**
  * OptionsMenu component that provides a dropdown menu for user options.
@@ -77,6 +78,7 @@ export default function OptionsMenu({
     }
   }, [router]);
 
+  const pathname = usePathname();
   return (
     <section className={`${styles.optionsMenu} ${className}`}>
       <DropdownMenu.Root>
@@ -91,16 +93,23 @@ export default function OptionsMenu({
             className={styles.DropdownMenuContent}
             sideOffset={5}
           >
-            {pages.map((page) => (
-              // TODO: Ensure accessibility and style current page differently in the dropdown menu
-              <DropdownMenu.Item
-                key={page.name}
-                className={styles.DropdownMenuItem}
-                asChild
-              >
-                <Link href={page.href}>{page.name}</Link>
-              </DropdownMenu.Item>
-            ))}
+            {pages.map((page) => {
+              const isCurrentPage = page.href === pathname;
+              return (
+                // TODO: Ensure accessibility and style current page differently in the dropdown menu
+                <DropdownMenu.Item
+                  key={page.name}
+                  className={clsx(
+                    styles.DropdownMenuItem,
+                    isCurrentPage && styles.currentItem,
+                  )}
+                  aria-current={isCurrentPage ? "page" : undefined}
+                  asChild
+                >
+                  <Link href={page.href}>{page.name}</Link>
+                </DropdownMenu.Item>
+              );
+            })}
             <DropdownMenu.Item
               className={styles.DropdownMenuItem}
               onSelect={handleSignOut}

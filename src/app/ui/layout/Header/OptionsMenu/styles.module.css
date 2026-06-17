@@ -77,6 +77,10 @@
   cursor: pointer;
 }
 
+.currentItem {
+  color: var(--orange-650);
+}
+
 @keyframes slideUpAndFade {
   from {
     opacity: 0;
