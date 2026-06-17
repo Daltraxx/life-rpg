@@ -10,8 +10,7 @@ import StrengthMenu from "./SelectMenus/StrengthMenu";
  * Props for the AddAffectedAttributeUI component.
  *
  * @interface AddAffectedAttributeUIProps
- * @property {UseQuestAttributeSelectionReturn} attributeSelection - The attribute selection hook return object containing methods and state for managing quest attribute selection.
- * @property {string} noAvailableAttributesText - The text to display when there are no available attributes to select.
+ * @property {AffectedAttributeManager} affectedAttributeManager - Manager object for affected attribute selection state and actions.
  */
 export interface AddAffectedAttributeUIProps {
   affectedAttributeManager: AffectedAttributeManager;
