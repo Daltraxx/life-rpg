@@ -5,7 +5,6 @@ import type { Database } from "../generatedTypes/supabase";
 import isProfileComplete from "@/app/queries/server/isProfileComplete";
 import { ROUTES } from "@/utils/constants/routes";
 import { COOKIES } from "@/utils/constants/cookies";
-import { createSupabaseAdminClient } from "@/utils/supabase/admin";
 import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
