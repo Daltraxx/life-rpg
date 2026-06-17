@@ -10,10 +10,7 @@ import styles from "./styles.module.css";
 import { useEffect, useRef, useState } from "react";
 import AttributeListItem from "./AttributeListItem/AttributeListItem";
 import clsx from "clsx";
-import {
-  type SetupAttribute,
-  createSetupAttribute,
-} from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { createSetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 import { createAttributeNameSchema } from "@/utils/validations/attributeName";
 
