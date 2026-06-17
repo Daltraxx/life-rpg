@@ -11,7 +11,7 @@ import type { Attribute } from "@/utils/types/attribute";
  * @property {number} levelStart - The experience points required to reach the current level.
  * @property {number} levelEnd - The experience points required to reach the next level.
  */
-export type AttributeProgress = Attribute & {
+export type AttributeProgress = Attribute & Omit<Attribute, "position"> & {
   levelStart: number;
   levelEnd: number;
 }
