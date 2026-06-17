@@ -16,7 +16,6 @@ import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
 import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
 import { ROUTES } from "@/utils/constants/routes";
-import { createSupabaseAdminClient } from "@/utils/supabase/admin";
 import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
 
 /**
