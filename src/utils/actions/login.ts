@@ -66,7 +66,7 @@ export async function login(
     };
   }
 
-  const { error } = await supabase.auth.signInWithPassword(
+  const { data, error } = await supabase.auth.signInWithPassword(
     validatedFields.data,
   );
 
@@ -102,5 +102,9 @@ export async function login(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
   revalidatePath("/"); // Revalidate home page or relevant pages to reflect authenticated state
-  redirect(ROUTES.PROFILE); // Redirect to profile or desired page after login (need to create page)
+  const profileComplete = data.user.app_metadata?.profile_complete ?? true; // true is safer default to ensure onboarding is for users without the flag set
+  const redirectRoute = profileComplete
+    ? ROUTES.PROFILE
+    : ROUTES.CREATE_PROFILE;
+  redirect(redirectRoute); // Redirect to profile or desired page after login (need to create page)
 }
