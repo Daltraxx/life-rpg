@@ -17,6 +17,7 @@ import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttribut
 import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
 import { ROUTES } from "@/utils/constants/routes";
 import { createSupabaseAdminClient } from "@/utils/supabase/admin";
+import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
 
 /**
  * Creates a user profile with associated quests and attributes.
@@ -155,12 +156,9 @@ export default async function createProfile(
     }
   }
   // Set profile_complete to true in app metadata (to avoid db queries in middleware and client components)
-  const supabaseAdmin = createSupabaseAdminClient();
-  const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(user.id, {
-    app_metadata: { profile_complete: true },
-  });
-
-  if (updateError) {
+  try {
+    await setProfileCompletionStatus(user.id, true);
+  } catch (updateError) {
     console.warn("Error updating user metadata:", { cause: updateError });
     // Not critical enough to fail the whole operation, so we proceed without returning an error state
     // Middleware will check profile completion status on next request and update metadata accordingly

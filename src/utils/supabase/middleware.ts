@@ -6,6 +6,7 @@ import isProfileComplete from "@/app/queries/server/isProfileComplete";
 import { ROUTES } from "@/utils/constants/routes";
 import { COOKIES } from "@/utils/constants/cookies";
 import { createSupabaseAdminClient } from "@/utils/supabase/admin";
+import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -162,21 +163,14 @@ export async function updateSession(
     try {
       profileComplete = await isProfileComplete(user, supabase);
       // Update user metadata with profile completion status to avoid db queries in middleware and client components
-      const supabaseAdmin = createSupabaseAdminClient();
-      const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(user.id, {
-        app_metadata: { profile_complete: profileComplete },
-      });
-      if (updateError) {
-        console.warn("Error updating user metadata:", { cause: updateError });
-        // Not critical enough to fail the whole operation, so we proceed without returning an error state
-        // Middleware will check profile completion status on next request and update metadata accordingly
-      }
+      await setProfileCompletionStatus(user.id, profileComplete);
     } catch (error) {
-      console.error("Error checking profile completion status:", error);
-      // Set profieComplete temporarily to true, safer than false which could redirect users to onboarding flow if there's an issue with the check.
+      console.warn("Error updating user metadata:", { cause: error });
+      // Not critical enough to fail the whole operation, so we proceed without returning an error state
       // Middleware will check profile completion status on next request and update metadata accordingly
+      // For now, set profileComplete to true to restrict access to profile creation routes
       profileComplete = true;
-    }
+    } 
   }
 
   if (user && !isAuthenticatedUserPath) {
