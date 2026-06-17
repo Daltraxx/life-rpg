@@ -18,7 +18,6 @@ import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 import { createAttributeNameSchema } from "@/utils/validations/attributeName";
 
 interface AttributeWidgetProps {
-  attributes: SetupAttribute[];
   attributeManager: AttributeManager;
   className?: string;
 }
@@ -35,7 +34,7 @@ interface AttributeWidgetProps {
  *
  * @example
  * // Basic usage in account setup flow
- * <AttributeWidget attributes={attributes} attributeManager={attributeManager} />
+ * <AttributeWidget attributeManager={attributeManager} />
  *
  * @remarks
  * - Duplicate checking is performed directly against current state
@@ -44,13 +43,13 @@ interface AttributeWidgetProps {
  * - Maintains accessibility with proper aria-describedby and htmlFor attributes
  */
 export default function AttributeWidget({
-  attributes,
   attributeManager,
   className,
 }: AttributeWidgetProps) {
   const [newAttributeName, setNewAttributeName] = useState<string>("");
   const [addAttributeError, setAddAttributeError] = useState<string[]>([]);
 
+  const { availableAttributes: attributes } = attributeManager;
   const { addAttribute, deleteAttribute, swapAttributeUp, swapAttributeDown } =
     attributeManager.actions;
 

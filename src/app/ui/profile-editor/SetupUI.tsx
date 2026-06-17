@@ -63,7 +63,6 @@ export default function SetupUI() {
         <div className={clsx(styles.widgetContainer, cssVars.widgetVars)}>
           <AttributeWidget
             className={styles.attributeWidget}
-            attributes={availableAttributes}
             attributeManager={attributeManager}
           />
           <QuestsWidget
