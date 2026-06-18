@@ -28,7 +28,7 @@ export default async function Header(): Promise<JSX.Element> {
       </Bounded>
     );
   } catch (error) {
-    console.error("Error rendering header:", { cause: error });
+    console.error("Error rendering header:", { error });
     // TODO: create error page and route, then redirect to it here instead of rendering fallback UI
     return (
       <Bounded
