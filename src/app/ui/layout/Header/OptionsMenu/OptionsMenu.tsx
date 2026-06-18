@@ -96,7 +96,6 @@ export default function OptionsMenu({
             {pages.map((page) => {
               const isCurrentPage = page.href === pathname;
               return (
-                // TODO: Ensure accessibility and style current page differently in the dropdown menu
                 <DropdownMenu.Item
                   key={page.name}
                   className={clsx(
