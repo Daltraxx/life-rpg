@@ -17,7 +17,10 @@ import type { AffectedAttribute } from "@/utils/types/AffectedAttribute";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import { createQuestNameSchema } from "@/utils/validations/questName";
 import { QuestManager } from "@/utils/hooks/useQuestManager";
-import { createAffectedAttribute, createQuest } from "@/utils/helpers/entity-creation";
+import {
+  createAffectedAttribute,
+  createQuest,
+} from "@/utils/helpers/entity-creation";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 
@@ -92,9 +95,9 @@ export default function QuestsWidget({
         createAffectedAttribute(REQUIRED_ATTRIBUTE, "normal"),
       );
     }
-    
+
     const position = quests.length + 1; // New quest will be added at the end
-    addQuest(createQuest( validationResult.data, affectedAttributes, position ));
+    addQuest(createQuest(validationResult.data, affectedAttributes, position));
 
     // Reset UI state
     setQuestErrors([]);
