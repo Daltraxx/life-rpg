@@ -23,7 +23,7 @@ import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-com
  * 1. Initializes a Supabase client for server-side authentication
  * 2. Validates form data against LoginSchema
  * 3. Attempts to authenticate with Supabase using email/password
- * 4. On success, revalidates the cache and redirects to /profile
+ * 4. On success, revalidates the cache and redirects to /profile if profile is complete, or /create-profile if not
  * 5. On failure, returns descriptive error messages for client-side display
  * 
  * @throws {Error} Implicitly via redirect() on successful authentication
