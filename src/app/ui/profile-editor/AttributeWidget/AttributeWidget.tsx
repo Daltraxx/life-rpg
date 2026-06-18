@@ -12,7 +12,7 @@ import AttributeListItem from "./AttributeListItem/AttributeListItem";
 import clsx from "clsx";
 import { createAttribute } from "@/utils/helpers/entity-creation";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
-import { createAttributeNameSchema } from "@/utils/validations/attributeName";
+import { createAttributeNameSchema } from "@/utils/validations/attribute-name";
 
 interface AttributeWidgetProps {
   attributeManager: AttributeManager;
