@@ -1,12 +1,13 @@
-import type { SetupAffectedAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { AttributeStrength } from "./AttributeStrength";
 
 /**
  * Represents an attribute that is affected by a quest, including its unique identifier from the database.
- * @shape
- * - `id`: number - Unique identifier for the affected attribute (from the database)
- * - `name`: string - The name of the affected attribute
- * - `strength`: AttributeStrength - The strength or intensity of the attribute's effect
+ * @property {number | string} id - A unique identifier for the affected attribute, which can be either a number (for database IDs) or a string (for temporary or client-side IDs).
+ * @property {string} name - The name of the affected attribute (e.g., "Strength", "Intelligence").
+ * @property {AttributeStrength} strength - The strength level of the attribute effect, indicating how significantly the quest impacts this attribute.
  */
-export type AffectedAttribute = SetupAffectedAttribute & {
-  id: number;
+export interface AffectedAttribute {
+  id: number | string;
+  name: string;
+  strength: AttributeStrength;
 };
