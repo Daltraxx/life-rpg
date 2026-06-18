@@ -34,7 +34,7 @@ export default async function getAttributes(): Promise<Attribute[]> {
     .order("position", { ascending: true });
 
   if (error) {
-    throw new Error("Error fetching attributes");
+    throw new Error("Error fetching attributes", { cause: error });
   }
 
   return data as Attribute[];
