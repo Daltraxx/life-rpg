@@ -7,9 +7,8 @@ import styles from "./styles.module.css";
 import cssVars from "./vars.module.css";
 import clsx from "clsx";
 import QuestBoard from "@/app/ui/QuestBoard/QuestBoardSetup";
-import useQuestSetupManager from "@/utils/hooks/useQuestSetupManager";
+import useQuestManager from "@/utils/hooks/useQuestManager";
 import useAttributeManager from "@/utils/hooks/useAttributeManager";
-import type { SetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
 import createProfile from "@/utils/actions/createProfile";
 import { useActionState } from "react";
@@ -19,20 +18,24 @@ import {
   Paragraph,
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import useAffectedAttributeManager from "@/utils/hooks/useAffectedAttributeManager";
+import { Quest } from "@/utils/types/Quest";
+import { Attribute } from "@/utils/validations/profileCreation/attribute";
+export interface SetupUIProps {
+  initialQuests: Quest[];
+  initialAttributes: Attribute[];
+}
 
-const INITIAL_ATTRIBUTES: SetupAttribute[] = [
-  { name: "Discipline" },
-  { name: "Vitality" },
-  { name: "Intelligence" },
-  { name: "Fitness" },
-];
+
 const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 
 const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
 
-export default function SetupUI() {
+export default function SetupUI({
+  initialQuests,
+  initialAttributes,
+}: SetupUIProps) {
   // Manage available attributes state
-  const attributeManager = useAttributeManager(INITIAL_ATTRIBUTES);
+  const attributeManager = useAttributeManager(initialAttributes);
   const { availableAttributes } = attributeManager;
 
   // Manage affected attribute selection state
@@ -42,7 +45,7 @@ export default function SetupUI() {
   );
 
   // Manage quests state
-  const questManager = useQuestSetupManager(availableAttributes);
+  const questManager = useQuestManager(availableAttributes);
   const { quests, pointsRemaining, actions: questActions } = questManager;
 
   // Handle form submission state
