@@ -8,6 +8,8 @@ import { LoginSchema, LoginState } from "@/utils/validations/login";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import resendVerificationEmail from "@/app/queries/server/resendVerificationEmail";
 import { ROUTES } from "@/utils/constants/routes";
+import isProfileComplete from "@/app/queries/server/isProfileComplete";
+import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
 
 /**
  * Authenticates a user by processing login form data and establishing a session.
@@ -102,7 +104,21 @@ export async function login(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
   revalidatePath("/"); // Revalidate home page or relevant pages to reflect authenticated state
-  const profileComplete = data.user.app_metadata?.profile_complete ?? true; // true is safer default to ensure onboarding is for users without the flag set
+  let profileComplete = data.user.app_metadata?.profile_complete;
+  if (profileComplete === undefined) {
+    try {
+      profileComplete = await isProfileComplete(data.user, supabase);
+      // Update user metadata with profile completion status to avoid db queries in middleware and client components
+      await setProfileCompletionStatus(data.user.id, profileComplete);
+    } catch (error) {
+      console.warn("Error updating user metadata:", { cause: error });
+      // Not critical enough to fail the whole operation, so we proceed without returning an error state
+      // Middleware will check profile completion status on next request and update metadata accordingly
+      // For now, set profileComplete to true to restrict access to profile creation routes
+      profileComplete = true;
+    }
+  }
+
   const redirectRoute = profileComplete
     ? ROUTES.PROFILE
     : ROUTES.CREATE_PROFILE;
