@@ -1,6 +1,5 @@
-import isProfileComplete from "@/app/queries/server/isProfileComplete";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
-import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
+import { resolveProfileComplete } from "@/app/queries/server/resolve-profile-complete";
 
 /**
  * Checks whether the authenticated user's profile is complete.
@@ -33,18 +32,7 @@ export const getProfileComplete = async (): Promise<boolean> => {
 
   let profileComplete = user.app_metadata?.profile_complete;
   if (profileComplete === undefined) {
-    try {
-      profileComplete = await isProfileComplete(user, supabase);
-      await setProfileCompletionStatus(user.id, profileComplete);
-    } catch (error) {
-      console.error("Error checking or setting profile completion status:", {
-        cause: error,
-      });
-      // Temporarily set profileComplete to true to restrict access to profile creation routes
-      // Resolution will be handled in the next request cycle
-      // when the middleware checks the profile completion status again
-      profileComplete = true;
-    }
+    profileComplete = await resolveProfileComplete(user.id, supabase);
   }
 
   return profileComplete;

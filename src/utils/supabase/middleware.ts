@@ -2,10 +2,9 @@ import { createServerClient } from "@supabase/ssr";
 import { AuthError, AuthSessionMissingError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../generatedTypes/supabase";
-import isProfileComplete from "@/app/queries/server/isProfileComplete";
 import { ROUTES } from "@/utils/constants/routes";
 import { COOKIES } from "@/utils/constants/cookies";
-import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
+import { resolveProfileComplete } from "@/app/queries/server/resolve-profile-complete";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -121,8 +120,8 @@ export async function updateSession(
   if (error) {
     if (error instanceof AuthSessionMissingError) {
       // Treat as expected behavior, as this can occur when a user is not logged in or the session has expired. No action needed.
-      // Silenced in production to avoid noise in logs, 
-      // but (TODO) consider adding monitoring for unexpected spikes in these errors 
+      // Silenced in production to avoid noise in logs,
+      // but (TODO) consider adding monitoring for unexpected spikes in these errors
       // which could indicate issues with cookie handling or session management.
       if (process.env.NODE_ENV === "development") {
         console.debug(
@@ -159,17 +158,7 @@ export async function updateSession(
   // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
   let profileComplete = user?.app_metadata?.profile_complete; // Initialize here to track value since current request will not immediately reflect metadata updates
   if (user && profileComplete === undefined) {
-    try {
-      profileComplete = await isProfileComplete(user, supabase);
-      // Update user metadata with profile completion status to avoid db queries in middleware and client components
-      await setProfileCompletionStatus(user.id, profileComplete);
-    } catch (error) {
-      console.warn("Error updating user metadata:", { cause: error });
-      // Not critical enough to fail the whole operation, so we proceed without returning an error state
-      // Middleware will check profile completion status on next request and update metadata accordingly
-      // For now, set profileComplete to true to restrict access to profile creation routes
-      profileComplete = true;
-    } 
+    profileComplete = await resolveProfileComplete(user.id, supabase);
   }
 
   if (user && !isAuthenticatedUserPath) {
