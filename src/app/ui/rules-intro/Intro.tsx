@@ -61,7 +61,7 @@ export default function Intro({ authUser }: { authUser: User }) {
         const username = await getUsername(authUser, supabase);
         if (!isMounted) return;
 
-        if (username) {
+        if (username !== null) {
           setUserName(username);
           setLoading(false);
         } else {
