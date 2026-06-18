@@ -14,7 +14,7 @@ import { ROUTES } from "@/utils/constants/routes";
 
 const explainerSections = introCopy.explainers.map((explainer, index) => (
   <section key={index} className={styles.explainerSection}>
-    <Heading as="h3" size="30" className={styles.explainerSectionHeading}>
+    <Heading as="h2" size="30" className={styles.explainerSectionHeading}>
       {explainer.title}
     </Heading>
     <ul className={styles.explainerPointsList}>
