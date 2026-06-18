@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { QuestSchema } from "@/utils/validations/profileCreation/quest";
-import { AttributeSchema } from "@/utils/validations/profileCreation/attribute";
+import { TransactionQuestSchema } from "@/utils/validations/profile-creation/transaction-quest";
+import { TransactionAttributeSchema } from "@/utils/validations/profile-creation/transaction-attribute";
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
 import {
   MAX_QUESTS_ALLOWED,
@@ -12,39 +12,39 @@ import { getNounAndVerbAgreement } from "@/utils/helpers/pluralOrSingularHandler
 
 export const ProfileCreationSchema = z.object({
   quests: z
-    .array(QuestSchema)
+    .array(TransactionQuestSchema)
     .min(
       MIN_QUESTS_ALLOWED,
       `At least ${MIN_QUESTS_ALLOWED} ${getNounAndVerbAgreement(
         "quest",
-        MIN_QUESTS_ALLOWED
-      )} required`
+        MIN_QUESTS_ALLOWED,
+      )} required`,
     )
     .max(
       MAX_QUESTS_ALLOWED,
       `No more than ${MAX_QUESTS_ALLOWED} ${getNounAndVerbAgreement(
         "quest",
-        MAX_QUESTS_ALLOWED
-      )} allowed`
+        MAX_QUESTS_ALLOWED,
+      )} allowed`,
     )
     .refine((quests) => hasUniqueValues(quests, "name"), {
       message: "Quest names must be unique",
     }),
   attributes: z
-    .array(AttributeSchema)
+    .array(TransactionAttributeSchema)
     .min(
       MIN_ATTRIBUTES_ALLOWED,
       `At least ${MIN_ATTRIBUTES_ALLOWED} ${getNounAndVerbAgreement(
         "attribute",
-        MIN_ATTRIBUTES_ALLOWED
-      )} required`
+        MIN_ATTRIBUTES_ALLOWED,
+      )} required`,
     )
     .max(
       MAX_ATTRIBUTES_ALLOWED,
       `No more than ${MAX_ATTRIBUTES_ALLOWED} ${getNounAndVerbAgreement(
         "attribute",
-        MAX_ATTRIBUTES_ALLOWED
-      )} allowed`
+        MAX_ATTRIBUTES_ALLOWED,
+      )} allowed`,
     )
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Attribute names must be unique",

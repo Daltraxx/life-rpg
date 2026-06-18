@@ -1,13 +1,16 @@
 import { z } from "zod";
 import {
-  MAX_ATTRIBUTES_ALLOWED,
   SAFE_CHARACTERS_REGEX,
   MAX_ATTRIBUTE_NAME_LENGTH,
   MIN_ATTRIBUTE_NAME_LENGTH,
 } from "@/utils/constants/gameConstants";
 import { addSIfPluralOrZero } from "@/utils/helpers/pluralOrSingularHandlers";
 
-export const AttributeSchema = z.object({
+/**
+ * TransactionAttributeSchema defines the validation rules for a attribute object
+ * being used in a profile creation transaction.
+ */
+export const TransactionAttributeSchema = z.object({
   name: z
     .string()
     .trim()
@@ -25,4 +28,4 @@ export const AttributeSchema = z.object({
     .regex(SAFE_CHARACTERS_REGEX, "Attribute name contains invalid characters")
 });
 
-export type Attribute = z.infer<typeof AttributeSchema>;
+export type TransactionAttribute = z.infer<typeof TransactionAttributeSchema>;

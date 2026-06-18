@@ -3,7 +3,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 import {
   ProfileCreationSchema,
   ProfileCreationState,
-} from "@/utils/validations/profileCreation/profileCreation";
+} from "@/utils/validations/profile-creation/profile-creation";
 import { z } from "zod";
 import { redirect } from "next/navigation";
 import type {

@@ -7,7 +7,11 @@ import {
 } from "@/utils/constants/gameConstants";
 import { addSIfPluralOrZero } from "@/utils/helpers/pluralOrSingularHandlers";
 
-export const AffectedAttributeSchema = z.object({
+/**
+ * TransactionAffectedAttributeSchema defines the validation rules for an affected attribute object
+ * being used in a profile creation transaction.
+ */
+export const TransactionAffectedAttributeSchema = z.object({
   name: z
     .string()
     .trim()
@@ -34,4 +38,4 @@ export const AffectedAttributeSchema = z.object({
   }),
 });
 
-export type AffectedAttribute = z.infer<typeof AffectedAttributeSchema>;
+export type TransactionAffectedAttribute = z.infer<typeof TransactionAffectedAttributeSchema>;

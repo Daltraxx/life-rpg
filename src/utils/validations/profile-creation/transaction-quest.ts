@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { AffectedAttributeSchema } from "@/utils/validations/profileCreation/affectedAttribute";
+import { TransactionAffectedAttributeSchema } from "@/utils/validations/profile-creation/transaction-affected-attribute";
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
 import {
   SAFE_CHARACTERS_REGEX,
@@ -14,7 +14,7 @@ import {
   getNounAndVerbAgreement,
 } from "@/utils/helpers/pluralOrSingularHandlers";
 
-export const QuestSchema = z.object({
+export const TransactionQuestSchema = z.object({
   name: z
     .string()
     .trim()
@@ -22,32 +22,32 @@ export const QuestSchema = z.object({
       MIN_QUEST_NAME_LENGTH,
       `Quest name cannot be less than ${MIN_QUEST_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
-        MIN_QUEST_NAME_LENGTH
-      )}`
+        MIN_QUEST_NAME_LENGTH,
+      )}`,
     )
     .max(
       MAX_QUEST_NAME_LENGTH,
       `Quest name cannot exceed ${MAX_QUEST_NAME_LENGTH} ${addSIfPluralOrZero(
         "character",
-        MAX_QUEST_NAME_LENGTH
-      )}`
+        MAX_QUEST_NAME_LENGTH,
+      )}`,
     )
     .regex(SAFE_CHARACTERS_REGEX, "Quest name contains invalid characters"),
   affectedAttributes: z
-    .array(AffectedAttributeSchema)
+    .array(TransactionAffectedAttributeSchema)
     .min(
       MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
       `At least ${MIN_AFFECTED_ATTRIBUTES_PER_QUEST} ${getNounAndVerbAgreement(
         "affected attribute",
-        MIN_AFFECTED_ATTRIBUTES_PER_QUEST
-      )} required`
+        MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
+      )} required`,
     )
     .max(
       MAX_AFFECTED_ATTRIBUTES_PER_QUEST,
       `A maximum of ${MAX_AFFECTED_ATTRIBUTES_PER_QUEST} ${getNounAndVerbAgreement(
         "affected attribute",
-        MAX_AFFECTED_ATTRIBUTES_PER_QUEST
-      )} allowed`
+        MAX_AFFECTED_ATTRIBUTES_PER_QUEST,
+      )} allowed`,
     )
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Affected attribute names must be unique",
@@ -58,8 +58,8 @@ export const QuestSchema = z.object({
     .min(1, "Each quest must be worth at least 1 experience point")
     .max(
       MAX_EXPERIENCE_POINTS_PER_QUEST,
-      `Experience point value must be at most ${MAX_EXPERIENCE_POINTS_PER_QUEST}`
+      `Experience point value must be at most ${MAX_EXPERIENCE_POINTS_PER_QUEST}`,
     ),
 });
 
-export type Quest = z.infer<typeof QuestSchema>;
+export type TransactionQuest = z.infer<typeof TransactionQuestSchema>;
