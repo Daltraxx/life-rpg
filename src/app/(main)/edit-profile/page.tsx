@@ -1,19 +1,15 @@
 import { type Metadata } from "next";
-import SetupUI from "@/app/ui/profile-editor/SetupUI";
-import getQuests from "@/app/queries/server/getQuests";
-import getAttributes from "@/app/queries/server/getAttributes";
+import EditUI from "@/app/ui/profile-editor/EditUI";
 export const metadata: Metadata = {
   title: "Edit Profile",
   description:
     "Edit your LifeRPG profile, changing your quests and attributes.",
 };
 
-export default async function EditProfilePage() {
-  const quests = await getQuests();
-  const attributes = await getAttributes();
+export default function EditProfilePage() {
   return (
     <>
-      <SetupUI mode="edit" initialQuests={quests} initialAttributes={attributes} />
+      <EditUI />
     </>
   );
 }

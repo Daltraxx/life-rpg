@@ -7,7 +7,7 @@ import styles from "./styles.module.css";
 import cssVars from "./vars.module.css";
 import clsx from "clsx";
 import QuestBoard from "@/app/ui/QuestBoard/QuestBoardSetup";
-import useQuestManager from "@/utils/hooks/useQuestManager";
+import useQuestSetupManager from "@/utils/hooks/useQuestSetupManager";
 import useAttributeManager from "@/utils/hooks/useAttributeManager";
 import type { SetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLikeWrappers";
@@ -42,8 +42,8 @@ export default function SetupUI() {
   );
 
   // Manage quests state
-  const questManagement = useQuestManager(availableAttributes);
-  const { quests, pointsRemaining, actions: questActions } = questManagement;
+  const questManager = useQuestSetupManager(availableAttributes);
+  const { quests, pointsRemaining, actions: questActions } = questManager;
 
   // Handle form submission state
   const [errorState, formAction, isPending] = useActionState(
@@ -67,8 +67,7 @@ export default function SetupUI() {
           />
           <QuestsWidget
             affectedAttributeManager={affectedAttributeManager}
-            quests={quests}
-            addQuest={questActions.addQuest}
+            questManager={questManager}
             className={clsx(styles.questsWidget, cssVars.questsWidgetVars)}
           />
         </div>
