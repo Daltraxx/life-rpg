@@ -14,7 +14,7 @@ import clsx from "clsx";
 import useSetElementHeight from "@/utils/hooks/useSetElementHeight";
 import useSetCSSProperty from "@/utils/hooks/useSetCSSProperty";
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { Quest } from "@/utils/types/Quest";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import useWindowWidth from "@/utils/hooks/useWindowWidth";
@@ -33,13 +33,13 @@ const HOLD_INITIAL_DELAY_MS = 300;
 const HOLD_INTERVAL_MS = 100;
 
 interface QuestItemSetupProps {
-  quest: SetupQuest;
+  quest: Quest;
   index: number;
   totalQuests: number;
-  onDeleteQuest: (quest: SetupQuest) => void;
-  onQuestOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
+  onDeleteQuest: (quest: Quest) => void;
+  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperienceShareChange: (
-    quest: SetupQuest,
+    quest: Quest,
     direction: "up" | "down",
   ) => void;
   className?: string;
@@ -58,12 +58,12 @@ interface QuestItemSetupProps {
  * Experience adjustment buttons support continuous increments via mouse hold or keyboard hold.
  *
  * @param {QuestItemSetupProps} props - Component props
- * @param {SetupQuest} props.quest - The quest data to display and manage
+ * @param {Quest} props.quest - The quest data to display and manage
  * @param {number} props.index - The index of the quest in the list (for ordering)
  * @param {number} props.totalQuests - The total number of quests in the list (for conditional UI)
- * @param {(quest: SetupQuest) => void} props.onDeleteQuest - Callback for deleting a quest
- * @param {(quest: SetupQuest, direction: "up" | "down") => void} props.onQuestOrderChange - Callback for changing quest order
- * @param {(quest: SetupQuest, direction: "up" | "down") => void} props.onExperienceShareChange - Callback for changing experience share
+ * @param {(quest: Quest) => void} props.onDeleteQuest - Callback for deleting a quest
+ * @param {(quest: Quest, direction: "up" | "down") => void} props.onQuestOrderChange - Callback for changing quest order
+ * @param {(quest: Quest, direction: "up" | "down") => void} props.onExperienceShareChange - Callback for changing experience share
  * @param {string} [props.className] - Optional additional class name for styling
  * @returns {JSX.Element} The rendered quest item setup component
  *

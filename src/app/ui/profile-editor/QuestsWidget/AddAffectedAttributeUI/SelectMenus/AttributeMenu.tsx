@@ -3,7 +3,7 @@
 import styles from "./styles.module.css";
 import clsx from "clsx";
 import { Select } from "radix-ui";
-import type { SetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import type { Attribute } from "@/utils/types/attribute";
 import {
   ChevronUpIcon,
   ChevronDownIcon,
@@ -11,7 +11,7 @@ import {
 } from "@radix-ui/react-icons";
 
 interface AttributeMenuProps {
-  availableAttributes: SetupAttribute[];
+  availableAttributes: Attribute[];
   currentAttribute: string;
   onAttributeSelect: (attribute: string) => void;
   noAvailableAttributesText: string;

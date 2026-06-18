@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 import { useEffect, useRef, useState } from "react";
 import AttributeListItem from "./AttributeListItem/AttributeListItem";
 import clsx from "clsx";
-import { createSetupAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { createAttribute } from "@/utils/helpers/entity-creation";
 import type { AttributeManager } from "@/utils/hooks/useAttributeManager";
 import { createAttributeNameSchema } from "@/utils/validations/attributeName";
 
@@ -60,7 +60,7 @@ export default function AttributeWidget({
     }
 
     setAddAttributeError([]);
-    const newAttribute = createSetupAttribute(parseResult.data);
+    const newAttribute = createAttribute(parseResult.data);
     addAttribute(newAttribute);
     setNewAttributeName("");
   };

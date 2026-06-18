@@ -12,13 +12,12 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
-import {
-  createSetupAffectedAttribute,
-  createSetupQuest,
-} from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import type { Quest } from "@/utils/types/Quest";
+import type { AffectedAttribute } from "@/utils/types/AffectedAttribute";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import { createQuestNameSchema } from "@/utils/validations/questName";
 import { QuestManager } from "@/utils/hooks/useQuestManager";
+import { createAffectedAttribute, createQuest } from "@/utils/helpers/entity-creation";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 
@@ -90,11 +89,12 @@ export default function QuestsWidget({
     const affectedAttributes = [...selectedAttributes];
     if (!affectedAttributes.some((attr) => attr.name === REQUIRED_ATTRIBUTE)) {
       affectedAttributes.push(
-        createSetupAffectedAttribute(REQUIRED_ATTRIBUTE, "normal"),
+        createAffectedAttribute(REQUIRED_ATTRIBUTE, "normal"),
       );
     }
-
-    addQuest(createSetupQuest(validationResult.data, affectedAttributes));
+    
+    const position = quests.length + 1; // New quest will be added at the end
+    addQuest(createQuest( validationResult.data, affectedAttributes, position ));
 
     // Reset UI state
     setQuestErrors([]);

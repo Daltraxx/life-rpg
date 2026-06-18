@@ -1,17 +1,15 @@
 import { useEffect, useMemo, useReducer } from "react";
 import type { AttributeStrength } from "@/utils/types/AttributeStrength";
-import {
-  type SetupAttribute,
-  type SetupAffectedAttribute,
-  createSetupAffectedAttribute,
-} from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import type { Attribute } from "@/utils/types/attribute";
+import type { AffectedAttribute } from "@/utils/types/AffectedAttribute";
+import { createAffectedAttribute } from "@/utils/helpers/entity-creation";
 
 const DEFAULT_ATTRIBUTE_STRENGTH: AttributeStrength = "normal";
 
 // State type for the attribute selection UI
 type AffectedAttributeSelectionState = {
-  availableAttributes: SetupAttribute[];
-  selectedAttributes: SetupAffectedAttribute[];
+  availableAttributes: Attribute[];
+  selectedAttributes: AffectedAttribute[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
   noAttributesAvailableText: string;
@@ -23,29 +21,29 @@ type AffectedAttributeSelectionAction =
   | { type: "SET_ATTRIBUTE_STRENGTH"; payload: AttributeStrength }
   | {
       type: "ADD_AFFECTED_ATTRIBUTE";
-      payload: SetupAttribute[];
+      payload: Attribute[];
     }
   | {
       type: "DELETE_AFFECTED_ATTRIBUTE";
       payload: {
         affectedAttributeName: string;
-        allAttributes: SetupAttribute[];
+        allAttributes: Attribute[];
       };
     }
   | {
       type: "RESET_AFFECTED_ATTRIBUTE_SELECTION_UI";
-      payload: SetupAttribute[];
+      payload: Attribute[];
     }
   | {
       type: "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES";
-      payload: SetupAttribute[];
+      payload: Attribute[];
     };
 
 // Helper to get available attributes by excluding selected ones
 const getAvailableAttributes = (
-  attributes: SetupAttribute[],
-  selectedAttributes: SetupAffectedAttribute[],
-): SetupAttribute[] => {
+  attributes: Attribute[],
+  selectedAttributes: AffectedAttribute[],
+): Attribute[] => {
   const selectedNames = new Set(selectedAttributes.map((attr) => attr.name));
   return attributes.filter((attr) => !selectedNames.has(attr.name));
 };
@@ -79,7 +77,10 @@ const affectedAttributeSelectionReducer = (
       // Add new affected attribute to selected list
       const updatedSelectedAttributes = [
         ...selectedAttributes,
-        createSetupAffectedAttribute(currentAttributeName, currentAttributeStrength),
+        createAffectedAttribute(
+          currentAttributeName,
+          currentAttributeStrength,
+        ),
       ];
 
       // Update available attributes by removing the newly selected one
@@ -188,8 +189,8 @@ const affectedAttributeSelectionReducer = (
  * Manages the selection and configuration of attributes that affect game mechanics.
  *
  * @typedef {Object} AffectedAttributeManager
- * @property {SetupAttribute[]} availableAttributes - List of all attributes available for selection
- * @property {SetupAffectedAttribute[]} selectedAttributes - Currently selected attributes and their configurations
+ * @property {Attribute[]} availableAttributes - List of all attributes available for selection
+ * @property {AffectedAttribute[]} selectedAttributes - Currently selected attributes and their configurations
  * @property {string} currentAttributeName - Name of the attribute currently being configured
  * @property {AttributeStrength} currentAttributeStrength - Strength level of the attribute being configured
  * @property {string} noAttributesAvailableText - Message to display when no attributes are available
@@ -199,11 +200,11 @@ const affectedAttributeSelectionReducer = (
  * @property {function(): void} actions.addAffectedAttribute - Adds the currently configured attribute to the selection
  * @property {function(string): void} actions.deleteAffectedAttribute - Removes an attribute from the selection by name
  * @property {function(): void} actions.resetAffectedAttributeSelectionUI - Resets the attribute selection interface to its initial state
- * @property {function(SetupAttribute[]): void} actions.syncAffectedAttributesWithAllAvailableAttributes - Synchronizes affected attributes with an updated list of available attributes
+ * @property {function(Attribute[]): void} actions.syncAffectedAttributesWithAllAvailableAttributes - Synchronizes affected attributes with an updated list of available attributes
  */
 export type AffectedAttributeManager = {
-  availableAttributes: SetupAttribute[];
-  selectedAttributes: SetupAffectedAttribute[];
+  availableAttributes: Attribute[];
+  selectedAttributes: AffectedAttribute[];
   currentAttributeName: string;
   currentAttributeStrength: AttributeStrength;
   noAttributesAvailableText: string;
@@ -214,7 +215,7 @@ export type AffectedAttributeManager = {
     deleteAffectedAttribute: (name: string) => void;
     resetAffectedAttributeSelectionUI: () => void;
     syncAffectedAttributesWithAllAvailableAttributes: (
-      attributes: SetupAttribute[],
+      attributes: Attribute[],
     ) => void;
   };
 };
@@ -224,7 +225,7 @@ const reducerInitializerFunction = ({
   attributes,
   noAttributesAvailableText,
 }: {
-  attributes: SetupAttribute[];
+  attributes: Attribute[];
   noAttributesAvailableText: string;
 }): AffectedAttributeSelectionState => ({
   availableAttributes: attributes,
@@ -269,7 +270,7 @@ const reducerInitializerFunction = ({
  * to update attributes outside of the hook's parameters.
  */
 const useAffectedAttributeManager = (
-  attributes: SetupAttribute[],
+  attributes: Attribute[],
   noAttributesAvailableText: string,
 ): AffectedAttributeManager => {
   const [state, dispatch] = useReducer(
@@ -321,7 +322,7 @@ const useAffectedAttributeManager = (
         });
       },
       syncAffectedAttributesWithAllAvailableAttributes: (
-        newAttributes: SetupAttribute[],
+        newAttributes: Attribute[],
       ) => {
         dispatch({
           type: "SYNC_AFFECTED_ATTRIBUTES_WITH_ALL_AVAILABLE_ATTRIBUTES",

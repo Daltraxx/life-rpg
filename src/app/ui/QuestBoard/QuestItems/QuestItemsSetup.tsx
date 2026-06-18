@@ -1,16 +1,16 @@
 import { Paragraph } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { Quest } from "@/utils/types/Quest";
 import QuestItemSetup from "@/app/ui/QuestBoard/QuestItems/QuestItem/QuestItemSetup";
 import styles from "./styles.module.css";
 import { clsx } from "clsx";
 
 interface QuestItemsSetupProps {
   className?: string;
-  quests: SetupQuest[];
-  onDeleteQuest: (quest: SetupQuest) => void;
-  onQuestOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
+  quests: Quest[];
+  onDeleteQuest: (quest: Quest) => void;
+  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperienceShareChange: (
-    quest: SetupQuest,
+    quest: Quest,
     direction: "up" | "down",
   ) => void;
 }

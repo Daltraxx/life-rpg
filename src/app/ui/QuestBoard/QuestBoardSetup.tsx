@@ -1,4 +1,4 @@
-import { SetupQuest } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { Quest } from "@/utils/types/Quest";
 import styles from "./styles.module.css";
 import gridVars from "./vars.module.css";
 import Heading from "@/app/ui/JSXWrappers/Heading/Heading";
@@ -9,12 +9,12 @@ import {
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 
 export interface QuestBoardSetupProps {
-  quests: SetupQuest[];
+  quests: Quest[];
   pointsRemaining: number;
-  onDeleteQuest: (quest: SetupQuest) => void;
-  onQuestOrderChange: (quest: SetupQuest, direction: "up" | "down") => void;
+  onDeleteQuest: (quest: Quest) => void;
+  onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperienceShareChange: (
-    quest: SetupQuest,
+    quest: Quest,
     direction: "up" | "down",
   ) => void;
 }

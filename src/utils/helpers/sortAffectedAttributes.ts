@@ -1,4 +1,4 @@
-import { SetupAffectedAttribute } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
+import { AffectedAttribute } from "@/utils/types/AffectedAttribute";
 import { AttributeStrength } from "@/utils/types/AttributeStrength";
 
 const strengthPriority: Record<AttributeStrength, number> = {
@@ -32,8 +32,8 @@ const strengthPriority: Record<AttributeStrength, number> = {
  * ```
  */
 export const sortAffectedAttributes = (
-  affectedAttributes: SetupAffectedAttribute[],
-): SetupAffectedAttribute[] => {
+  affectedAttributes: AffectedAttribute[],
+): AffectedAttribute[] => {
   return affectedAttributes.toSorted((a, b) => {
     const strengthDiff =
       strengthPriority[b.strength] - strengthPriority[a.strength];

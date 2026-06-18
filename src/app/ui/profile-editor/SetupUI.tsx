@@ -19,7 +19,8 @@ import {
 } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import useAffectedAttributeManager from "@/utils/hooks/useAffectedAttributeManager";
 import { Quest } from "@/utils/types/Quest";
-import { Attribute } from "@/utils/validations/profileCreation/attribute";
+import { Attribute } from "@/utils/types/attribute";
+
 export interface SetupUIProps {
   initialQuests: Quest[];
   initialAttributes: Attribute[];

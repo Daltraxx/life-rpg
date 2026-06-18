@@ -11,7 +11,7 @@ import type {
   CreateProfileTransactionDataShape,
   CreateProfileTransactionQuests,
   CreateProfileTransactionQuestsAttributes,
-} from "@/utils/types/accountSetup/profile_transaction/createProfileTransactionDataShapes";
+} from "@/utils/types/create-profile-transaction";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
 import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
@@ -128,7 +128,7 @@ export default async function createProfile(
     p_quests: questsData,
     p_quests_attributes: questsAttributesData,
   };
-  
+
   const { error } = await supabase.rpc(
     "create_profile_transaction",
     createProfileTransactionData,
@@ -162,7 +162,7 @@ export default async function createProfile(
     // Not critical enough to fail the whole operation, so we proceed without returning an error state
     // Middleware will check profile completion status on next request and update metadata accordingly
   }
-  
+
   // Redirect to profile upon successful profile creation
   redirect(ROUTES.PROFILE);
 }
