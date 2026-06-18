@@ -11,4 +11,7 @@ export const AttributeSchema = z.object({
   position: z.number().min(0, "Position must be at least 0"),
 });
 
+export const AttributeArraySchema = z.array(AttributeSchema);
+
 export type Attribute = z.infer<typeof AttributeSchema>;
+export type AttributeArray = z.infer<typeof AttributeArraySchema>;
