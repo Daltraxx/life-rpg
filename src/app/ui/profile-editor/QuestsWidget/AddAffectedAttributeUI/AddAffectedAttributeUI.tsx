@@ -50,6 +50,7 @@ export default function AddAffectedAttributeUI({
 
   return (
     <fieldset className={styles.addAffectedAttributeFieldset}>
+      {/* TODO: Place legend as first child of fieldset for accessibility, and modify styles to accomodate */}
       <div className={styles.addAffectedAttributeContainer}>
         <legend className={styles.label}>Affected Attributes:</legend>
 
