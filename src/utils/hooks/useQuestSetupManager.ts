@@ -196,8 +196,8 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
 }
 
 /**
- * Return type for the useQuestManager hook
- * @interface QuestManager
+ * Return type for the useQuestSetupManager hook
+ * @interface QuestSetupManager
  * @property {SetupQuest[]} quests - Array of quest objects
  * @property {number} pointsRemaining - The number of experience points available to allocate
  * @property {Object} actions - Object containing quest management action handlers
@@ -206,7 +206,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
  * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.questOrderChange - Moves a quest up or down in the order
  * @property {(quest: SetupQuest, direction: "up" | "down") => void} actions.experienceShareChange - Adjusts the experience share of a quest
  */
-export interface QuestManager {
+export interface QuestSetupManager {
   quests: SetupQuest[];
   pointsRemaining: number;
   actions: {
@@ -227,7 +227,7 @@ export interface QuestManager {
  * ordering, and experience point adjustments. Uses a reducer pattern to handle
  * state transitions. Also ensures quests remain consistent with available attributes.
  *
- * @returns {QuestManager} An object containing:
+ * @returns {QuestSetupManager} An object containing:
  *   - `quests`: Array of current quests
  *   - `pointsRemaining`: Remaining experience points available to allocate
  *   - `actions`: Object containing action creators:
@@ -237,13 +237,13 @@ export interface QuestManager {
  *     - `experienceShareChange`: Adjusts a quest's experience share
  *
  * @example
- * const { quests, pointsRemaining, actions } = useQuestManager();
+ * const { quests, pointsRemaining, actions } = useQuestSetupManager();
  * actions.addQuest(newQuest);
  * actions.questOrderChange(quest, 'up');
  */
-export default function useQuestManager(
+export default function useQuestSetupManager(
   availableAttributes: SetupAttribute[],
-): QuestManager {
+): QuestSetupManager {
   const [state, dispatch] = useReducer(questReducer, {
     quests: [],
     pointsRemaining: TOTAL_EXPERIENCE_POINTS,

@@ -14,18 +14,17 @@ import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttribute
 import clsx from "clsx";
 import {
   createSetupAffectedAttribute,
-  type SetupQuest,
   createSetupQuest,
 } from "@/utils/types/accountSetup/SetupAttributesAndQuests";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import { createQuestNameSchema } from "@/utils/validations/questName";
-import { QuestManager } from "@/utils/hooks/useQuestManager";
+import { QuestSetupManager } from "@/utils/hooks/useQuestSetupManager";
 
 const REQUIRED_ATTRIBUTE = "Discipline";
 
 interface QuestsWidgetProps {
   affectedAttributeManager: AffectedAttributeManager;
-  questManager: QuestManager;
+  questManager: QuestSetupManager;
   className?: string;
 }
 
@@ -39,7 +38,7 @@ interface QuestsWidgetProps {
  * @component
  * @param {QuestsWidgetProps} props - Component props
  * @param {AffectedAttributeManager} props.affectedAttributeManager - Manager for handling attribute selection and state
- * @param {QuestManager} props.questManager - Manager for handling quest state and actions
+ * @param {QuestSetupManager} props.questManager - Manager for handling quest setup state and actions
  * @param {string} [props.className] - Optional CSS class name for styling the container
  *
  * @returns {React.ReactElement} The rendered quests widget section
@@ -48,8 +47,7 @@ interface QuestsWidgetProps {
  * ```tsx
  * <QuestsWidget
  *   affectedAttributeManager={manager}
- *   quests={questList}
- *   addQuest={handleAddQuest}
+ *   questManager={questManager}
  *   className="custom-class"
  * />
  * ```
