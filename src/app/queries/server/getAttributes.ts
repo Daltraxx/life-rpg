@@ -1,5 +1,6 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { Attribute } from "@/utils/types/attribute";
+import { AttributeArraySchema } from "@/utils/validations/attribute";
 
 /**
  * Fetches all attributes for the currently authenticated user.
@@ -37,5 +38,11 @@ export default async function getAttributes(): Promise<Attribute[]> {
     throw new Error("Error fetching attributes", { cause: error });
   }
 
-  return data as Attribute[];
+  const validationResult = AttributeArraySchema.safeParse(data);
+  if (!validationResult.success) {
+    console.error("Attribute data validation failed:", validationResult.error);
+    throw new Error("Invalid attribute data format", { cause: validationResult.error });
+  }
+
+  return validationResult.data as Attribute[];
 }
