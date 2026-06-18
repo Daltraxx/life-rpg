@@ -48,11 +48,6 @@ export default function AttributeListItem({
   index,
 }: AttributeListItemProps): JSX.Element {
   const isDiscipline = attribute.name === REQUIRED_DISCIPLINE_ATTRIBUTE;
-  const handleDelete = useCallback(() => {
-    if (!isDiscipline) {
-      onDelete(attribute);
-    }
-  }, [attribute, onDelete]);
 
   return (
     <ListItem className={styles.attributeItem} size="24">
@@ -68,7 +63,7 @@ export default function AttributeListItem({
           isDiscipline && styles.disciplineAttributeRemoveButton,
         )}
         title={isDiscipline ? "Discipline is a required attribute" : undefined}
-        onClick={handleDelete}
+        onClick={() => onDelete(attribute)}
         disabled={isDiscipline}
       >
         <FontAwesomeIcon
