@@ -2,6 +2,7 @@ import styles from "./styles.module.css";
 import clsx from "clsx";
 import { strengthDisplayMap } from "@/utils/helpers/StrengthDisplayMap";
 import type { AffectedAttribute } from "@/utils/types/AffectedAttribute";
+import componentStyles from "@/app/ui/shared-css/common.module.css";
 
 interface AffectedAttributesTableProps {
   selectedAttributes: AffectedAttribute[];
@@ -69,7 +70,7 @@ export default function AffectedAttributesTable({
             <td className={clsx(styles.deleteAttributeButtonCell)}>
               <button
                 className={clsx(
-                  styles.appendedButton,
+                  componentStyles.appendedButton,
                   styles.deleteAttributeButton,
                 )}
                 onClick={() => onDeleteAttribute(attribute.name)}

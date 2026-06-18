@@ -5,6 +5,7 @@ import clsx from "clsx";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import AttributeMenu from "./SelectMenus/AttributeMenu";
 import StrengthMenu from "./SelectMenus/StrengthMenu";
+import componentStyles from '@/app/ui/shared-css/common.module.css';
 
 /**
  * Props for the AddAffectedAttributeUI component.
@@ -86,7 +87,7 @@ export default function AddAffectedAttributeUI({
 
         {/* ADD ATTRIBUTE TO QUEST BUTTON */}
         <button
-          className={clsx(styles.appendedButton, styles.addAttributeButton)}
+          className={clsx(componentStyles.appendedButton, styles.addAttributeButton)}
           type="button"
           onClick={addAffectedAttribute}
           disabled={availableAttributes.length === 0}
