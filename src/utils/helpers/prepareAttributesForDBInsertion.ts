@@ -1,4 +1,4 @@
-import type { Attribute } from "@/utils/helpers/entity-creation";
+import type { Attribute } from "@/utils/types/attribute";
 import type { CreateProfileTransactionAttributes } from "@/utils/types/create-profile-transaction";
 
 /**
