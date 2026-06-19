@@ -14,7 +14,7 @@ export default async function EditProfilePage() {
   const attributes = await getAttributes();
   return (
     <>
-      <SetupUI initialQuests={quests} initialAttributes={attributes} />
+      <SetupUI mode="edit" initialQuests={quests} initialAttributes={attributes} />
     </>
   );
 }

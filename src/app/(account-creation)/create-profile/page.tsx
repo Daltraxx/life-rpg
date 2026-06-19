@@ -41,7 +41,7 @@ export default async function AccountSetupPage() {
   return (
     <>
       <Intro authUser={user} />
-      <SetupUI initialQuests={[]} initialAttributes={INITIAL_ATTRIBUTES} />
+      <SetupUI mode="create" initialQuests={[]} initialAttributes={INITIAL_ATTRIBUTES} />
     </>
   );
 }
