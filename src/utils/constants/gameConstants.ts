@@ -64,6 +64,8 @@ export const MIN_QUEST_NAME_LENGTH = REGULAR_NAME_MIN_LENGTH;
  */
 export const MAX_QUEST_NAME_LENGTH = REGULAR_NAME_MAX_LENGTH;
 
+export const MAX_QUEST_DESCRIPTION_LENGTH = 500;
+
 // ------------------------------------------------------------------------
 
 /** Minimum number of attributes a player must have.
