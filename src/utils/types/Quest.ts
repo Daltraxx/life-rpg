@@ -1,4 +1,5 @@
 import { AffectedAttribute } from "./AffectedAttribute";
+import { QUEST_STRENGTH_LEVELS } from "@/utils/constants/gameConstants";
 
 /**
  * Represents a quest in the life RPG system.
@@ -30,4 +31,4 @@ export interface Quest {
 }
 
 /** Strength levels for quests which affect experience multiplier */
-export type QuestStrengthLevel = "S" | "A" | "B" | "C" | "D" | "E";
+export type QuestStrengthLevel = typeof QUEST_STRENGTH_LEVELS[number];
