@@ -21,6 +21,7 @@ export interface AttributeManager {
     swapAttributeUp: (attribute: Attribute) => void;
     swapAttributeDown: (attribute: Attribute) => void;
   };
+  deletedAttributeIds: number[];
 }
 
 /**
@@ -42,12 +43,16 @@ export interface AttributeManager {
  *
  * actions.addAttribute(newAttribute);
  * actions.deleteAttribute(attributeToRemove);
+ * actions.swapAttributeUp(attributeToMoveUp);
+ * actions.swapAttributeDown(attributeToMoveDown);
+ * deletedAttributeIds: Array of IDs for attributes that have been deleted. Only includes attributes already in database.
  */
 export default function useAttributeManager(
   initialAttributes: Attribute[],
 ): AttributeManager {
   const [availableAttributes, setAvailableAttributes] =
     useState<Attribute[]>(initialAttributes);
+  const [deletedAttributeIds, setDeletedAttributeIds] = useState<number[]>([]);
 
   const handleAddAttribute = useCallback((attribute: Attribute) => {
     setAvailableAttributes((prev) => [...prev, attribute]);
@@ -57,6 +62,10 @@ export default function useAttributeManager(
     setAvailableAttributes((prev) =>
       prev.filter((attr) => attr.name !== attribute.name),
     );
+    if (typeof attribute.id === "number") {
+      const attributeId = attribute.id;
+      setDeletedAttributeIds((prev) => [...prev, attributeId]);
+    }
   }, []);
 
   const swapAttributeUp = useCallback((attribute: Attribute) => {
@@ -105,5 +114,6 @@ export default function useAttributeManager(
   return {
     availableAttributes,
     actions,
+    deletedAttributeIds,
   };
 }

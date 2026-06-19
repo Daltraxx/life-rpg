@@ -13,10 +13,12 @@ const TOTAL_EXPERIENCE_POINTS = 100;
  * @interface QuestState
  * @property {Quest[]} quests - Array of quest objects managed by the application.
  * @property {number} pointsRemaining - The number of points available for quest allocation.
+ * @property {number[]} deletedQuestIds - Array of IDs for quests that have been deleted. Only includes quests already in database.
  */
 interface QuestState {
   quests: Quest[];
   pointsRemaining: number;
+  deletedQuestIds: number[];
 }
 
 /**
@@ -88,6 +90,7 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
     }
     case "DELETE_QUEST": {
       const {
+        id: deletedQuestId,
         name: deletedQuestName,
         experienceShare: deletedQuestExperiencePoints,
       } = action.payload;
@@ -101,6 +104,9 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
       return {
         ...state,
         quests: updatedQuests,
+        deletedQuestIds: typeof deletedQuestId === "number"
+          ? [...state.deletedQuestIds, deletedQuestId]
+          : state.deletedQuestIds,
         pointsRemaining: state.pointsRemaining + deletedQuestExperiencePoints,
       };
     }
@@ -204,6 +210,7 @@ const questManagerInitializer = (initialQuests: Quest[]): QuestState => ({
   pointsRemaining:
     TOTAL_EXPERIENCE_POINTS -
     initialQuests.reduce((total, quest) => total + quest.experienceShare, 0),
+  deletedQuestIds: [],
 });
 
 /**
@@ -216,6 +223,7 @@ const questManagerInitializer = (initialQuests: Quest[]): QuestState => ({
  * @property {(quest: Quest) => void} actions.deleteQuest - Removes a quest from the list
  * @property {(quest: Quest, direction: "up" | "down") => void} actions.questOrderChange - Moves a quest up or down in the order
  * @property {(quest: Quest, direction: "up" | "down") => void} actions.experienceShareChange - Adjusts the experience share of a quest
+ * @property {number[]} deletedQuestIds - Array of IDs for quests that have been deleted. Only includes quests already in database.
  */
 export interface QuestManager {
   quests: Quest[];
@@ -229,6 +237,7 @@ export interface QuestManager {
       direction: "up" | "down",
     ) => void;
   };
+  deletedQuestIds: number[];
 }
 
 /**
