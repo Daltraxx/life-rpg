@@ -19,7 +19,8 @@ import { Quest } from "./Quest";
  * - `position`: number - Display position
  * - `completedQuestId`: number | null - ID of the quest completion record if completed, otherwise null
  */
-export type DailyQuest = Quest & {
+export type DailyQuest = Omit<Quest, "id"> & {
+  id: number;
   isCompleted: "completed" | "incomplete" | "pending";
   completedQuestId: number | null;
   bonusExperiencePoints: number;
