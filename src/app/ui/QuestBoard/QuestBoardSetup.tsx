@@ -52,6 +52,7 @@ export default function QuestBoardSetup({
               onDeleteQuest={onDeleteQuest}
               onQuestOrderChange={onQuestOrderChange}
               onExperienceShareChange={onExperienceShareChange}
+              pointsRemaining={pointsRemaining}
               className={gridVars.gridVars}
             />
             <Span

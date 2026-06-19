@@ -7,6 +7,7 @@ import { clsx } from "clsx";
 interface QuestItemsSetupProps {
   className?: string;
   quests: Quest[];
+  pointsRemaining: number;
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperienceShareChange: (
@@ -27,6 +28,7 @@ interface QuestItemsSetupProps {
 export default function QuestItemsSetup({
   className,
   quests,
+  pointsRemaining,
   onDeleteQuest,
   onQuestOrderChange,
   onExperienceShareChange,
@@ -62,6 +64,7 @@ export default function QuestItemsSetup({
           onDeleteQuest={onDeleteQuest}
           onQuestOrderChange={onQuestOrderChange}
           onExperienceShareChange={onExperienceShareChange}
+          pointsRemaining={pointsRemaining}
           className={styles.questItem}
         />
       ))}

@@ -36,6 +36,7 @@ interface QuestItemSetupProps {
   quest: Quest;
   index: number;
   totalQuests: number;
+  pointsRemaining: number;
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
   onExperienceShareChange: (
@@ -83,6 +84,7 @@ export default function QuestItemSetup({
   quest,
   index,
   totalQuests,
+  pointsRemaining,
   onDeleteQuest,
   onQuestOrderChange,
   onExperienceShareChange,
@@ -256,7 +258,7 @@ export default function QuestItemSetup({
               onMouseLeave={stopIncreasingPointsOnMouseHold}
               onKeyDown={startIncreasingPointsOnKeyHold}
               onKeyUp={stopIncreasingPointsOnKeyHold}
-              disabled={quest.experienceShare === MAX_EXPERIENCE_POINTS}
+              disabled={pointsRemaining === 0 || quest.experienceShare === MAX_EXPERIENCE_POINTS}
             />
             <ChevronDownButton
               aria-label="Decrease experience"
