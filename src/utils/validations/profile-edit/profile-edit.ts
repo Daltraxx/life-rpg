@@ -49,6 +49,8 @@ export const ProfileEditSchema = z.object({
     .refine((attributes) => hasUniqueValues(attributes, "name"), {
       message: "Attribute names must be unique",
     }),
+  deletedQuestIds: z.array(z.number()),
+  deletedAttributeIds: z.array(z.number()),
 });
 
 export type ProfileEditFormData = z.infer<typeof ProfileEditSchema>;
