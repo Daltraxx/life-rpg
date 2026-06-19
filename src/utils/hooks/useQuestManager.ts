@@ -125,6 +125,9 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
           updatedQuests[index],
           updatedQuests[swapIndex],
         ];
+        updatedQuests[swapIndex].position = swapIndex;
+        updatedQuests[index].position = index;
+        
         return { ...state, quests: updatedQuests };
       }
 
