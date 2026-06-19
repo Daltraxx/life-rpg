@@ -26,7 +26,6 @@ export interface SetupUIProps {
   initialAttributes: Attribute[];
 }
 
-
 const INITIAL_PROFILE_CREATION_STATE = createSimpleInitialFormActionState();
 
 const NO_ATTRIBUTES_AVAILABLE_TEXT = "N/A";
@@ -55,13 +54,18 @@ export default function SetupUI({
     INITIAL_PROFILE_CREATION_STATE,
   );
 
+  const hasQuestsWithNoExperienceShare = quests.some(
+    (quest) => quest.experienceShare <= 0,
+  );
+
   const isSubmitDisabled =
     quests.length === 0 ||
     pointsRemaining > 0 ||
-    availableAttributes.length === 0;
+    availableAttributes.length === 0 ||
+    hasQuestsWithNoExperienceShare;
 
   return (
-    <form action={formAction}>
+    <form action={formAction} aria-describedby={errorState?.message ? "quest-board-errors" : undefined}>
       <Bounded innerClassName={styles.setupContainer}>
         {/* ATTRIBUTE AND QUEST WIDGETS */}
         <div className={clsx(styles.widgetContainer, cssVars.widgetVars)}>
@@ -87,7 +91,7 @@ export default function SetupUI({
 
         {/* ERROR MESSAGES */}
         {errorState?.message && (
-          <div>
+          <div id="quest-board-errors">
             <Paragraph className={styles.errorMessage} role="alert" size="20">
               {errorState.message}
             </Paragraph>
