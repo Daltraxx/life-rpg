@@ -6,6 +6,7 @@ export interface EditProfileTransactionDataShape {
   p_quest_updates: Json;
   p_attribute_inserts: Json;
   p_attribute_updates: Json;
+  p_quests_attributes: Json;
   p_deleted_quest_ids: Json;
   p_deleted_attribute_ids: Json;
 }
