@@ -40,7 +40,7 @@ export default function QuestBoardSetup({
   onExperienceShareChange,
 }: QuestBoardSetupProps) {
   return (
-    <section className={styles.container} onClick={() => console.log(quests)}>
+    <section className={styles.container}>
       <Heading as="h2" color="blue-700" size="36">
         Current Quest Board:
       </Heading>
