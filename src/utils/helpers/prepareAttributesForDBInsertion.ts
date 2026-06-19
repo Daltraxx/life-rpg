@@ -1,15 +1,15 @@
-import type { Attribute } from "@/utils/types/attribute";
 import type { CreateProfileTransactionAttributes } from "@/utils/types/create-profile-transaction";
+import type { TransactionAttribute } from "@/utils/validations/profile-creation/transaction-attribute";
 
 /**
  * Transforms an array of attributes into a format suitable for database insertion.
  * Each attribute is mapped to include its name and position (index) in the array.
  *
- * @param attributes - An array of {@link Attribute} objects to be prepared for insertion
+ * @param attributes - An array of {@link TransactionAttribute} objects to be prepared for insertion
  * @returns An array of {@link CreateProfileTransactionAttributes} objects with name and position properties
  *
  * @example
- * const attributes = [
+ * const attributes: TransactionAttribute[] = [
  *   { name: 'Strength' },
  *   { name: 'Dexterity' },
  *   { name: 'Intelligence' }
@@ -23,7 +23,7 @@ import type { CreateProfileTransactionAttributes } from "@/utils/types/create-pr
  * // ]
  */
 export const prepareAttributesForDBInsertion = (
-  attributes: Attribute[],
+  attributes: TransactionAttribute[],
 ): CreateProfileTransactionAttributes[] => {
   return attributes.map((attr, index) => ({
     name: attr.name,
