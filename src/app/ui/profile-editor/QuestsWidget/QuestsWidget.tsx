@@ -96,7 +96,10 @@ export default function QuestsWidget({
       );
     }
 
-    const position = quests.length + 1; // New quest will be added at the end
+    // New quest will be added at the end of the list, so its position is based on the current number of quests
+    // Note that position does not really matter here, as it will be assigned based on index when
+    // quest rows are inserted/updated in the database, but we include it for completeness
+    const position = quests.length;
     addQuest(createQuest(validationResult.data, affectedAttributes, position));
 
     // Reset UI state
