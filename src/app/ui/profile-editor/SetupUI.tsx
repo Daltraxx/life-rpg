@@ -65,7 +65,10 @@ export default function SetupUI({
     hasQuestsWithNoExperienceShare;
 
   return (
-    <form action={formAction} aria-describedby={errorState?.message ? "quest-board-errors" : undefined}>
+    <form
+      action={formAction}
+      aria-describedby={errorState?.message ? "quest-board-errors" : undefined}
+    >
       <Bounded innerClassName={styles.setupContainer}>
         {/* ATTRIBUTE AND QUEST WIDGETS */}
         <div className={clsx(styles.widgetContainer, cssVars.widgetVars)}>
@@ -90,6 +93,16 @@ export default function SetupUI({
         />
 
         {/* ERROR MESSAGES */}
+        {!errorState?.message &&
+          hasQuestsWithNoExperienceShare &&
+          pointsRemaining === 0 && (
+            <div id="quest-board-errors">
+              <Paragraph className={styles.errorMessage} role="alert" size="20">
+                All quests must have an experience share greater than 0.
+              </Paragraph>
+            </div>
+          )}
+        
         {errorState?.message && (
           <div id="quest-board-errors">
             <Paragraph className={styles.errorMessage} role="alert" size="20">
