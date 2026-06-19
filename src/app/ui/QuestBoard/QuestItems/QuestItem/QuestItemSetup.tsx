@@ -39,10 +39,7 @@ interface QuestItemSetupProps {
   pointsRemaining: number;
   onDeleteQuest: (quest: Quest) => void;
   onQuestOrderChange: (quest: Quest, direction: "up" | "down") => void;
-  onExperienceShareChange: (
-    quest: Quest,
-    direction: "up" | "down",
-  ) => void;
+  onExperienceShareChange: (quest: Quest, direction: "up" | "down") => void;
   className?: string;
 }
 
@@ -223,18 +220,20 @@ export default function QuestItemSetup({
         <Paragraph
           size="24-responsive"
           color="background"
-          aria-label="Quest streak: 0"
+          aria-label={`Quest streak: ${quest.streak}`}
         >
-          <span className={styles.smallScreenOnly}>Streak: </span>0
+          <span className={styles.smallScreenOnly}>Streak: </span>
+          {quest.streak}
         </Paragraph>
 
         {/* STRENGTH */}
         <Paragraph
           size="24-responsive"
           color="background"
-          aria-label="Quest strength: 0 — E"
+          aria-label={`Quest strength: ${quest.strengthPoints} — ${quest.strengthLevel}`}
         >
-          <span className={styles.smallScreenOnly}>Strength: </span>0 — E
+          <span className={styles.smallScreenOnly}>Strength: </span>
+          {`${quest.strengthPoints} — ${quest.strengthLevel}`}
         </Paragraph>
 
         {/* EXPERIENCE */}
@@ -258,7 +257,10 @@ export default function QuestItemSetup({
               onMouseLeave={stopIncreasingPointsOnMouseHold}
               onKeyDown={startIncreasingPointsOnKeyHold}
               onKeyUp={stopIncreasingPointsOnKeyHold}
-              disabled={pointsRemaining === 0 || quest.experienceShare === MAX_EXPERIENCE_POINTS}
+              disabled={
+                pointsRemaining === 0 ||
+                quest.experienceShare === MAX_EXPERIENCE_POINTS
+              }
             />
             <ChevronDownButton
               aria-label="Decrease experience"
