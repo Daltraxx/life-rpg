@@ -51,6 +51,7 @@ export const ProfileEditSchema = z.object({
     }),
   deletedQuestIds: z.array(z.number()),
   deletedAttributeIds: z.array(z.number()),
+  deletedAffectedAttributeIds: z.array(z.number()),
 });
 
 export type ProfileEditFormData = z.infer<typeof ProfileEditSchema>;
@@ -60,6 +61,7 @@ export type ProfileEditState = {
     userId?: string[];
     quests?: string[];
     attributes?: string[];
+    affectedAttributes?: string[];
   };
   message?: string;
 };

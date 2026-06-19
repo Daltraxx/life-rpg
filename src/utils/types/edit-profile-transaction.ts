@@ -9,6 +9,7 @@ export interface EditProfileTransactionDataShape {
   p_quests_attributes: Json;
   p_deleted_quest_ids: Json;
   p_deleted_attribute_ids: Json;
+  p_deleted_affected_attribute_ids: Json;
 }
 
 export interface EditProfileTransactionQuestInsert {
@@ -71,6 +72,11 @@ export interface EditProfileTransactionDeletedQuestIds {
 }
 
 export interface EditProfileTransactionDeletedAttributeIds {
+  [key: string]: Json;
+  id: number;
+}
+
+export interface EditProfileTransactionDeletedAffectedAttributeIds {
   [key: string]: Json;
   id: number;
 }

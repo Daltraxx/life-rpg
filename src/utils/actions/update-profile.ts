@@ -57,6 +57,7 @@ export default async function updateProfile(
     attributes: validatedAttributes,
     deletedQuestIds,
     deletedAttributeIds,
+    deletedAffectedAttributeIds,
   } = validatedInput.data;
 
   const { attributeInserts, attributeUpdates } =
@@ -80,6 +81,7 @@ export default async function updateProfile(
     p_quests_attributes: questsAttributesData,
     p_deleted_quest_ids: deletedQuestIds,
     p_deleted_attribute_ids: deletedAttributeIds,
+    p_deleted_affected_attribute_ids: deletedAffectedAttributeIds,
   };
 
   const { error} = await supabase.rpc("edit_profile_transaction", editProfileTransactionData);

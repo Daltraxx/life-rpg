@@ -52,9 +52,10 @@ export default function SetupUI({
   const { quests, pointsRemaining, actions: questActions } = questManager;
 
   // Handle form submission state
-  const [errorState, formAction, isPending] = mode === "create"
-    ? useActionState(createProfile, INITIAL_PROFILE_CREATION_STATE)
-    : useActionState(updateProfile, INITIAL_PROFILE_CREATION_STATE);
+  const [errorState, formAction, isPending] =
+    mode === "create"
+      ? useActionState(createProfile, INITIAL_PROFILE_CREATION_STATE)
+      : useActionState(updateProfile, INITIAL_PROFILE_CREATION_STATE);
 
   const hasQuestsWithNoExperienceShare = quests.some(
     (quest) => quest.experienceShare <= 0,
@@ -154,6 +155,13 @@ export default function SetupUI({
           type="hidden"
           name="deletedAttributeIds"
           value={JSON.stringify(attributeManager.deletedAttributeIds)}
+        />
+        <input
+          type="hidden"
+          name="deletedAffectedAttributeIds"
+          value={JSON.stringify(
+            affectedAttributeManager.deletedAffectedAttributeIds,
+          )}
         />
 
         {/* TODO: Add styling for pending submission */}

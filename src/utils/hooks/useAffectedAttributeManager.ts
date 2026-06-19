@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useReducer } from "react";
+import { useEffect, useMemo, useReducer, useState } from "react";
 import type { AttributeStrength } from "@/utils/types/AttributeStrength";
 import type { Attribute } from "@/utils/types/attribute";
 import type { AffectedAttribute } from "@/utils/types/AffectedAttribute";
@@ -26,7 +26,7 @@ type AffectedAttributeSelectionAction =
   | {
       type: "DELETE_AFFECTED_ATTRIBUTE";
       payload: {
-        affectedAttributeName: string;
+        affectedAttributeId: number | string;
         allAttributes: Attribute[];
       };
     }
@@ -99,7 +99,7 @@ const affectedAttributeSelectionReducer = (
       };
     }
     case "DELETE_AFFECTED_ATTRIBUTE": {
-      const { affectedAttributeName, allAttributes } = action.payload;
+      const { affectedAttributeId, allAttributes } = action.payload;
       const {
         noAttributesAvailableText,
         currentAttributeName,
@@ -107,7 +107,7 @@ const affectedAttributeSelectionReducer = (
       } = state;
       // Remove the specified attribute from the selected list
       const updatedSelectedAttributes = selectedAttributes.filter(
-        (attr) => attr.name !== affectedAttributeName,
+        (attr) => attr.id !== affectedAttributeId,
       );
       // Update available attributes by adding back the removed attribute
       const updatedAvailableAttributes = getAvailableAttributes(
@@ -121,7 +121,7 @@ const affectedAttributeSelectionReducer = (
         // If no attributes were available, set current to the newly available (deleted) attribute
         currentAttributeName:
           currentAttributeName === noAttributesAvailableText
-            ? affectedAttributeName
+            ? allAttributes.find((attr) => attr.id === affectedAttributeId)?.name || noAttributesAvailableText
             : currentAttributeName,
       };
     }
@@ -187,6 +187,7 @@ const affectedAttributeSelectionReducer = (
 
 /**
  * Manages the selection and configuration of attributes that affect game mechanics.
+ * Also stores the IDs of affected attributes that have been deleted for proper handling in update transactions.
  *
  * @typedef {Object} AffectedAttributeManager
  * @property {Attribute[]} availableAttributes - List of all attributes available for selection
@@ -198,7 +199,7 @@ const affectedAttributeSelectionReducer = (
  * @property {function(string): void} actions.setCurrentAttributeName - Updates the name of the attribute being configured
  * @property {function(AttributeStrength): void} actions.setAttributeStrength - Updates the strength of the attribute being configured
  * @property {function(): void} actions.addAffectedAttribute - Adds the currently configured attribute to the selection
- * @property {function(string): void} actions.deleteAffectedAttribute - Removes an attribute from the selection by name
+ * @property {function(number | string): void} actions.deleteAffectedAttribute - Removes an attribute from the selection by ID
  * @property {function(): void} actions.resetAffectedAttributeSelectionUI - Resets the attribute selection interface to its initial state
  * @property {function(Attribute[]): void} actions.syncAffectedAttributesWithAllAvailableAttributes - Synchronizes affected attributes with an updated list of available attributes
  */
@@ -212,12 +213,13 @@ export type AffectedAttributeManager = {
     setCurrentAttributeName: (newAttributeName: string) => void;
     setAttributeStrength: (newAttributeStrength: AttributeStrength) => void;
     addAffectedAttribute: () => void;
-    deleteAffectedAttribute: (name: string) => void;
+    deleteAffectedAttribute: (id: number | string) => void;
     resetAffectedAttributeSelectionUI: () => void;
     syncAffectedAttributesWithAllAvailableAttributes: (
       attributes: Attribute[],
     ) => void;
   };
+  deletedAffectedAttributeIds: number[];
 };
 
 // Initializer function for the reducer for initial state setup
@@ -278,6 +280,7 @@ const useAffectedAttributeManager = (
     { attributes, noAttributesAvailableText },
     reducerInitializerFunction,
   );
+  const [ deletedAffectedAttributeIds, setDeletedAffectedAttributeIds ] = useState<number[]>([]);
 
   useEffect(() => {
     dispatch({
@@ -306,14 +309,22 @@ const useAffectedAttributeManager = (
           payload: attributes,
         });
       },
-      deleteAffectedAttribute: (name: string) => {
+      deleteAffectedAttribute: (id: number | string) => {
         dispatch({
           type: "DELETE_AFFECTED_ATTRIBUTE",
           payload: {
-            affectedAttributeName: name,
+            affectedAttributeId: id,
             allAttributes: attributes,
           },
         });
+        // If the affected attribute being deleted has a numeric ID, 
+        // we know it's an existing attribute that needs to be deleted in the database, 
+        // so we track its ID for deletion in the transaction. 
+        // Attributes with non-numeric IDs are new and not yet persisted, 
+        // so we don't need to track them for deletion.
+        if (typeof id === "number") {
+          setDeletedAffectedAttributeIds((prev) => [...prev, id]);
+        }
       },
       resetAffectedAttributeSelectionUI: () => {
         dispatch({
@@ -336,6 +347,7 @@ const useAffectedAttributeManager = (
   return {
     ...state,
     actions,
+    deletedAffectedAttributeIds,
   };
 };
 
