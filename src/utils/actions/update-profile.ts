@@ -65,6 +65,8 @@ export default async function updateProfile(
   
   const attributeNameToIdMap: Record<string, number> = {};
 
+  // Create a mapping of attribute names to their IDs for all attributes being updated, 
+  // which will be used to link affected attributes to the correct attribute IDs in the database.
   attributeUpdates.forEach((attr) => {
     attributeNameToIdMap[attr.name] = attr.id;
   });
