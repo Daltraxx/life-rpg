@@ -12,8 +12,6 @@ import { ButtonWrapper } from "@/app/ui/JSXWrappers/ButtonLikeWrappers/ButtonLik
 import AddAffectedAttributeUI from "./AddAffectedAttributeUI/AddAffectedAttributeUI";
 import AffectedAttributesTable from "./AffectedAttributesTable/AffectedAttributesTable";
 import clsx from "clsx";
-import type { Quest } from "@/utils/types/Quest";
-import type { AffectedAttribute } from "@/utils/types/AffectedAttribute";
 import type { AffectedAttributeManager } from "@/utils/hooks/useAffectedAttributeManager";
 import { createQuestNameSchema } from "@/utils/validations/questName";
 import { QuestManager } from "@/utils/hooks/useQuestManager";
