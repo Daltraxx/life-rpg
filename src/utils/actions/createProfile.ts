@@ -13,8 +13,8 @@ import type {
   CreateProfileTransactionQuestsAttributes,
 } from "@/utils/types/create-profile-transaction";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
-import { prepareAttributesForDBInsertion } from "@/utils/helpers/prepareAttributesForDBInsertion";
-import { prepareQuestsForDBInsertion } from "@/utils/helpers/prepareQuestsForDBInsertion";
+import { prepareAttributesForDBInsertion } from "@/utils/actions/helpers/prepare-attributes-create-profile";
+import { prepareQuestsForDBInsertion } from "@/utils/actions/helpers/prepare-quests-create-profile";
 import { ROUTES } from "@/utils/constants/routes";
 import { setProfileCompletionStatus } from "@/app/queries/server/set-profile-completion-status";
 
