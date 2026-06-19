@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TransactionAffectedAttributeSchema } from "@/utils/validations/profile-creation/transaction-affected-attribute";
+import { TransactionAffectedAttributeSchema } from "@/utils/validations/profile-edit/transaction-affected-attribute";
 import hasUniqueValues from "@/utils/helpers/hasUniqueValues";
 import {
   MIN_AFFECTED_ATTRIBUTES_PER_QUEST,
