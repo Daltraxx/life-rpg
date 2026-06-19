@@ -66,6 +66,8 @@ export const MAX_QUEST_NAME_LENGTH = REGULAR_NAME_MAX_LENGTH;
 
 export const MAX_QUEST_DESCRIPTION_LENGTH = 500;
 
+export const QUEST_STRENGTH_LEVELS = ["S", "A", "B", "C", "D", "E"] as const;
+
 // ------------------------------------------------------------------------
 
 /** Minimum number of attributes a player must have.
