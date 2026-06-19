@@ -62,18 +62,21 @@ export default async function updateProfile(
 
   const { attributeInserts, attributeUpdates } =
     prepareAttributesForProfileUpdate(validatedAttributes);
-  
+
   const attributeNameToIdMap: Record<string, number> = {};
 
-  // Create a mapping of attribute names to their IDs for all attributes being updated, 
+  // Create a mapping of attribute names to their IDs for all attributes being updated,
   // which will be used to link affected attributes to the correct attribute IDs in the database.
   attributeUpdates.forEach((attr) => {
     attributeNameToIdMap[attr.name] = attr.id;
   });
 
   const { questInserts, questUpdates, questsAttributesData } =
-    prepareQuestsAndAffectedAttributesForProfileUpdate(validatedQuests, attributeNameToIdMap);
-  
+    prepareQuestsAndAffectedAttributesForProfileUpdate(
+      validatedQuests,
+      attributeNameToIdMap,
+    );
+
   const editProfileTransactionData: EditProfileTransactionDataShape = {
     p_user_id: user.id,
     p_quest_inserts: questInserts,
@@ -86,12 +89,16 @@ export default async function updateProfile(
     p_deleted_affected_attribute_ids: deletedAffectedAttributeIds,
   };
 
-  const { error} = await supabase.rpc("edit_profile_transaction", editProfileTransactionData);
+  const { error } = await supabase.rpc(
+    "edit_profile_transaction",
+    editProfileTransactionData,
+  );
 
   if (error) {
     console.error("Error executing profile update transaction:", error);
     return {
-      message: "An error occurred while updating the profile. Please try again.",
+      message:
+        "An error occurred while updating the profile. Please try again.",
     };
   }
 
