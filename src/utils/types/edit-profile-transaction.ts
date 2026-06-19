@@ -23,6 +23,7 @@ export interface EditProfileTransactionQuestUpdate {
   [key: string]: Json;
   id: number;
   name: string;
+  description: string | null;
   experience_share: number;
   position: number;
 }

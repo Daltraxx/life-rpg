@@ -50,6 +50,7 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
       questUpdates.push({
         id: questId,
         name: quest.name,
+        description: quest.description,
         experience_share: quest.experienceShare,
         position: index,
       });
