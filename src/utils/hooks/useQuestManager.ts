@@ -193,6 +193,20 @@ function questReducer(state: QuestState, action: QuestAction): QuestState {
 }
 
 /**
+ * Initializer function for the quest reducer, used to set up the initial state based on provided quests.
+ * Primarily calculates the initial points remaining based on the experience shares of the provided quests.
+ *
+ * @param initialQuests - The initial array of quests to set up
+ * @returns {QuestState} The initial state for the quest reducer
+ */
+const questManagerInitializer = (initialQuests: Quest[]): QuestState => ({
+  quests: initialQuests,
+  pointsRemaining:
+    TOTAL_EXPERIENCE_POINTS -
+    initialQuests.reduce((total, quest) => total + quest.experienceShare, 0),
+});
+
+/**
  * Return type for the useQuestManager hook
  * @interface QuestManager
  * @property {Quest[]} quests - Array of quest objects
@@ -239,12 +253,11 @@ export interface QuestManager {
  * actions.questOrderChange(quest, 'up');
  */
 export default function useQuestManager(
+  quests: Quest[],
   availableAttributes: Attribute[],
 ): QuestManager {
-  const [state, dispatch] = useReducer(questReducer, {
-    quests: [],
-    pointsRemaining: TOTAL_EXPERIENCE_POINTS,
-  });
+  const [state, dispatch] = useReducer(questReducer, quests, questManagerInitializer);
+  
   const attributesRef = useRef(
     new Set(availableAttributes.map((attr) => attr.name)),
   );
