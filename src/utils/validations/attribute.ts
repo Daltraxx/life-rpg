@@ -5,6 +5,7 @@ import { AttributeNameSchema } from "./attribute-name";
  * Defines the schema for validating an Attribute object, which represents a character attribute in the game.
  */
 export const AttributeSchema = z.object({
+  id: z.number().nonnegative("ID must be a non-negative number"),
   name: AttributeNameSchema,
   experience: z.number().nonnegative("Experience must be a non-negative number"),
   level: z.number().min(1, "Level must be at least 1"),
