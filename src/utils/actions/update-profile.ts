@@ -71,7 +71,7 @@ export default async function updateProfile(
     attributeNameToIdMap[attr.name] = attr.id;
   });
 
-  const { questInserts, questUpdates, questsAttributesData } =
+  const { questInserts, questUpdates, questAttributesInserts, questAttributesUpdates } =
     prepareQuestsAndAffectedAttributesForProfileUpdate(
       validatedQuests,
       attributeNameToIdMap,
@@ -83,7 +83,8 @@ export default async function updateProfile(
     p_quest_updates: questUpdates,
     p_attribute_inserts: attributeInserts,
     p_attribute_updates: attributeUpdates,
-    p_quests_attributes: questsAttributesData,
+    p_quest_attributes_inserts: questAttributesInserts,
+    p_quest_attributes_updates: questAttributesUpdates,
     p_deleted_quest_ids: deletedQuestIds,
     p_deleted_attribute_ids: deletedAttributeIds,
     p_deleted_affected_attribute_ids: deletedAffectedAttributeIds,

@@ -1,7 +1,8 @@
-import {
-  EditProfileTransactionQuestAttributeMapping,
+import type {
   EditProfileTransactionQuestInsert,
   EditProfileTransactionQuestUpdate,
+  EditProfileTransactionQuestAttributeInsert,
+  EditProfileTransactionQuestAttributeUpdate,
 } from "@/utils/types/edit-profile-transaction";
 import { TransactionQuest } from "@/utils/validations/profile-edit/transaction-quest";
 import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
@@ -14,7 +15,8 @@ import { strengthToIntMap } from "@/utils/helpers/strengthToIntMap";
 interface PreparedQuestUpdates {
   questInserts: EditProfileTransactionQuestInsert[];
   questUpdates: EditProfileTransactionQuestUpdate[];
-  questsAttributesData: EditProfileTransactionQuestAttributeMapping[];
+  questAttributesInserts: EditProfileTransactionQuestAttributeInsert[];
+  questAttributesUpdates: EditProfileTransactionQuestAttributeUpdate[];
 }
 
 /**
@@ -42,8 +44,11 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
 ): PreparedQuestUpdates => {
   const questInserts: EditProfileTransactionQuestInsert[] = [];
   const questUpdates: EditProfileTransactionQuestUpdate[] = [];
-  const questsAttributesData: EditProfileTransactionQuestAttributeMapping[] =
+  const questAttributesInserts: EditProfileTransactionQuestAttributeInsert[] =
     [];
+  const questAttributesUpdates: EditProfileTransactionQuestAttributeUpdate[] =
+    [];
+
   quests.forEach((quest, index) => {
     const existingQuest = typeof quest.id === "number";
     if (existingQuest) {
@@ -64,22 +69,40 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
     }
 
     quest.affectedAttributes.forEach((affectedAttribute) => {
-      questsAttributesData.push({
-        id:
-          typeof affectedAttribute.id === "number"
-            ? (affectedAttribute.id as number)
-            : null,
-        quest_id: existingQuest ? (quest.id as number) : null,
-        quest_name: quest.name,
-        // New attributes can have temporary string IDs and will not exist in attributeNameToIdMap yet.
-        // In that case attribute_id is intentionally null; the DB transaction resolves the mapping
-        // by attribute_name after inserting those new attributes and assigning numeric IDs.
-        attribute_id: attributeNameToIdMap[affectedAttribute.name] ?? null,
-        attribute_name: affectedAttribute.name,
-        attribute_power: strengthToIntMap[affectedAttribute.strength],
-      });
+      const existingAffectedAttribute =
+        typeof affectedAttribute.id === "number";
+      const attributeId = attributeNameToIdMap[affectedAttribute.name] ?? null;
+      if (
+        (existingAffectedAttribute && attributeId === null) ||
+        (existingAffectedAttribute && !existingQuest)
+      ) {
+        throw new Error(
+          `Affected attribute "${affectedAttribute.name}" has an preexisting ID but no corresponding attribute ID found in the mapping.`,
+        );
+      }
+      if (existingAffectedAttribute) {
+        questAttributesUpdates.push({
+          id: affectedAttribute.id as number,
+          quest_id: quest.id as number,
+          attribute_id: attributeId,
+          attribute_power: strengthToIntMap[affectedAttribute.strength],
+        });
+      } else {
+        questAttributesInserts.push({
+          quest_id: existingQuest ? (quest.id as number) : null,
+          quest_name: quest.name,
+          attribute_id: attributeId,
+          attribute_name: affectedAttribute.name,
+          attribute_power: strengthToIntMap[affectedAttribute.strength],
+        });
+      }
     });
   });
 
-  return { questInserts, questUpdates, questsAttributesData };
+  return {
+    questInserts,
+    questUpdates,
+    questAttributesInserts,
+    questAttributesUpdates,
+  };
 };
