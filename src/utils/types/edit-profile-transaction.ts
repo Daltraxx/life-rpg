@@ -26,6 +26,7 @@ export interface EditProfileTransactionQuestInsert {
 
 export interface EditProfileTransactionQuestUpdate {
   [key: string]: Json;
+  client_key: string; // Temporary key for database mapping to quest IDs
   id: number;
   name: string;
   description: string | null;
@@ -44,6 +45,7 @@ export interface EditProfileTransactionAttributeInsert {
 
 export interface EditProfileTransactionAttributeUpdate {
   [key: string]: Json;
+  client_key: string; // Temporary key for database mapping to attribute IDs
   id: number;
   name: string;
   position: number;
@@ -62,10 +64,8 @@ export interface EditProfileTransactionAttributeUpdate {
  */
 export interface EditProfileTransactionQuestAttributeInsert {
   [key: string]: Json;
-  quest_id: number | null;
-  quest_name: string;
-  attribute_id: number | null;
-  attribute_name: string;
+  quest_client_key: string;
+  attribute_client_key: string;
   attribute_power: number;
 }
 

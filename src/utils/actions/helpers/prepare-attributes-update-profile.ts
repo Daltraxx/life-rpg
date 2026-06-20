@@ -36,6 +36,7 @@ export const prepareAttributesForProfileUpdate = (
   attributes.forEach((attr, index) => {
     if (typeof attr.id === "number") {
       attributeUpdates.push({
+        client_key: crypto.randomUUID(), // Generate a temporary client key for mapping to the attribute ID in the database
         id: attr.id,
         name: attr.name,
         position: index,
