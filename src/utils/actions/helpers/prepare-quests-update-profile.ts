@@ -41,6 +41,7 @@ interface PreparedQuestUpdates {
 export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
   quests: TransactionQuest[],
   attributeNameToIdMap: Record<string, number>,
+  attributeNameToClientKeyMap: Record<string, string>,
 ): PreparedQuestUpdates => {
   const questInserts: EditProfileTransactionQuestInsert[] = [];
   const questUpdates: EditProfileTransactionQuestUpdate[] = [];
@@ -54,7 +55,6 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
     if (existingQuest) {
       const questId = quest.id as number;
       questUpdates.push({
-        client_key: crypto.randomUUID(), // Generate a temporary client key for mapping to the quest ID in the database
         id: questId,
         name: quest.name,
         description: quest.description,
@@ -78,7 +78,8 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
     quest.affectedAttributes.forEach((affectedAttribute) => {
       const existingAffectedAttribute =
         typeof affectedAttribute.id === "number";
-      const attributeId = attributeNameToIdMap[affectedAttribute.name] ?? null;
+      const attributeId: number | null = attributeNameToIdMap[affectedAttribute.name] ?? null;
+      const attributeClientKey: string | null = attributeNameToClientKeyMap[affectedAttribute.name] ?? null;
       if (
         (existingAffectedAttribute && attributeId === null) ||
         (existingAffectedAttribute && !existingQuest)
@@ -96,8 +97,10 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
         });
       } else {
         questAttributesInserts.push({
-          quest_client_key: existingQuest ? crypto.randomUUID() : quest.id as string, // Use the quest ID for updates or the client-side ID for inserts to map after insertion
-          attribute_client_key: existingAffectedAttribute ? crypto.randomUUID() : affectedAttribute.id as string, // Use the attribute ID for updates or the client-side ID for inserts to map after insertion
+          quest_id: existingQuest ? (quest.id as number) : null,
+          quest_client_key: !existingQuest ? (quest.id as string) : null,
+          attribute_id: attributeId,
+          attribute_client_key: attributeClientKey,
           attribute_power: strengthToIntMap[affectedAttribute.strength],
         });
       }
