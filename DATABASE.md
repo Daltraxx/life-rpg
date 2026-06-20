@@ -80,7 +80,7 @@ Full table can be found on the Supabase dashboard.
 - UNIQUE (user_id, name)
   - Ensures attribute names are unique per user
 - UNIQUE (user_id, position)
-  - Ensures each user has unique attribute ordering
+  - Ensures each user has unique attribute ordering, deferrable to handle reordering within a transaction
 
 **attributes indexes**:
 
@@ -121,7 +121,7 @@ Full table can be found on the Supabase dashboard.
 - `updated_at`: TIMESTAMPTZ DEFAULT NOW() NOT NULL
   - Timestamp of last update
 - UNIQUE (user_id, position)
-  - Ensures each user has unique quest ordering
+  - Ensures each user has unique quest ordering, deferrable to handle reordering within a transaction
 - UNIQUE (user_id, name)
   - Ensures quest names are unique per user
 
