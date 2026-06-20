@@ -85,9 +85,9 @@ export default async function updateProfile(
     p_attribute_updates: attributeUpdates,
     p_quest_attributes_inserts: questAttributesInserts,
     p_quest_attributes_updates: questAttributesUpdates,
-    p_deleted_quest_ids: deletedQuestIds,
-    p_deleted_attribute_ids: deletedAttributeIds,
-    p_deleted_affected_attribute_ids: deletedAffectedAttributeIds,
+    p_quest_deletes: deletedQuestIds,
+    p_attribute_deletes: deletedAttributeIds,
+    p_quest_attributes_deletes: deletedAffectedAttributeIds,
   };
 
   const { error } = await supabase.rpc(
