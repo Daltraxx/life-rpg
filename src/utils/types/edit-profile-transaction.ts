@@ -2,15 +2,15 @@ import { Json } from "@/utils/generatedTypes/supabase";
 
 export interface EditProfileTransactionDataShape {
   p_user_id: string;
-  p_quest_inserts: Json;
-  p_quest_updates: Json;
-  p_attribute_inserts: Json;
-  p_attribute_updates: Json;
-  p_quest_attributes_inserts: Json;
-  p_quest_attributes_updates: Json;
-  p_quest_deletes: Json;
-  p_attribute_deletes: Json;
-  p_quest_attributes_deletes: Json;
+  p_quests_inserts: Json;
+  p_quests_updates: Json;
+  p_attributes_inserts: Json;
+  p_attributes_updates: Json;
+  p_quests_attributes_inserts: Json;
+  p_quests_attributes_updates: Json;
+  p_quests_deletes: Json;
+  p_attributes_deletes: Json;
+  p_quests_attributes_deletes: Json;
 }
 
 export interface EditProfileTransactionQuestInsert {

@@ -79,15 +79,15 @@ export default async function updateProfile(
 
   const editProfileTransactionData: EditProfileTransactionDataShape = {
     p_user_id: user.id,
-    p_quest_inserts: questInserts,
-    p_quest_updates: questUpdates,
-    p_attribute_inserts: attributeInserts,
-    p_attribute_updates: attributeUpdates,
-    p_quest_attributes_inserts: questAttributesInserts,
-    p_quest_attributes_updates: questAttributesUpdates,
-    p_quest_deletes: deletedQuestIds,
-    p_attribute_deletes: deletedAttributeIds,
-    p_quest_attributes_deletes: deletedAffectedAttributeIds,
+    p_quests_inserts: questInserts,
+    p_quests_updates: questUpdates,
+    p_attributes_inserts: attributeInserts,
+    p_attributes_updates: attributeUpdates,
+    p_quests_attributes_inserts: questAttributesInserts,
+    p_quests_attributes_updates: questAttributesUpdates,
+    p_quests_deletes: deletedQuestIds,
+    p_attributes_deletes: deletedAttributeIds,
+    p_quests_attributes_deletes: deletedAffectedAttributeIds,
   };
 
   const { error } = await supabase.rpc(
