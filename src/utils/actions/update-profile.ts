@@ -64,6 +64,7 @@ export default async function updateProfile(
     prepareAttributesForProfileUpdate(validatedAttributes);
 
   const attributeNameToIdMap: Record<string, number> = {};
+  const attributeNameToClientKeyMap: Record<string, string> = {};
 
   // Create a mapping of attribute names to their IDs for all attributes being updated,
   // which will be used to link affected attributes to the correct attribute IDs in the database.
@@ -71,10 +72,15 @@ export default async function updateProfile(
     attributeNameToIdMap[attr.name] = attr.id;
   });
 
+  attributeInserts.forEach((attr) => {
+    attributeNameToClientKeyMap[attr.name] = attr.client_key;
+  });
+
   const { questInserts, questUpdates, questAttributesInserts, questAttributesUpdates } =
     prepareQuestsAndAffectedAttributesForProfileUpdate(
       validatedQuests,
       attributeNameToIdMap,
+      attributeNameToClientKeyMap,
     );
 
   const editProfileTransactionData: EditProfileTransactionDataShape = {
