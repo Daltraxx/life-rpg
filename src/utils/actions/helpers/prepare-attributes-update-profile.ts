@@ -42,6 +42,7 @@ export const prepareAttributesForProfileUpdate = (
       });
     } else {
       attributeInserts.push({
+        id_key: attr.id as string, // Use the string ID as a temporary key for mapping to the new ID in the database
         name: attr.name,
         position: index,
       });

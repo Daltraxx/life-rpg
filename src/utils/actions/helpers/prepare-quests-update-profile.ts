@@ -58,12 +58,18 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
         name: quest.name,
         description: quest.description,
         experience_share: quest.experienceShare,
+        frequency: quest.frequency,
+        rest_frequency: quest.restFrequency,
         position: index,
       });
     } else {
       questInserts.push({
+        id_key: quest.id as string, // Use the temporary client-side ID as the id_key for mapping after insertion
         name: quest.name,
+        description: quest.description,
         experience_share: quest.experienceShare,
+        frequency: quest.frequency,
+        rest_frequency: quest.restFrequency,
         position: index,
       });
     }
