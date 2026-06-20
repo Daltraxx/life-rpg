@@ -19,15 +19,15 @@ interface PreparedQuestUpdates {
 
 /**
  * Prepares quests and their affected attributes for profile updates.
- * 
+ *
  * Separates quests into insert and update operations based on whether they have an existing ID.
  * Also processes all affected attributes for each quest, mapping attribute names to their IDs.
- * 
+ *
  * @param quests - Array of quests to process with their attributes
  * @param attributeNameToIdMap - Map of attribute names to their corresponding IDs
  * @returns PreparedQuestUpdates object containing arrays of quest inserts, updates, and attribute mappings
  * @throws Does not throw, but may produce null values for unmapped attributes
- * 
+ *
  * @example
  * ```typescript
  * const result = prepareQuestsAndAffectedAttributesForProfileUpdate(quests, attributeMap);
@@ -42,7 +42,8 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
 ): PreparedQuestUpdates => {
   const questInserts: EditProfileTransactionQuestInsert[] = [];
   const questUpdates: EditProfileTransactionQuestUpdate[] = [];
-  const questsAttributesData: EditProfileTransactionQuestAttributeMapping[] = [];
+  const questsAttributesData: EditProfileTransactionQuestAttributeMapping[] =
+    [];
   quests.forEach((quest, index) => {
     const existingQuest = typeof quest.id === "number";
     if (existingQuest) {
@@ -64,14 +65,20 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
 
     quest.affectedAttributes.forEach((affectedAttribute) => {
       questsAttributesData.push({
-        id: typeof affectedAttribute.id === "number" ? (affectedAttribute.id as number) : null,
-        quest_id: existingQuest ? quest.id as number : null,
+        id:
+          typeof affectedAttribute.id === "number"
+            ? (affectedAttribute.id as number)
+            : null,
+        quest_id: existingQuest ? (quest.id as number) : null,
         quest_name: quest.name,
+        // New attributes can have temporary string IDs and will not exist in attributeNameToIdMap yet.
+        // In that case attribute_id is intentionally null; the DB transaction resolves the mapping
+        // by attribute_name after inserting those new attributes and assigning numeric IDs.
         attribute_id: attributeNameToIdMap[affectedAttribute.name] ?? null,
         attribute_name: affectedAttribute.name,
         attribute_power: strengthToIntMap[affectedAttribute.strength],
       });
-    })
+    });
   });
 
   return { questInserts, questUpdates, questsAttributesData };
