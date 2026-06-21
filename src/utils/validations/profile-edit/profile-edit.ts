@@ -62,6 +62,9 @@ export type ProfileEditState = {
     quests?: string[];
     attributes?: string[];
     affectedAttributes?: string[];
+    deletedQuestIds?: string[];
+    deletedAttributeIds?: string[];
+    deletedAffectedAttributeIds?: string[];
   };
   message?: string;
 };
