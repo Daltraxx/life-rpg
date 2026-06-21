@@ -13,7 +13,7 @@ import clsx from "clsx";
  * OptionsMenu component that provides a dropdown menu for user options.
  *
  * Displays a menu button that opens a dropdown containing navigation and account options,
- * including a "Rules" link and a "Sign Out" button.
+ * including links to Manual, Dashboard, and profile-related pages, as well as a Sign Out button.
  *
  * @component
  * @param {Object} props - Component props
