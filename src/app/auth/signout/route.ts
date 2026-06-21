@@ -1,44 +1,40 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { type NextRequest, NextResponse } from "next/server";
-import { ROUTES } from "@/utils/constants/routes";
+import { NextResponse } from "next/server";
 
 /**
  * Handles POST requests to sign out the current user.
  *
- * Checks if a user is currently authenticated via Supabase claims,
- * and if so, signs them out. After sign-out, revalidates the root layout
- * and redirects to the home page.
+ * Attempts to sign out the current user regardless of current auth state.
+ * On success, revalidates the root layout and returns 204 so the client
+ * can handle navigation.
  *
- * @param req - The incoming NextRequest object
- * @returns A NextResponse that redirects to the home page with a 302 status code
+ * @returns A NextResponse with 204 on success, or 500 JSON on failure
  */
-export async function POST(req: NextRequest) {
-  const supabase = await createSupabaseServerClient();
-
-  // Check if a user's logged in
-  const { data: claimsData } = await supabase.auth.getClaims();
-
-  if (claimsData?.claims) {
+export async function POST() {
+  try {
+    const supabase = await createSupabaseServerClient();
     const { error } = await supabase.auth.signOut();
+
     if (error) {
       console.error("Error signing out:", error);
       return NextResponse.json(
         {
-          error: error.message,
-          redirectUrl: `${ROUTES.ERROR}?message=${encodeURIComponent(error.message)}&status=500`,
+          error: "Unable to sign out. Please try again.",
         },
         { status: 500 },
       );
     }
-  }
 
-  revalidatePath("/", "layout");
-  // Does not actually cause the client to redirect when this endpoint is called via fetch
-  // (this is handled in the client-side code),
-  // but ensures that if the user tries to navigate anywhere after signing out, 
-  // they will be treated as signed out and not get any cached content meant for authenticated users
-  return NextResponse.redirect(new URL(ROUTES.HOME, req.url), {
-    status: 302,
-  });
+    revalidatePath("/", "layout");
+    return new NextResponse(null, { status: 204 });
+  } catch (error) {
+    console.error("Unexpected error while signing out:", error);
+    return NextResponse.json(
+      {
+        error: "Unable to sign out. Please try again.",
+      },
+      { status: 500 },
+    );
+  }
 }
