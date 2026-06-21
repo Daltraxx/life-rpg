@@ -1,12 +1,11 @@
 "use client";
 
-import { JSX, useCallback } from "react";
+import { JSX } from "react";
 import { DropdownMenu } from "radix-ui";
 import styles from "./styles.module.css";
 import { Button } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { ROUTES } from "@/utils/constants/routes";
-import { isRelativePath } from "@/utils/helpers/is-relative-path";
 import Link from "next/link";
 import clsx from "clsx";
 
