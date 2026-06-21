@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { isValidTimezone } from "./timezone";
 
 // Further validation can be added here as needed
 export const SignupSchema = z.object({
@@ -30,7 +31,7 @@ export const SignupSchema = z.object({
       /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_+=~`<>,.;:'"()\[\]{}\\|/-]).*$/,
       "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character",
     ),
-  timezone: z.string(), // IANA timezone string provided by the client, not user-editable but included in form data for submission
+  timezone: z.string().refine(isValidTimezone, "Invalid timezone"), // IANA timezone string provided by the client, not user-editable but included in form data for submission
 });
 
 export type SignupState = {
