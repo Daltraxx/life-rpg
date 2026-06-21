@@ -6,7 +6,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 /**
  * Updates the timezone for the authenticated user in the database.
  * @param timezone - The timezone string to set for the user
- * @throws Will return early if user is not authenticated
+ * @throws An error if the update fails, with the original error as the cause
  */
 export async function updateTimezone(timezone: string): Promise<void> {
   const supabase = await createSupabaseServerClient();
@@ -20,5 +20,11 @@ export async function updateTimezone(timezone: string): Promise<void> {
     return;
   }
 
-  await setUserTimezone(user.id, timezone);
+
+  try {
+    await setUserTimezone(user.id, timezone);
+  } catch (error) {
+    console.error("Error updating user timezone:", error);
+    throw new Error("Failed to update user timezone", { cause: error });
+  }
 }
