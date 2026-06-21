@@ -3,7 +3,7 @@ import { TransactionAffectedAttributeSchema as ProfileCreationAffectedAttributeS
 
 export const TransactionAffectedAttributeSchema =
   ProfileCreationAffectedAttributeSchema.extend({
-    id: z.number().or(z.string()),
+    id: z.union([z.number(), z.string().min(1, "ID must not be empty")]),
   });
 
 export type TransactionAffectedAttribute = z.infer<
