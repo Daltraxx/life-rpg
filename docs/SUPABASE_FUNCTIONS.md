@@ -7,6 +7,7 @@
 -- It extracts the email, username, and usertag from the raw_user_meta_data JSON field provided by Supabase during signup.
 -- This ensures that every authenticated user has a corresponding profile in our users table,
 -- which is necessary for linking quests, attributes, and progression data.
+-- Note that metadata fields must be validated before insertion, as the trigger assumes they are correctly formatted if present.
 
 ```sql
 -- Trigger Function
