@@ -7,13 +7,18 @@ import {
   MIN_QUESTS_ALLOWED,
   MAX_ATTRIBUTES_ALLOWED,
   MIN_ATTRIBUTES_ALLOWED,
+  MAX_TOTAL_BASE_EXPERIENCE_POINTS,
 } from "@/utils/constants/gameConstants";
 import { getNounAndVerbAgreement } from "@/utils/helpers/pluralOrSingularHandlers";
 
 /**
- * Validation schema for profile editing form data, 
- * including quests and attributes with their respective constraints and uniqueness requirements. 
- * Also validates that deleted IDs do not conflict with updated entities.
+ * Validation schema for profile editing form data,
+ * including quests and attributes with their respective constraints and uniqueness requirements.
+ * Validates that:
+ * - The number of quests and attributes are within defined limits.
+ * - Quest and attribute names are unique.
+ * - Total experience share across quests equals the defined maximum.
+ * - Deleted quest/attribute IDs do not overlap with updated quests/attributes.
  */
 export const ProfileEditSchema = z
   .object({
@@ -35,7 +40,19 @@ export const ProfileEditSchema = z
       )
       .refine((quests) => hasUniqueValues(quests, "name"), {
         message: "Quest names must be unique",
-      }),
+      })
+      .refine(
+        (quests) => {
+          const totalShare = quests.reduce(
+            (sum, q) => sum + q.experienceShare,
+            0,
+          );
+          return totalShare === MAX_TOTAL_BASE_EXPERIENCE_POINTS;
+        },
+        {
+          message: `Total experience share must equal ${MAX_TOTAL_BASE_EXPERIENCE_POINTS}`,
+        },
+      ),
     attributes: z
       .array(TransactionAttributeSchema)
       .min(

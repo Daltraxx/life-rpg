@@ -43,6 +43,10 @@ export const REGULAR_NAME_MIN_LENGTH = 1;
 
 // ------------------------------------------------------------------------
 
+/** Max total base experience points that can be earned from all quests.
+ */
+export const MAX_TOTAL_BASE_EXPERIENCE_POINTS = 100;
+
 /** Minimum number of quests a player must have.
  */
 export const MIN_QUESTS_ALLOWED = 1;
