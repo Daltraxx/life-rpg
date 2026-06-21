@@ -2,7 +2,7 @@
 
 import z from "zod";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
-import { ProfileCreationState } from "@/utils/validations/profile-creation/profile-creation";
+import { ProfileEditState } from "@/utils/validations/profile-edit/profile-edit";
 import { ProfileEditSchema } from "@/utils/validations/profile-edit/profile-edit";
 import { prepareQuestsAndAffectedAttributesForProfileUpdate } from "./helpers/prepare-quests-update-profile";
 import { prepareAttributesForProfileUpdate } from "./helpers/prepare-attributes-update-profile";
@@ -11,9 +11,9 @@ import { redirect } from "next/navigation";
 import { ROUTES } from "../constants/routes";
 
 export default async function updateProfile(
-  prevState: ProfileCreationState | void,
+  prevState: ProfileEditState | void,
   formData: FormData,
-): Promise<ProfileCreationState | void> {
+): Promise<ProfileEditState | void> {
   const supabase = await createSupabaseServerClient();
 
   const {
