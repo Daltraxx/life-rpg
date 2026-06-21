@@ -1,5 +1,5 @@
 import { CookieResponse, CookieStore } from "@/utils/types/cookies";
-import { COOKIES } from "@/utils/constants/cookies";
+import { COOKIES } from "@/utils/constants/server-cookies";
 
 /**
  * Deletes the unverified signup cookie from the cookie store.
@@ -27,7 +27,10 @@ export default function deleteUnverifiedSignupCookie(
       cookieName: COOKIES.UNVERIFIED_SIGNUP,
     };
   } catch (error) {
-    console.error(`Failed to delete ${COOKIES.UNVERIFIED_SIGNUP} cookie:`, error);
+    console.error(
+      `Failed to delete ${COOKIES.UNVERIFIED_SIGNUP} cookie:`,
+      error,
+    );
     return {
       ok: false,
       cookieName: COOKIES.UNVERIFIED_SIGNUP,

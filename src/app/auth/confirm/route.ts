@@ -4,7 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { ROUTES } from "@/utils/constants/routes";
-import { COOKIES } from "@/utils/constants/cookies";
+import { COOKIES } from "@/utils/constants/server-cookies";
 
 /**
  * Handles confirmation links for Supabase Auth by verifying a one-time password (OTP)
@@ -62,7 +62,7 @@ export async function GET(request: NextRequest) {
     redirectTo.pathname = ROUTES.ERROR;
     redirectTo.searchParams.set(
       "message",
-      "Invalid confirmation link. Please check your email for the correct link."
+      "Invalid confirmation link. Please check your email for the correct link.",
     );
     return NextResponse.redirect(redirectTo);
   }
@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
     redirectTo.pathname = ROUTES.ERROR;
     redirectTo.searchParams.set(
       "message",
-      "An unexpected error occurred. Please try again."
+      "An unexpected error occurred. Please try again.",
     );
     return NextResponse.redirect(redirectTo);
   }
@@ -91,7 +91,7 @@ export async function GET(request: NextRequest) {
     redirectTo.pathname = ROUTES.ERROR;
     redirectTo.searchParams.set(
       "message",
-      "An unexpected error occurred during verification. Please try again."
+      "An unexpected error occurred during verification. Please try again.",
     );
     return NextResponse.redirect(redirectTo);
   }
@@ -101,7 +101,7 @@ export async function GET(request: NextRequest) {
     const cookieStore = await cookies();
     cookieStore.delete(COOKIES.UNVERIFIED_SIGNUP);
     cookieStore.delete(COOKIES.PENDING_EMAIL_VERIFICATION);
-    redirectTo.searchParams.delete("next"); // Clean up redirect URL per Supabase Auth best practices    
+    redirectTo.searchParams.delete("next"); // Clean up redirect URL per Supabase Auth best practices
     redirectTo.pathname = ROUTES.CREATE_PROFILE;
     return NextResponse.redirect(redirectTo);
   }

@@ -3,7 +3,7 @@ import { AuthError, AuthSessionMissingError } from "@supabase/supabase-js";
 import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../generatedTypes/supabase";
 import { ROUTES } from "@/utils/constants/routes";
-import { COOKIES } from "@/utils/constants/cookies";
+import { COOKIES } from "@/utils/constants/server-cookies";
 import { resolveProfileComplete } from "@/app/queries/server/resolve-profile-complete";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {

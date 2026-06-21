@@ -3,7 +3,7 @@ import crypto from "crypto";
 import { SetCookieResponse } from "@/utils/types/cookies";
 import { SecureCookiePayload } from "@/utils/types/cookies";
 import { ROUTES } from "@/utils/constants/routes";
-import { COOKIES } from "@/utils/constants/cookies";
+import { COOKIES } from "@/utils/constants/server-cookies";
 
 const COOKIE_EXPIRATION_MS = 5 * 60 * 1000; // 5 minutes
 const COOKIE_MAX_AGE_SECONDS = COOKIE_EXPIRATION_MS / 1000;
@@ -96,7 +96,10 @@ export default function setPendingVerificationEmailCookie(
         expiresAt: payload.exp,
       };
     } catch (error) {
-      console.error(`Failed to set ${COOKIES.PENDING_EMAIL_VERIFICATION} cookie:`, error);
+      console.error(
+        `Failed to set ${COOKIES.PENDING_EMAIL_VERIFICATION} cookie:`,
+        error,
+      );
       return {
         ok: false,
         cookieName: COOKIES.PENDING_EMAIL_VERIFICATION,
