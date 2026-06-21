@@ -33,6 +33,12 @@ export default async function updateProfile(
       rawFormData.quests = JSON.parse(rawFormData.quests);
     if (typeof rawFormData.attributes === "string")
       rawFormData.attributes = JSON.parse(rawFormData.attributes);
+    if (typeof rawFormData.deletedQuestIds === "string")
+      rawFormData.deletedQuestIds = JSON.parse(rawFormData.deletedQuestIds);
+    if (typeof rawFormData.deletedAttributeIds === "string")
+      rawFormData.deletedAttributeIds = JSON.parse(rawFormData.deletedAttributeIds);
+    if (typeof rawFormData.deletedAffectedAttributeIds === "string")
+      rawFormData.deletedAffectedAttributeIds = JSON.parse(rawFormData.deletedAffectedAttributeIds);
   } catch {
     return {
       message: "Invalid JSON format in form data.",
