@@ -5,7 +5,7 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
  * @param userId - The unique identifier of the user
  * @param timezone - The timezone string to set for the user (e.g., "America/New_York")
  * @returns A promise that resolves when the update is complete
- * @throws Logs an error to console if the database update fails
+ * @throws An error if the update fails, with the original error as the cause
  */
 export default async function setUserTimezone(
   userId: string,
@@ -19,5 +19,6 @@ export default async function setUserTimezone(
 
   if (error) {
     console.error("Error updating user timezone:", error);
+    throw new Error("Failed to update user timezone", { cause: error });
   }
 }
