@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     "Set up your account to start progressing with Life RPG. Choose the attributes you wish to level, and the daily quests that will get you there.",
 };
 
-// ids here are temporarily generated on the client side, 
+// ids here are temporarily generated here for the initial profile creation flow, 
 // but are replaced with database generated ids when the profile is created. 
 const INITIAL_ATTRIBUTES: Attribute[] = [
   { id: crypto.randomUUID(), name: "Discipline", experience: 0, level: 1, position: 0 },
