@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useActionState, useRef, ReactElement } from "react";
+import { useState, useActionState, useRef, ReactElement, useEffect } from "react";
 import { createAccount } from "@/utils/actions/createAccount";
 import { SignupState } from "@/utils/validations/signup";
 
@@ -38,12 +38,14 @@ export type SignupFormData = {
   username: string;
   usertag: string;
   password: string;
+  timezone: string; // Not an input field but included in form data for submission
 };
 export const INITIAL_FORM_DATA: SignupFormData = {
   email: "",
   username: "",
   usertag: "",
   password: "",
+  timezone: "", // Not an input field but included in form data for submission
 };
 
 const getSubmitButtonText = (
@@ -86,6 +88,20 @@ const MAX_HEADING_WIDTH_RATIO = 0.95; // 95% of window width
  */
 export default function CreateAccountForm(): ReactElement {
   const [formData, setFormData] = useState(INITIAL_FORM_DATA);
+  const [timezone, setTimezone] = useState("");
+  useEffect(() => {
+    // Timezone is needed for account creation but not part of form inputs, so we fetch it on mount and include it in the form action data
+    const fetchTimezone = async () => {
+      try {
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        setTimezone(tz);
+      } catch (error) {
+        console.error("Failed to fetch timezone:", error);
+        setTimezone("UTC"); // Fallback to UTC if timezone can't be determined
+      }
+    };
+    fetchTimezone();
+  }, []);
 
   const [interactedFields, setInteractedFields] = useState(
     INITIAL_INTERACTED_FIELDS,
@@ -148,6 +164,7 @@ export default function CreateAccountForm(): ReactElement {
         action={formAction}
         aria-describedby={errorState.message ? "server-error" : undefined}
       >
+        <input type="hidden" name="timezone" value={timezone || "UTC"} />
         <div className={styles.inputContainer}>
           {/* EMAIL FIELD */}
           <Label htmlFor="email" size="24-responsive">
@@ -171,7 +188,7 @@ export default function CreateAccountForm(): ReactElement {
             color="orange-600"
           />
         </div>
-    
+
         {/* USERNAME FIELD */}
         <div className={styles.inputContainer}>
           <Label htmlFor="username" size="24-responsive">

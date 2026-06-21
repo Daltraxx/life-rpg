@@ -16,6 +16,7 @@ $$
 DECLARE
   v_username TEXT := NEW.raw_user_meta_data ->> 'username';
   v_usertag TEXT := NEW.raw_user_meta_data ->> 'usertag';
+  v_timezone TEXT := NEW.raw_user_meta_data ->> 'timezone';
 BEGIN
   IF v_username IS NULL OR btrim(v_username) = '' THEN
     RAISE EXCEPTION 'Signup metadata missing required field: username';
@@ -25,8 +26,12 @@ BEGIN
     RAISE EXCEPTION 'Signup metadata missing required field: usertag';
   END IF;
 
-  INSERT INTO public.users (id, email, username, usertag)
-  VALUES (NEW.id, NEW.email, v_username, v_usertag);
+  IF v_timezone IS NULL OR btrim(v_timezone) = '' THEN
+    RAISE EXCEPTION 'Signup metadata missing required field: timezone';
+  END IF;
+
+  INSERT INTO public.users (id, email, username, usertag, timezone)
+  VALUES (NEW.id, NEW.email, v_username, v_usertag, v_timezone);
   RETURN NEW;
 END;
 $$

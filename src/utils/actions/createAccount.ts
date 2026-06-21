@@ -84,8 +84,12 @@ export async function createAccount(
     email: userData.email,
     password: userData.password,
     options: {
-      data: { username: userData.username, usertag: userData.usertag },
-    }, // store username and usertag in auth metadata
+      data: {
+        username: userData.username,
+        usertag: userData.usertag,
+        timezone: userData.timezone,
+      },
+    }, // store username, usertag, and timezone in auth metadata
   });
 
   // Inserting in users table is handled by Supabase trigger
