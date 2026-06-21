@@ -24,11 +24,15 @@ export default function TimezoneUpdater({
 }) {
   useEffect(() => {
     let prevTimezone: string | null = null;
-    const updateUserTimezone = () => {
-      const updatedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      if (prevTimezone !== updatedTimezone) {
-        prevTimezone = updatedTimezone;
-        updateTimezone(updatedTimezone);
+    const updateUserTimezone = async () => {
+      try {
+        const updatedTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (prevTimezone !== updatedTimezone) {
+          prevTimezone = updatedTimezone;
+          await updateTimezone(updatedTimezone);
+        }
+      } catch (error) {
+        console.error("Error updating user timezone:", error);
       }
     };
 
