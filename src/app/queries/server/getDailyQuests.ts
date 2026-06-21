@@ -117,9 +117,6 @@ export default async function getDailyQuests(
       };
     }),
   );
-  // TODO: Remove this log after confirming quests are being fetched with correct attributes in development environment
-  if (process.env.NODE_ENV === "development") {
-    console.log("Fetched quests with attributes:", quests);
-  }
+  
   return quests;
 }
