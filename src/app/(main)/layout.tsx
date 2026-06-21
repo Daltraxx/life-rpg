@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import Header from "@/app/ui/layout/Header/Header";
-import Footer from "@/app/ui/layout/Footer/Footer";
+import Header from "@/app/ui/layout/authenticated/header/Header";
+import Footer from "@/app/ui/layout/authenticated/footer/Footer";
 import styles from "./styles.module.css";
 import TimezoneUpdater from "../components/TimezoneUpdater";
 
