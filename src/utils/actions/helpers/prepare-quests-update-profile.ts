@@ -50,7 +50,6 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
 
     // Determine if the quest is new (insert) or existing (update) based on the presence of a numeric ID.
     if (existingQuest) {
-      const questId = quest.id as number;
       questUpdates.push({
         id: questId,
         name: quest.name,
