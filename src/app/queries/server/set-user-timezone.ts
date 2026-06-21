@@ -20,6 +20,4 @@ export default async function setUserTimezone(
   if (error) {
     console.error("Error updating user timezone:", error);
   }
-
-  // console.log(`Timezone for user ${userId} updated to: ${timezone}`);
 }

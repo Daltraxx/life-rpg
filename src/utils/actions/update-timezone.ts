@@ -20,6 +20,5 @@ export async function updateTimezone(timezone: string): Promise<void> {
     return;
   }
 
-  // console.log("Updating timezone for user:", user.id, "to", timezone);
   await setUserTimezone(user.id, timezone);
 }
