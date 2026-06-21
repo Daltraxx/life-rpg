@@ -5,15 +5,19 @@ import { createSupabaseServerClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { COOKIES } from "@/utils/constants/server-cookies";
 import setUserTimezoneCookie from "@/utils/cookies/set-user-timezone-cookie";
+import { isValidTimezone } from "../validations/timezone";
 
 /**
  * Updates the timezone for the authenticated user in the database if it has changed.
  * Also updates the user's timezone cookie if it has changed.
  *
  * @param timezone - The timezone string to set for the user
- * @throws An error if the update fails, with the original error as the cause
+ * @throws An error if the timezone is invalid or if the update fails, with the original error as the cause
  */
 export async function updateTimezone(timezone: string): Promise<void> {
+  if (!isValidTimezone(timezone)) {
+      throw new Error(`Invalid timezone: ${timezone}`);
+    }
   const supabase = await createSupabaseServerClient();
 
   const {
