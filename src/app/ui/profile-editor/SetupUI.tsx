@@ -52,10 +52,8 @@ export default function SetupUI({
   const { quests, pointsRemaining, actions: questActions } = questManager;
 
   // Handle form submission state
-  const [errorState, formAction, isPending] =
-    mode === "create"
-      ? useActionState(createProfile, INITIAL_PROFILE_CREATION_STATE)
-      : useActionState(updateProfile, INITIAL_PROFILE_CREATION_STATE);
+  const action = mode === "create" ? createProfile : updateProfile;
+  const [errorState, formAction, isPending] = useActionState(action, INITIAL_PROFILE_CREATION_STATE);
 
   const hasQuestsWithNoExperienceShare = quests.some(
     (quest) => quest.experienceShare <= 0,
