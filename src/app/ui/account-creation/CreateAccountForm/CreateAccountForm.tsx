@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useActionState, useRef, ReactElement, useEffect } from "react";
+import {
+  useState,
+  useActionState,
+  useRef,
+  ReactElement,
+  useEffect,
+} from "react";
 import { createAccount } from "@/utils/actions/createAccount";
 import { SignupState } from "@/utils/validations/signup";
 
@@ -91,7 +97,7 @@ export default function CreateAccountForm(): ReactElement {
   const [timezone, setTimezone] = useState("");
   useEffect(() => {
     // Timezone is needed for account creation but not part of form inputs, so we fetch it on mount and include it in the form action data
-    const fetchTimezone = async () => {
+    const fetchTimezone = () => {
       try {
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         setTimezone(tz);
