@@ -11,7 +11,7 @@ import { getNounAndVerbAgreement } from "@/utils/helpers/pluralOrSingularHandler
 import { TransactionQuestSchema as ProfileCreationQuestSchema } from "../profile-creation/transaction-quest";
 
 export const TransactionQuestSchema = ProfileCreationQuestSchema.extend({
-  id: z.number().or(z.string()),
+  id: z.union([z.number(), z.string().min(1, "ID must not be empty")]),
   description: z
     .string()
     .trim()
