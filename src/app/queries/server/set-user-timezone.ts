@@ -1,4 +1,5 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { isValidTimezone } from "@/utils/validations/timezone";
 
 /**
  * Updates the timezone for a user in the database.
@@ -11,6 +12,10 @@ export default async function setUserTimezone(
   userId: string,
   timezone: string,
 ): Promise<void> {
+  if (!isValidTimezone(timezone)) {
+    throw new Error(`Invalid timezone: ${timezone}`);
+  }
+  
   const supabase = await createSupabaseServerClient();
   const { error } = await supabase
     .from("users")
