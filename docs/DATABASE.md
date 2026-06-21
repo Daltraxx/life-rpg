@@ -186,7 +186,7 @@ Full table can be found on the Supabase dashboard.
 
 - Notes on insertions:
   - Each record represents a single experience change event, whether from quest completion, level up, or attribute progression
-  - target indicates where the points are applied (users(experience), quests(quest_strength_points), or attributes(experience))
+  - target indicates where the points are applied (users(experience), quests(strength_points), or attributes(experience))
   - user_id is always required to link the transaction to a user, but attribute_id may be null if the transaction is not related to a specific attribute
   - quest_id is always required upon insert due to all experience being the result of quest completions
   - quest_id is only nullable in case the quest is deleted in the future, but quest_name is stored for reference.
