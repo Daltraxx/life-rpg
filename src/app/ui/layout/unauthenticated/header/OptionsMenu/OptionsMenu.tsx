@@ -31,52 +31,17 @@ import clsx from "clsx";
  */
 export default function OptionsMenu({
   className,
-  profileComplete,
 }: {
   className: string;
-  profileComplete: boolean;
 }): JSX.Element {
   const pages = [
+    { name: "Login", href: ROUTES.HOME },
+    { name: "Sign Up", href: ROUTES.SIGNUP },
     {
       name: "Manual",
       href: ROUTES.MANUAL,
     },
-    {
-      name: "Dashboard",
-      href: ROUTES.PROFILE,
-    },
-    {
-      name: profileComplete ? "Edit Profile" : "Create Profile",
-      href: profileComplete ? ROUTES.EDIT_PROFILE : ROUTES.CREATE_PROFILE,
-    },
   ];
-
-  const router = useRouter();
-  const handleSignOut = useCallback(async () => {
-    try {
-      const response = await fetch(ROUTES.AUTH_SIGNOUT, {
-        method: "POST",
-      });
-      if (!response.ok) {
-        console.error("Failed to sign out:", response.statusText);
-        try {
-          const { redirectUrl } = await response.json();
-          // Only allow relative paths for redirection to prevent open redirect vulnerabilities
-          const redirectPath = isRelativePath(redirectUrl)
-            ? redirectUrl
-            : ROUTES.HOME;
-          router.push(redirectPath); // Redirect to provided URL or fallback to home page
-        } catch {
-          router.push(ROUTES.HOME); // Fallback redirect to home page if JSON parsing fails
-        }
-      } else {
-        router.push(ROUTES.HOME); // Redirect to home page on successful sign out
-      }
-    } catch (error) {
-      console.error("Error signing out:", error);
-      router.push(ROUTES.ERROR); // Redirect to a generic error page on network or unexpected errors
-    }
-  }, [router]);
 
   const pathname = usePathname();
   return (
@@ -109,12 +74,6 @@ export default function OptionsMenu({
                 </DropdownMenu.Item>
               );
             })}
-            <DropdownMenu.Item
-              className={styles.DropdownMenuItem}
-              onSelect={handleSignOut}
-            >
-              Sign Out
-            </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
