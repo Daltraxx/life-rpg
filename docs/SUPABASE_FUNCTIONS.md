@@ -1,10 +1,11 @@
 # Functions and Triggers Reference
 
 ## Handle New User Signup (Trigger)
--- This trigger function listens for new user insertions into the auth.users table (handled by Supabase authentication) 
--- and creates a corresponding record in our application-specific users table. 
--- It extracts the email, username, and usertag from the raw_user_meta_data JSON field provided by Supabase during signup. 
--- This ensures that every authenticated user has a corresponding profile in our users table, 
+
+-- This trigger function listens for new user insertions into the auth.users table (handled by Supabase authentication)
+-- and creates a corresponding record in our application-specific users table.
+-- It extracts the email, username, and usertag from the raw_user_meta_data JSON field provided by Supabase during signup.
+-- This ensures that every authenticated user has a corresponding profile in our users table,
 -- which is necessary for linking quests, attributes, and progression data.
 
 ```sql
@@ -12,9 +13,20 @@
 CREATE OR REPLACE FUNCTION public.handle_new_user_signup()
 RETURNS TRIGGER AS
 $$
+DECLARE
+  v_username TEXT := NEW.raw_user_meta_data ->> 'username';
+  v_usertag TEXT := NEW.raw_user_meta_data ->> 'usertag';
 BEGIN
+  IF v_username IS NULL OR btrim(v_username) = '' THEN
+    RAISE EXCEPTION 'Signup metadata missing required field: username';
+  END IF;
+
+  IF v_usertag IS NULL OR btrim(v_usertag) = '' THEN
+    RAISE EXCEPTION 'Signup metadata missing required field: usertag';
+  END IF;
+
   INSERT INTO public.users (id, email, username, usertag)
-  VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data ->> 'username', NEW.raw_user_meta_data ->> 'usertag');
+  VALUES (NEW.id, NEW.email, v_username, v_usertag);
   RETURN NEW;
 END;
 $$
@@ -71,7 +83,7 @@ const { error } = await supabase.rpc("create_profile_transaction", {
 });
 ```
 
----------------------------------------------------------------------------------------
+---
 
 ## Create Profile Transaction Function
 
@@ -179,13 +191,16 @@ EXCEPTION
 END;
 $$;
 ```
----------------------------------------------------------------------------------------
+
+---
 
 ### Get Settlement Data Function
+
 -- Function to fetch all necessary data for settlement pipeline in a single call
 -- Takes array of timezone strings to filter users for batch processing and optimize data retrieval
 -- Returns JSON with users, quests, attributes, quests_attributes, and quest_completions for relevant users
 -- This function is intended to reduce the number of round trips between the application and database during the daily settlement batch job, improving performance and efficiency. By filtering users based on timezone, we can ensure that we are only retrieving data for users who are due for settlement processing, which is determined by their local date and time. This function should be called at the beginning of the batch job to gather all necessary data before performing calculations and updates.
+
 ```sql
 create or replace function public.get_settlement_users_data(
   p_timezones text[]
@@ -275,16 +290,18 @@ as $$
   ) user_data;
 $$;
 ```
----------------------------------------------------------------------------------------
+
+---
 
 ## Commit Progression Function
+
 -- Function to commit user progression updates to the database in a transaction
 -- Takes processed progression data for a user and the activity date for which the progression is being committed
 -- This function is intended to be called for each user during the daily settlement batch job after calculations have been performed based on the data retrieved from get_settlement_users_data. It will handle all necessary updates to the users, quests, attributes, and progression_logs tables in a single transaction to ensure data integrity. The function also includes validation of the input data and error handling to catch any issues during the update process.
 -- Safe to call multiple times for the same user and activity date due to the unique constraint on daily_progression_batches, which prevents duplicate processing and allows for idempotent retries in case of failures.
 -- Service role permissions are required to execute this function and its helper function due to the need for updating multiple tables and ensuring proper access control.
 
-``` sql
+```sql
 -- Define a function to commit user progression updates to the database in a transaction
 CREATE OR REPLACE FUNCTION public.commit_progression(p_processed_progression_data JSONB, p_activity_date DATE)
 RETURNS void
@@ -347,16 +364,16 @@ BEGIN
     END IF;
 
     -- Update the user's overall experience and level in the users table
-    DECLARE 
+    DECLARE
         v_rows_updated INTEGER;
     BEGIN
         UPDATE users
-        SET 
+        SET
             experience = v_user_experience,
             level = v_user_level,
             updated_at = NOW()
         WHERE id = v_user_id;
-          
+
         GET DIAGNOSTICS v_rows_updated = ROW_COUNT;
         IF v_rows_updated <> 1 THEN
             RAISE EXCEPTION 'Expected to update 1 user, updated % for user %', v_rows_updated, v_user_id;
@@ -390,7 +407,7 @@ BEGIN
             )
         )
         UPDATE quests q
-        SET 
+        SET
             strength_level = qu."strengthLevel",
             strength_points = qu."strengthPoints",
             rest_progress = qu."restProgress",
@@ -427,7 +444,7 @@ BEGIN
         )
     )
         UPDATE attributes a
-        SET 
+        SET
             level = au."level",
             experience = au."experience",
             updated_at = NOW()
@@ -468,7 +485,7 @@ BEGIN
             reason,
             created_at
         )
-        SELECT 
+        SELECT
             v_daily_batch_id,
             v_user_id,
             l."target",
@@ -488,7 +505,7 @@ BEGIN
             "points" INTEGER,
             "reason" TEXT
         );
-      
+
         GET DIAGNOSTICS v_actual_log_inserts = ROW_COUNT;
         IF v_actual_log_inserts <> v_expected_log_inserts THEN
             RAISE EXCEPTION 'Expected to insert % progression logs, but inserted % for user %', v_expected_log_inserts, v_actual_log_inserts, v_user_id;
@@ -513,10 +530,10 @@ BEGIN
             processed_at = v_processed_at,
             updated_at = NOW()
         FROM completion_ids
-        WHERE qc.user_id = v_user_id 
+        WHERE qc.user_id = v_user_id
             AND qc.processed_at IS NULL
             AND qc.id = completion_ids.id;
-        
+
         GET DIAGNOSTICS v_actual_completions_updated = ROW_COUNT;
         IF v_actual_completions_updated <> v_expected_completions_updated THEN
             RAISE EXCEPTION 'Expected to update % quest completions, but updated % for user %', v_expected_completions_updated, v_actual_completions_updated, v_user_id;
@@ -527,14 +544,15 @@ $$;
 ```
 
 ## Edit Profile Transaction Function
+
 -- This function performs the entire profile update process within a single transaction.
 -- It takes the user ID and arrays of quests, attributes, and quest-attribute relationships to be inserted, updated, or deleted.
--- It uses a map of client keys to new IDs for quests and attributes to handle the insertion of new records 
+-- It uses a map of client keys to new IDs for quests and attributes to handle the insertion of new records
 -- and the creation of relationships in the quests_attributes table when there is not a pre-existing attribute or quest ID.
 -- The function ensures that all operations are performed atomically, so if any part of the process fails, the entire transaction will be rolled back to maintain data integrity.
 -- The function also includes security checks to ensure that users can only modify their own profiles, and it validates the input data to prevent issues during the update process.
 
-``` sql
+```sql
 CREATE OR REPLACE FUNCTION public.edit_profile_transaction(
     p_user_id UUID,
     p_quests_inserts JSONB DEFAULT '[]'::JSONB,
@@ -569,26 +587,26 @@ DECLARE
 BEGIN
     -- SECURITY CHECK: Ensure the authenticated user can only modify their own data
     IF p_user_id IS NULL OR p_user_id <> auth.uid() THEN
-      RAISE EXCEPTION 'Unauthorized: User ID mismatch' 
+      RAISE EXCEPTION 'Unauthorized: User ID mismatch'
         USING ERRCODE = '42501';
     END IF;
 
     -- Validate inputs are not NULL
-    IF p_quests_inserts IS NULL OR p_quests_updates IS NULL OR 
-    p_attributes_inserts IS NULL OR p_attributes_updates IS NULL OR 
-    p_quests_attributes_inserts IS NULL OR p_quests_attributes_updates IS NULL OR 
+    IF p_quests_inserts IS NULL OR p_quests_updates IS NULL OR
+    p_attributes_inserts IS NULL OR p_attributes_updates IS NULL OR
+    p_quests_attributes_inserts IS NULL OR p_quests_attributes_updates IS NULL OR
     p_quests_deletes IS NULL OR p_attributes_deletes IS NULL OR p_quests_attributes_deletes IS NULL THEN
       RAISE EXCEPTION 'Input parameters cannot be NULL';
     END IF;
 
     -- Lock the user row to prevent concurrent modifications and ensure the user exists
-    PERFORM 1 
-    FROM public.users 
+    PERFORM 1
+    FROM public.users
     WHERE id = p_user_id
     FOR UPDATE; -- Lock the user row to prevent concurrent modifications
 
-    IF NOT FOUND THEN 
-      RAISE EXCEPTION 'User not found' 
+    IF NOT FOUND THEN
+      RAISE EXCEPTION 'User not found'
         USING ERRCODE = 'P0002';
     END IF;
 
@@ -627,7 +645,7 @@ BEGIN
     END LOOP;
 
     -- 3. Delete attributes. This cascades to quests_attributes due to the foreign key constraint.
-    FOR v_a IN 
+    FOR v_a IN
         SELECT * FROM jsonb_to_recordset(coalesce(p_attributes_deletes, '[]'::JSONB))
         AS x(id INT)
     LOOP
@@ -744,11 +762,11 @@ BEGIN
         AS x(quest_id INT, quest_client_key TEXT, attribute_id INT, attribute_client_key TEXT, attribute_power INT)
     LOOP
         -- Check that at least one of quest_id or quest_client_key is null, and at least one of attribute_id or attribute_client_key is null
-        IF (v_qa.quest_id IS NOT NULL AND v_qa.quest_client_key IS NOT NULL) OR 
+        IF (v_qa.quest_id IS NOT NULL AND v_qa.quest_client_key IS NOT NULL) OR
             (v_qa.attribute_id IS NOT NULL AND v_qa.attribute_client_key IS NOT NULL) THEN
           RAISE EXCEPTION 'For quest-attribute inserts, either quest_id or quest_client_key must be null, and either attribute_id or attribute_client_key must be null';
         END IF;
-        
+
         -- Resolve the quest_id and attribute_id using the maps
         v_resolved_quest_id := COALESCE(v_qa.quest_id, (v_quest_id_map ->> v_qa.quest_client_key)::INT);
         v_resolved_attribute_id := COALESCE(v_qa.attribute_id, (v_attribute_id_map ->> v_qa.attribute_client_key)::INT);
@@ -764,14 +782,14 @@ BEGIN
         END IF;
 
         -- Verify that the resolved quest and attribute belong to the user
-        PERFORM 1 FROM public.quests 
+        PERFORM 1 FROM public.quests
         WHERE id = v_resolved_quest_id AND user_id = p_user_id;
         IF NOT FOUND THEN
           RAISE EXCEPTION 'Resolved quest ID % does not belong to user %',
             v_resolved_quest_id, p_user_id;
         END IF;
 
-        PERFORM 1 FROM public.attributes 
+        PERFORM 1 FROM public.attributes
         WHERE id = v_resolved_attribute_id AND user_id = p_user_id;
         IF NOT FOUND THEN
           RAISE EXCEPTION 'Resolved attribute ID % does not belong to user %',
@@ -783,8 +801,8 @@ BEGIN
         ) VALUES (
           p_user_id, v_resolved_quest_id, v_resolved_attribute_id, v_qa.attribute_power
         )
-        ON CONFLICT (quest_id, attribute_id) 
-        DO UPDATE SET 
+        ON CONFLICT (quest_id, attribute_id)
+        DO UPDATE SET
             attribute_power = EXCLUDED.attribute_power,
             updated_at = NOW();
     END LOOP;
