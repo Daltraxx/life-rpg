@@ -88,7 +88,7 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
         (existingAffectedAttribute && !existingQuest)
       ) {
         throw new Error(
-          `Affected attribute "${affectedAttribute.name}" has an preexisting ID but no corresponding attribute ID found in the mapping.`,
+          `Affected attribute "${affectedAttribute.name}" has a preexisting ID but no corresponding attribute ID found in the mapping.`,
         );
       }
       if (existingAffectedAttribute) {
