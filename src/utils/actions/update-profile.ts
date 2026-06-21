@@ -76,36 +76,48 @@ export default async function updateProfile(
     attributeNameToClientKeyMap[attr.name] = attr.client_key;
   });
 
-  const { questInserts, questUpdates, questAttributesInserts, questAttributesUpdates } =
-    prepareQuestsAndAffectedAttributesForProfileUpdate(
+  try {
+    const {
+      questInserts,
+      questUpdates,
+      questAttributesInserts,
+      questAttributesUpdates,
+    } = prepareQuestsAndAffectedAttributesForProfileUpdate(
       validatedQuests,
       attributeNameToIdMap,
       attributeNameToClientKeyMap,
     );
 
-  const editProfileTransactionData: EditProfileTransactionDataShape = {
-    p_user_id: user.id,
-    p_quests_inserts: questInserts,
-    p_quests_updates: questUpdates,
-    p_attributes_inserts: attributeInserts,
-    p_attributes_updates: attributeUpdates,
-    p_quests_attributes_inserts: questAttributesInserts,
-    p_quests_attributes_updates: questAttributesUpdates,
-    p_quests_deletes: deletedQuestIds,
-    p_attributes_deletes: deletedAttributeIds,
-    p_quests_attributes_deletes: deletedAffectedAttributeIds,
-  };
+    const editProfileTransactionData: EditProfileTransactionDataShape = {
+      p_user_id: user.id,
+      p_quests_inserts: questInserts,
+      p_quests_updates: questUpdates,
+      p_attributes_inserts: attributeInserts,
+      p_attributes_updates: attributeUpdates,
+      p_quests_attributes_inserts: questAttributesInserts,
+      p_quests_attributes_updates: questAttributesUpdates,
+      p_quests_deletes: deletedQuestIds,
+      p_attributes_deletes: deletedAttributeIds,
+      p_quests_attributes_deletes: deletedAffectedAttributeIds,
+    };
 
-  const { error } = await supabase.rpc(
-    "edit_profile_transaction",
-    editProfileTransactionData,
-  );
+    const { error } = await supabase.rpc(
+      "edit_profile_transaction",
+      editProfileTransactionData,
+    );
 
-  if (error) {
-    console.error("Error executing profile update transaction:", error);
+    if (error) {
+      console.error("Error executing profile update transaction:", error);
+      return {
+        message:
+          "An error occurred while updating the profile. Please try again.",
+      };
+    }
+  } catch (error) {
+    console.error("Error preparing quest data for update:", error);
     return {
       message:
-        "An error occurred while updating the profile. Please try again.",
+        "An error occurred while processing quest data. Please try again.",
     };
   }
 
