@@ -14,8 +14,7 @@ import { resolveProfileComplete } from "@/app/queries/server/resolve-profile-com
  *
  * @remarks
  * - If an error occurs while checking or setting the completion status, the function
- *   defaults to returning true to restrict access to profile creation routes.
- *   Resolution is deferred to the next request cycle.
+ *   throws an error that must be handled by the caller.
  * - This function is intended to be used in server components or API routes
  *   where access to the authenticated user's profile completion status is needed.
  */
