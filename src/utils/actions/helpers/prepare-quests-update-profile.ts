@@ -108,6 +108,7 @@ export const prepareQuestsAndAffectedAttributesForProfileUpdate = (
             `Error validating ID and client key pair for quest "${quest.name}" and attribute "${affectedAttribute.name}":`,
             error,
           );
+          throw error; // Re-throw the error after logging
         }
         questAttributesInserts.push({
           quest_id: questId,
