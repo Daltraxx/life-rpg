@@ -15,10 +15,10 @@ export const metadata: Metadata = {
 // ids here are temporarily generated on the client side, 
 // but are replaced with database generated ids when the profile is created. 
 const INITIAL_ATTRIBUTES: Attribute[] = [
-  { id: crypto.randomUUID(), name: "Discipline", experience: 0, level: 1, position: 1 },
-  { id: crypto.randomUUID(), name: "Vitality", experience: 0, level: 1, position: 2 },
-  { id: crypto.randomUUID(), name: "Intelligence", experience: 0, level: 1, position: 3 },
-  { id: crypto.randomUUID(), name: "Fitness", experience: 0, level: 1, position: 4 },
+  { id: crypto.randomUUID(), name: "Discipline", experience: 0, level: 1, position: 0 },
+  { id: crypto.randomUUID(), name: "Vitality", experience: 0, level: 1, position: 1 },
+  { id: crypto.randomUUID(), name: "Intelligence", experience: 0, level: 1, position: 2 },
+  { id: crypto.randomUUID(), name: "Fitness", experience: 0, level: 1, position: 3 },
 ];
 
 export default async function AccountSetupPage() {
