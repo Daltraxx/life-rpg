@@ -24,8 +24,6 @@ import clsx from "clsx";
  * <OptionsMenu className="header-menu" />
  *
  * @remarks
- * - The Sign Out action makes a POST request to `/auth/signout` endpoint
- * - On successful or failed sign out, the user is redirected to the home page
  * - Uses Radix UI DropdownMenu components for accessibility
  */
 export default function OptionsMenu({
