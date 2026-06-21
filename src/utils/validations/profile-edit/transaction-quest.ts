@@ -15,7 +15,6 @@ export const TransactionQuestSchema = ProfileCreationQuestSchema.extend({
   description: z
     .string()
     .trim()
-    .min(1, "Description cannot be empty")
     .max(
       MAX_QUEST_DESCRIPTION_LENGTH,
       `Description cannot exceed ${MAX_QUEST_DESCRIPTION_LENGTH} characters`,
