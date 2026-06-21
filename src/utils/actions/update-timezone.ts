@@ -2,9 +2,14 @@
 
 import setUserTimezone from "@/app/queries/server/set-user-timezone";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import { cookies } from "next/headers";
+import { COOKIES } from "@/utils/constants/server-cookies";
+import setUserTimezoneCookie from "@/utils/cookies/set-user-timezone-cookie";
 
 /**
- * Updates the timezone for the authenticated user in the database.
+ * Updates the timezone for the authenticated user in the database if it has changed.
+ * Also updates the user's timezone cookie if it has changed.
+ *
  * @param timezone - The timezone string to set for the user
  * @throws An error if the update fails, with the original error as the cause
  */
@@ -20,6 +25,17 @@ export async function updateTimezone(timezone: string): Promise<void> {
     return;
   }
 
+  const cookieStore = await cookies();
+  const prevTimezone = cookieStore.get(COOKIES.TIMEZONE)?.value;
+  if (prevTimezone === timezone) {
+    // No change in timezone, no need to update
+    return;
+  }
+
+  const cookieResponse = setUserTimezoneCookie(cookieStore, timezone);
+  if (!cookieResponse.ok) {
+    console.error("Error setting timezone cookie:", cookieResponse.error);
+  }
 
   try {
     await setUserTimezone(user.id, timezone);
