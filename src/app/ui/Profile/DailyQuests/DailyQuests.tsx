@@ -35,7 +35,7 @@ export default async function DailyQuests({ userId }: { userId: string }) {
     return (
       <div>
         <Heading as="h1">Oh no.</Heading>
-        <p>Sorry, we couldn't load your quests. Please try again later.</p>
+        <p>Sorry, we couldn&apos;t load your quests. Please try again later.</p>
       </div>
     );
   }
