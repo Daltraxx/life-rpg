@@ -24,10 +24,10 @@ interface AffectedAttributesTableProps {
  * ```tsx
  * <AffectedAttributesTable
  *   selectedAttributes={[
- *     { name: "Strength", strength: "plus" },
- *     { name: "Intelligence", strength: "plusPlus" }
+ *     { id: 1, name: "Strength", strength: "plus" },
+ *     { id: 2, name: "Intelligence", strength: "plusPlus" }
  *   ]}
- *   onDeleteAttribute={(name) => console.log(`Removing ${name}`)}
+ *   onDeleteAttribute={(id) => console.log(`Removing attribute with ID: ${id}`)}
  * />
  * ```
  */
@@ -46,7 +46,7 @@ export default function AffectedAttributesTable({
       </thead>
       <tbody>
         {selectedAttributes.map((attribute) => (
-          <tr key={attribute.name} className={styles.affectedAttributeRow}>
+          <tr key={attribute.id} className={styles.affectedAttributeRow}>
             <td
               className={clsx(
                 styles.affectedAttributeCell,
