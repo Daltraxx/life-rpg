@@ -153,7 +153,7 @@ export default function CreateAccountForm(): ReactElement {
       outerClassName={styles.outerContainer}
       innerClassName={styles.contentContainer}
     >
-      <div className={styles.headerContainer} onClick={() => console.log(formData)}>
+      <div className={styles.headerContainer}>
         <Heading
           as="h1"
           size="48-responsive"
