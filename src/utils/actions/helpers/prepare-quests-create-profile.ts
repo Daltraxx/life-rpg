@@ -1,5 +1,5 @@
 import type { CreateProfileTransactionQuests } from "@/utils/types/create-profile-transaction";
-import type { TransactionQuest } from "../validations/profile-creation/transaction-quest";
+import type { TransactionQuest } from "@/utils/validations/profile-creation/transaction-quest";
 
 /**
  * Prepares an array of quests for database insertion by mapping them to a transaction-compatible format.
