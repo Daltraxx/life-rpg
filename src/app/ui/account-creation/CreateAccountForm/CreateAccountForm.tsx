@@ -105,6 +105,7 @@ export default function CreateAccountForm(): ReactElement {
       } catch (error) {
         console.error("Failed to fetch timezone:", error);
         setTimezone("UTC"); // Fallback to UTC if timezone can't be determined
+        setFormData((prev) => ({ ...prev, timezone: "UTC" }));
       }
     };
     fetchTimezone();
