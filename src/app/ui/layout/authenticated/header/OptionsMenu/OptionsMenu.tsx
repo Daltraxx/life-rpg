@@ -59,13 +59,16 @@ export default function OptionsMenu({
       });
 
       if (!response.ok) {
+        // TODO: Redirect to error page or show a user-friendly error message (toast notification?).
         console.error("Failed to sign out:", response.statusText);
+        return;
       }
       router.replace(ROUTES.HOME);
       router.refresh();
     } catch (error) {
       console.error("Error signing out:", error);
       // TODO: Redirect to error page or show a user-friendly error message (toast notification?).
+      return;
     }
   }, [router]);
 
