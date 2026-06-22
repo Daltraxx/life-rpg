@@ -105,7 +105,6 @@ const affectedAttributeSelectionReducer = (
         currentAttributeName,
         selectedAttributes,
       } = state;
-      console.log("Deleting affected attribute with ID:", affectedAttributeId);
       // Remove the specified attribute from the selected list
       const updatedSelectedAttributes = selectedAttributes.filter(
         (attr) => attr.id !== affectedAttributeId,
