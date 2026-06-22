@@ -557,6 +557,7 @@ $$;
 -- and the creation of relationships in the quests_attributes table when there is not a pre-existing attribute or quest ID.
 -- The function ensures that all operations are performed atomically, so if any part of the process fails, the entire transaction will be rolled back to maintain data integrity.
 -- The function also includes security checks to ensure that users can only modify their own profiles, and it validates the input data to prevent issues during the update process.
+-- TODO: Make all parameters required and remove defaults, as this function should be called with all necessary data for a complete profile update.
 
 ```sql
 CREATE OR REPLACE FUNCTION public.edit_profile_transaction(
