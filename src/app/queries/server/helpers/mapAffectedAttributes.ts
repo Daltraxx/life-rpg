@@ -4,13 +4,12 @@ import {
 } from "@/utils/helpers/strengthToIntMap";
 
 export type AffectedAttributesQueryResult = {
-  strength: number | null;
+  id: number;
+  strength: number;
   attributes: {
     id: number;
     name: string;
-    level: number | null;
-    experience: number | null;
-  } | null;
+  };
 }[];
 
 /**
@@ -45,7 +44,7 @@ export default function mapAffectedAttributes(
         );
       }
       return {
-        id: Number(attribute.id),
+        id: questAttr.id,
         name: attribute.name,
         strength: intToStrengthMap[strength],
       };

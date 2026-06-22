@@ -44,12 +44,11 @@ export default async function getDailyQuests(
     updated_at,
 
     affectedAttributes:quests_attributes (
+      id,
       strength:attribute_power,
       attributes (
         id,
-        name,
-        level,
-        experience
+        name
       )
     ),
     latestCompletion:quest_completions (

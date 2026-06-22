@@ -39,12 +39,11 @@ export default async function getQuests(): Promise<Quest[]> {
     position,
 
     affectedAttributes:quests_attributes (
+      id,
       strength:attribute_power,
       attributes (
         id,
-        name,
-        level,
-        experience
+        name
       )
     )
   `,
