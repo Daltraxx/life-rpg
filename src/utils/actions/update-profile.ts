@@ -43,7 +43,8 @@ export default async function updateProfile(
       rawFormData.deletedAffectedAttributeIds = JSON.parse(
         rawFormData.deletedAffectedAttributeIds,
       );
-  } catch {
+  } catch (error) {
+    console.error("JSON parse error in updateProfile:", error);
     return {
       message: "Invalid JSON format in form data.",
     };
