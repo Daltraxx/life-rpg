@@ -3,7 +3,7 @@ import { faRectangleXmark } from "@fortawesome/free-regular-svg-icons";
 import clsx from "clsx";
 import { ListItem } from "@/app/ui/JSXWrappers/TextWrappers/TextWrappers";
 import styles from "./styles.module.css";
-import { JSX, useCallback } from "react";
+import { JSX } from "react";
 import type { Attribute } from "@/utils/types/attribute";
 import {
   ChevronDownButton,
