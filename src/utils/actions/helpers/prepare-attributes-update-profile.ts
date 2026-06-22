@@ -5,10 +5,10 @@ import {
 import { TransactionAttribute } from "@/utils/validations/profile-edit/transaction-attribute";
 
 /**
- * Prepares an array of attributes for profile update by separating them into inserts and updates.
+ * An object containing arrays of attribute inserts and updates for profile update transactions.
  *
- * @param attributes - An array of TransactionAttribute objects to be prepared for update
- * @returns An object containing arrays of attribute inserts and updates
+ * - `attributeInserts`: An array of attributes that need to be inserted, each containing a client key, name, and position.
+ * - `attributeUpdates`: An array of attributes that need to be updated, each containing an ID, name, and position.
  */
 interface PreparedAttributeUpdates {
   attributeInserts: EditProfileTransactionAttributeInsert[];
