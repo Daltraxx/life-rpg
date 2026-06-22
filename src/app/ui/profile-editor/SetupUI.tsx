@@ -53,7 +53,10 @@ export default function SetupUI({
 
   // Handle form submission state
   const action = mode === "create" ? createProfile : updateProfile;
-  const [errorState, formAction, isPending] = useActionState(action, INITIAL_PROFILE_CREATION_STATE);
+  const [errorState, formAction, isPending] = useActionState(
+    action,
+    INITIAL_PROFILE_CREATION_STATE,
+  );
 
   const hasQuestsWithNoExperienceShare = quests.some(
     (quest) => quest.experienceShare <= 0,
@@ -68,7 +71,12 @@ export default function SetupUI({
   return (
     <form
       action={formAction}
-      aria-describedby={errorState?.message ? "quest-board-errors" : undefined}
+      aria-describedby={
+        errorState?.message ||
+        (hasQuestsWithNoExperienceShare && pointsRemaining === 0)
+          ? "quest-board-errors"
+          : undefined
+      }
     >
       <Bounded innerClassName={styles.setupContainer}>
         {/* ATTRIBUTE AND QUEST WIDGETS */}
