@@ -261,7 +261,7 @@ const reducerInitializerFunction = ({
  *     - setCurrentAttributeName: Updates the currently selected attribute name
  *     - setAttributeStrength: Updates the strength value of the current attribute
  *     - addAffectedAttribute: Adds the current attribute to the affected attributes list
- *     - deleteAffectedAttribute: Removes an affected attribute by name
+ *     - deleteAffectedAttribute: Removes an affected attribute by ID
  *     - resetAffectedAttributeSelectionUI: Resets the selection UI to initial state
  *     - syncAffectedAttributesWithAllAvailableAttributes: Manually synchronizes affected attributes with updated available attributes
  *
