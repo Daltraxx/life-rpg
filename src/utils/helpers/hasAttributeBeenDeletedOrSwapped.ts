@@ -17,7 +17,7 @@ const hasAttributeBeenDeletedOrSwapped = (
   if (prevAttributes.size > newAttributes.size) {
     return true;
   }
-  for (let attr of prevAttributes) {
+  for (const attr of prevAttributes) {
     if (!newAttributes.has(attr)) {
       return true;
     }
