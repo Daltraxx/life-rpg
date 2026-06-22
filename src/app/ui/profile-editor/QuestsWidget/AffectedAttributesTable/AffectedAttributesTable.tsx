@@ -6,7 +6,7 @@ import componentStyles from "@/app/ui/shared-css/common.module.css";
 
 interface AffectedAttributesTableProps {
   selectedAttributes: AffectedAttribute[];
-  onDeleteAttribute: (name: string) => void;
+  onDeleteAttribute: (id: string | number) => void;
 }
 
 /**
@@ -16,7 +16,7 @@ interface AffectedAttributesTableProps {
  * @param props - Component props
  * @param props.selectedAttributes - Array of attributes to display in the table
  * @param props.onDeleteAttribute - Callback function invoked when the remove button
- * is clicked, receives the attribute name as a parameter
+ * is clicked, receives the attribute ID as a parameter
  *
  * @returns A table component with attribute name, strength indicator, and remove button
  *
@@ -73,7 +73,7 @@ export default function AffectedAttributesTable({
                   componentStyles.appendedButton,
                   styles.deleteAttributeButton,
                 )}
-                onClick={() => onDeleteAttribute(attribute.name)}
+                onClick={() => onDeleteAttribute(attribute.id)}
                 type="button"
                 aria-label={`Remove ${attribute.name} from affected attributes`}
               >
