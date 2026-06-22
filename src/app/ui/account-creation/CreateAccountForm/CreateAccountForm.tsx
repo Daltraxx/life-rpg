@@ -101,6 +101,7 @@ export default function CreateAccountForm(): ReactElement {
       try {
         const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
         setTimezone(tz);
+        setFormData((prev) => ({ ...prev, timezone: tz }));
       } catch (error) {
         console.error("Failed to fetch timezone:", error);
         setTimezone("UTC"); // Fallback to UTC if timezone can't be determined
@@ -151,7 +152,7 @@ export default function CreateAccountForm(): ReactElement {
       outerClassName={styles.outerContainer}
       innerClassName={styles.contentContainer}
     >
-      <div className={styles.headerContainer}>
+      <div className={styles.headerContainer} onClick={() => console.log(formData)}>
         <Heading
           as="h1"
           size="48-responsive"
