@@ -36,10 +36,10 @@ export default function OptionsMenu({
   profileComplete: boolean;
 }): JSX.Element {
   const pages = [
-    {
-      name: "Manual",
-      href: ROUTES.MANUAL,
-    },
+    // {
+    //   name: "Manual",
+    //   href: ROUTES.MANUAL,
+    // },
     {
       name: "Dashboard",
       href: ROUTES.PROFILE,

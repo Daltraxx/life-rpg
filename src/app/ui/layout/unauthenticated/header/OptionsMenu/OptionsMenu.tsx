@@ -34,10 +34,10 @@ export default function OptionsMenu({
   const pages = [
     { name: "Login", href: ROUTES.HOME },
     { name: "Sign Up", href: ROUTES.SIGNUP },
-    {
-      name: "Manual",
-      href: ROUTES.MANUAL,
-    },
+    // {
+    //   name: "Manual",
+    //   href: ROUTES.MANUAL,
+    // },
   ];
 
   const pathname = usePathname();
