@@ -1,4 +1,4 @@
-import type { User, SupabaseClient } from "@supabase/supabase-js";
+import type { SupabaseClient } from "@supabase/supabase-js";
 
 /**
  * Checks whether a user's profile is complete by querying the database.
