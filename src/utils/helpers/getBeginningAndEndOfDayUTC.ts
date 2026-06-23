@@ -1,5 +1,13 @@
 import { TZDate } from "@date-fns/tz";
-import { endOfDay, startOfDay, addHours, subHours } from "date-fns";
+import {
+  endOfDay,
+  startOfDay,
+  addHours,
+  subHours,
+  setHours,
+  subMilliseconds,
+  addDays,
+} from "date-fns";
 import { DAY_BOUNDARY_HOUR_OFFSET } from "@/utils/constants/gameConstants";
 
 /**
@@ -15,6 +23,14 @@ export interface UTCDayBoundaries {
 /**
  * Calculates the beginning and end of the current day in UTC, based on the user's timezone.
  * Includes the hour offset for day boundaries as defined in game constants.
+ * 
+ * Flow:
+ * 1. Get the current date and time in the user's timezone.
+ * 2. Adjust the time by subtracting the day boundary hour offset, 
+ *    ensuring that even if time is after midnight but before the boundary hour, 
+ *    it is considered part of the previous day.
+ * 3. Calculate the start and end of the day in the user's timezone, anchored at the wall-clock boundary hour.
+ * 4. Convert these times to UTC and return them as ISO string timestamps.
  *
  * @param userTimezone - The user's timezone string (e.g., 'America/New_York')
  * @returns An object containing the ISO string timestamps for the start and end of the day in UTC
@@ -31,16 +47,16 @@ export default function getBeginningAndEndOfDayUTC(
   try {
     const nowInUserTZ = new TZDate(new Date(), userTimezone);
     // Adjust for the day boundary hour offset
-    // For example, if DAY_BOUNDARY_HOUR_OFFSET is 2, and it is currently 1 AM in the user's timezone, 
+    // For example, if DAY_BOUNDARY_HOUR_OFFSET is 2, and it is currently 1 AM in the user's timezone,
     // we consider it still part of the previous day.
     const adjustedTime = subHours(nowInUserTZ, DAY_BOUNDARY_HOUR_OFFSET);
 
-    // Start/end of the current day in the user's timezone shifted by the day boundary hour offset
-    const beginningOfDayUserTZ = addHours(
+    // Start/end of the current day in the user's timezone, anchored at the wall-clock boundary hour
+    const beginningOfDayUserTZ = setHours(
       startOfDay(adjustedTime),
       DAY_BOUNDARY_HOUR_OFFSET,
     );
-    const endOfDayUserTZ = addHours(endOfDay(adjustedTime), DAY_BOUNDARY_HOUR_OFFSET);
+    const endOfDayUserTZ = subMilliseconds(addDays(beginningOfDayUserTZ, 1), 1);
 
     // UTC timestamps for the start and end of the day in the user's timezone
     const beginningOfDayUTC = beginningOfDayUserTZ.toISOString();
