@@ -1,5 +1,5 @@
 import { TZDate } from "@date-fns/tz";
-import { endOfDay, startOfDay, addHours } from "date-fns";
+import { endOfDay, startOfDay, addHours, subHours } from "date-fns";
 import { END_OF_DAY_HOUR } from "@/utils/constants/gameConstants";
 
 /**
@@ -30,10 +30,11 @@ export default function getBeginningAndEndOfDayUTC(
 ): UTCDayBoundaries {
   try {
     const nowInUserTZ = new TZDate(new Date(), userTimezone);
+    const adjustedTime = subHours(nowInUserTZ, END_OF_DAY_HOUR); // Adjust for the end of day hour offset
 
-    // Start/end of the current day in the user's timezone
-    const beginningOfDayUserTZ = addHours(startOfDay(nowInUserTZ), END_OF_DAY_HOUR);
-    const endOfDayUserTZ = addHours(endOfDay(nowInUserTZ), END_OF_DAY_HOUR);
+    // Start/end of the current day in the user's timezone shifted by the end of day hour offset
+    const beginningOfDayUserTZ = addHours(startOfDay(adjustedTime), END_OF_DAY_HOUR);
+    const endOfDayUserTZ = addHours(endOfDay(adjustedTime), END_OF_DAY_HOUR);
 
     // UTC timestamps for the start and end of the day in the user's timezone
     const beginningOfDayUTC = beginningOfDayUserTZ.toISOString();
