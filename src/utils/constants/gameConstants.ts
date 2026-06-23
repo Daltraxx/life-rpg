@@ -99,6 +99,6 @@ export const MAX_AFFECTED_ATTRIBUTES_PER_QUEST = 50;
 
 // ------------------------------------------------------------------------
 
-/** The hour at which the end of the day occurs.
+/** The hour offset for day boundaries.
  */
-export const END_OF_DAY_HOUR = 2;
+export const DAY_BOUNDARY_HOUR_OFFSET = 2; // This means that the "end of day" is considered to be 2 AM in the user's local timezone.
