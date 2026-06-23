@@ -16,7 +16,7 @@ export default function Intro(): ReactElement {
         on-screen progress that will be reflected in your real life mind,
         discipline, and capabilities. It&apos;s a feedback loop that can be
         mesmerizing in a video game. Now it can propel you to becoming
-        overpowered in your own dreams, in your own life.
+        overpowered in your own dreams, in your own life. (Beta version, so please report any bugs you find!)
       </Paragraph>
     </Bounded>
   );
