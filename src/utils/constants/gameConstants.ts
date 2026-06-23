@@ -96,3 +96,9 @@ export const MIN_AFFECTED_ATTRIBUTES_PER_QUEST = 1;
 /** Maximum number of affected attributes allowed per quest.
  */
 export const MAX_AFFECTED_ATTRIBUTES_PER_QUEST = 50;
+
+// ------------------------------------------------------------------------
+
+/** The hour at which the end of the day occurs.
+ */
+export const END_OF_DAY_HOUR = 2;
