@@ -14,7 +14,7 @@ export interface UTCDayBoundaries {
 
 /**
  * Calculates the beginning and end of the current day in UTC, based on the user's timezone.
- * Includes the hour offset for the end of the day as defined in game constants.
+ * Includes the hour offset for day boundaries as defined in game constants.
  *
  * @param userTimezone - The user's timezone string (e.g., 'America/New_York')
  * @returns An object containing the ISO string timestamps for the start and end of the day in UTC
