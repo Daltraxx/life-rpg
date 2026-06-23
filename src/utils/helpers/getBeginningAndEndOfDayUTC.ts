@@ -30,6 +30,7 @@ export interface UTCDayBoundaries {
  *    ensuring that even if time is after midnight but before the boundary hour, 
  *    it is considered part of the previous day.
  * 3. Calculate the start and end of the day in the user's timezone, anchored at the wall-clock boundary hour.
+ *    This takes into account time changes due to daylight saving time and other timezone-specific rules.
  * 4. Convert these times to UTC and return them as ISO string timestamps.
  *
  * @param userTimezone - The user's timezone string (e.g., 'America/New_York')
