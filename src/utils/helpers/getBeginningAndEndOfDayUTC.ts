@@ -30,10 +30,16 @@ export default function getBeginningAndEndOfDayUTC(
 ): UTCDayBoundaries {
   try {
     const nowInUserTZ = new TZDate(new Date(), userTimezone);
-    const adjustedTime = subHours(nowInUserTZ, END_OF_DAY_HOUR); // Adjust for the end of day hour offset
+    // Adjust for the end of day hour offset
+    // For example, if END_OF_DAY_HOUR is 2, and it is currently 1 AM in the user's timezone, 
+    // we consider it still part of the previous day.
+    const adjustedTime = subHours(nowInUserTZ, END_OF_DAY_HOUR);
 
     // Start/end of the current day in the user's timezone shifted by the end of day hour offset
-    const beginningOfDayUserTZ = addHours(startOfDay(adjustedTime), END_OF_DAY_HOUR);
+    const beginningOfDayUserTZ = addHours(
+      startOfDay(adjustedTime),
+      END_OF_DAY_HOUR,
+    );
     const endOfDayUserTZ = addHours(endOfDay(adjustedTime), END_OF_DAY_HOUR);
 
     // UTC timestamps for the start and end of the day in the user's timezone
