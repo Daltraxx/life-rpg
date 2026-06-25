@@ -1,5 +1,7 @@
 import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayUTC";
 import getUserTimezone from "../getUserTimezone";
+import { cookies } from "next/headers";
+import { COOKIES } from "@/utils/constants/server-cookies";
 
 type QuestCompletionRecordItems = {
   completed_at: string;
@@ -31,7 +33,10 @@ export default async function isQuestCompletedToday({
     return false;
   }
   try {
-    const userTimezone = await getUserTimezone(userId);
+    const cookieStore = await cookies();
+    let userTimezone = cookieStore.get(COOKIES.TIMEZONE)?.value;
+    if (!userTimezone) userTimezone = await getUserTimezone(userId);
+
     const { beginningOfDayUTC, endOfDayUTC } =
       getBeginningAndEndOfDayUTC(userTimezone);
     return (
