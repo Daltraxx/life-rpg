@@ -1,11 +1,13 @@
 import { createSupabaseServerClient } from "@/utils/supabase/server";
+import type { QueryResponse } from "@/utils/types/query-response";
 
 /**
  * Retrieves the authenticated user's ID from the Supabase session.
- * @returns A promise that resolves to the authenticated user's ID.
- * @throws {Error} If the user is not authenticated or an error occurs during retrieval.
+ * @returns A promise that resolves to a QueryResponse containing the authenticated user's ID.
  */
-export default async function getAuthenticatedUserId(): Promise<string> {
+export default async function getAuthenticatedUserId(): Promise<
+  QueryResponse<string>
+> {
   const supabase = await createSupabaseServerClient();
 
   const {
@@ -13,7 +15,13 @@ export default async function getAuthenticatedUserId(): Promise<string> {
     error,
   } = await supabase.auth.getUser();
   if (error || !user) {
-    throw new Error("User not authenticated", { cause: error });
+    return {
+      data: null,
+      error: error || new Error("No authenticated user found"),
+    };
   }
-  return user.id;
+  return {
+    data: user.id,
+    error: null,
+  };
 }
