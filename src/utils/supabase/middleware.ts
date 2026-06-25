@@ -143,47 +143,52 @@ export async function updateSession(
     return NextResponse.redirect(url);
   }
 
-  // Paths accessible to authenticated (email-verified) users
-  const authenticatedUserPaths = [
-    ROUTES.CREATE_PROFILE,
-    ROUTES.EDIT_PROFILE,
-    ROUTES.PROFILE,
-    ROUTES.ERROR,
-    ROUTES.AUTH,
-  ];
-  const isAuthenticatedUserPath = authenticatedUserPaths.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`),
-  );
+  if (user) {
+    // Paths accessible to authenticated (email-verified) users
+    const authenticatedUserPaths = [
+      ROUTES.CREATE_PROFILE,
+      ROUTES.EDIT_PROFILE,
+      ROUTES.PROFILE,
+      ROUTES.ERROR,
+      ROUTES.AUTH,
+    ];
+    const isAuthenticatedUserPath = authenticatedUserPaths.some(
+      (path) => pathname === path || pathname.startsWith(`${path}/`),
+    );
 
-  // Get profile completion status from user metadata or resolve it from database if not present
-  const { data: profileComplete, error: profileError } = await getResolvedProfileCompletionStatus();
+    // Get profile completion status from user metadata or resolve it from database if not present
+    const { data: profileComplete, error: profileError } =
+      await getResolvedProfileCompletionStatus();
 
-  if (profileError) {
-    console.error("Failed to resolve profile completion status:", { profileError });
-    const url = request.nextUrl.clone();
-    url.pathname = ROUTES.ERROR;
-    return NextResponse.redirect(url);
-  }
+    if (profileError) {
+      console.error("Failed to resolve profile completion status:", {
+        profileError,
+      });
+      const url = request.nextUrl.clone();
+      url.pathname = ROUTES.ERROR;
+      return NextResponse.redirect(url);
+    }
 
-  if (user && !isAuthenticatedUserPath) {
-    // Redirect authenticated users to complete profile or profile page based on profile completion status in metadata
-    const url = request.nextUrl.clone();
-    url.pathname = profileComplete ? ROUTES.PROFILE : ROUTES.CREATE_PROFILE;
-    return NextResponse.redirect(url);
-  }
+    if (!isAuthenticatedUserPath) {
+      // Redirect authenticated users to complete profile or profile page based on profile completion status in metadata
+      const url = request.nextUrl.clone();
+      url.pathname = profileComplete ? ROUTES.PROFILE : ROUTES.CREATE_PROFILE;
+      return NextResponse.redirect(url);
+    }
 
-  if (pathname === ROUTES.CREATE_PROFILE && profileComplete) {
-    // If user tries to access create-profile but they already have a complete profile, redirect to edit-profile
-    const url = request.nextUrl.clone();
-    url.pathname = ROUTES.EDIT_PROFILE;
-    return NextResponse.redirect(url);
-  }
+    if (pathname === ROUTES.CREATE_PROFILE && profileComplete) {
+      // If user tries to access create-profile but they already have a complete profile, redirect to edit-profile
+      const url = request.nextUrl.clone();
+      url.pathname = ROUTES.EDIT_PROFILE;
+      return NextResponse.redirect(url);
+    }
 
-  if (pathname === ROUTES.EDIT_PROFILE && !profileComplete) {
-    // If user tries to access edit-profile but they don't have a complete profile, redirect to create-profile
-    const url = request.nextUrl.clone();
-    url.pathname = ROUTES.CREATE_PROFILE;
-    return NextResponse.redirect(url);
+    if (pathname === ROUTES.EDIT_PROFILE && !profileComplete) {
+      // If user tries to access edit-profile but they don't have a complete profile, redirect to create-profile
+      const url = request.nextUrl.clone();
+      url.pathname = ROUTES.CREATE_PROFILE;
+      return NextResponse.redirect(url);
+    }
   }
 
   // IMPORTANT: You *must* return the supabaseResponse object as it is.
