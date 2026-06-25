@@ -5,24 +5,8 @@ import styles from "./styles.module.css";
 import PurposeStatement from "./PurposeStatement/PurposeStatement";
 
 export default async function LevelSummary({ userId }: { userId: string }) {
-  try {
-    const userProgress = await getUserProgress(userId);
-    return (
-      <div className={styles.container}>
-        <Banner userProgress={userProgress} />
-        <div className={styles.contentContainer}>
-          <AttributeSummary
-            userProgress={userProgress}
-            className={styles.attributeSummary}
-          />
-          <PurposeStatement
-            purposeText={userProgress.purpose}
-            className={styles.purposeStatement}
-          />
-        </div>
-      </div>
-    );
-  } catch (error) {
+  const { data: userProgress, error } = await getUserProgress(userId);
+  if (error) {
     console.error("Error fetching user progress:", error);
     // TODO: Handle error more gracefully, maybe with a dedicated error component
     return (
@@ -32,4 +16,20 @@ export default async function LevelSummary({ userId }: { userId: string }) {
       </div>
     );
   }
+  
+  return (
+    <div className={styles.container}>
+      <Banner userProgress={userProgress} />
+      <div className={styles.contentContainer}>
+        <AttributeSummary
+          userProgress={userProgress}
+          className={styles.attributeSummary}
+        />
+        <PurposeStatement
+          purposeText={userProgress.purpose}
+          className={styles.purposeStatement}
+        />
+      </div>
+    </div>
+  );
 }
