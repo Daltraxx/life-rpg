@@ -4,6 +4,18 @@ import getUserProgress from "@/app/queries/server/getUserProgress";
 import styles from "./styles.module.css";
 import PurposeStatement from "./PurposeStatement/PurposeStatement";
 
+/**
+ * Displays the stats related to the user's general level as well as attribute levels and purpose.
+ *
+ * @async
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.userId - The unique identifier of the user
+ * @returns {Promise<JSX.Element>} A rendered profile summary component or error fallback
+ *
+ * @example
+ * <LevelSummary userId="user123" />
+ */
 export default async function LevelSummary({ userId }: { userId: string }) {
   const { data: userProgress, error } = await getUserProgress(userId);
   if (error) {
@@ -16,7 +28,7 @@ export default async function LevelSummary({ userId }: { userId: string }) {
       </div>
     );
   }
-  
+
   return (
     <div className={styles.container}>
       <Banner userProgress={userProgress} />
