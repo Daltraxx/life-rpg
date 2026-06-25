@@ -1,4 +1,5 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
+import type { QueryResponse } from "@/utils/types/query-response";
 
 /**
  * Checks whether a user's profile is complete by querying the database.
@@ -7,32 +8,30 @@ import type { SupabaseClient } from "@supabase/supabase-js";
  *
  * @param userId - The ID of the user whose profile completion status needs to be checked
  * @param supabase - The Supabase client instance used to query the database
- * @returns A promise that resolves to true if the user's profile is complete, false otherwise
- * @throws Will throw an error if the database query fails
+ * @returns A promise that resolves to a QueryResponse object containing the profile completion status
  *
  * @example
  * ```typescript
- * const isComplete = await isProfileComplete(userId, supabaseClient);
+ * const { data: isComplete, error } = await getProfileCompletionStatus(userId, supabaseClient);
  * if (isComplete) {
  *   // Proceed with authenticated flow
  * }
  * ```
  */
-export default async function isProfileComplete(
+export default async function getProfileCompletionStatus(
   userId: string,
   supabase: SupabaseClient
-): Promise<boolean> {
+): Promise<QueryResponse<boolean>> {
   const { data, error } = await supabase
     .from("users")
     .select("profile_complete")
     .eq("id", userId)
     .single<{ profile_complete: boolean }>();
 
-  if (error)
-    throw new Error(
-      `Failed to check profile completion for user ${userId}: ${error.message}`,
-      { cause: error }
-    );
+  if (error) {
+    console.error("Error checking profile completion status:", { error });
+    return { data: null, error };
+  }
 
-  return data.profile_complete;
+  return { data: data.profile_complete, error: null };
 }

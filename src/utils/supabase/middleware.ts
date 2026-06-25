@@ -4,7 +4,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import type { Database } from "../generatedTypes/supabase";
 import { ROUTES } from "@/utils/constants/routes";
 import { COOKIES } from "@/utils/constants/server-cookies";
-import { resolveProfileComplete } from "@/app/queries/server/resolve-profile-complete";
+import { getResolvedProfileCompletionStatus } from "../helpers/get-resolved-profile-completion-status";
 
 const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   const errorDetails = {
@@ -155,10 +155,14 @@ export async function updateSession(
     (path) => pathname === path || pathname.startsWith(`${path}/`),
   );
 
-  // If user is authenticated but profile_complete is not set in metadata, check profile completion status and update metadata
-  let profileComplete = user?.app_metadata?.profile_complete; // Initialize here to track value since current request will not immediately reflect metadata updates
-  if (user && profileComplete === undefined) {
-    profileComplete = await resolveProfileComplete(user.id, supabase);
+  // Get profile completion status from user metadata or resolve it from database if not present
+  const { data: profileComplete, error: profileError } = await getResolvedProfileCompletionStatus();
+
+  if (profileError) {
+    console.error("Failed to resolve profile completion status:", { profileError });
+    const url = request.nextUrl.clone();
+    url.pathname = ROUTES.ERROR;
+    return NextResponse.redirect(url);
   }
 
   if (user && !isAuthenticatedUserPath) {

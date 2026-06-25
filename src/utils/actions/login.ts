@@ -8,7 +8,7 @@ import { LoginSchema, LoginState } from "@/utils/validations/login";
 import { createSupabaseServerClient } from "@/utils/supabase/server";
 import resendVerificationEmail from "@/app/queries/server/resendVerificationEmail";
 import { ROUTES } from "@/utils/constants/routes";
-import { resolveProfileComplete } from "@/app/queries/server/resolve-profile-complete";
+import { getResolvedProfileCompletionStatus } from "@/utils/helpers/get-resolved-profile-completion-status";
 
 /**
  * Authenticates a user by processing login form data and establishing a session.
@@ -103,9 +103,13 @@ export async function login(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
   revalidatePath("/"); // Revalidate home page or relevant pages to reflect authenticated state
-  let profileComplete = data.user.app_metadata?.profile_complete;
-  if (profileComplete === undefined) {
-    profileComplete = await resolveProfileComplete(data.user.id, supabase);
+  const { data: profileComplete, error: profileError } = await getResolvedProfileCompletionStatus();
+  if (profileError) {
+    console.error("Failed to resolve profile completion status:", { profileError });
+    return {
+      message:
+        "An unexpected error occurred while checking profile status. Please try again later.",
+    };
   }
 
   const redirectRoute = profileComplete
