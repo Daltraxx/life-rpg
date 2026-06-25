@@ -3,6 +3,7 @@ import { DailyQuest } from "@/utils/types/DailyQuest";
 import isQuestCompletedToday from "./helpers/isQuestCompletedToday";
 import getQuestBonusPoints from "@/utils/helpers/getQuestBonusPoints";
 import mapAffectedAttributes from "./helpers/mapAffectedAttributes";
+import type { QueryResponse } from "@/utils/types/query-response";
 
 /**
  * Fetches all daily quests for the specified user.
@@ -21,11 +22,11 @@ import mapAffectedAttributes from "./helpers/mapAffectedAttributes";
  */
 export default async function getDailyQuests(
   userId: string,
-): Promise<DailyQuest[]> {
+): Promise<QueryResponse<DailyQuest[]>> {
   const supabase = await createSupabaseServerClient();
 
-  // RLS policies further restrict access to only quests belonging to the authenticated user, 
-  // so combined with this function only being called on the server, 
+  // RLS policies further restrict access to only quests belonging to the authenticated user,
+  // so combined with this function only being called on the server,
   // we can be confident that users cannot access quests that don't belong to them.
   const { data, error } = await supabase
     .from("quests")
@@ -71,51 +72,56 @@ export default async function getDailyQuests(
 
   if (error) {
     console.error("Error fetching quests:", error);
-    throw new Error("Failed to fetch daily quests", { cause: error });
+    return { data: null, error };
   }
 
-  const quests = await Promise.all(
-    (data ?? []).map(async (quest) => {
-      const isCompleted = await isQuestCompletedToday({
-        userId,
-        latestCompletion: quest.latestCompletion[0] ?? null,
-      });
-      const completionStatus: DailyQuest["isCompleted"] = isCompleted
-        ? "completed"
-        : "incomplete";
-      if (!quest.strength_levels) {
-        throw new Error(
-          `Missing strength_levels data for quest ID ${quest.id}`,
+  try {
+    const quests = await Promise.all(
+      (data ?? []).map(async (quest) => {
+        const isCompleted = await isQuestCompletedToday({
+          userId,
+          latestCompletion: quest.latestCompletion[0] ?? null,
+        });
+        const completionStatus: DailyQuest["isCompleted"] = isCompleted
+          ? "completed"
+          : "incomplete";
+        if (!quest.strength_levels) {
+          throw new Error(
+            `Missing strength_levels data for quest with ID ${quest.id}.`,
+          );
+        }
+        const bonusExperiencePoints = getQuestBonusPoints(
+          quest.experienceShare,
+          quest.strength_levels.multiplier,
         );
-      }
-      const bonusExperiencePoints = getQuestBonusPoints(
-        quest.experienceShare,
-        quest.strength_levels.multiplier,
-      );
 
-      return {
-        id: quest.id,
-        name: quest.name,
-        description: quest.description,
-        isCompleted: completionStatus,
-        completedQuestId: isCompleted
-          ? (quest.latestCompletion[0]?.id ?? null)
-          : null,
-        experienceShare: quest.experienceShare,
-        frequency: quest.frequency,
-        restFrequency: quest.restFrequency,
-        streak: quest.streak,
-        strengthPoints: quest.strengthPoints,
-        strengthLevel: quest.strengthLevel,
-        bonusExperiencePoints: bonusExperiencePoints,
-        position: quest.position,
-        affectedAttributes: mapAffectedAttributes(
-          quest.id,
-          quest.affectedAttributes,
-        ),
-      };
-    }),
-  );
-  
-  return quests;
+        return {
+          id: quest.id,
+          name: quest.name,
+          description: quest.description,
+          isCompleted: completionStatus,
+          completedQuestId: isCompleted
+            ? (quest.latestCompletion[0]?.id ?? null)
+            : null,
+          experienceShare: quest.experienceShare,
+          frequency: quest.frequency,
+          restFrequency: quest.restFrequency,
+          streak: quest.streak,
+          strengthPoints: quest.strengthPoints,
+          strengthLevel: quest.strengthLevel,
+          bonusExperiencePoints: bonusExperiencePoints,
+          position: quest.position,
+          affectedAttributes: mapAffectedAttributes(
+            quest.id,
+            quest.affectedAttributes,
+          ),
+        };
+      }),
+    );
+
+    return { data: quests, error: null };
+  } catch (error) {
+    console.error("Error processing quests:", error);
+    return { data: null, error: error as Error };
+  }
 }
