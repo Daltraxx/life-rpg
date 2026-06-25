@@ -30,7 +30,7 @@ export const getResolvedProfileCompletionStatus = async (): Promise<QueryRespons
     return { data: null, error: error as Error };
   }
 
-  let profileCompleteMetadataValue = user.app_metadata?.profile_complete;
+  const profileCompleteMetadataValue = user.app_metadata?.profile_complete;
   if (profileCompleteMetadataValue !== undefined) {
     return { data: profileCompleteMetadataValue, error: null };
   }
