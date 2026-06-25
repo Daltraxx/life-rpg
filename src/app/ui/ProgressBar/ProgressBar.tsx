@@ -32,77 +32,65 @@ export default function ProgressBar({
   current,
   size,
 }: ProgressBarProps) {
-  try {
-    // Validate inputs
-    if (start >= end) {
-      throw new Error(
-        `Invalid range: start (${start}) must be less than end (${end})`,
-      );
-    }
-    if (current < start || current > end) {
-      throw new Error(
-        `Current value (${current}) must be between start (${start}) and end (${end})`,
-      );
-    }
-
-    const progressWidth = ((current - start) / (end - start)) * 100;
-    return (
-      <div
-        className={clsx(
-          styles.container,
-          size === "small" ? styles.smallContainer : styles.largeContainer,
-        )}
-        role="progressbar"
-        aria-valuenow={current}
-        aria-valuemin={start}
-        aria-valuemax={end}
-        aria-label="Experience progress"
-      >
-        <div
-          className={styles.progress}
-          style={{ width: `${progressWidth}%` }}
-        ></div>
-        <Span
-          className={clsx(
-            styles.leftBound,
-            clsx(size === "small" ? styles.smallVal : styles.largeVal),
-          )}
-          size="custom"
-        >
-          {start}
-        </Span>
-        {/* TODO: Account for cases where current is so close to start or end that it overlaps with the bounds */}
-        <Span
-          className={clsx(
-            styles.currentValue,
-            clsx(size === "small" ? styles.smallVal : styles.largeVal),
-          )}
-          style={{ left: `${progressWidth}%` }}
-          size="custom"
-        >
-          {current !== start ? current : ""}
-        </Span>
-        <Span
-          className={clsx(
-            styles.rightBound,
-            clsx(size === "small" ? styles.smallVal : styles.largeVal),
-          )}
-          size="custom"
-        >
-          {end}
-        </Span>
-      </div>
-    );
-  } catch (error) {
+  // Validate inputs
+  if (start >= end || current < start || current > end) {
+    console.error(`Invalid progress bar configuration: start=${start}, end=${end}, current=${current}`);
     return (
       // TODO: This error handling is very basic - consider creating a dedicated error component that fits the app's design better
       <div className={styles.container}>
         <Span size="custom" className={styles.error}>
-          {error instanceof Error
-            ? error.message
-            : "Invalid progress bar configuration"}
+          Invalid progress bar configuration
         </Span>
       </div>
     );
   }
+
+  const progressWidth = ((current - start) / (end - start)) * 100;
+  return (
+    <div
+      className={clsx(
+        styles.container,
+        size === "small" ? styles.smallContainer : styles.largeContainer,
+      )}
+      role="progressbar"
+      aria-valuenow={current}
+      aria-valuemin={start}
+      aria-valuemax={end}
+      aria-label="Experience progress"
+    >
+      <div
+        className={styles.progress}
+        style={{ width: `${progressWidth}%` }}
+      ></div>
+      <Span
+        className={clsx(
+          styles.leftBound,
+          clsx(size === "small" ? styles.smallVal : styles.largeVal),
+        )}
+        size="custom"
+      >
+        {start}
+      </Span>
+      {/* TODO: Account for cases where current is so close to start or end that it overlaps with the bounds */}
+      <Span
+        className={clsx(
+          styles.currentValue,
+          clsx(size === "small" ? styles.smallVal : styles.largeVal),
+        )}
+        style={{ left: `${progressWidth}%` }}
+        size="custom"
+      >
+        {current !== start ? current : ""}
+      </Span>
+      <Span
+        className={clsx(
+          styles.rightBound,
+          clsx(size === "small" ? styles.smallVal : styles.largeVal),
+        )}
+        size="custom"
+      >
+        {end}
+      </Span>
+    </div>
+  );
 }
