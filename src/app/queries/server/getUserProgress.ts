@@ -4,6 +4,7 @@ import {
   calculateLevelProgress,
   type LevelProgress,
 } from "@/utils/helpers/calculateLevelProgress";
+import type { QueryResponse } from "@/utils/types/query-response";
 
 /**
  * Fetches and calculates the progress data for a user.
@@ -14,7 +15,7 @@ import {
  */
 export default async function getUserProgress(
   userId: string,
-): Promise<UserProgress> {
+): Promise<QueryResponse<UserProgress>> {
   const supabase = await createSupabaseServerClient();
 
   // RLS policies further restrict access to only user data belonging to the authenticated user,
@@ -24,17 +25,17 @@ export default async function getUserProgress(
     .from("users")
     .select(
       `
-    id,
-    username,
-    experience,
-    purpose,
-    attributes (
       id,
-      name,
+      username,
       experience,
-      position
-    )
-    `,
+      purpose,
+      attributes (
+        id,
+        name,
+        experience,
+        position
+      )
+      `,
     )
     .eq("id", userId)
     .order("position", {
@@ -45,7 +46,10 @@ export default async function getUserProgress(
 
   if (error) {
     console.error("Error fetching user progress:", error);
-    throw new Error("Failed to fetch user progress", { cause: error });
+    return {
+      data: null,
+      error: error,
+    };
   }
 
   const userLevelProgress: LevelProgress = calculateLevelProgress(
@@ -78,5 +82,8 @@ export default async function getUserProgress(
     }),
   };
 
-  return userProgress;
+  return {
+    data: userProgress,
+    error: null,
+  };
 }
