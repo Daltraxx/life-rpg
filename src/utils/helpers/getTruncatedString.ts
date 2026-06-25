@@ -86,5 +86,7 @@ export default function getTruncatedString(
     truncated = truncated.slice(0, -1);
     measuredWidth = context.measureText(truncated + "...").width; // NOTE: not a perfect measurement but close enough for now
   }
+  console.log(`Truncated string: "${truncated}" (original: "${string}") to fit within ${maxStringWidth}px`);
+  console.log(`Measured width: ${measuredWidth}px, Max width: ${maxStringWidth}px`);
   return truncated + "...";
 }

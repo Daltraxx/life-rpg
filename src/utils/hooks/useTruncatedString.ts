@@ -34,41 +34,13 @@ export default function useTruncatedString(
   const [displayString, setDisplayString] = useState(
     stringVal || placeholderText,
   );
-  const [stringTruncated, setStringTruncated] = useState(false);
 
   const prevStringVal = useRef<string>(stringVal);
 
-  // If the string value has changed to a shorter length, reset truncation state and allow re-evaluation
-  const onStringValChange = useEffectEvent((newStringVal: string) => {
-    if (newStringVal.length < prevStringVal.current.length) {
-      setStringTruncated(false);
-    }
-    prevStringVal.current = newStringVal;
-  });
-  useEffect(() => {
-    onStringValChange(stringVal);
-  }, [stringVal]);
-
-  // Reset truncation state on window resize to re-evaluate
-  const onWindowResize = useEffectEvent(() => {
-    setStringTruncated(false);
-  });
-  useEffect(() => {
-    // Debounce the resize event to avoid excessive re-renders
-    const resizeHandler = setTimeout(() => {
-      onWindowResize();
-    }, 300);
-
-    return () => {
-      clearTimeout(resizeHandler);
-    };
-  }, [windowWidth]);
-
-  const onEvaluateTruncation = useEffectEvent(() => {
+  const truncationHandler = () => { 
     const maxElementWidth = windowWidth * maxWidthRatio;
     const currentString = stringVal || placeholderText;
     if (elementWidth > maxElementWidth) {
-      setStringTruncated(true);
       const truncatedString = getTruncatedString(
         currentString,
         windowWidth,
@@ -80,30 +52,32 @@ export default function useTruncatedString(
     } else {
       setDisplayString(currentString);
     }
+  }
+
+  const onStringValChange = useEffectEvent((newStringVal: string) => {
+    truncationHandler();
   });
+
+  const onWindowWidthChange = useEffectEvent(() => {
+    truncationHandler();
+  });
+
+  // Trigger truncation evaluation when the string value changes
   useEffect(() => {
-    // If already truncated (window resize and reducing string length will reset this), do nothing to prevent infinite loop
-    // (truncation reduces element width below threshold, which would trigger re-truncation)
-    if (stringTruncated) return;
+    if (prevStringVal.current !== stringVal) {
+      console.log("Running due to stringVal change");
+      prevStringVal.current = stringVal;
+      onStringValChange(stringVal);
+    }
+  }, [stringVal]);
 
-    const stringChangeHandler = setTimeout(() => {
-      onEvaluateTruncation();
-    }, 0);
-
-    return () => {
-      clearTimeout(stringChangeHandler);
-    };
-  }, [
-    stringVal,
-    elementWidth,
-    windowWidth,
-    stringTruncated,
-    maxWidthRatio,
-    placeholderText,
-    fontName,
-    smallFontSize,
-    largeFontSize,
-  ]);
+  // Trigger truncation evaluation when the window width changes
+  useEffect(() => {
+    setTimeout(() => {
+      console.log("Running due to windowWidth change");
+      onWindowWidthChange();
+    }, 300); // Delay to ensure the element width has been updated after window resize
+  }, [windowWidth]);
 
   return displayString;
 }
