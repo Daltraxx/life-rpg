@@ -1,4 +1,4 @@
-import { useEffect, useState, RefObject, useRef } from "react";
+import { useEffect, useState, RefObject, useRef, useEffectEvent } from "react";
 import useWindowWidth from "./useWindowWidth";
 import useElementWidth from "./useElementWidth";
 import getTruncatedString from "@/utils/helpers/getTruncatedString";
@@ -27,29 +27,36 @@ export default function useTruncatedString(
   placeholderText: string,
   fontName: string,
   smallFontSize: number = 16,
-  largeFontSize: number = 16
+  largeFontSize: number = 16,
 ): string {
   const windowWidth = useWindowWidth();
   const elementWidth = useElementWidth(elementRef);
   const [displayString, setDisplayString] = useState(
-    stringVal || placeholderText
+    stringVal || placeholderText,
   );
   const [stringTruncated, setStringTruncated] = useState(false);
 
   const prevStringVal = useRef<string>(stringVal);
 
-  useEffect(() => {
-    // If the string value has changed to a shorter length, reset truncation state
-    if (stringVal.length < prevStringVal.current.length) {
+  // If the string value has changed to a shorter length, reset truncation state and allow re-evaluation
+  const onStringValChange = useEffectEvent((newStringVal: string) => {
+    if (newStringVal.length < prevStringVal.current.length) {
       setStringTruncated(false);
     }
-    prevStringVal.current = stringVal;
+    prevStringVal.current = newStringVal;
+  });
+  useEffect(() => {
+    onStringValChange(stringVal);
   }, [stringVal]);
 
   // Reset truncation state on window resize to re-evaluate
+  const onWindowResize = useEffectEvent(() => {
+    setStringTruncated(false);
+  });
   useEffect(() => {
+    // Debounce the resize event to avoid excessive re-renders
     const resizeHandler = setTimeout(() => {
-      setStringTruncated(false);
+      onWindowResize();
     }, 300);
 
     return () => {
@@ -57,14 +64,9 @@ export default function useTruncatedString(
     };
   }, [windowWidth]);
 
-  useEffect(() => {
-    // If already truncated (window resize and reducing string length will reset this), do nothing to prevent infinite loop
-    // (truncation reduces element width below threshold, which would trigger re-truncation)
-    if (stringTruncated) return;
-
+  const onEvaluateTruncation = useEffectEvent(() => {
     const maxElementWidth = windowWidth * maxWidthRatio;
     const currentString = stringVal || placeholderText;
-
     if (elementWidth > maxElementWidth) {
       setStringTruncated(true);
       const truncatedString = getTruncatedString(
@@ -72,12 +74,25 @@ export default function useTruncatedString(
         windowWidth,
         elementWidth,
         maxElementWidth,
-        { fontName, smallFontSize, largeFontSize }
+        { fontName, smallFontSize, largeFontSize },
       );
       setDisplayString(truncatedString);
     } else {
       setDisplayString(currentString);
     }
+  });
+  useEffect(() => {
+    // If already truncated (window resize and reducing string length will reset this), do nothing to prevent infinite loop
+    // (truncation reduces element width below threshold, which would trigger re-truncation)
+    if (stringTruncated) return;
+
+    const stringChangeHandler = setTimeout(() => {
+      onEvaluateTruncation();
+    }, 0);
+
+    return () => {
+      clearTimeout(stringChangeHandler);
+    };
   }, [
     stringVal,
     elementWidth,
