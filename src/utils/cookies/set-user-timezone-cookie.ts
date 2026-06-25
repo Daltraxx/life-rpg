@@ -21,7 +21,7 @@ export default function setUserTimezoneCookie(
   cookieStore: CookieStore,
   timezone: string,
 ): SetCookieResponse {
-  const ttlSeconds = 60 * 60 * 24 * 30; // 30 days
+  const ttlSeconds = 60 * 60 * 3; // 3 hours
   try {
     cookieStore.set(COOKIES.TIMEZONE, timezone, {
       httpOnly: true,
