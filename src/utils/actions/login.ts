@@ -67,7 +67,7 @@ export async function login(
     };
   }
 
-  const { data, error } = await supabase.auth.signInWithPassword(
+  const { error } = await supabase.auth.signInWithPassword(
     validatedFields.data,
   );
 
