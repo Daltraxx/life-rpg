@@ -21,6 +21,14 @@ const getUserErrorLog = (error: AuthError, request: NextRequest) => {
   return errorDetails;
 };
 
+const redirectWithCookies = (url: URL, supabaseResponse: NextResponse) => {
+  const redirectResponse = NextResponse.redirect(url);
+  supabaseResponse.cookies.getAll().forEach((cookie) => {
+    redirectResponse.cookies.set(cookie);
+  });
+  return redirectResponse;
+};
+
 /**
  * Updates the user session by validating authentication state and managing cookies.
  *
@@ -169,28 +177,28 @@ export async function updateSession(
       }
       const url = request.nextUrl.clone();
       url.pathname = ROUTES.ERROR;
-      return NextResponse.redirect(url);
+      return redirectWithCookies(url, supabaseResponse);
     }
 
     if (!isAuthenticatedUserPath) {
       // Redirect authenticated users to complete profile or profile page based on profile completion status in metadata
       const url = request.nextUrl.clone();
       url.pathname = profileComplete ? ROUTES.PROFILE : ROUTES.CREATE_PROFILE;
-      return NextResponse.redirect(url);
+      return redirectWithCookies(url, supabaseResponse);
     }
 
     if (pathname === ROUTES.CREATE_PROFILE && profileComplete) {
       // If user tries to access create-profile but they already have a complete profile, redirect to edit-profile
       const url = request.nextUrl.clone();
       url.pathname = ROUTES.EDIT_PROFILE;
-      return NextResponse.redirect(url);
+      return redirectWithCookies(url, supabaseResponse);
     }
 
     if (pathname === ROUTES.EDIT_PROFILE && !profileComplete) {
       // If user tries to access edit-profile but they don't have a complete profile, redirect to create-profile
       const url = request.nextUrl.clone();
       url.pathname = ROUTES.CREATE_PROFILE;
-      return NextResponse.redirect(url);
+      return redirectWithCookies(url, supabaseResponse);
     }
   }
 
