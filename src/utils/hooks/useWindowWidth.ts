@@ -31,13 +31,14 @@ import { useState, useEffect, useRef } from "react";
  * - Cancels any pending animation frame or timeout when the component unmounts.
  */
 export default function useWindowWidth(debounceMs: number = 0): number {
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [windowWidth, setWindowWidth] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth : 0
+  );
   const frameRef = useRef<number | null>(null);
   const timeoutRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    setWindowWidth(window.innerWidth);
 
     const handleResize = () => {
       // Debounced resize handling
@@ -66,5 +67,6 @@ export default function useWindowWidth(debounceMs: number = 0): number {
       if (timeoutRef.current !== null) window.clearTimeout(timeoutRef.current);
     };
   }, [debounceMs]);
+
   return windowWidth;
 }
