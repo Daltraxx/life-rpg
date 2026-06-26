@@ -2,6 +2,17 @@
 
 import { measureText } from "./measure-text";
 
+/**
+ * Configuration options for truncating a string based on its rendered width.
+ * @typedef {Object} TruncateOptions
+ * @property {string} font - The font name used for measuring the string width.
+ * @property {number} fontSize - The font size used for measuring the string width.
+ * @property {number} [breakpointFontSize] - The font size used when window width is large (>= 768px). Defaults to `fontSize` if not provided.
+ * @property {number} [fontWeight] - The font weight used for measuring the string width. Defaults to 400.
+ * @property {string} [fontStyle] - The font style used for measuring the string width. Defaults to "normal".
+ * @property {number} [windowWidthBreakpointMD] - The window width breakpoint for determining which font size to use. Defaults to 768.
+ * @property {number} [windowWidth] - The current window width. If not provided, fontSize only will be used for measurement.
+ */
 type TruncateOptions = {
   font: string;
   fontSize: number;
@@ -13,30 +24,12 @@ type TruncateOptions = {
 };
 
 /**
- * Truncates a string to fit within a specified maximum width by removing characters from the end
- * and appending an ellipsis ("...").
- *
- * @param string - The string to be truncated
- * @param windowWidth - The current window width in pixels, used to determine font size
- * @param stringWidth - The initial measured width of the string in pixels
- * @param maxStringWidth - The maximum allowed width for the string in pixels
- * @param options - Configuration object for text measurement
- * @param options.font - The name of the font to use for text measurement
- * @param options.fontSize - The font size in pixels to use for windows narrower than the breakpoint
- * @param options.breakpointFontSize - The font size in pixels to use for windows wider than the breakpoint
- * @param options.fontWeight - The font weight to use for text measurement (default: 400)
- * @param options.fontStyle - The font style to use for text measurement (default: "normal")
- * @param options.windowWidthBreakpointMD - The window width breakpoint in pixels (default: 768)
- *
- * @returns The truncated string with "..." appended, or the original string if it fits within the maximum width
- *
- * @remarks
- * - Creates a persistent, hidden canvas element in the document body for text measurement (reused across calls)
- * - Uses a canvas context to measure text width with the specified font
- * - Font size is determined by comparing windowWidth to windowWidthBreakpointMD
- * - Creates a canvas element if one doesn't already exist in the document
- * - Iteratively removes characters from the end until the string fits within maxStringWidth
- * - The measurement includes the ellipsis ("...") in the final width calculation
+ * Truncates a string to fit within a maximum width, appending "..." if truncated.
+ * @param string - The string to truncate.
+ * @param stringWidth - The current rendered width of the string in pixels.
+ * @param maxStringWidth - The maximum allowed width in pixels.
+ * @param options - Configuration options for truncation.
+ * @returns The truncated string with "..." appended if truncation occurred, otherwise the original string.
  */
 export default function getTruncatedString(
   string: string,
