@@ -1,5 +1,12 @@
 "use client";
 
+/**
+ * Configuration object for canvas text measurement.
+ * @property {string} font - The font family to use for text measurement.
+ * @property {number} fontSize - The font size in pixels to use for text measurement.
+ * @property {string} [fontStyle] - Optional font style (e.g., "italic") for text measurement.
+ * @property {number} [fontWeight] - Optional font weight (e.g., 400, 700) for text measurement.
+ */
 export interface CanvasConfig {
   font: string;
   fontSize: number;
@@ -7,6 +14,14 @@ export interface CanvasConfig {
   fontWeight?: number;
 }
 
+/**
+ * Measures the width of text using canvas 2D context.
+ * Creates a hidden canvas element for measurement if one doesn't exist.
+ *
+ * @param text - The text to measure
+ * @param canvasConfig - Configuration object containing font properties
+ * @returns The width of the text in pixels
+ */
 export const measureText = (
   text: string,
   canvasConfig: CanvasConfig,
