@@ -1,6 +1,5 @@
 import { useEffect, useState, RefObject, useRef, useEffectEvent } from "react";
 import useWindowWidth from "./useWindowWidth";
-import useElementWidth from "./useElementWidth";
 import getTruncatedString from "@/utils/helpers/getTruncatedString";
 import { measureText } from "@/utils/helpers/measure-text";
 
@@ -28,6 +27,7 @@ export default function useTruncatedString(
   font: string,
   smallFontSize: number = 16,
   largeFontSize: number = 16,
+  windowWidthBreakpointMD: number = 768,
 ): string {
   const windowWidth = useWindowWidth();
   const [displayString, setDisplayString] = useState(
@@ -37,7 +37,7 @@ export default function useTruncatedString(
   const prevStringVal = useRef<string>(stringVal);
 
   const truncationHandler = () => {
-    const maxElementWidth = windowWidth * maxWidthRatio;
+    const maxStringWidth = windowWidth * maxWidthRatio;
     const currentString = stringVal || placeholderText;
     if (currentString === placeholderText) {
       setDisplayString(placeholderText);
@@ -46,22 +46,27 @@ export default function useTruncatedString(
 
     const currentStringWidth = measureText(currentString, {
       font,
-      fontSize: windowWidth >= 768 ? largeFontSize : smallFontSize,
+      fontSize: windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize,
     });
 
-    if (currentStringWidth > maxElementWidth) {
+    if (currentStringWidth > maxStringWidth) {
       const truncatedString = getTruncatedString(
         currentString,
-        windowWidth,
         currentStringWidth,
-        maxElementWidth,
-        { font, smallFontSize, largeFontSize },
+        maxStringWidth,
+        {
+          font,
+          fontSize: smallFontSize,
+          breakpointFontSize: largeFontSize,
+          windowWidth,
+          windowWidthBreakpointMD,
+        },
       );
       setDisplayString(truncatedString);
     } else {
       setDisplayString(currentString);
     }
-  }
+  };
 
   const onStringValChange = useEffectEvent(() => {
     truncationHandler();

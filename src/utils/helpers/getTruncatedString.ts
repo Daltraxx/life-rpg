@@ -4,11 +4,12 @@ import { measureText } from "./measure-text";
 
 type TruncateOptions = {
   font: string;
-  smallFontSize: number;
-  largeFontSize: number;
+  fontSize: number;
+  breakpointFontSize?: number;
   fontWeight?: number;
   fontStyle?: string;
   windowWidthBreakpointMD?: number;
+  windowWidth?: number;
 };
 
 /**
@@ -21,8 +22,8 @@ type TruncateOptions = {
  * @param maxStringWidth - The maximum allowed width for the string in pixels
  * @param options - Configuration object for text measurement
  * @param options.font - The name of the font to use for text measurement
- * @param options.smallFontSize - The font size in pixels to use for windows narrower than the breakpoint
- * @param options.largeFontSize - The font size in pixels to use for windows wider than the breakpoint
+ * @param options.fontSize - The font size in pixels to use for windows narrower than the breakpoint
+ * @param options.breakpointFontSize - The font size in pixels to use for windows wider than the breakpoint
  * @param options.fontWeight - The font weight to use for text measurement (default: 400)
  * @param options.fontStyle - The font style to use for text measurement (default: "normal")
  * @param options.windowWidthBreakpointMD - The window width breakpoint in pixels (default: 768)
@@ -39,7 +40,6 @@ type TruncateOptions = {
  */
 export default function getTruncatedString(
   string: string,
-  windowWidth: number,
   stringWidth: number,
   maxStringWidth: number,
   options: TruncateOptions,
@@ -48,14 +48,16 @@ export default function getTruncatedString(
 
   const {
     font,
-    smallFontSize,
-    largeFontSize,
+    fontSize,
+    breakpointFontSize = fontSize,
     fontWeight = 400,
     fontStyle = "normal",
+    windowWidth = 0,
     windowWidthBreakpointMD = 768,
   } = options;
 
-  const fontSize = windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize;
+  const currFontSize =
+    windowWidth >= windowWidthBreakpointMD ? breakpointFontSize : fontSize;
 
   // Could optimize with binary search, but expected string lengths are short enough for iterative approach
   let truncated = string;
@@ -64,7 +66,7 @@ export default function getTruncatedString(
     truncated = truncated.slice(0, -1);
     measuredWidth = measureText(truncated + "...", {
       font,
-      fontSize,
+      fontSize: currFontSize,
       fontWeight,
       fontStyle,
     });
