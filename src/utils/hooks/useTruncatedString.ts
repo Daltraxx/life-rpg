@@ -2,6 +2,7 @@ import { useEffect, useState, RefObject, useRef, useEffectEvent } from "react";
 import useWindowWidth from "./useWindowWidth";
 import useElementWidth from "./useElementWidth";
 import getTruncatedString from "@/utils/helpers/getTruncatedString";
+import { measureText } from "@/utils/helpers/measure-text";
 
 /**
  * A custom hook that truncates a string based on the available width of an element
@@ -22,35 +23,39 @@ import getTruncatedString from "@/utils/helpers/getTruncatedString";
  */
 export default function useTruncatedString(
   stringVal: string,
-  elementRef: RefObject<HTMLElement | null>,
   maxWidthRatio: number,
   placeholderText: string,
-  fontName: string,
+  font: string,
   smallFontSize: number = 16,
   largeFontSize: number = 16,
 ): string {
   const windowWidth = useWindowWidth();
-  const elementWidth = useElementWidth(elementRef);
   const [displayString, setDisplayString] = useState(
     stringVal || placeholderText,
   );
 
   const prevStringVal = useRef<string>(stringVal);
 
-  const truncationHandler = () => { 
+  const truncationHandler = () => {
     const maxElementWidth = windowWidth * maxWidthRatio;
     const currentString = stringVal || placeholderText;
     if (currentString === placeholderText) {
       setDisplayString(placeholderText);
       return;
     }
-    if (elementWidth > maxElementWidth) {
+
+    const currentStringWidth = measureText(currentString, {
+      font,
+      fontSize: windowWidth >= 768 ? largeFontSize : smallFontSize,
+    });
+
+    if (currentStringWidth > maxElementWidth) {
       const truncatedString = getTruncatedString(
         currentString,
         windowWidth,
-        elementWidth,
+        currentStringWidth,
         maxElementWidth,
-        { fontName, smallFontSize, largeFontSize },
+        { font, smallFontSize, largeFontSize },
       );
       setDisplayString(truncatedString);
     } else {

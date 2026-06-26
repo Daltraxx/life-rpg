@@ -1,7 +1,9 @@
 "use client";
 
+import { measureText } from "./measure-text";
+
 type TruncateOptions = {
-  fontName: string;
+  font: string;
   smallFontSize: number;
   largeFontSize: number;
   fontWeight?: number;
@@ -18,7 +20,7 @@ type TruncateOptions = {
  * @param stringWidth - The initial measured width of the string in pixels
  * @param maxStringWidth - The maximum allowed width for the string in pixels
  * @param options - Configuration object for text measurement
- * @param options.fontName - The name of the font to use for text measurement
+ * @param options.font - The name of the font to use for text measurement
  * @param options.smallFontSize - The font size in pixels to use for windows narrower than the breakpoint
  * @param options.largeFontSize - The font size in pixels to use for windows wider than the breakpoint
  * @param options.fontWeight - The font weight to use for text measurement (default: 400)
@@ -45,7 +47,7 @@ export default function getTruncatedString(
   if (stringWidth <= maxStringWidth) return string;
 
   const {
-    fontName,
+    font,
     smallFontSize,
     largeFontSize,
     fontWeight = 400,
@@ -53,38 +55,19 @@ export default function getTruncatedString(
     windowWidthBreakpointMD = 768,
   } = options;
 
-  let canvas: HTMLCanvasElement | null = document.querySelector(
-    "canvas[data-text-measurement]",
-  );
-  if (!canvas) {
-    canvas = document.createElement("canvas");
-    canvas.setAttribute("data-text-measurement", "true");
-    canvas.style.display = "none";
-    document.body?.appendChild(canvas);
-  }
-
-  const fontSize =
-    windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize; // md breakpoint
-
-  const context = canvas.getContext("2d");
-  // Safety check, should never happen unless browser doesn't support canvas
-  if (!context) {
-    // Rough approximation: assume average character is ~8px wide
-    const avgCharWidth = fontSize * 0.5;
-    const estimatedMaxChars = Math.floor(maxStringWidth / avgCharWidth) - 3;
-    return estimatedMaxChars > 0
-      ? string.slice(0, estimatedMaxChars) + "..."
-      : "...";
-  }
-
-  context.font = `${fontStyle} ${fontWeight} ${fontSize}px "${fontName}"`;
+  const fontSize = windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize;
 
   // Could optimize with binary search, but expected string lengths are short enough for iterative approach
   let truncated = string;
   let measuredWidth = stringWidth;
   while (measuredWidth > maxStringWidth && truncated.length > 0) {
     truncated = truncated.slice(0, -1);
-    measuredWidth = context.measureText(truncated + "...").width; // NOTE: not a perfect measurement but close enough for now
+    measuredWidth = measureText(truncated + "...", {
+      font,
+      fontSize,
+      fontWeight,
+      fontStyle,
+    });
   }
 
   return truncated + "...";

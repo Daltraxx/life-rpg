@@ -132,10 +132,8 @@ export default function CreateAccountForm(): ReactElement {
   );
 
   // Dynamic username display logic designed to prevent layout overflow
-  const headingElementRef = useRef<HTMLHeadingElement>(null);
   const usernameForDisplay = useTruncatedString(
     formData.username,
-    headingElementRef,
     MAX_HEADING_WIDTH_RATIO,
     USERNAME_PLACEHOLDER,
     HEADING_FONT_FAMILY,
@@ -157,7 +155,6 @@ export default function CreateAccountForm(): ReactElement {
         <Heading
           as="h1"
           size="48-responsive"
-          ref={headingElementRef}
           className={styles.heading}
         >
           Welcome {usernameForDisplay}!
