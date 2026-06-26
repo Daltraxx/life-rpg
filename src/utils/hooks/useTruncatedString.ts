@@ -1,4 +1,4 @@
-import { useEffect, useState, RefObject, useRef, useEffectEvent } from "react";
+import { useEffect, useState, useRef, useEffectEvent } from "react";
 import useWindowWidth from "./useWindowWidth";
 import getTruncatedString from "@/utils/helpers/getTruncatedString";
 import { measureText } from "@/utils/helpers/measure-text";
@@ -46,7 +46,8 @@ export default function useTruncatedString(
 
     const currentStringWidth = measureText(currentString, {
       font,
-      fontSize: windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize,
+      fontSize:
+        windowWidth >= windowWidthBreakpointMD ? largeFontSize : smallFontSize,
     });
 
     if (currentStringWidth > maxStringWidth) {

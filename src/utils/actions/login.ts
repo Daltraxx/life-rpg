@@ -103,7 +103,7 @@ export async function login(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
   revalidatePath("/"); // Revalidate home page or relevant pages to reflect authenticated state
-  let { data: profileComplete, error: profileError } = await getResolvedProfileCompletionStatus();
+  const { data: profileComplete, error: profileError } = await getResolvedProfileCompletionStatus();
   if (profileError) {
     console.error("Failed to resolve profile completion status:", { profileError });
     await supabase.auth.signOut(); // Sign out the user to prevent inconsistent state
