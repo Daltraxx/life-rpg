@@ -2,6 +2,7 @@ import getBeginningAndEndOfDayUTC from "@/utils/helpers/getBeginningAndEndOfDayU
 import getUserTimezone from "../getUserTimezone";
 import { cookies } from "next/headers";
 import { COOKIES } from "@/utils/constants/server-cookies";
+import { isValidTimezone } from "@/utils/validations/timezone";
 
 type QuestCompletionRecordItems = {
   completed_at: string;
@@ -35,6 +36,10 @@ export default async function isQuestCompletedToday({
   try {
     const cookieStore = await cookies();
     let userTimezone = cookieStore.get(COOKIES.TIMEZONE)?.value;
+    if (userTimezone && !isValidTimezone(userTimezone)) { 
+      console.warn(`Invalid timezone cookie value: ${userTimezone}. Fetching timezone from user profile.`);
+      userTimezone = undefined; // Reset to undefined to fetch from user profile
+    }
     if (!userTimezone) userTimezone = await getUserTimezone(userId);
 
     const { beginningOfDayUTC, endOfDayUTC } =
