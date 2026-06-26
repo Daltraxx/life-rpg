@@ -26,14 +26,18 @@ export default async function getUsername(
       console.error("Error fetching username:", error);
       return { data: null, error };
     }
-    if (!data || !data.username) {
+    if (!data) {
       return {
         data: null,
         error: new Error(`Username not found for user ID: ${userId}`),
       };
     }
 
-    return { data: data.username, error: null };
+    if (!data.username) {
+      console.warn(`Username is null or undefined for user ID: ${userId}`);
+    }
+
+    return { data: data.username ?? "", error: null }; // If empty string returned, caller should provide fallback or handle accordingly
   } catch (error) {
     console.error(
       "Error creating Supabase client or fetching username:",
