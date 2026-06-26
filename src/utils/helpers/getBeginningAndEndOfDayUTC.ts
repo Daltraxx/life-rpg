@@ -1,4 +1,4 @@
-import { TZDate } from "@date-fns/tz";
+import { tz, TZDate } from "@date-fns/tz";
 import {
   startOfDay,
   subHours,
@@ -53,13 +53,14 @@ export default function getBeginningAndEndOfDayUTC(
     // Start/end of the current day in the user's timezone, anchored at the wall-clock boundary hour
     const beginningOfDayUserTZ = setHours(
       startOfDay(adjustedTime),
-      DAY_BOUNDARY_HOUR_OFFSET,
+      DAY_BOUNDARY_HOUR_OFFSET
     );
+    
     const endOfDayUserTZ = subMilliseconds(addDays(beginningOfDayUserTZ, 1), 1);
 
     // UTC timestamps for the start and end of the day in the user's timezone
-    const beginningOfDayUTC = beginningOfDayUserTZ.toISOString();
-    const endOfDayUTC = endOfDayUserTZ.toISOString();
+    const beginningOfDayUTC = new Date(beginningOfDayUserTZ.getTime()).toISOString();
+    const endOfDayUTC = new Date(endOfDayUserTZ.getTime()).toISOString();
 
     return { beginningOfDayUTC, endOfDayUTC };
   } catch (error) {
