@@ -76,9 +76,10 @@ export default function useTruncatedString(
 
   // Trigger truncation evaluation when the window width changes
   useEffect(() => {
-    setTimeout(() => {
+    let timeoutId = setTimeout(() => {
       onWindowWidthChange();
-    }, 300); // Delay to ensure the element width has been updated after window resize
+    }, 300); // Debounce the window resize event to avoid excessive calculations
+    return () => clearTimeout(timeoutId);
   }, [windowWidth]);
 
   return displayString;
