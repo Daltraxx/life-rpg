@@ -23,59 +23,59 @@ import type { QueryResponse } from "@/utils/types/query-response";
 export default async function getDailyQuests(
   userId: string,
 ): Promise<QueryResponse<DailyQuest[]>> {
-  const supabase = await createSupabaseServerClient();
-
-  // RLS policies further restrict access to only quests belonging to the authenticated user,
-  // so combined with this function only being called on the server,
-  // we can be confident that users cannot access quests that don't belong to them.
-  const { data, error } = await supabase
-    .from("quests")
-    .select(
-      `
-    id,
-    name,
-    description,
-    experienceShare:experience_share,
-    frequency,
-    restFrequency:rest_frequency,
-    streak,
-    strengthPoints:strength_points,
-    strengthLevel:strength_level,
-    position,
-    updated_at,
-
-    affectedAttributes:quests_attributes (
-      id,
-      strength:attribute_power,
-      attributes (
-        id,
-        name
-      )
-    ),
-    latestCompletion:quest_completions (
-      id,
-      completed_at,
-      processed_at
-    ),
-    strength_levels (
-      multiplier
-    )
-  `,
-    )
-    .eq("user_id", userId)
-    .order("position", { ascending: true })
-    .order("completed_at", {
-      ascending: false,
-      referencedTable: "quest_completions",
-    })
-    .limit(1, { referencedTable: "quest_completions" });
-
-  if (error) {
-    console.error("Error fetching quests:", error);
-    return { data: null, error };
-  }
-
   try {
+    const supabase = await createSupabaseServerClient();
+
+    // RLS policies further restrict access to only quests belonging to the authenticated user,
+    // so combined with this function only being called on the server,
+    // we can be confident that users cannot access quests that don't belong to them.
+    const { data, error } = await supabase
+      .from("quests")
+      .select(
+        `
+        id,
+        name,
+        description,
+        experienceShare:experience_share,
+        frequency,
+        restFrequency:rest_frequency,
+        streak,
+        strengthPoints:strength_points,
+        strengthLevel:strength_level,
+        position,
+        updated_at,
+
+        affectedAttributes:quests_attributes (
+          id,
+          strength:attribute_power,
+          attributes (
+            id,
+            name
+          )
+        ),
+        latestCompletion:quest_completions (
+          id,
+          completed_at,
+          processed_at
+        ),
+        strength_levels (
+          multiplier
+        )
+      `,
+      )
+      .eq("user_id", userId)
+      .order("position", { ascending: true })
+      .order("completed_at", {
+        ascending: false,
+        referencedTable: "quest_completions",
+      })
+      .limit(1, { referencedTable: "quest_completions" });
+
+    if (error) {
+      console.error("Error fetching quests:", error);
+      return { data: null, error };
+    }
+
     const quests = await Promise.all(
       (data ?? []).map(async (quest) => {
         const isCompleted = await isQuestCompletedToday({
@@ -122,6 +122,12 @@ export default async function getDailyQuests(
     return { data: quests, error: null };
   } catch (error) {
     console.error("Error processing quests:", error);
-    return { data: null, error: error as Error };
+    return {
+      data: null,
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Failed to fetch daily quests"),
+    };
   }
 }
