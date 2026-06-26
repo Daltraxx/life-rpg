@@ -29,15 +29,15 @@ export default async function getUsername(
     if (!data) {
       return {
         data: null,
-        error: new Error(`Username not found for user ID: ${userId}`),
+        error: new Error(`Username not found`),
       };
     }
 
     if (!data.username) {
-      console.error("Username is null or undefined for user ID:", userId);
+      console.error("Username is null or undefined for authenticated user");
       return {
         data: null,
-        error: new Error(`Username is null or undefined for user ID: ${userId}`),
+        error: new Error(`Username is null or undefined`),
       };
     }
 
