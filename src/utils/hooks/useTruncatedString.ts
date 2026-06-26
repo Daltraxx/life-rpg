@@ -40,6 +40,10 @@ export default function useTruncatedString(
   const truncationHandler = () => { 
     const maxElementWidth = windowWidth * maxWidthRatio;
     const currentString = stringVal || placeholderText;
+    if (currentString === placeholderText) {
+      setDisplayString(placeholderText);
+      return;
+    }
     if (elementWidth > maxElementWidth) {
       const truncatedString = getTruncatedString(
         currentString,
@@ -65,7 +69,6 @@ export default function useTruncatedString(
   // Trigger truncation evaluation when the string value changes
   useEffect(() => {
     if (prevStringVal.current !== stringVal) {
-      console.log("Running due to stringVal change");
       prevStringVal.current = stringVal;
       onStringValChange(stringVal);
     }
@@ -74,7 +77,6 @@ export default function useTruncatedString(
   // Trigger truncation evaluation when the window width changes
   useEffect(() => {
     setTimeout(() => {
-      console.log("Running due to windowWidth change");
       onWindowWidthChange();
     }, 300); // Delay to ensure the element width has been updated after window resize
   }, [windowWidth]);
