@@ -10,27 +10,39 @@ import type { QueryResponse } from "@/utils/types/query-response";
 export default async function getUsername(
   userId: string,
 ): Promise<QueryResponse<string>> {
-  const supabase = await createSupabaseServerClient();
+  try {
+    const supabase = await createSupabaseServerClient();
 
-  // RLS policies further restrict access to only user data belonging to the authenticated user,
-  // so combined with this function only being called on the server,
-  // we can be confident that users cannot access data that doesn't belong to them.
-  const { data, error } = await supabase
-    .from("users")
-    .select("username")
-    .eq("id", userId)
-    .single();
+    // RLS policies further restrict access to only user data belonging to the authenticated user,
+    // so combined with this function only being called on the server,
+    // we can be confident that users cannot access data that doesn't belong to them.
+    const { data, error } = await supabase
+      .from("users")
+      .select("username")
+      .eq("id", userId)
+      .single();
 
-  if (error) {
-    console.error("Error fetching username:", error);
-    return { data: null, error };
-  }
-  if (!data || !data.username) {
+    if (error) {
+      console.error("Error fetching username:", error);
+      return { data: null, error };
+    }
+    if (!data || !data.username) {
+      return {
+        data: null,
+        error: new Error(`Username not found for user ID: ${userId}`),
+      };
+    }
+
+    return { data: data.username, error: null };
+  } catch (error) {
+    console.error(
+      "Error creating Supabase client or fetching username:",
+      error,
+    );
     return {
       data: null,
-      error: new Error(`Username not found for user ID: ${userId}`),
+      error:
+        error instanceof Error ? error : new Error("Failed to fetch username"),
     };
   }
-
-  return { data: data.username, error: null };
 }
