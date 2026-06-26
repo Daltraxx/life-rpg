@@ -3,7 +3,7 @@ import getProfileCompletionStatus from "@/app/queries/server/get-profile-complet
 import type { QueryResponse } from "@/utils/types/query-response";
 
 /**
- * Checks whether the authenticated user's profile is complete. 
+ * Checks whether the authenticated user's profile is complete.
  * This function should only be called on the server side
  * where the authenticated user's profile completion status is needed.
  *
@@ -19,15 +19,18 @@ import type { QueryResponse } from "@/utils/types/query-response";
  * - This function is intended to be used in server components or API routes
  *   where access to the authenticated user's profile completion status is needed.
  */
-export const getResolvedProfileCompletionStatus = async (): Promise<QueryResponse<boolean>> => {
+export const getResolvedProfileCompletionStatus = async (): Promise<
+  QueryResponse<boolean>
+> => {
   const supabase = await createSupabaseServerClient();
   const {
     data: { user },
     error,
   } = await supabase.auth.getUser();
   if (error || !user) {
-    console.error("Error fetching authenticated user:", { error });
-    return { data: null, error: error as Error };
+    const authError = error ?? new Error("No authenticated user found");
+    console.error("Error fetching authenticated user:", { error: authError });
+    return { data: null, error: authError };
   }
 
   const profileCompleteMetadataValue = user.app_metadata?.profile_complete;
@@ -35,10 +38,8 @@ export const getResolvedProfileCompletionStatus = async (): Promise<QueryRespons
     return { data: profileCompleteMetadataValue, error: null };
   }
 
-  const { data: isProfileComplete, error: queryError } = await getProfileCompletionStatus(
-    user.id,
-    supabase,
-  );
+  const { data: isProfileComplete, error: queryError } =
+    await getProfileCompletionStatus(user.id, supabase);
   if (queryError) {
     console.error("Error resolving profile completion status:", {
       error: queryError,
