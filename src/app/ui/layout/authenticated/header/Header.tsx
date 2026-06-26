@@ -13,7 +13,7 @@ import { getResolvedProfileCompletionStatus } from "@/utils/helpers/get-resolved
  * Fetches profile completion status to determine menu visibility.
  *
  * @returns {Promise<JSX.Element>} The rendered header component
- * @throws Logs error if profile completion status cannot be resolved
+ * @remarks Logs the error and renders fallback branding if profile completion status cannot be resolved.
  */
 export default async function Header(): Promise<JSX.Element> {
   const { data: profileComplete, error } =
