@@ -34,10 +34,14 @@ export default async function getUsername(
     }
 
     if (!data.username) {
-      console.warn(`Username is null or undefined for user ID: ${userId}`);
+      console.error("Username is null or undefined for user ID:", userId);
+      return {
+        data: null,
+        error: new Error(`Username is null or undefined for user ID: ${userId}`),
+      };
     }
 
-    return { data: data.username ?? "", error: null }; // If empty string returned, caller should provide fallback or handle accordingly
+    return { data: data.username, error: null };
   } catch (error) {
     console.error(
       "Error creating Supabase client or fetching username:",
