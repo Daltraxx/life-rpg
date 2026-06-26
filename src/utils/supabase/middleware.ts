@@ -164,6 +164,9 @@ export async function updateSession(
       console.error("Failed to resolve profile completion status:", {
         profileError,
       });
+      if (request.nextUrl.pathname === ROUTES.ERROR) {
+        return supabaseResponse;
+      }
       const url = request.nextUrl.clone();
       url.pathname = ROUTES.ERROR;
       return NextResponse.redirect(url);
