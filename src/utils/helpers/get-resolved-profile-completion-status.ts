@@ -22,30 +22,43 @@ import type { QueryResponse } from "@/utils/types/query-response";
 export const getResolvedProfileCompletionStatus = async (): Promise<
   QueryResponse<boolean>
 > => {
-  const supabase = await createSupabaseServerClient();
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-  if (error || !user) {
-    const authError = error ?? new Error("No authenticated user found");
-    console.error("Error fetching authenticated user:", { error: authError });
-    return { data: null, error: authError };
-  }
+  try {
+    const supabase = await createSupabaseServerClient();
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser();
+    if (error || !user) {
+      const authError = error ?? new Error("No authenticated user found");
+      console.error("Error fetching authenticated user:", { error: authError });
+      return { data: null, error: authError };
+    }
 
-  const profileCompleteMetadataValue = user.app_metadata?.profile_complete;
-  if (typeof profileCompleteMetadataValue === "boolean") {
-    return { data: profileCompleteMetadataValue, error: null };
-  }
+    const profileCompleteMetadataValue = user.app_metadata?.profile_complete;
+    if (typeof profileCompleteMetadataValue === "boolean") {
+      return { data: profileCompleteMetadataValue, error: null };
+    }
 
-  const { data: isProfileComplete, error: queryError } =
-    await getProfileCompletionStatus(user.id, supabase);
-  if (queryError) {
-    console.error("Error resolving profile completion status:", {
-      error: queryError,
+    const { data: isProfileComplete, error: queryError } =
+      await getProfileCompletionStatus(user.id, supabase);
+    if (queryError) {
+      console.error("Error resolving profile completion status:", {
+        error: queryError,
+      });
+      return { data: null, error: queryError };
+    }
+
+    return { data: isProfileComplete, error: null };
+  } catch (error) {
+    console.error("Error in getResolvedProfileCompletionStatus:", {
+      error,
     });
-    return { data: null, error: queryError };
+    return {
+      data: null,
+      error:
+        error instanceof Error
+          ? error
+          : new Error("Failed to resolve profile completion status"),
+    };
   }
-
-  return { data: isProfileComplete, error: null };
 };
