@@ -103,12 +103,13 @@ export async function login(
 
   // TODO: Consider targeted revalidation (e.g., "/profile", "/dashboard") instead of root for better performance
   revalidatePath("/"); // Revalidate home page or relevant pages to reflect authenticated state
-  const { data: profileComplete, error: profileError } = await getResolvedProfileCompletionStatus();
+  let { data: profileComplete, error: profileError } = await getResolvedProfileCompletionStatus();
   if (profileError) {
     console.error("Failed to resolve profile completion status:", { profileError });
+    await supabase.auth.signOut(); // Sign out the user to prevent inconsistent state
+    revalidatePath("/", "layout"); // Revalidate to reflect unauthenticated state
     return {
-      message:
-        "An unexpected error occurred while checking profile status. Please try again later.",
+      message: "Error determining profile status. Please try again later.",
     };
   }
 
