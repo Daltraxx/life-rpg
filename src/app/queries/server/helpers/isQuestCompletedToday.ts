@@ -38,7 +38,7 @@ export default async function isQuestCompletedToday({
     let userTimezone = cookieStore.get(COOKIES.TIMEZONE)?.value;
     if (userTimezone && !isValidTimezone(userTimezone)) { 
       console.warn(`Invalid timezone cookie value: ${userTimezone}. Fetching timezone from user profile.`);
-      userTimezone = undefined; // Reset to undefined to fetch from user profile
+      userTimezone = undefined; // Reset locally to undefined to fetch from user profile
     }
     if (!userTimezone) userTimezone = await getUserTimezone(userId);
 
