@@ -67,7 +67,7 @@ const getSubmitButtonText = (
 
 const HEADING_FONT_FAMILY = "Jersey 10";
 const USERNAME_PLACEHOLDER = "[new user]";
-const MAX_HEADING_WIDTH_RATIO = 0.90; // 95% of window width
+const MAX_HEADING_WIDTH_RATIO = 0.90; // 90% of window width
 
 /**
  * CreateAccountForm component for user registration.
