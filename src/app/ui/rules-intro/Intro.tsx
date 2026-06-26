@@ -81,7 +81,7 @@ export default function Intro({ authUser }: { authUser: User }) {
     return () => {
       isMounted = false;
     };
-  }, [authUser.id, supabase, router]);
+  }, [authUser, authUser.id, supabase, router]);
 
   return (
     <Bounded innerClassName={styles.contentContainer}>
