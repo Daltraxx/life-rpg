@@ -58,7 +58,7 @@ export default function useTruncatedString(
     }
   }
 
-  const onStringValChange = useEffectEvent((newStringVal: string) => {
+  const onStringValChange = useEffectEvent(() => {
     truncationHandler();
   });
 
@@ -70,13 +70,13 @@ export default function useTruncatedString(
   useEffect(() => {
     if (prevStringVal.current !== stringVal) {
       prevStringVal.current = stringVal;
-      onStringValChange(stringVal);
+      onStringValChange();
     }
   }, [stringVal]);
 
   // Trigger truncation evaluation when the window width changes
   useEffect(() => {
-    let timeoutId = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       onWindowWidthChange();
     }, 300); // Debounce the window resize event to avoid excessive calculations
     return () => clearTimeout(timeoutId);
